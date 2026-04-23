@@ -1,0 +1,91 @@
+{
+  "salonProfile": {
+    "id": "test-profile-1",
+    "name": "Beauty Nails",
+    "address": "Avenue du Commerce, Gombe, Kinshasa, RD Congo",
+    "phone": "+243 810 000 000",
+    "email": "contact@beautynails.cd",
+    "website": "https://www.beautynails.cd",
+    "description": "Votre salon de beauté de référence à Kinshasa",
+    "logo": "/images/beauty-nails-logo.png",
+    "openingHours": {
+      "monday": { "open": "08:00", "close": "20:00" },
+      "tuesday": { "open": "08:00", "close": "20:00" },
+      "wednesday": { "open": "08:00", "close": "20:00" },
+      "thursday": { "open": "08:00", "close": "20:00" },
+      "friday": { "open": "08:00", "close": "20:00" },
+      "saturday": { "open": "09:00", "close": "18:00" },
+      "sunday": { "open": "10:00", "close": "16:00" }
+    },
+    "socialMedia": {
+      "facebook": "https://facebook.com/beautynails",
+      "instagram": "https://instagram.com/beautynails",
+      "whatsapp": "+243 810 000 000"
+    },
+    "currency": "CDF",
+    "timezone": "Africa/Kinshasa",
+    "language": "fr",
+    "createdAt": "2024-01-15T08:00:00Z",
+    "updatedAt": "2024-01-15T08:00:00Z"
+  },
+  "systemSettings": {
+    "smsNotifications": true,
+    "emailNotifications": true,
+    "autoReminders": true,
+    "onlineBooking": true,
+    "requireConfirmation": false,
+    "maintenanceMode": false,
+    "showPastAppointments": true,
+    "maxAdvanceBookingDays": 30,
+    "appointmentDuration": 60,
+    "notificationLeadTime": 24,
+    "currencySymbol": "FC",
+    "dateFormat": "DD/MM/YYYY",
+    "timeFormat": "24h",
+    "defaultTaxRate": 0,
+    "enableLoyaltyProgram": true,
+    "loyaltyPointsPerCurrency": 1,
+    "loyaltyPointsRequired": 100
+  },
+  "notificationTemplates": [
+    {
+      "id": "tmpl-1",
+      "name": "Rappel de Rendez-vous",
+      "type": "appointment_reminder",
+      "subject": "Rappel de votre rendez-vous",
+      "content": "Bonjour {{client_name}},\n\nCeci est un rappel de votre rendez-vous prévu le {{date}} à {{time}}.\n\nNous vous attendons avec plaisir!",
+      "isActive": true
+    },
+    {
+      "id": "tmpl-2",
+      "name": "Confirmation de Rendez-vous",
+      "type": "appointment_confirmation",
+      "subject": "Confirmation de votre rendez-vous",
+      "content": "Bonjour {{client_name}},\n\nVotre rendez-vous du {{date}} à {{time}} a été confirmé.\n\nService: {{service_name}}\nEsthéticienne: {{worker_name}}",
+      "isActive": true
+    }
+  ],
+  "integrations": [
+    {
+      "id": "int-1",
+      "name": "Twilio SMS",
+      "provider": "twilio",
+      "config": {
+        "accountSid": "your_account_sid",
+        "authToken": "your_auth_token",
+        "phoneNumber": "+243810000000"
+      },
+      "isActive": false
+    },
+    {
+      "id": "int-2",
+      "name": "SendGrid Email",
+      "provider": "sendgrid",
+      "config": {
+        "apiKey": "your_sendgrid_api_key",
+        "senderEmail": "noreply@beautynails.cd"
+      },
+      "isActive": false
+    }
+  ]
+}
