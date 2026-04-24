@@ -243,7 +243,7 @@ export default function Login() {
           <DialogHeader>
             <DialogTitle>Beauty Nails One-Time-Password (OTP)</DialogTitle>
             <DialogDescription>
-              Un code OTP a été envoyé à votre numéro de téléphone. Veuillez entrer le code pour vérifier votre identité et accéder à votre tableau de bord.
+              Un code OTP a été envoyé à votre email et votre numéro de téléphone. Veuillez entrer le code pour vérifier votre identité et accéder à votre tableau de bord.
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                 Si vous ne recevez pas le code, veuillez vérifier avec ce code par defaut : {expectedOtp}.
               </p>
