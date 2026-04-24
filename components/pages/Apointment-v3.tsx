@@ -40,7 +40,6 @@ import { useClient } from '@/lib/hooks/useClients';
 import { useLoyalty } from '@/lib/hooks/useLoyalty';
 import axiosdb from '@/lib/axios';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { e } from '@vercel/blob/dist/create-folder-D-Qslm5_.cjs';
 import { useQueryClient } from '@tanstack/react-query';
 
 export default function AppointmentsV3() {
@@ -1052,7 +1051,7 @@ export default function AppointmentsV3() {
                     </p>
                     <div className="flex items-center justify-between gap-4 mt-2">
                       <p className="text-2xl font-bold text-pink-600 dark:text-pink-400 tracking-wider">
-                        *384*333666#
+                        *384*333000#
                       </p>
                       <div className="flex flex-col items-center gap-8">
                         <button

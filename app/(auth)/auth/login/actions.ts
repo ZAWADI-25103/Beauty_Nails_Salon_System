@@ -3,7 +3,11 @@
 import { signIn } from "@/lib/auth/auth";
 import axiosdb from "@/lib/axios";
 
-export async function handleLogin(formData: FormData, expectedRole: string, redirect?: string | null) {
+export async function handleLogin(
+  formData: FormData,
+  expectedRole: string,
+  redirect?: string | null,
+) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
@@ -18,43 +22,54 @@ export async function handleLogin(formData: FormData, expectedRole: string, redi
       return { error: "Email ou mot de passe incorrect" };
     }
 
-    if (!redirect){
+    if (!redirect) {
+      const res = await axiosdb.post("/mail/otp", { email: email });
 
-      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      if (!res.data.success) {
+        return { error: "Échec de l'envoi du code OTP. Veuillez réessayer." };
+      }
+      const otpCode = res.data.expectedOtp;
 
-      const otpResponse = await axiosdb.post("/auth/send-otp", {
-        phoneNumber: "+250790802201",
-        otp: otpCode,
-      });
+      // const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+      // const otpResponse = await axiosdb.post("/auth/send-otp", {
+      //   phoneNumber: "+250790003480",
+      //   otp: otpCode,
+      // });
 
       return {
-      success: true,
-      expectedOtp: otpCode,
-      message: otpResponse.data.message,
-      redirectUrl: `/dashboard/${expectedRole}`,
-    };
+        success: true,
+        expectedOtp: otpCode,
+        message: res.data.message,
+        redirectUrl: `/dashboard/${expectedRole}`,
+      };
     } else {
       const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
 
       const otpResponse = await axiosdb.post("/auth/send-otp", {
-        phoneNumber: "+250790802201",
+        phoneNumber: "+250790003480",
         otp: otpCode,
       });
 
       return {
-      success: true,
-      expectedOtp: otpCode,
-      message: otpResponse.data.message,
-      redirectUrl: `/${redirect}`,
-    };
+        success: true,
+        expectedOtp: otpCode,
+        message: otpResponse.data.message,
+        redirectUrl: `/${redirect}`,
+      };
     }
-
   } catch (err: any) {
-    return { error: err.message || "Une erreur est survenue lors de la connexion" };
+    return {
+      error: err.message || "Une erreur est survenue lors de la connexion",
+    };
   }
 }
 
-export async function handleOTPVerification(otp: string, expectedOtp: string, redirectUrl: string) {
+export async function handleOTPVerification(
+  otp: string,
+  expectedOtp: string,
+  redirectUrl: string,
+) {
   if (otp === expectedOtp) {
     return {
       success: true,
@@ -66,4 +81,3 @@ export async function handleOTPVerification(otp: string, expectedOtp: string, re
     };
   }
 }
-

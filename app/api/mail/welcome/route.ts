@@ -35,7 +35,9 @@ export async function POST(req: Request) {
       // Continue processing even if admin notification fails
     }
 
-    return NextResponse.json({ message: 'Welcome email sent successfully' });
+    return NextResponse.json({ 
+      success : true,
+      message: 'Welcome' });
   } catch (error) {
     console.error('Error sending welcome email:', error);
     return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });

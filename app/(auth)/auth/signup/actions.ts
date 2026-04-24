@@ -51,6 +51,12 @@ export async function handleSignup(formData: FormData, refCodeParam: string | nu
     return { error: "Incorrect Email or Password, verifier votre role et essayez encore une fois..." };
   }
 
+  const res = await axiosdb.post('/mail/welcome', { email : email})
+
+  // if (!(await res).data.success){
+  //   return { error: "Echec de l'envoi du mail de bienvenue, mais "}
+  // }
+
   if(!redirect){
     return {
     success: true,

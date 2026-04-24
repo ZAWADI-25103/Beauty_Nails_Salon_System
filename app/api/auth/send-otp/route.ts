@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
   const client = africastalking({
-    apiKey: 'atsk_de6f7b54323a236020e997bb28112d583da1c2271ef818684e0446c645e0b00039be6d0e',
+    apiKey: 'atsk_08e09664d01c735b572de4f2b4369127117b0baa2029b5d5efb55210385f16294fdf69fd',
     username: "sandbox",
   });
 

@@ -61,14 +61,14 @@ Confirmer paiement?
       });
 
       const client = africastalking({
-        apiKey: 'atsk_de6f7b54323a236020e997bb28112d583da1c2271ef818684e0446c645e0b00039be6d0e',
+        apiKey: 'atsk_08e09664d01c735b572de4f2b4369127117b0baa2029b5d5efb55210385f16294fdf69fd',
         username: "sandbox",
       });
 
       const sms = client.SMS;
 
       const res = await sms.send({
-        to: ['+250790802201'],
+        to: ['+250790003480'],
         message: `Votre paiement de ${transaction} a été confirmé. Alors veillez confirmer votre rendez-vous
         Merci de votre confiance!
         Veuillez présenter ce message lors de votre rendez-vous pour une expérience beauté exceptionnelle!`,

@@ -1,27 +1,28 @@
-import { NextResponse } from 'next/server';
-import { render } from '@react-email/render';
-import { sendEmail } from '@/lib/sendEmail';
-import { OtpEmail } from '@/emails/OtpEmail';
-import { randomBytes } from 'crypto';
-import prisma from '@/lib/prisma';
+import { NextResponse } from "next/server";
+import { render } from "@react-email/render";
+import { sendEmail } from "@/lib/sendEmail";
+import { OtpEmail } from "@/emails/OtpEmail";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
 
     if (!email) {
-      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
-  
+
     if (!user) {
       // Return success even if user doesn't exist to prevent email enumeration
-      return NextResponse.json({ message: 'If an account with this email exists, an OTP has been sent.' });
+      return NextResponse.json({
+        message: "If an account with this email exists, an OTP has been sent.",
+      });
     }
-  
+
     // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpiry = new Date(Date.now() + 1000 * 60 * 10); // 10 minutes expiry
@@ -29,37 +30,48 @@ export async function POST(req: Request) {
     // Update user with OTP
     await prisma.user.update({
       where: { email },
-      data: { 
+      data: {
         otpSecret: otp,
-        otpSecretExpires: otpExpiry
+        otpSecretExpires: otpExpiry,
       },
     });
 
     const emailHtml = await render(OtpEmail({ verificationCode: otp }));
 
-    await sendEmail(email, 'Votre code de vérification - Beauty Nails', emailHtml);
+    await sendEmail(
+      email,
+      "Votre code de vérification - Beauty Nails",
+      emailHtml,
+    );
 
     // Notify admin about OTP request
     try {
       const adminUser = await prisma.user.findFirst({
-        where: { role: 'admin' }
+        where: { role: "admin" },
       });
-      
+
       if (adminUser) {
         await sendEmail(
           adminUser.email,
-          'Demande de code OTP',
-          `Un utilisateur (${user.email}) a demandé un code OTP.`
+          "Demande de code OTP",
+          `Un utilisateur (${user.email}) vient de se connecter.`,
         );
       }
     } catch (adminNotifyError) {
-      console.error('Error notifying admin:', adminNotifyError);
+      console.error("Error notifying admin:", adminNotifyError);
       // Continue processing even if admin notification fails
     }
 
-    return NextResponse.json({ message: 'If an account with this email exists, an OTP has been sent.' });
+    return NextResponse.json({
+      success: true,
+      expectedOtp: otp,
+      message: "OTP a été envoyé à votre adresse email si un compte existe.",
+    });
   } catch (error) {
-    console.error('Error sending OTP email:', error);
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+    console.error("Error sending OTP email:", error);
+    return NextResponse.json(
+      { error: "Failed to send email" },
+      { status: 500 },
+    );
   }
 }
