@@ -18,7 +18,7 @@ export const OtpEmail = ({ verificationCode }: OtpEmailProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Your login verification code for Intelligent ERP</Preview>
+      <Preview>Your login verification code for Beauty Nails System</Preview>
       <Body style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#f4f4f5', color: '#212121', padding: '20px' }}>
         <Container style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '8px', maxWidth: '600px' }}>
           <Heading style={{ color: '#1f2937', fontSize: '20px', fontWeight: '600', marginBottom: '16px' }}>
@@ -26,7 +26,7 @@ export const OtpEmail = ({ verificationCode }: OtpEmailProps) => {
           </Heading>
 
           <Text style={{ fontSize: '14px', marginBottom: '20px', color: '#374151' }}>
-            Please use the following code to complete your login to <strong>Intelligent ERP</strong>.
+            Please use the following code to complete your login to <strong>Beauty Nails System</strong>.
             If you didn’t request this code, you can safely ignore this email.
           </Text>
 
@@ -43,8 +43,8 @@ export const OtpEmail = ({ verificationCode }: OtpEmailProps) => {
           <Hr style={{ borderTop: '1px solid #e5e7eb', margin: '24px 0' }} />
 
           <Text style={{ fontSize: '12px', color: '#6b7280' }}>
-            You’re receiving this email because you have an account at <a href="https://intelligenterp.dpdns.org" style={{ color: '#2563eb' }}>intelligenterp.dpdns.org</a>.
-            Intelligent ERP will never ask for your password or payment details by email.
+            You’re receiving this email because you have an account at <a href="https://beauty-nails-salon.vercel.app" style={{ color: '#2563eb' }}>beauty-nails-salon.vercel.app</a>.
+            Beauty Nails System will never ask for your password or payment details by email.
           </Text>
         </Container>
       </Body>
@@ -89,7 +89,7 @@ export default OtpEmail;
 //           <Section style={{ padding: '25px 35px' }}>
 //             <Heading style={{ color: '#80410e', fontSize: '20px', fontWeight: 'bold', marginBottom: '15px' }}>Verify Your Login</Heading>
 //             <Text style={{ color: '#5a3b02', fontSize: '14px', marginBottom: '14px' }}>
-//               Use the code below to complete your login to Intelligent ERP. If you did not request this, please ignore this email.
+//               Use the code below to complete your login to Beauty Nails System. If you did not request this, please ignore this email.
 //             </Text>
 //             <Section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 //               <Text style={{ color: '#80410e', fontSize: '14px', fontWeight: 'bold', marginBottom: '10px' }}>Verification Code</Text>
@@ -100,10 +100,10 @@ export default OtpEmail;
 //           <Hr style={{ borderTop: '1px solid #D1D5DB', margin: '20px 0' }} />
 //           <Section style={{ padding: '25px 35px' }}>
 //             <Text style={{ color: '#5a3b02', fontSize: '14px' }}>
-//               Intelligent ERP will never email you and ask you to disclose or verify your password, credit card, or banking account number.
+//               Beauty Nails System will never email you and ask you to disclose or verify your password, credit card, or banking account number.
 //             </Text>
 //             <Text style={{ color: '#5a3b02', fontSize: '14px' }}>
-//               You're receiving this email because you have an account at intelligenterp.dpdns.org.
+//               You're receiving this email because you have an account at beauty-nails-salon.vercel.app.
 //             </Text>
 //           </Section>
 //         </Container>

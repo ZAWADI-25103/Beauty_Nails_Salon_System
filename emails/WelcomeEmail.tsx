@@ -48,20 +48,20 @@ export const WelcomeEmail = ({
         },
       }}
     >
-      <Preview>Welcome to Intelligent ERP</Preview>
+      <Preview>Welcome to Beauty Nails System</Preview>
       <Body className="bg-offwhite font-sans text-base">
         <h1 className='text-center text-2xl  text-[#80410e] mb-8'>
-          Intelligent ERP
+          Beauty Nails System
         </h1>
         <Container className="bg-white p-45 rounded-lg shadow-md">
           <Heading className="my-0 text-center leading-8 text-[#80410e]">
-            Welcome to Intelligent ERP
+            Welcome to Beauty Nails System
           </Heading>
 
           <Section>
             <Row>
               <Text className="text-base text-gray-800">
-                Congratulations! You're joining businesses worldwide that use Intelligent ERP to streamline operations and drive success.
+                Congratulations! You're joining businesses worldwide that use Beauty Nails System to streamline operations and drive success.
               </Text>
 
               <Text className="text-base text-gray-800">Here's how to get started:</Text>
@@ -105,7 +105,7 @@ export const WelcomeEmail = ({
             </Row>
           </Section>
           <Text className="mb-45 text-center text-gray-400">
-            Intelligent ERP, 123 Business Street, Suite 300, San Francisco, CA
+            Beauty Nails System, 123 Business Street, Suite 300, San Francisco, CA
           </Text>
         </Container>
       </Body>

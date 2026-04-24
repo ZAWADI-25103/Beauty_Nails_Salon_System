@@ -25,10 +25,10 @@ export async function POST(req: Request) {
 
     // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const otpExpiry = new Date(Date.now() + 1000 * 60 * 10); // 10 minutes expiry
+    const otpExpiry = new Date(Date.now() + 1000 * 60 * 5); // 10 minutes expiry
 
     // Update user with OTP
-    await prisma.user.update({
+    const theUser = await prisma.user.update({
       where: { email },
       data: {
         otpSecret: otp,
@@ -36,37 +36,49 @@ export async function POST(req: Request) {
       },
     });
 
-    const emailHtml = await render(OtpEmail({ verificationCode: otp }));
+    if (theUser) {
+      const emailHtml = await render(OtpEmail({ verificationCode: otp }));
 
-    await sendEmail(
-      email,
-      "Votre code de vérification - Beauty Nails",
-      emailHtml,
-    );
+      const result = await sendEmail(
+        email,
+        "Votre code de vérification - Beauty Nails",
+        emailHtml,
+      );
 
-    // Notify admin about OTP request
-    try {
-      const adminUser = await prisma.user.findFirst({
-        where: { role: "admin" },
-      });
+      console.log("Nodemailer Result with OTP :", otp);
 
-      if (adminUser) {
-        await sendEmail(
-          adminUser.email,
-          "Demande de code OTP",
-          `Un utilisateur (${user.email}) vient de se connecter.`,
-        );
+      // Notify admin about OTP request
+      try {
+        const adminUser = await prisma.user.findFirst({
+          where: { role: "admin" },
+        });
+
+        if (adminUser) {
+          await sendEmail(
+            adminUser.email,
+            "Demande de code OTP",
+            `Un utilisateur (${user.email}) vient de se connecter.`,
+          );
+        }
+      } catch (adminNotifyError) {
+        console.error("Error notifying admin:", adminNotifyError);
+        // Continue processing even if admin notification fails
       }
-    } catch (adminNotifyError) {
-      console.error("Error notifying admin:", adminNotifyError);
-      // Continue processing even if admin notification fails
+
+      return NextResponse.json({
+        success: true,
+        expectedOtp: otp,
+        message: "OTP a été envoyé à votre adresse email si un compte existe.",
+      });
     }
 
     return NextResponse.json({
-      success: true,
+      success: false,
       expectedOtp: otp,
-      message: "OTP a été envoyé à votre adresse email si un compte existe.",
+      message: "OTP n'a pas été envoyé. Veillez reessayer encore",
     });
+
+    
   } catch (error) {
     console.error("Error sending OTP email:", error);
     return NextResponse.json(
