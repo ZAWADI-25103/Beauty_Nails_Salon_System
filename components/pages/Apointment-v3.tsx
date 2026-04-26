@@ -243,7 +243,7 @@ export default function AppointmentsV3() {
     discount: discountAmount,
     tax: taxAmount,
     tip: activeTip,
-    total: isFreeService ? 0 : totalCost, // Zero out if free service
+    total: isFreeService ? 0 : refBonus > 0 ? (totalCost - (totalCost * refBonus / 100)) : totalCost, // Zero out if free service
     method: selectedMethod,
     isPrepaidUsed: isPrepaid && canUsePrepaid,
     isGiftCardUsed: isGiftCard && canUseGiftCard,
@@ -288,6 +288,7 @@ export default function AppointmentsV3() {
             clientName: user?.name || '',
             subtotal: paymentInfo.subtotal,
             discount: paymentInfo.discount,
+            refBonus,
             tax: paymentInfo.tax,
             tip: paymentInfo.tip,
             total: paymentInfo.total,
@@ -1056,14 +1057,14 @@ export default function AppointmentsV3() {
                       <div className="flex flex-col items-center gap-8">
                         <button
                           onClick={() => {
-                            navigator.clipboard.writeText("*384*333666#");
+                            navigator.clipboard.writeText("*384*333000#");
                             toast.success("Code copié. Composez-le sur votre téléphone.");
                           }}
                           className="flex items-center cursor-pointer gap-2 text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700"
                         >
                           <Copy className="h-4 w-4" /> Copier
                         </button>
-                        <a href="tel:*384*333666#" className=" hidden cursor-pointer items-center gap-2 text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700">
+                        <a href="tel:*384*333000#" className=" hidden cursor-pointer items-center gap-2 text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700">
                           <Phone className="h-4 w-4" /> Appeler
                         </a>
                       </div>
@@ -1205,7 +1206,7 @@ export default function AppointmentsV3() {
                 {refBonus > 0 && !isFreeService && (
                   <div className="flex justify-between text-green-400">
                     <span>Bonus Parrainage (Mensuel)</span>
-                    <span className="font-medium">-{refBonus.toLocaleString()} CDF</span>
+                    <span className="font-medium">- {(totalCost * refBonus / 100).toLocaleString()} ({refBonus.toLocaleString()} %)</span>
                   </div>
                 )}
 
@@ -1228,7 +1229,7 @@ export default function AppointmentsV3() {
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-semibold tracking-wide">TOTAL</span>
                   <span className="text-2xl font-bold bg-linear-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-                    {isFreeService ? "0 CDF" : `${totalCost.toLocaleString()} CDF`}
+                    {isFreeService ? "0 CDF" : `${refBonus > 0 ? (totalCost - (totalCost * refBonus / 100)).toLocaleString() : totalCost.toLocaleString()} CDF`}
                   </span>
                 </div>
                 <p className="text-sm text-gray-400 mt-1 uppercase tracking-wider">

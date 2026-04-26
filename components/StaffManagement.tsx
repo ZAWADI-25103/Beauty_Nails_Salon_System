@@ -23,7 +23,7 @@ export default function StaffManagement() {
   const { user } = useAuth()
 
   // API hook
-  const { staff, isLoading: staffLoading } = useStaff();
+  const { staff, isLoading: staffLoading, refetch } = useStaff();
   const { commissions, isUpdating } = useCommission(); // Use the global // Fetch selected staff's profile to get commission frequency
   const { data: workerProfile, isLoading: profileLoading } = useWorker(selectedStaff?.id || '');
   const { createCommission, isCreating } = useCommission();
@@ -313,6 +313,7 @@ export default function StaffManagement() {
                   <EditScheduleModal
                     staffId={selectedStaff.id}
                     staffName={selectedStaff.name}
+                    refetch={refetch}
                     trigger={
                       <Button className="flex-1 bg-linear-to-r from-purple-500 to-pink-500 text-white rounded-full">
                         Modifier Horaires

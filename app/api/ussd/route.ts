@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     if (!payment) {
       response = `END ❌ Aucun paiement en attente`;
     } else {
-      response = `CON Montant: ${payment.amount} RWF
+      response = `CON Montant: ${payment.amount} CDF
 Confirmer paiement?
 1. Oui
 2. Annuler`;

@@ -456,7 +456,7 @@ export default function ClientDashboardV2() {
   // Copy referral code
   const handleCopyReferralCode = () => {
     navigator.clipboard.writeText(
-      "https://beauty-nails.vercel.app/auth/signup?ref=" +
+      "https://beauty-nails-salon.vercel.app/auth/signup?ref=" +
         referralCode.toLocaleLowerCase(),
     );
     toast.success("Lien de parrainage copié !");
@@ -1621,7 +1621,7 @@ export default function ClientDashboardV2() {
                   <div className="flex-1 p-4 bg-background rounded-lg border-2 border-dashed border-pink-300">
                     <p className="text-lg lg:text-3xl text-center text-pink-600 tracking-wider">
                       {referralCode
-                        ? "https://beauty-nails.vercel.app/auth/signup?ref=" +
+                        ? "https://beauty-nails-salon.vercel.app/auth/signup?ref=" +
                           referralCode.toLocaleLowerCase()
                         : "Chargement..."}
                     </p>

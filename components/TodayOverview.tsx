@@ -2,7 +2,7 @@
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { Calendar, Clock, DollarSign, Users, AlertCircle, UserCheck, Activity, Plus, CreditCard, Package } from 'lucide-react';
+import { Calendar, Clock, DollarSign, Users, AlertCircle, UserCheck, Activity, Plus, CreditCard, Package, XCircle, CheckCircle } from 'lucide-react';
 import { useAppointments } from '@/lib/hooks/useAppointments';
 import { useRevenueReport, useServicePerformance } from '@/lib/hooks/useReports';
 import { useAvailableStaff, useStaff } from '@/lib/hooks/useStaff';
@@ -62,6 +62,55 @@ export default function TodayOverview() {
   const urgentAlerts = [] as any[];
   const lowStock = (apiInventory || []).filter((i: any) => i.status === 'low' || i.status === 'critical' || i.status === 'out');
   if (lowStock.length > 0) urgentAlerts.push({ type: 'stock', message: `${lowStock.length} article(s) avec stock bas`, priority: 'high', icon: Package });
+
+    const appointmentHistory = apiAppointments.filter(
+    (apt) => apt.status === "completed" || apt.status === "cancelled",
+  );
+
+  // Format date
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
+  // Get status badge
+    const getStatusBadge = (status: string) => {
+      switch (status) {
+        case "confirmed":
+          return (
+            <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+              <CheckCircle className="w-3 h-3 mr-1" />
+              Confirmé
+            </Badge>
+          );
+        case "pending":
+          return (
+            <Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">
+              <Clock className="w-3 h-3 mr-1" />
+              En attente
+            </Badge>
+          );
+        case "completed":
+          return (
+            <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">
+              <CheckCircle className="w-3 h-3 mr-1" />
+              Terminé
+            </Badge>
+          );
+        case "cancelled":
+          return (
+            <Badge className="bg-red-100 text-red-700 hover:bg-red-100">
+              <XCircle className="w-3 h-3 mr-1" />
+              Annulé
+            </Badge>
+          );
+        default:
+          return <Badge>{status}</Badge>;
+      }
+    };
 
   const popularServices = (servicePerformance && servicePerformance.services && servicePerformance.services.length > 0)
     ? servicePerformance.services.slice(0, 4).map((s: any) => ({ name: s.name, count: s.count || 0, revenue: `${(s.revenue || 0).toLocaleString()} CDF` }))
@@ -193,7 +242,7 @@ export default function TodayOverview() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-lg sm:text-base text-gray-900 dark:text-gray-100  truncate">{apt.client.user.name}</p>
-                      <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 font-medium truncate">{apt.service.name}</p>
+                      <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 font-medium truncate">{apt.service?.name}</p>
                     </div>
                   </div>
                   <div className="hidden sm:block w-px h-10 bg-pink-200 dark:bg-pink-800/30" />
@@ -222,10 +271,10 @@ export default function TodayOverview() {
                   Nouveau Rendez-vous
                 </Button>
               } />
-            <Button className="w-full bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-green-500/25 transition-all hover:scale-[1.02]">
+            {/* <Button className="w-full bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-green-500/25 transition-all hover:scale-[1.02]">
               <CreditCard className="w-5 h-5 mr-3" />
               Encaisser Cliente
-            </Button>
+            </Button> */}
             {/* <AdjustStockModal
               trigger={
                 <Button className="w-full bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-amber-500/25 transition-all hover:scale-[1.02]">
@@ -233,20 +282,20 @@ export default function TodayOverview() {
                   Ajouter Stock
                 </Button>
               } /> */}
-            <Button className="w-full bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-amber-500/25 transition-all hover:scale-[1.02]">
+            {/* <Button className="w-full bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-amber-500/25 transition-all hover:scale-[1.02]">
               <Package className="w-5 h-5 mr-3" />
               Ajouter Stock
-            </Button>
+            </Button> */}
             <ClientModalTrigger>
               <Button variant="outline" className="w-full rounded-full py-6 justify-start px-6  dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]">
                 <Users className="w-5 h-5 mr-3 text-purple-500" />
                 Nouvelle Cliente
               </Button>
             </ClientModalTrigger>
-            <Button variant="outline" className="w-full rounded-full py-6 justify-start px-6  dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]">
+            {/* <Button variant="outline" className="w-full rounded-full py-6 justify-start px-6  dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]">
               <Clock className="w-5 h-5 mr-3 text-blue-500" />
               Voir Planning
-            </Button>
+            </Button> */}
           </div>
         </Card>
       </div>
@@ -364,24 +413,42 @@ export default function TodayOverview() {
 
       {/* Popular Services Today */}
       <Card className="border-0 shadow-lg rounded-2xl p-5 sm:p-6 bg-white dark:bg-gray-950 dark:border dark:border-pink-900/30">
-        <h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  mb-6">Services Populaires</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {popularServices.map((service, idx) => (
-            <Card key={idx} className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 border-0 p-5 shadow-sm transition-all hover:scale-[1.03]">
-              <p className="text-lg sm:text-base text-gray-900 dark:text-gray-100  mb-3 truncate">{service.name}</p>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl sm:text-3xl text-gray-900 dark:text-gray-100 font-black tracking-tight">{service.count}</p>
-                  <p className="text-[10px] sm:text-base text-gray-500 dark:text-gray-400  uppercase">Réservations</p>
+        <h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  mb-6">Services récents</h3>
+        {appointmentHistory.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">
+                  <Package className="w-16 h-16 mx-auto mb-4 opacity-20" />
+                  <p>Aucun historique</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-base sm:text-lg text-pink-600 dark:text-pink-400 font-black">{service.revenue}</p>
-                  <p className="text-[10px] sm:text-base text-gray-500 dark:text-gray-400  uppercase">Revenu</p>
+              ) : (
+                <div className="space-y-3">
+                  {appointmentHistory.map((appointment) => (
+                    <div
+                      key={appointment.id}
+                      className="flex items-center justify-between p-4 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950"
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="font-semibold">
+                            {appointment.service?.name}
+                          </h3>
+                          {getStatusBadge(appointment.status)}
+                        </div>
+                        <div className="flex items-center gap-4 text-lg text-gray-900 dark:text-gray-100">
+                          <span>{formatDate(appointment.date)}</span>
+                          <span>•</span>
+                          <span>{appointment.worker?.user?.name}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <p className=" text-gray-900 dark:text-gray-200">
+                          {appointment.price?.toLocaleString()} CDF
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+              )}
       </Card>
     </div>
   );

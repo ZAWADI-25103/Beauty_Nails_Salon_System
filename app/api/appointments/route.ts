@@ -240,17 +240,17 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const wasRefBonusUsed = (amount: number) => {
+    // const wasRefBonusUsed = (amount: number) => {
 
-      if(refBonusApplied) {
-        return amount * 0.01;
-      }
-      return amount
-    }
+    //   if(refBonusApplied) {
+    //     return amount - (amount * 0.01);
+    //   }
+    //   return amount
+    // }
     
     // Calculate final total
     const taxAmount = (totalPrice - discountAmount) * 0.16; // 16% tax
-    const finalTotal = wasRefBonusUsed(isFreeServiceUsed ? 0 : (totalPrice - discountAmount + taxAmount + (paymentInfo.tip || 0)));
+    const finalTotal = isFreeServiceUsed ? 0 : (totalPrice - discountAmount + taxAmount + (paymentInfo.tip || 0));
 
 
     // Create appointment in a single transaction

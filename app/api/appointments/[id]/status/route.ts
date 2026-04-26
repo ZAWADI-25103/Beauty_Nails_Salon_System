@@ -66,7 +66,7 @@ export async function PUT(
           service: true,
         },
       });
-
+      
       // 3️⃣ Handle completion logic
       if (status === 'completed') {
         await tx.clientProfile.update({
@@ -125,10 +125,28 @@ export async function PUT(
                   updatedAppointment.service.workerCommission / 100)) * 0.05,
           },
         });
+
+        await tx.workerProfile.update({
+          where: { id : updatedAppointment.workerId },
+          data: { user: {
+            update: {
+              isActive : true
+            }
+          } }
+        })
       }
 
       return updatedAppointment;
     });
+
+    await prisma.workerProfile.update({
+        where: { id : result?.workerId },
+        data: { user: {
+          update: {
+            isActive : status === 'in_progress' ? false : true 
+          }
+        } }
+      })
 
     return successResponse({
       message: 'Statut mis à jour',

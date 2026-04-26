@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
       clientName,
       subtotal,
       discount,
+      refBonus,
       tax,
       tip,
       total,
@@ -48,7 +49,7 @@ export async function POST(req: NextRequest) {
     const paymentIntent = await prisma.paymentIntent.create({
       data: {
         phoneNumber,
-        amount,
+        amount: refBonus > 0 ? (amount - (amount * refBonus / 100)): amount,
         serviceId,
         workerId,
         status: "pending",
@@ -59,7 +60,7 @@ export async function POST(req: NextRequest) {
         discount,
         tax,
         tip,
-        total,
+        total: refBonus > 0 ? (total - (total * refBonus / 100)): total,
       },
     });
 

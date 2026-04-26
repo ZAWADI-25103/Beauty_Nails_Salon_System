@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import { ScrollArea } from '../ui/scroll-area';
 import { format } from 'date-fns';
-import { fr, tr } from 'date-fns/locale';
+import { fr } from 'date-fns/locale';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import {
   CalendarIcon, Clock, CheckCircle, Star, TrendingUp, Award,

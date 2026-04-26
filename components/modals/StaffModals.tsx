@@ -24,6 +24,7 @@ interface EditScheduleModalProps {
   staffId: string;
   staffName?: string;
   trigger?: React.ReactNode;
+  refetch: () => void
 }
 
 type DaySchedule = {
@@ -36,6 +37,7 @@ export function EditScheduleModal({
   staffId,
   staffName,
   trigger,
+  refetch: fetchWorker
 }: EditScheduleModalProps) {
   const { updateSchedule, schedule, isUpdating } = useWorkerSchedule(staffId);
   const [weekSchedule, setWeekSchedule] = useState<Record<number, DaySchedule>>({});
@@ -117,6 +119,7 @@ export function EditScheduleModal({
       });
     } finally {
       setSavingDays((prev) => ({ ...prev, [day]: false }));
+      fetchWorker()
     }
   };
 
@@ -129,6 +132,7 @@ export function EditScheduleModal({
     }
 
     refetch()
+    fetchWorker()
   };
 
   return (
@@ -139,9 +143,9 @@ export function EditScheduleModal({
           <DialogTitle className="flex justify-between items-center">
             <span className="text-gray-900 dark:text-gray-100">Modifier Planning - {staffName || "Employée"}</span>
 
-            <Button variant="outline" size="sm" className="gap-2 text-base dark:border-pink-900 dark:text-pink-300 dark:hover:border-pink-400">
+            {/* <Button variant="outline" size="sm" className="gap-2 text-base dark:border-pink-900 dark:text-pink-300 dark:hover:border-pink-400">
               <Copy className="w-3 h-3" /> Copier semaine précédente
-            </Button>
+            </Button> */}
           </DialogTitle>
         </DialogHeader>
 
@@ -444,6 +448,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
                   <EditScheduleModal
                     staffId={staff?.id || ""}
                     staffName={staff?.name}
+                    refetch={()=>{}}
                     trigger={
                       <Button className="w-full bg-purple-500 hover:bg-purple-600 text-white dark:bg-purple-600 dark:hover:bg-purple-700">
                         Modifier Horaires

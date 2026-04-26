@@ -6,7 +6,9 @@ import axiosdb from "@/lib/axios";
 export async function handleSignup(formData: FormData, refCodeParam: string | null, redirect?: string | null, isFirstAdmin = false) {
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;
-  const phone = formData.get("phone") as string;
+  const phon = formData.get("phone") as string;
+  const countryCode = formData.get("countryCode") as string
+  const phone = `${countryCode}${phon}`
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;
   // const acceptTerms = !!formData.get("acceptTerms");
@@ -51,7 +53,7 @@ export async function handleSignup(formData: FormData, refCodeParam: string | nu
     return { error: "Incorrect Email or Password, verifier votre role et essayez encore une fois..." };
   }
 
-  const res = await axiosdb.post('/mail/welcome', { email : email})
+  // const res = await axiosdb.post('/mail/welcome', { email : email})
 
   // if (!(await res).data.success){
   //   return { error: "Echec de l'envoi du mail de bienvenue, mais "}

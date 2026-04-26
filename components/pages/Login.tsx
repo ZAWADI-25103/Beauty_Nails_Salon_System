@@ -103,7 +103,7 @@ export default function Login() {
                 className="space-y-4"
               >
                 <div>
-                  <Label htmlFor="email" className="dark:text-gray-200">Email ou Telephone</Label>
+                  <Label htmlFor="email" className="dark:text-gray-200">Email</Label>
                   <Input
                     id="email"
                     type="email"
@@ -143,7 +143,7 @@ export default function Login() {
                 className="space-y-4"
               >
                 <div>
-                  <Label htmlFor="email" className="dark:text-gray-200">Email ou Telephone</Label>
+                  <Label htmlFor="email" className="dark:text-gray-200">Email</Label>
                   <Input
                     id="email"
                     type="email"
@@ -183,7 +183,7 @@ export default function Login() {
                 className="space-y-4"
               >
                 <div>
-                  <Label htmlFor="email" className="dark:text-gray-200">Email ou Telephone</Label>
+                  <Label htmlFor="email" className="dark:text-gray-200">Email</Label>
                   <Input
                     id="email"
                     type="email"
@@ -244,9 +244,9 @@ export default function Login() {
             <DialogTitle>Beauty Nails One-Time-Password (OTP)</DialogTitle>
             <DialogDescription>
               Un code OTP a été envoyé à votre email. Veuillez entrer le code pour vérifier votre identité et accéder à votre tableau de bord.
-              {/* <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                 Si vous ne recevez pas le code, veuillez vérifier avec ce code par defaut : {expectedOtp}.
-              </p> */}
+              </p>
             </DialogDescription>
           </DialogHeader>
 

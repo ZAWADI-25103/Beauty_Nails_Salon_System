@@ -40,19 +40,19 @@ export default function ClientModal({ client, open, onOpenChange, edit = false }
   const { createClient, updateClient, isCreatingClient, isUpdatingClient } = useClients();
 
   const [formData, setFormData] = useState<ClientFormData>({
-    userId: client.userId || '',
-    name: client.name || '',
-    email: client.email || '',
-    phone: client.phone || '',
-    membershipStatus: client.membershipStatus || 'Regular',
-    notes: client.notes || '',
-    birthday: client.birthday ? new Date(client.birthday).toISOString().split('T')[0] : '',
-    address: client.address || '',
-    allergies: String(client.allergies).split(',').map(s => s.trim()).filter(Boolean) || [],
-    favoriteServices: client.favoriteServices || [],
-    prepaymentBalance: client.prepaymentBalance || 0,
-    giftCardBalance: client.giftCardBalance || 0,
-    referrals: client.referrals || 0
+    userId: client?.userId || '',
+    name: client?.name || '',
+    email: client?.email || '',
+    phone: client?.phone || '',
+    membershipStatus: client?.membershipStatus || 'Regular',
+    notes: client?.notes || '',
+    birthday: client?.birthday ? new Date(client?.birthday).toISOString().split('T')[0] : '',
+    address: client?.address || '',
+    allergies: String(client?.allergies).split(',').map(s => s.trim()).filter(Boolean) || [],
+    favoriteServices: client?.favoriteServices || [],
+    prepaymentBalance: client?.prepaymentBalance || 0,
+    giftCardBalance: client?.giftCardBalance || 0,
+    referrals: client?.referrals || 0
   });
 
   const [newAllergy, setNewAllergy] = useState('');
