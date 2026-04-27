@@ -660,7 +660,7 @@ export default function AppointmentsV3() {
                         </Badge>
                       </div>
 
-                      {!isActive && (
+                      {/* {!isActive && (
                         <div className="mt-3">
                           <Label className="text-lg text-gray-600 dark:text-gray-400">
                             Confirmez que vous avez votre propre {addOn.name.toLowerCase()}
@@ -671,7 +671,7 @@ export default function AppointmentsV3() {
                             disabled
                           />
                         </div>
-                      )}
+                      )} */}
                     </Card>
                   );
                 })}

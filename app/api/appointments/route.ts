@@ -495,11 +495,11 @@ export async function POST(request: NextRequest) {
         console.log("Client update data :", clientUpdateData.data)
       }
 
-      if (paymentInfo.method === 'mobile') {
-        clientUpdateData.data.prepaymentBalance = {
-          decrement: finalTotal
-        }
-      }
+      // if (paymentInfo.method === 'mobile') {
+      //   clientUpdateData.data.prepaymentBalance = {
+      //     decrement: finalTotal
+      //   }
+      // }
 
       const updateClient = await tx.clientProfile.update({
         where: { id: clientId },

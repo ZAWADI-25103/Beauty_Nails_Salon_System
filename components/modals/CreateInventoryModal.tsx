@@ -67,13 +67,13 @@ export default function CreateInventoryModal({ triggerLabel = "Créer un article
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-full bg-black hover:bg-gray-800 dark:bg-white dark:text-black transition-all shadow-lg flex gap-2">
+        <Button className="rounded-2xl bg-black hover:bg-gray-800 dark:bg-white dark:text-black transition-all shadow-lg flex gap-2">
           <PackagePlus className="w-4 h-4" />
           {triggerLabel}
         </Button>
       </DialogTrigger>
       
-      <DialogContent className="sm:max-w-4xl w-[95vw] max-h-[95vh] overflow-y-auto border-0 shadow-2xl rounded-[2rem] dark:bg-gray-950 p-0 overflow-hidden">
+      <DialogContent className="sm:max-w-4xl w-[95vw] max-h-[95vh] overflow-y-auto border-0 shadow-2xl rounded-xl dark:bg-gray-950 p-0 ">
         {/* Header Decor */}
         <div className="bg-linear-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 p-8 text-white dark:text-black">
           <DialogHeader>

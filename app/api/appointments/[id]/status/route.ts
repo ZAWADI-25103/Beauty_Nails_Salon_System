@@ -96,6 +96,8 @@ export async function PUT(
           },
         });
 
+        const date = new Date()
+
         await tx.commission.create({
           data: {
             worker: { connect: { id: updatedAppointment.workerId } },
@@ -106,11 +108,7 @@ export async function PUT(
             commissionRate: updatedAppointment.service?.workerCommission ?? 0,
             status: 'pending',
             totalRevenue: updatedAppointment.price,
-            period: `${format(
-              new Date(updatedAppointment.date),
-              "EEEE d MMMM 'à' HH'h'mm",
-              { locale: fr }
-            )}`,
+            period: date.toISOString().split('T')[0],
             businessEarnings:
               updatedAppointment.price -
               (updatedAppointment.price *

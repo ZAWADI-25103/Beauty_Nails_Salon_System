@@ -73,6 +73,7 @@ export default function StaffManagement() {
     return periods;
   }, [workerProfile]); // Recalculate when workerProfile changes
 
+  console.log({generatedPeriods})
 
   // Determine commission records for the selected staff
   const staffCommissions = useMemo(() => {
@@ -329,7 +330,7 @@ export default function StaffManagement() {
                 <h4 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-4 font-medium">Calcul Commission & Paie</h4>
 
                 {/* Admin Controls for Initialization */}
-                {/* {user?.role === 'admin' && selectedStaff && (
+                {user?.role === 'admin' && selectedStaff && (
                   <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
                     <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Initialiser Commission (Admin)</h5>
                     <div className="flex flex-col sm:flex-row gap-3">
@@ -337,7 +338,7 @@ export default function StaffManagement() {
                         value={selectedPeriod}
                         onValueChange={setSelectedPeriod}
                       >
-                        <SelectTrigger className="flex-grow">
+                        <SelectTrigger className="grow">
                           <SelectValue placeholder="Sélectionnez une période à initialiser" />
                         </SelectTrigger>
                         <SelectContent>
@@ -363,7 +364,7 @@ export default function StaffManagement() {
                     </p>
                   </div>
                 )
-                } */}
+                }
 
                 {/* Selected Period Details */}
                 {

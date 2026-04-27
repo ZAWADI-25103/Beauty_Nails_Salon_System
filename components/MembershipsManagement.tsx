@@ -124,12 +124,12 @@ export default function MembershipsManagement() {
         <h2 className="text-2xl   text-gray-900 dark:text-gray-100">Gestion des Abonnements</h2>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-md hover:shadow-lg transition-all">
+            <Button className="bg-linear-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-md hover:shadow-lg transition-all">
               <Plus className="w-4 h-4 mr-2" />
               Nouvel Abonnement
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="sm:max-w-2xl">
             <DialogHeader>
               <DialogTitle>{editingMembership ? "Modifier Abonnement" : "Nouvel Abonnement"}</DialogTitle>
             </DialogHeader>
