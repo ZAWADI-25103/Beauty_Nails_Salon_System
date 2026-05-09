@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 export async function GET(request: NextRequest){
   try {
 
-    requireRole(["admin"])
+    // requireRole(["admin"])
 
     const users = await prisma.user.findMany({
       cacheStrategy:{

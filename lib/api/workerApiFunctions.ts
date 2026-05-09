@@ -12,6 +12,7 @@ export interface WorkerProfileUpdateData {
   bio?: string;
   workingHours?: any;
   isAvailable?: boolean;
+  isActive?: boolean;
   name?: string;
   email?: string;
   phone?: string;

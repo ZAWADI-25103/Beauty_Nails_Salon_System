@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // src/app/api/media/upload/route.ts
 export async function POST(request: NextRequest) {
   try {
-    requireRole(["admin", "client", "worker"]);
+    // requireRole(["admin", "client", "worker"]);
 
     const { searchParams } = new URL(request.url);
     const filename = searchParams.get('filename');

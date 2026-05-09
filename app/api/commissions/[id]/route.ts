@@ -3,7 +3,6 @@
 import { NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 import { requireRole, successResponse, handleApiError, errorResponse } from "@/lib/api/helpers";
-import { error } from "node:console";
 export async function PATCH(
   request: NextRequest,
   context: { params: Promise<{ id: string; }>; }
@@ -12,7 +11,7 @@ export async function PATCH(
 
   const id = (await context.params).id;
     // Only admin can approve/pay
-    const currentUser = await requireRole(["admin"]);
+    const currentUser = await requireRole(["admin", "worker"]);
 
     const body = await request.json();
 

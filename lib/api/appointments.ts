@@ -17,6 +17,10 @@ export interface Appointment {
   cancelReason?: string;
   createdAt: string;
   updatedAt: string;
+  transfer: any & {
+    newWorker: any,
+    originalWorker: any
+  };
   client?: any;
   service?: Service;
   worker?: any;
@@ -75,6 +79,31 @@ export interface CreateAppointmentDataAsWorker {
     loyaltyPointUsed: 0,
     receipt: string,
 }
+}
+
+ // Add to existing appointments API
+
+export interface AppointmentTransfer {
+  id: string;
+  appointmentId: string;
+  originalWorkerId: string;
+  newWorkerId: string;
+  transferReason?: string;
+  transferFeePercentage: number;
+  transferFeeAmount: number;
+  status: 'pending' | 'accepted' | 'rejected' | 'completed' | 'cancelled';
+  requestedAt: string;
+  completedAt?: string;
+  notes?: string;
+  appointment: any;
+  originalWorker: any;
+  newWorker: any;
+}
+
+export interface TransferRequestData {
+  newWorkerId: string;
+  transferReason?: string;
+  transferFeePercentage?: number;
 }
 
 export interface UpdateAppointmentStatusData {
@@ -156,4 +185,24 @@ export const appointmentsApi = {
     const { data } = await axiosdb.post(`/appointments/${id}/reminder`, { type });
     return data;
   },
+  
+  // Transfer functions
+  requestTransfer: async (appointmentId: string, data: TransferRequestData): Promise<{ transfer: AppointmentTransfer; message: string }> => {
+    const { data: response } = await axiosdb.post(`/appointments/${appointmentId}/transfer`, data);
+    return response;
+  },
+  
+  respondToTransfer: async (appointmentId: string, action: 'accept' | 'reject', notes?: string): Promise<{ transfer: AppointmentTransfer; message: string }> => {
+    const { data: response } = await axiosdb.patch(`/appointments/${appointmentId}/transfer`, { action, notes });
+    return response;
+  },
+  
+  getTransfer: async (appointmentId: string): Promise<AppointmentTransfer | null> => {
+    try {
+      const { data } = await axiosdb.get(`/appointments/${appointmentId}/transfer`);
+      return data;
+    } catch (error) {
+      return null;
+    }
+  }
 };

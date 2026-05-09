@@ -1,30 +1,62 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Calendar, Clock, MapPin, Phone, Mail, DollarSign, Star, FileText, Download, Copy, Save, Loader2, CalendarIcon, TrendingUp, Award } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { Separator } from '@/components/ui/separator';
-import { useCommission, useStaff, useWorker, useWorkerCommission, useWorkerSchedule } from '@/lib/hooks/useStaff';
-import { Worker } from '@/lib/api/staff';
-import { useAuth } from '@/lib/hooks/useAuth';
-import { toast } from 'sonner';
-import { PayrollCountdown } from '../PayrollCountdown';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Calendar,
+  Phone,
+  Mail,
+  DollarSign,
+  Star,
+  FileText,
+  Download,
+  Copy,
+  Save,
+  Loader2,
+  CalendarIcon,
+  TrendingUp,
+  Award,
+} from "lucide-react";
+import { useState, useEffect } from "react";
+import { Separator } from "@/components/ui/separator";
+import {
+  useCommission,
+  useStaff,
+  useWorker,
+  useWorkerCommission,
+  useWorkerSchedule,
+} from "@/lib/hooks/useStaff";
+import { Worker } from "@/lib/api/staff";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { toast } from "sonner";
+import { PayrollCountdown } from "../PayrollCountdown";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 // --- Edit Schedule Modal (Mobile Optimized with Dark Mode) ---
 interface EditScheduleModalProps {
   staffId: string;
   staffName?: string;
   trigger?: React.ReactNode;
-  refetch: () => void
 }
 
 type DaySchedule = {
@@ -37,12 +69,13 @@ export function EditScheduleModal({
   staffId,
   staffName,
   trigger,
-  refetch: fetchWorker
 }: EditScheduleModalProps) {
   const { updateSchedule, schedule, isUpdating } = useWorkerSchedule(staffId);
-  const [weekSchedule, setWeekSchedule] = useState<Record<number, DaySchedule>>({});
+  const [weekSchedule, setWeekSchedule] = useState<Record<number, DaySchedule>>(
+    {},
+  );
   const [savingDays, setSavingDays] = useState<Record<number, boolean>>({});
-  const { refetch } = useStaff()
+  const { refetch } = useStaff();
   const daysOfWeek = [
     { idx: 0, day: "Dimanche" },
     { idx: 1, day: "Lundi" },
@@ -119,7 +152,6 @@ export function EditScheduleModal({
       });
     } finally {
       setSavingDays((prev) => ({ ...prev, [day]: false }));
-      fetchWorker()
     }
   };
 
@@ -131,8 +163,7 @@ export function EditScheduleModal({
       await saveDay(Number(day));
     }
 
-    refetch()
-    fetchWorker()
+    refetch();
   };
 
   return (
@@ -141,9 +172,15 @@ export function EditScheduleModal({
       <DialogContent className="sm:max-w-180 max-h-[85vh] overflow-y-auto dark:bg-gray-900">
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center">
-            <span className="text-gray-900 dark:text-gray-100">Modifier Planning - {staffName || "Employée"}</span>
+            <span className="text-gray-900 dark:text-gray-100">
+              Modifier Planning - {staffName || "Employée"}
+            </span>
 
-            {/* <Button variant="outline" size="sm" className="gap-2 text-base dark:border-pink-900 dark:text-pink-300 dark:hover:border-pink-400">
+            {/* <Button
+              variant="outline"
+              size="sm"
+              className="gap-2 text-base dark:border-pink-900 dark:text-pink-300 dark:hover:border-pink-400"
+            >
               <Copy className="w-3 h-3" /> Copier semaine précédente
             </Button> */}
           </DialogTitle>
@@ -233,7 +270,10 @@ export function EditScheduleModal({
 
         {/* Optional fallback save */}
         <DialogFooter>
-          <Button variant="outline" className="dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800">
+          <Button
+            variant="outline"
+            className="dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+          >
             Annuler
           </Button>
 
@@ -280,19 +320,19 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 
   const { commissions, isUpdating } = useCommission();
   const getCommissionForMonth = (month: string) =>
-    commissions.find(
-      (c) =>
-        c.workerId === staff?.id &&
-        c.period === month
-    );
+    commissions.find((c) => c.workerId === staff?.id && c.period === month);
 
   const isMonthPaid = (month: string) =>
     getCommissionForMonth(month)?.status === "paid";
 
-  const totalRevenue = getCommissionForMonth(selectedMonth || "")?.totalRevenue || 0;
-  const commissionRate = getCommissionForMonth(selectedMonth || "")?.commissionRate || 0;
-  const appointmentsCount = getCommissionForMonth(selectedMonth || "")?.appointmentsCount || 0;
-  const commissionAmount = getCommissionForMonth(selectedMonth || "")?.commissionAmount || 0;
+  const totalRevenue =
+    getCommissionForMonth(selectedMonth || "")?.totalRevenue || 0;
+  const commissionRate =
+    getCommissionForMonth(selectedMonth || "")?.commissionRate || 0;
+  const appointmentsCount =
+    getCommissionForMonth(selectedMonth || "")?.appointmentsCount || 0;
+  const commissionAmount =
+    getCommissionForMonth(selectedMonth || "")?.commissionAmount || 0;
   const employerShare = totalRevenue - commissionAmount;
   const materielShare = employerShare * 0.05; // 5% du total pour les produits de beauté.
   const operationalCosts = employerShare * 0.05; // 5% du total pour les coûts opérationnels.
@@ -313,18 +353,29 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
                 <Avatar className="w-28 h-28 border-4 border-white shadow-lg dark:border-gray-800">
                   <AvatarImage src="" />
                   <AvatarFallback className="text-3xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
-                    {staff?.name.split(" ")[0]?.charAt(0) || staff?.name.charAt(0)}
+                    {staff?.name.split(" ")[0]?.charAt(0) ||
+                      staff?.name.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{staff?.name}</h3>
-                <p className="text-pink-600 dark:text-pink-400 font-medium">Employee</p>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                  {staff?.name}
+                </h3>
+                <p className="text-pink-600 dark:text-pink-400 font-medium">
+                  Employee
+                </p>
               </div>
 
-              <Badge className={staff?.isAvailable ? 'bg-green-500' : 'bg-gray-400 dark:bg-gray-700'}>
-                {staff?.isAvailable ? 'Employée Active' : 'Inactif'}
+              <Badge
+                className={
+                  staff?.isAvailable
+                    ? "bg-green-500"
+                    : "bg-gray-400 dark:bg-gray-700"
+                }
+              >
+                {staff?.isAvailable ? "Employée Active" : "Inactif"}
               </Badge>
 
               <div className="w-full space-y-3 text-left bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
@@ -338,23 +389,42 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
                 </div>
                 <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
                   <Calendar className="w-4 h-4 text-gray-400 dark:text-gray-500 flex-shrink-0" />
-                  Embauche: {staff?.hireDate ? staff?.hireDate.split('T')[0].split('-').reverse().join('/') : "N/A"}
+                  Embauche:{" "}
+                  {staff?.hireDate
+                    ? staff?.hireDate
+                        .split("T")[0]
+                        .split("-")
+                        .reverse()
+                        .join("/")
+                    : "N/A"}
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-left block font-semibold text-gray-900 dark:text-gray-100">Biographie</Label>
+                <Label className="text-left block font-semibold text-gray-900 dark:text-gray-100">
+                  Biographie
+                </Label>
                 <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-lg text-left">
                   Spécialiste en onglerie avec plus de 5 ans d'expérience.
-                  Experte en Nail Art et soins des mains. Appréciée pour sa douceur et sa créativité.
-                  Parle Français et Lingala couramment.
+                  Experte en Nail Art et soins des mains. Appréciée pour sa
+                  douceur et sa créativité. Parle Français et Lingala
+                  couramment.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-left block font-semibold text-gray-900 dark:text-gray-100">Compétences</Label>
+                <Label className="text-left block font-semibold text-gray-900 dark:text-gray-100">
+                  Compétences
+                </Label>
                 <div className="flex flex-wrap justify-center gap-2">
-                  {['Manucure', 'Pédicure', 'Nail Art', 'Gel', 'Acrylique', 'Massage des mains'].map(skill => (
+                  {[
+                    "Manucure",
+                    "Pédicure",
+                    "Nail Art",
+                    "Gel",
+                    "Acrylique",
+                    "Massage des mains",
+                  ].map((skill) => (
                     <Badge
                       key={skill}
                       variant="secondary"
@@ -369,7 +439,9 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 
             {/* Main Content Tabs */}
             <div className="w-full pt-2">
-              <p className=" dark:text-pink-400 text-xs sm:text-xs">{'glisser  <--- | --->'}</p>
+              <p className=" dark:text-pink-400 text-xs sm:text-xs">
+                {"glisser  <--- | --->"}
+              </p>
               <Tabs defaultValue="performance" className="w-full">
                 <TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
                   <TabsTrigger
@@ -396,12 +468,18 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
                 <TabsContent value="performance" className="space-y-4 mt-4">
                   <div className="flex flex-col items-center gap-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
                     <div className="text-center">
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{staff?.name}</h3>
-                      <p className="text-gray-600 dark:text-gray-400 mt-1">{staff?.role}</p>
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                        {staff?.name}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 mt-1">
+                        {staff?.role}
+                      </p>
                     </div>
                     <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 p-3 rounded-2xl border border-amber-100 dark:border-amber-900/30">
                       <Star className="w-5 h-5 fill-amber-400 text-amber-400 dark:fill-amber-500 dark:text-amber-500" />
-                      <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">{staff?.rating}</span>
+                      <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                        {staff?.rating}
+                      </span>
                     </div>
                   </div>
 
@@ -409,46 +487,70 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
                   <div className="grid grid-cols-2 gap-3">
                     <Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-3">
                       <CalendarIcon className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-2" />
-                      <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{staff?.appointmentsCount}</p>
-                      <p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">RDV ce mois</p>
+                      <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                        {staff?.appointmentsCount}
+                      </p>
+                      <p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                        RDV ce mois
+                      </p>
                     </Card>
                     <Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-3">
                       <DollarSign className="w-5 h-5 text-green-600 dark:text-green-400 mb-2" />
-                      <p className="text-lg font-bold text-gray-900 dark:text-gray-100">{staff?.revenue}</p>
-                      <p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">Revenus</p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                        {staff?.revenue}
+                      </p>
+                      <p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                        Revenus
+                      </p>
                     </Card>
                     <Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-3">
                       <TrendingUp className="w-5 h-5 text-purple-600 dark:text-purple-400 mb-2" />
-                      <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{staff?.clientRetention}</p>
-                      <p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">Rétention</p>
+                      <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                        {staff?.clientRetention}
+                      </p>
+                      <p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                        Rétention
+                      </p>
                     </Card>
                     <Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-3">
                       <Award className="w-5 h-5 text-amber-600 dark:text-amber-400 mb-2" />
-                      <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{staff?.upsellRate}</p>
-                      <p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">Taux Vente+</p>
+                      <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                        {staff?.upsellRate}
+                      </p>
+                      <p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                        Taux Vente+
+                      </p>
                     </Card>
                   </div>
 
                   <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-xl border border-purple-100 dark:border-purple-900/30">
-                    <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">Jours de Travail</h4>
+                    <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">
+                      Jours de Travail
+                    </h4>
                     <div className="flex flex-wrap gap-2 justify-center">
-                      {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day, index) => (
-                        <Badge
-                          key={day}
-                          className={staff?.schedules?.some((s: any) => s.dayOfWeek === index && s.isAvailable)
-                            ? 'bg-purple-500 text-white'
-                            : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}
-                        >
-                          {day}
-                        </Badge>
-                      ))}
+                      {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map(
+                        (day, index) => (
+                          <Badge
+                            key={day}
+                            className={
+                              staff?.schedules?.some(
+                                (s: any) =>
+                                  s.dayOfWeek === index && s.isAvailable,
+                              )
+                                ? "bg-purple-500 text-white"
+                                : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                            }
+                          >
+                            {day}
+                          </Badge>
+                        ),
+                      )}
                     </div>
                   </div>
 
                   <EditScheduleModal
                     staffId={staff?.id || ""}
                     staffName={staff?.name}
-                    refetch={()=>{}}
                     trigger={
                       <Button className="w-full bg-purple-500 hover:bg-purple-600 text-white dark:bg-purple-600 dark:hover:bg-purple-700">
                         Modifier Horaires
@@ -459,7 +561,9 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 
                 {/* Commission Tab - Mobile Optimized */}
                 <TabsContent value="commission" className="space-y-4 mt-4">
-                  <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">Calcul Commission & Paie</h4>
+                  <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    Calcul Commission & Paie
+                  </h4>
                   <div className="space-y-4">
                     <Select
                       value={selectedMonth}
@@ -486,35 +590,69 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
                       <Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-4">
                         <h5 className="text-lg mb-3 flex items-center gap-2 text-gray-900 dark:text-gray-100">
                           <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                          Ce Mois ({allMonths.find((m) => m.value === selectedMonth)?.label} - {getCommissionForMonth(selectedMonth)?.status === "paid" ? "Payé" : "En attente"})
+                          Ce Mois (
+                          {
+                            allMonths.find((m) => m.value === selectedMonth)
+                              ?.label
+                          }{" "}
+                          -{" "}
+                          {getCommissionForMonth(selectedMonth)?.status ===
+                          "paid"
+                            ? "Payé"
+                            : "En attente"}
+                          )
                         </h5>
                         <div className="space-y-3">
                           <div className="flex justify-between items-center">
-                            <span className="text-lg text-gray-700 dark:text-gray-300">Revenus générés</span>
-                            <span className="font-medium text-gray-900 dark:text-gray-100">{totalRevenue.toLocaleString()}</span>
+                            <span className="text-lg text-gray-700 dark:text-gray-300">
+                              Revenus générés
+                            </span>
+                            <span className="font-medium text-gray-900 dark:text-gray-100">
+                              {totalRevenue.toLocaleString()}
+                            </span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-lg text-gray-700 dark:text-gray-300">Taux commission</span>
-                            <span className="font-medium text-gray-900 dark:text-gray-100">{commissionRate.toLocaleString()}%</span>
+                            <span className="text-lg text-gray-700 dark:text-gray-300">
+                              Taux commission
+                            </span>
+                            <span className="font-medium text-gray-900 dark:text-gray-100">
+                              {commissionRate.toLocaleString()}%
+                            </span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-lg text-gray-700 dark:text-gray-300">Business revenue</span>
-                            <span className="font-medium text-gray-900 dark:text-gray-100">{employerShare}</span>
+                            <span className="text-lg text-gray-700 dark:text-gray-300">
+                              Business revenue
+                            </span>
+                            <span className="font-medium text-gray-900 dark:text-gray-100">
+                              {employerShare}
+                            </span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-lg text-gray-700 dark:text-gray-300">Materials reserve</span>
-                            <span className="font-medium text-gray-900 dark:text-gray-100">{materielShare}</span>
+                            <span className="text-lg text-gray-700 dark:text-gray-300">
+                              Materials reserve
+                            </span>
+                            <span className="font-medium text-gray-900 dark:text-gray-100">
+                              {materielShare}
+                            </span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-lg text-gray-700 dark:text-gray-300">Operational costs</span>
-                            <span className="font-medium text-gray-900 dark:text-gray-100">{operationalCosts}</span>
+                            <span className="text-lg text-gray-700 dark:text-gray-300">
+                              Operational costs
+                            </span>
+                            <span className="font-medium text-gray-900 dark:text-gray-100">
+                              {operationalCosts}
+                            </span>
                           </div>
 
                           <Separator className="my-3 dark:bg-gray-700" />
 
                           <div className="flex justify-between items-center pt-2">
-                            <span className="font-medium text-gray-900 dark:text-gray-100">Commission totale</span>
-                            <span className="text-xl text-green-600 dark:text-green-400 font-bold">{commissionAmount.toLocaleString()}</span>
+                            <span className="font-medium text-gray-900 dark:text-gray-100">
+                              Commission totale
+                            </span>
+                            <span className="text-xl text-green-600 dark:text-green-400 font-bold">
+                              {commissionAmount.toLocaleString()}
+                            </span>
                           </div>
                         </div>
                       </Card>
@@ -541,24 +679,42 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
                 {/* Documents Tab - Mobile Optimized */}
                 <TabsContent value="documents" className="mt-4">
                   <div className="space-y-3">
-                    {['Contrat de travail.pdf', 'Pièce d\'identité.jpg', 'Certificats.pdf'].map((doc, i) => (
-                      <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 border rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 cursor-pointer transition-colors group">
+                    {[
+                      "Contrat de travail.pdf",
+                      "Pièce d'identité.jpg",
+                      "Certificats.pdf",
+                    ].map((doc, i) => (
+                      <div
+                        key={i}
+                        className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 border rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 cursor-pointer transition-colors group"
+                      >
                         <div className="flex items-center gap-3 mb-2 sm:mb-0">
                           <div className="p-2 bg-pink-50 dark:bg-pink-900/20 rounded-lg text-pink-500 dark:text-pink-400">
                             <FileText className="w-5 h-5" />
                           </div>
                           <div>
-                            <p className="font-medium text-gray-900 dark:text-gray-100">{doc}</p>
-                            <p className="text-base text-gray-500 dark:text-gray-400">Ajouté le 12 Jan 2023</p>
+                            <p className="font-medium text-gray-900 dark:text-gray-100">
+                              {doc}
+                            </p>
+                            <p className="text-base text-gray-500 dark:text-gray-400">
+                              Ajouté le 12 Jan 2023
+                            </p>
                           </div>
                         </div>
-                        <Button variant="ghost" size="icon" className="text-gray-400 dark:text-gray-400 group-hover:text-pink-600 dark:group-hover:text-pink-400">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-gray-400 dark:text-gray-400 group-hover:text-pink-600 dark:group-hover:text-pink-400"
+                        >
                           <Download className="w-4 h-4" />
                         </Button>
                       </div>
                     ))}
                   </div>
-                  <Button variant="outline" className="w-full mt-4 border-dashed py-6 text-gray-500 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 hover:border-pink-300 dark:hover:border-pink-400">
+                  <Button
+                    variant="outline"
+                    className="w-full mt-4 border-dashed py-6 text-gray-500 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 hover:border-pink-300 dark:hover:border-pink-400"
+                  >
                     + Ajouter un document
                   </Button>
                 </TabsContent>
@@ -581,55 +737,71 @@ interface PayrollModalProps {
 }
 
 export const getNextResetDate = (period: string) => {
-  const now = new Date()
-  const next = new Date()
+  const now = new Date();
+  const next = new Date();
 
   if (period === "daily") {
-    next.setDate(now.getDate() + 1)
-    next.setHours(0, 0, 0, 0)
+    next.setDate(now.getDate() + 1);
+    next.setHours(0, 0, 0, 0);
   }
 
   if (period === "weekly") {
-    const day = now.getDay()
-    const diff = (7 - day + 1) % 7 || 7
-    next.setDate(now.getDate() + diff)
-    next.setHours(0, 0, 0, 0)
+    const day = now.getDay();
+    const diff = (7 - day + 1) % 7 || 7;
+    next.setDate(now.getDate() + diff);
+    next.setHours(0, 0, 0, 0);
   }
 
   if (period === "monthly") {
-    next.setMonth(now.getMonth() + 1)
-    next.setDate(1)
-    next.setHours(0, 0, 0, 0)
+    next.setMonth(now.getMonth() + 1);
+    next.setDate(1);
+    next.setHours(0, 0, 0, 0);
   }
 
-  return next
-}
+  return next;
+};
 
-export function PayrollModal({ staffName, staff, period, trigger }: PayrollModalProps) {
+export function PayrollModal({
+  staffName,
+  staff,
+  period,
+  trigger,
+}: PayrollModalProps) {
   const { user } = useAuth(); // or however you get current user
   const isAdmin = user?.role === "admin";
-  const { createCommission, isCreating, updateCommission, commissions, isUpdating, refetch } = useCommission();
+  const {
+    createCommission,
+    isCreating,
+    updateCommission,
+    commissions,
+    isUpdating,
+    refetch,
+  } = useCommission();
 
-  const { data: workerProfile } = useWorker(staff?.id || ''); // Fetch worker profile to get frequency
-  const [isPaymentAvailable, setIsPaymentAvailable] = useState(false)
+  const { data: workerProfile } = useWorker(staff?.id || ""); // Fetch worker profile to get frequency
+  const [isPaymentAvailable, setIsPaymentAvailable] = useState(false);
 
-  const { data: currentPeriodCommissionData, isLoading: isCurrentPeriodCommissionLoading } = useWorkerCommission(workerProfile?.id || '', period);
-  const [localPeriod, setLocalPeriod] = useState('');
+  const {
+    data: currentPeriodCommissionData,
+    isLoading: isCurrentPeriodCommissionLoading,
+  } = useWorkerCommission(workerProfile?.id || "", period);
+  const [localPeriod, setLocalPeriod] = useState("");
 
   // Generate periods based on worker's frequency
-  const generatedPeriods = commissions.filter((c) => c.workerId === workerProfile?.id).map((c) => c.period); // Use only the getter part of useState
+  const generatedPeriods = commissions
+    .filter((c) => c.workerId === workerProfile?.id)
+    .map((c) => c.period); // Use only the getter part of useState
 
-  const isLockedByTime = !isPaymentAvailable
+  const isLockedByTime = !isPaymentAvailable;
 
   // Get commission data for the selected period
   const getCommissionForPeriod = (periodStr: string) =>
     commissions.find(
-      (c: any) =>
-        c.workerId === staff?.id &&
-        c.period === periodStr // period format matches generated format
+      (c: any) => c.workerId === staff?.id && c.period === periodStr, // period format matches generated format
     );
 
-  const isPeriodPaid = (periodStr: string) => getCommissionForPeriod(periodStr)?.status === "paid";
+  const isPeriodPaid = (periodStr: string) =>
+    getCommissionForPeriod(periodStr)?.status === "paid";
 
   // Determine if a commission record already exists for the selected period
   const commissionRecordExists = !!getCommissionForPeriod(localPeriod);
@@ -638,9 +810,11 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
   const commissionData = getCommissionForPeriod(localPeriod);
 
   if (isCurrentPeriodCommissionLoading) {
-    return (<div className="flex justify-center items-center h-64">
-      <Loader2 className="h-8 w-8 animate-spin" />
-    </div>)
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
   }
 
   let totalRevenue = 0;
@@ -677,7 +851,9 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
     if (commissionRecordExists) {
       // If record exists but is not paid, worker is requesting approval
       if (!isAdmin) {
-        toast.info("La demande de paiement est déjà soumise. En attente d'approbation.");
+        toast.info(
+          "La demande de paiement est déjà soumise. En attente d'approbation.",
+        );
         // Optionally, trigger an update mutation to set status to 'pending' if it wasn't already
         // This depends on your backend logic for handling requests.
         // Example: updateCommission({ id: commissionData.id, status: 'pending' });
@@ -705,7 +881,7 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
         commissionRate: commissionRate,
         // status defaults to 'pending' in backend
       });
-      refetch()
+      refetch();
     } else {
       // Worker requests generation - this might involve creating a record with status 'requested'
       // or sending a notification. For now, we'll create a 'pending' record.
@@ -718,14 +894,16 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
         commissionRate: commissionRate,
         // status defaults to 'pending' in backend, which is appropriate for a request
       });
-      refetch()
+      refetch();
     }
   };
 
   const handleApprove = () => {
     const commission = getCommissionForPeriod(localPeriod);
     if (!commission?.id) {
-      toast.error('Aucun enregistrement de commission trouvé pour cette période.');
+      toast.error(
+        "Aucun enregistrement de commission trouvé pour cette période.",
+      );
       return;
     }
     // Admin approves by changing status to 'paid'
@@ -733,18 +911,26 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
       id: commission.id,
       status: "paid",
     });
-    refetch()
+    refetch();
   };
 
   // Determine button states based on user role, period status, and record existence
   const isPaid = isPeriodPaid(localPeriod);
-  const isPending = getCommissionForPeriod(localPeriod)?.status === 'pending';
+  const isPending = getCommissionForPeriod(localPeriod)?.status === "pending";
   const isRequested = isPending && !isAdmin; // Worker sees 'requested' as 'pending'
   const canAdminApprove = isAdmin && isPending && localPeriod;
 
   // Determine button text and state
   let buttonText = "Générer Demande";
-  let buttonVariant: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined = "default";
+  let buttonVariant:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link"
+    | null
+    | undefined = "default";
   let buttonDisabled = !localPeriod || isPaid;
 
   if (isAdmin) {
@@ -763,7 +949,8 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
       buttonText = isCreating ? "Création..." : "Créer & Demander";
       buttonVariant = "default";
     }
-  } else { // Worker
+  } else {
+    // Worker
     if (isPaid) {
       buttonText = "Payé";
       buttonVariant = "outline";
@@ -783,39 +970,55 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
     }
   }
 
-
   return (
     <Dialog>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent className="sm:max-w-md w-[95vw] max-h-[90vh] overflow-y-auto p-4 dark:bg-gray-900">
         <DialogHeader>
-          <DialogTitle className="text-lg font-bold text-gray-900 dark:text-gray-100">Générer Fiche de Paie</DialogTitle>
+          <DialogTitle className="text-lg font-bold text-gray-900 dark:text-gray-100">
+            Générer Fiche de Paie
+          </DialogTitle>
         </DialogHeader>
 
         <div className="py-4 space-y-4">
           <div className="grid grid-cols-1 gap-3">
             <div className="space-y-2">
-              <Label className="text-lg text-gray-700 dark:text-gray-300">Employé(e)</Label>
+              <Label className="text-lg text-gray-700 dark:text-gray-300">
+                Employé(e)
+              </Label>
               <Input
-                value={staffName || staff?.user?.name || 'Employé(e)'}
+                value={staffName || staff?.user?.name || "Employé(e)"}
                 disabled
                 className="bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 h-11 text-base"
               />
             </div>
 
             <div className="space-y-2">
-              {!isAdmin && <Label className="text-lg justify-between text-gray-700 dark:text-gray-300">
-                ({period === 'daily' ? 'Aujourd\'hui' : period === 'weekly' ? 'Cette semaine' : 'Ce mois-ci'})
-                {<Input
-                  type="text"
-                  value={`${format(getNextResetDate(period || ''), "EEEE d MMMM 'à' HH'h'mm", { locale: fr })}`}
-                  // onChange={(e) => setLocalTotalRevenue(parseFloat(e.target.value) || 0)} // Disable editing in this view
-                  className="w-56 text-right h-10 text-base bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300"
-                  disabled // Values are calculated/fetched, not edited here
-                />}
-              </Label>}
-              {isAdmin &&
-                <><Label className="text-lg text-gray-700 dark:text-gray-300">Periode</Label>
+              {!isAdmin && (
+                <Label className="text-lg justify-between text-gray-700 dark:text-gray-300">
+                  (
+                  {period === "daily"
+                    ? "Aujourd'hui"
+                    : period === "weekly"
+                      ? "Cette semaine"
+                      : "Ce mois-ci"}
+                  )
+                  {
+                    <Input
+                      type="text"
+                      value={`${format(getNextResetDate(period || ""), "EEEE d MMMM 'à' HH'h'mm", { locale: fr })}`}
+                      // onChange={(e) => setLocalTotalRevenue(parseFloat(e.target.value) || 0)} // Disable editing in this view
+                      className="w-56 text-right h-10 text-base bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300"
+                      disabled // Values are calculated/fetched, not edited here
+                    />
+                  }
+                </Label>
+              )}
+              {isAdmin && (
+                <>
+                  <Label className="text-lg text-gray-700 dark:text-gray-300">
+                    Periode
+                  </Label>
                   <Select value={localPeriod} onValueChange={setLocalPeriod}>
                     <SelectTrigger>
                       <SelectValue placeholder="Sélectionnez une période" />
@@ -827,28 +1030,35 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
                         </SelectItem>
                       ))}
                     </SelectContent>
-                  </Select></>
-              }
+                  </Select>
+                </>
+              )}
             </div>
           </div>
 
           <Separator className="dark:bg-gray-700" />
           <div className="space-y-3">
             <PayrollCountdown
-              frequency={workerProfile?.commissionFrequency as any}
+              frequency={period as any}
               onReadyChange={setIsPaymentAvailable}
             />
           </div>
           <Separator className="dark:bg-gray-700" />
 
           <div className="space-y-3">
-            <h4 className="font-medium text-gray-900 dark:text-gray-100">Détails du Calcul</h4>
+            <h4 className="font-medium text-gray-900 dark:text-gray-100">
+              Détails du Calcul
+            </h4>
 
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <Label className="text-gray-600 dark:text-gray-400 text-lg">Revenu Généré</Label>
+                <Label className="text-gray-600 dark:text-gray-400 text-lg">
+                  Revenu Généré
+                </Label>
                 <div className="flex items-center">
-                  <span className="text-lg text-gray-500 dark:text-gray-400 mr-1">CDF</span>
+                  <span className="text-lg text-gray-500 dark:text-gray-400 mr-1">
+                    CDF
+                  </span>
                   <Input
                     type="number"
                     value={totalRevenue}
@@ -860,7 +1070,9 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
               </div>
 
               <div className="flex justify-between items-center">
-                <Label className="text-gray-600 dark:text-gray-400 text-lg">Nb. Rendez-vous</Label>
+                <Label className="text-gray-600 dark:text-gray-400 text-lg">
+                  Nb. Rendez-vous
+                </Label>
                 <Input
                   type="number"
                   value={appointmentsCount}
@@ -871,7 +1083,9 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
               </div>
 
               <div className="flex justify-between items-center">
-                <Label className="text-gray-600 dark:text-gray-400 text-lg">Taux de Commission</Label>
+                <Label className="text-gray-600 dark:text-gray-400 text-lg">
+                  Taux de Commission
+                </Label>
                 <div className="flex items-center">
                   <Input
                     type="number"
@@ -879,14 +1093,20 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
                     className="text-right w-24 h-10 text-base bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300"
                     disabled
                   />
-                  <span className="ml-1 text-gray-500 dark:text-gray-400">%</span>
+                  <span className="ml-1 text-gray-500 dark:text-gray-400">
+                    %
+                  </span>
                 </div>
               </div>
 
               <div className="flex justify-between items-center">
-                <Label className="text-gray-600 dark:text-gray-400 text-lg">Commission (Calculée)</Label>
+                <Label className="text-gray-600 dark:text-gray-400 text-lg">
+                  Commission (Calculée)
+                </Label>
                 <div className="flex items-center">
-                  <span className="text-lg text-gray-500 dark:text-gray-400 mr-1">CDF</span>
+                  <span className="text-lg text-gray-500 dark:text-gray-400 mr-1">
+                    CDF
+                  </span>
                   <Input
                     value={commissionAmount.toFixed(2)}
                     disabled
@@ -897,9 +1117,13 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
 
               {isAdmin && (
                 <div className="flex justify-between items-center">
-                  <Label className="text-blue-600 dark:text-blue-400 text-lg">Part Administrateur</Label>
+                  <Label className="text-blue-600 dark:text-blue-400 text-lg">
+                    Part Administrateur
+                  </Label>
                   <div className="flex items-center">
-                    <span className="text-lg text-gray-500 dark:text-gray-400 mr-1">CDF</span>
+                    <span className="text-lg text-gray-500 dark:text-gray-400 mr-1">
+                      CDF
+                    </span>
                     <Input
                       value={employerShare.toFixed(2)}
                       disabled
@@ -912,7 +1136,9 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
 
             <div className="bg-gray-900 dark:bg-gray-800 text-white p-3 rounded-xl flex justify-between items-center">
               <span className="font-medium">Net à Payer</span>
-              <span className="text-xl font-bold">{commissionAmount.toLocaleString()} CDF</span>
+              <span className="text-xl font-bold">
+                {commissionAmount.toLocaleString()} CDF
+              </span>
             </div>
 
             <div className="flex items-center gap-2">
@@ -921,13 +1147,24 @@ export function PayrollModal({ staffName, staff, period, trigger }: PayrollModal
                 defaultChecked
                 className="border-gray-400 dark:border-gray-600 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500 dark:data-[state=checked]:bg-pink-600 dark:data-[state=checked]:border-pink-600"
               />
-              <Label htmlFor="email-slip" className="text-gray-600 dark:text-gray-400">{!isAdmin ? "Envoyer par email à l'employeur" : "Envoyer par email à l'employé(e)"}</Label>
+              <Label
+                htmlFor="email-slip"
+                className="text-gray-600 dark:text-gray-400"
+              >
+                {!isAdmin
+                  ? "Envoyer par email à l'employeur"
+                  : "Envoyer par email à l'employé(e)"}
+              </Label>
             </div>
           </div>
         </div>
 
         <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 mt-4">
-          <Button variant="outline" className="w-full sm:w-auto gap-2 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800" disabled>
+          <Button
+            variant="outline"
+            className="w-full sm:w-auto gap-2 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+            disabled
+          >
             <Download className="w-4 h-4" /> PDF
           </Button>
           {isAdmin ? (

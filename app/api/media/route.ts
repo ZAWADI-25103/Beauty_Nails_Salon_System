@@ -7,7 +7,7 @@ import { NextRequest } from 'next/server';
 export async function GET(req: NextRequest){
   
   try {
-    requireRole(["admin","client", "worker"])
+    // requireRole(["admin","client", "worker"])
 
     const medias = await prisma.media.findMany()
 

@@ -6,7 +6,7 @@ import { successResponse, handleApiError, requireRole } from "@/lib/api/helpers"
 
 export async function POST(request: NextRequest) {
   try {
-    await requireRole(["worker", "admin"]);
+    await requireRole(["worker", "admin", 'client']);
 
     const body = await request.json();
     const {
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    await requireRole(["admin", "worker"]);
+    await requireRole(["admin", "worker", "client"]);
 
     const commissions = await prisma.commission.findMany({
       include: {

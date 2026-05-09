@@ -1,6 +1,6 @@
 "use client"
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { appointmentsApi, UpdateAppointmentStatusData, RescheduleAppointmentData } from '../api/appointments';
+import { appointmentsApi, UpdateAppointmentStatusData, RescheduleAppointmentData, TransferRequestData } from '../api/appointments';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
@@ -131,4 +131,48 @@ export function useAvailableSlots(params?: { date?: string; workerId: string }) 
     data,
     isLoading,
   }
+}
+
+
+export function useAppointmentTransfer(appointmentId: string) {
+  return useQuery({
+    queryKey: ['appointments', appointmentId, 'transfer'],
+    queryFn: () => appointmentsApi.getTransfer(appointmentId),
+    enabled: !!appointmentId,
+    staleTime: 2 * 60 * 1000, // 2 minutes
+  });
+}
+
+export function useRequestTransfer() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: ({ appointmentId, data }: { appointmentId: string; data: TransferRequestData }) => 
+      appointmentsApi.requestTransfer(appointmentId, data),
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['appointments'] });
+      queryClient.invalidateQueries({ queryKey: ['appointments', variables.appointmentId, 'transfer'] });
+      toast.success(data.message);
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.error?.message || 'Erreur lors de la demande de transfert');
+    }
+  });
+}
+
+export function useRespondToTransfer() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: ({ appointmentId, action, notes }: { appointmentId: string; action: 'accept' | 'reject'; notes?: string }) => 
+      appointmentsApi.respondToTransfer(appointmentId, action, notes),
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['appointments'] });
+      queryClient.invalidateQueries({ queryKey: ['appointments', variables.appointmentId, 'transfer'] });
+      toast.success(data.message);
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.error?.message || 'Erreur lors de la réponse au transfert');
+    }
+  });
 }

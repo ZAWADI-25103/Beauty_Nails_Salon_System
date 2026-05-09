@@ -25,7 +25,7 @@ export default function AppClientLayer() {
 
   return (
     <>
-      <FloatingReceipt />
+      {user.role === "client" && <FloatingReceipt />}
       <FloatingBubbles
         appointments={ongoingAppointments}
         user={user}

@@ -5,7 +5,7 @@ import {  successResponse, handleApiError, requireRole, errorResponse } from '@/
 
 export async function GET(_request: NextRequest) {
   try {
-    requireRole(['admin'])
+    requireRole(['admin', 'worker', 'client']);
 
     const loyaltyTransactions = await prisma.loyaltyTransaction.findMany({
       orderBy: { createdAt: 'desc' },

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
@@ -6,35 +6,54 @@ import { Button } from "@/components/ui/button";
 import { useMedias } from "@/lib/hooks/useMedia";
 import { MediaData } from "@/lib/api/media";
 import { toast } from "sonner";
-import { Plus, FileText, Eye, X, Loader2, AlertTriangle } from "lucide-react";
+import {
+  Plus,
+  FileText,
+  Eye,
+  X,
+  Loader2,
+  AlertTriangle,
+  Trash2,
+} from "lucide-react";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 interface MediaGridProps {
   workerId: string;
   onRemove?: (id: string) => void;
   onView?: (url: string) => void;
+  canDelete?: boolean; // Prop to control delete permission (default: false for workers)
 }
 
-export default function MediaGrid({ workerId, onRemove, onView }: MediaGridProps) {
+export default function MediaGrid({
+  workerId,
+  onRemove,
+  onView,
+  canDelete = false, // Workers cannot delete by default
+}: MediaGridProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const { user } = useAuth();
 
-  const { medias, isCreating, createMedia, isLoading, error, refetch } = useMedias();
+  const { medias, isCreating, createMedia, isLoading, error, refetch } =
+    useMedias();
 
   const handleUpload = async (file: File) => {
-    if (file.type !== 'application/pdf') {
-      toast.error('Seuls les fichiers PDF sont autorisés');
+    if (file.type !== "application/pdf") {
+      toast.error("Seuls les fichiers PDF sont autorisés");
       return;
     }
 
     // Check if worker already has 3 documents
-    const workerDocs = medias?.filter(media =>
-      media.workerId === workerId &&
-      media.type === 'DOCUMENT' &&
-      media.mimeType === 'application/pdf'
-    ) || [];
+    const workerDocs =
+      medias?.filter(
+        (media) =>
+          media.workerId === workerId &&
+          media.type === "DOCUMENT" &&
+          media.mimeType === "application/pdf",
+      ) || [];
 
     if (workerDocs.length >= 3) {
-      toast.error('Maximum 3 documents autorisés');
+      toast.error("Maximum 3 documents autorisés");
       return;
     }
 
@@ -42,24 +61,28 @@ export default function MediaGrid({ workerId, onRemove, onView }: MediaGridProps
 
     // Create FormData for upload
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('filename', file.name);
+    formData.append("file", file);
+    formData.append("filename", file.name);
 
     // Create media object
     const media: MediaData = {
       file,
       clientId: null,
       appointmentId: null,
-      workerId
+      workerId,
     };
 
     try {
       await createMedia(media);
+      toast.success("Document uploadé avec succès");
       if (inputRef.current) {
-        inputRef.current.value = '';
+        inputRef.current.value = "";
       }
     } catch (err: any) {
-      toast.error(err.response?.data?.error?.message || 'Erreur lors de l\'upload du document');
+      toast.error(
+        err.response?.data?.error?.message ||
+          "Erreur lors de l'upload du document",
+      );
     } finally {
       setUploading(false);
     }
@@ -72,37 +95,57 @@ export default function MediaGrid({ workerId, onRemove, onView }: MediaGridProps
   };
 
   const handleRemove = async (id: string) => {
+    // Only allow deletion if user has permission
+    if (!canDelete && user?.role !== "admin") {
+      toast.error("Vous n'avez pas la permission de supprimer ce document");
+      return;
+    }
+
     // In a real implementation, you would call a delete API
     // For now, we'll just refetch to update the list
     await refetch();
+    toast.success("Document supprimé");
   };
 
   const handleView = (url: string) => {
     if (onView) {
       onView(url);
     } else {
-      window.open(url, '_blank');
+      window.open(url, "_blank");
     }
   };
 
   // Filter to only show PDF documents for this worker
-  const pdfDocuments = medias?.filter(media =>
-    media.workerId === workerId &&
-    media.type === 'DOCUMENT' &&
-    media.mimeType === 'application/pdf'
-  ) || [];
+  const pdfDocuments =
+    medias?.filter(
+      (media) =>
+        media.workerId === workerId &&
+        media.type === "DOCUMENT" &&
+        media.mimeType === "application/pdf",
+    ) || [];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      {/* Add File Card */}
+    <div className="space-y-3">
+      {/* Add File Card - List Style */}
       <Card
         onClick={() => inputRef.current?.click()}
-        className="flex flex-col items-center justify-center p-4 cursor-pointer border-dashed border-2 border-gray-300 dark:border-gray-700 hover:border-pink-500 dark:hover:border-pink-600 transition rounded-xl bg-gray-50 dark:bg-gray-900/50"
+        className="flex items-center justify-between p-4 cursor-pointer border-dashed border-2 border-gray-300 dark:border-gray-700 hover:border-pink-500 dark:hover:border-pink-600 transition rounded-xl bg-gray-50 dark:bg-gray-900/50"
       >
-        <Plus className="w-6 h-6 mb-2 text-gray-500 dark:text-gray-400" />
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          {uploading || isCreating ? "Upload..." : "Ajouter"}
-        </p>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
+            <Plus className="w-5 h-5 text-pink-500 dark:text-pink-400" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+              {uploading || isCreating
+                ? "Upload en cours..."
+                : "Ajouter un document"}
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              PDF uniquement • Maximum 3 documents
+            </p>
+          </div>
+        </div>
         <input
           ref={inputRef}
           type="file"
@@ -112,59 +155,74 @@ export default function MediaGrid({ workerId, onRemove, onView }: MediaGridProps
         />
       </Card>
 
-      {/* Files */}
+      {/* Files List */}
       {isLoading ? (
-        <div className="flex justify-center items-center h-64 col-span-full">
-          <Loader2 className="h-8 w-8 animate-spin" />
+        <div className="flex justify-center items-center py-8">
+          <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
         </div>
       ) : error ? (
-        <Card className="p-6 text-center col-span-full">
-          <AlertTriangle className="w-12 h-12 mx-auto text-red-500 mb-4" />
-          <p className="text-red-500">Erreur de chargement des documents.</p>
+        <Card className="p-4 text-center">
+          <AlertTriangle className="w-8 h-8 mx-auto text-red-500 mb-2" />
+          <p className="text-sm text-red-500">
+            Erreur de chargement des documents.
+          </p>
         </Card>
       ) : pdfDocuments.length === 0 ? (
-        <div className="text-center py-8 col-span-full">
-          <FileText className="w-12 h-12 mx-auto text-gray-400 mb-2" />
-          <p className="text-gray-500 dark:text-gray-400">Aucun document PDF uploadé</p>
-        </div>
+        <Card className="p-6 text-center">
+          <FileText className="w-10 h-10 mx-auto text-gray-400 mb-2" />
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Aucun document PDF uploadé
+          </p>
+        </Card>
       ) : (
-        pdfDocuments.map((file: any) => (
-          <Card
-            key={file.id}
-            className="p-2 rounded-xl overflow-hidden hover:shadow-md transition relative group"
-          >
-            <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <FileText className="w-8 h-8 text-gray-500 dark:text-gray-400" />
-            </div>
-            <p className="text-xs mt-2 truncate text-gray-600 dark:text-gray-300 px-1">
-              {file.name}
-            </p>
+        <div className="space-y-2">
+          {pdfDocuments.map((file: any) => (
+            <Card
+              key={file.id}
+              className="flex items-center justify-between p-4 rounded-xl hover:shadow-md transition bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+            >
+              <div className="flex items-center gap-4 flex-1 min-w-0">
+                <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0">
+                  <FileText className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                    {file.name}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    PDF • {(file.size / 1024).toFixed(1)} KB
+                  </p>
+                </div>
+              </div>
 
-            {/* Hover Overlay */}
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <div className="flex gap-2">
+              <div className="flex items-center gap-2 shrink-0">
                 <Button
                   type="button"
                   size="sm"
-                  variant="secondary"
+                  variant="outline"
                   onClick={() => handleView(file.url)}
+                  className="rounded-full"
                 >
                   <Eye className="w-4 h-4 mr-1" />
                   Voir
                 </Button>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="destructive"
-                  onClick={() => handleRemove(file.id)}
-                >
-                  <X className="w-4 h-4 mr-1" />
-                  Supp
-                </Button>
+
+                {/* Only show delete button for admins or if canDelete prop is true */}
+                {(canDelete || user?.role === "admin") && (
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handleRemove(file.id)}
+                    className="rounded-full text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                )}
               </div>
-            </div>
-          </Card>
-        ))
+            </Card>
+          ))}
+        </div>
       )}
     </div>
   );

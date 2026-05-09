@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 export async function GET(req: NextRequest) {
 
   try {
-    requireRole(['admin'])
+    requireRole(['admin', 'worker', 'client']);
 
     const payments = await prisma.payment.findMany({
       orderBy:{

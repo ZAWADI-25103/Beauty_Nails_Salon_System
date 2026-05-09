@@ -1,10 +1,11 @@
 import { NextRequest } from 'next/server';
 import prisma from '@/lib/prisma';
 import {successResponse, handleApiError, errorResponse, getAuthenticatedUser } from '@/lib/api/helpers';
+import { requireRole } from '@/lib/auth/auth';
 
 export async function GET(request: NextRequest) {
   try {
-    const user = await getAuthenticatedUser();
+    const user = await requireRole(['admin', 'client', 'worker']);
     const { searchParams } = new URL(request.url);
     
     const date = searchParams.get('date');
@@ -42,7 +43,20 @@ export async function GET(request: NextRequest) {
         where.workerId = wId;
       }
     } else if (user.role === 'worker') {
-      where.workerId = wId || user.workerProfile?.id;
+      const workerId = wId || user.workerProfile?.id;
+
+      where.workerId = workerId;
+
+      // where.OR = [
+      //   {
+      //     transfer: {
+      //       originalWorkerId: workerId,
+      //     },
+      //   },
+      //   {
+      //     transfer: null,
+      //   },
+      // ];
       if (date) {
         where.date = new Date(date);
       }
@@ -74,6 +88,7 @@ export async function GET(request: NextRequest) {
           include: {
             user: {
               select: {
+                id:true,
                 name: true,
                 avatar: true,
               },
@@ -85,6 +100,7 @@ export async function GET(request: NextRequest) {
           include: {
             user: {
               select: {
+                id: true,
                 name: true,
                 avatar: true,
               },
@@ -101,7 +117,19 @@ export async function GET(request: NextRequest) {
               }
             },
           }
-        }
+        },
+        transfer: { include: {
+          newWorker: {
+            include : {
+              user: true
+            }
+          },
+          originalWorker: {
+            include : {
+              user: true
+            }
+          }
+        }}
       },
       orderBy: [{ date: 'asc' }],
       cacheStrategy: { 
@@ -109,7 +137,9 @@ export async function GET(request: NextRequest) {
         swr: 30,      // For another 30s, serve old data while updating in background
       },
     });
-    
+
+    // console.log("Apps: ", { appointments })
+
     return successResponse(appointments);
   } catch (error) {
     return handleApiError(error);
@@ -240,17 +270,17 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // const wasRefBonusUsed = (amount: number) => {
+    const wasRefBonusUsed = (amount: number) => {
 
-    //   if(refBonusApplied) {
-    //     return amount - (amount * 0.01);
-    //   }
-    //   return amount
-    // }
+      if(refBonusApplied) {
+        return amount * 0.01;
+      }
+      return amount
+    }
     
     // Calculate final total
     const taxAmount = (totalPrice - discountAmount) * 0.16; // 16% tax
-    const finalTotal = isFreeServiceUsed ? 0 : (totalPrice - discountAmount + taxAmount + (paymentInfo.tip || 0));
+    const finalTotal = wasRefBonusUsed(isFreeServiceUsed ? 0 : (totalPrice - discountAmount + taxAmount + (paymentInfo.tip || 0)));
 
 
     // Create appointment in a single transaction
@@ -495,11 +525,11 @@ export async function POST(request: NextRequest) {
         console.log("Client update data :", clientUpdateData.data)
       }
 
-      // if (paymentInfo.method === 'mobile') {
-      //   clientUpdateData.data.prepaymentBalance = {
-      //     decrement: finalTotal
-      //   }
-      // }
+      if (paymentInfo.method === 'mobile') {
+        clientUpdateData.data.prepaymentBalance = {
+          decrement: finalTotal
+        }
+      }
 
       const updateClient = await tx.clientProfile.update({
         where: { id: clientId },

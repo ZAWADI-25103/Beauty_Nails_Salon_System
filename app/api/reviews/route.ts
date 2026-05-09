@@ -90,7 +90,7 @@ export async function GET(request: NextRequest){
     const workerId = searchParams.get('workerId');
     const clientId = searchParams.get('clientId');
 
-    requireRole(["admin","client","worker"])
+    // requireRole(["admin","client","worker"])
 
     let reviews = await prisma.review.findMany({
       cacheStrategy:{

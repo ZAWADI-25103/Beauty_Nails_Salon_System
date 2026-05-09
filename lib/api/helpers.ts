@@ -12,7 +12,10 @@ export async function getAuthenticatedUser() {
 
 export async function requireRole(allowedRoles: UserRole[]) {
   const user = await getAuthenticatedUser();
-  if (!allowedRoles.includes(user.role as UserRole)) {
+  if (!user) {
+    throw new Error("Pas d'utilisateur");
+  }
+  else if (!allowedRoles.includes(user.role as UserRole)) {
     throw new Error('Accès interdit');
   }
   return user;

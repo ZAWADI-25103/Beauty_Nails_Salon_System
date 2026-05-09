@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -9,82 +9,72 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "../ui/dialog"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
+} from "../ui/dialog";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
-import { Checkbox } from "../ui/checkbox"
-import { useStaff } from "@/lib/hooks/useStaff"
-import { toast } from "sonner"
+} from "../ui/select";
+import { Checkbox } from "../ui/checkbox";
+import { useStaff } from "@/lib/hooks/useStaff";
+import { toast } from "sonner";
 
-const POSITIONS = [
-  "Spécialiste",
-  "Réceptionniste",
-  "Manager",
-  "Assistant",
-]
+const POSITIONS = ["Spécialiste", "Réceptionniste", "Manager", "Assistant"];
 
-const SERVICE_CATEGORIES = [
-  "Onglerie",
-  "Cils",
-  "Tresses",
-  "Maquillage",
-]
+const SERVICE_CATEGORIES = ["Onglerie", "Cils", "Tresses", "Maquillage"];
 
 export default function CreateWorkerModal({
   triggerLabel = "Ajouter un employé",
 }: {
-  triggerLabel?: string
+  triggerLabel?: string;
 }) {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
-  const [password, setPassword] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [position, setPosition] = useState("")
-  const [specialties, setSpecialties] = useState<string[]>([])
-  const [commissionRate, setCommissionRate] = useState<number | "">("")
-  const [workingHours, setWorkingHours] = useState("")
+  const [position, setPosition] = useState("");
+  const [specialties, setSpecialties] = useState<string[]>([]);
+  const [commissionRate, setCommissionRate] = useState<number | "">("");
+  const [workingHours, setWorkingHours] = useState("");
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
-  const { createWorker, isCreating } = useStaff()
+  const { createWorker, isCreating } = useStaff();
 
   const toggleSpecialty = (category: string) => {
     setSpecialties((prev) =>
       prev.includes(category)
         ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    )
-  }
+        : [...prev, category],
+    );
+  };
 
   const onSubmit = () => {
     if (!name || !email || !phone || !password || !position) {
-      toast.error("Veuillez remplir tous les champs obligatoires")
-      return
+      toast.error("Veuillez remplir tous les champs obligatoires");
+      return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      toast.error("Email invalide")
-      return
+      toast.error("Email invalide");
+      return;
     }
 
     if (phone.length < 9) {
-      toast.error("Numéro de téléphone invalide")
-      return
+      toast.error("Numéro de téléphone invalide");
+      return;
     }
 
     if (password.length < 6) {
-      toast.error("Le mot de passe doit contenir au moins 6 caractères")
-      return
+      toast.error("Le mot de passe doit contenir au moins 6 caractères");
+      return;
     }
 
     const payload = {
@@ -99,20 +89,21 @@ export default function CreateWorkerModal({
         commissionRate: Number(commissionRate) || 0,
         workingHours: workingHours || undefined,
       },
-    }
+      isActive: true,
+    };
 
-    createWorker(payload as any)
+    createWorker(payload as any);
 
-    setIsOpen(false)
-    setName("")
-    setEmail("")
-    setPhone("")
-    setPassword("")
-    setPosition("")
-    setSpecialties([])
-    setCommissionRate("")
-    setWorkingHours("")
-  }
+    setIsOpen(false);
+    setName("");
+    setEmail("");
+    setPhone("");
+    setPassword("");
+    setPosition("");
+    setSpecialties([]);
+    setCommissionRate("");
+    setWorkingHours("");
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -122,16 +113,12 @@ export default function CreateWorkerModal({
 
       {/* ✅ Bigger + Responsive */}
       <DialogContent className="sm:max-w-3xl w-[95vw] max-h-[90vh] overflow-y-auto  dark:bg-gray-950 p-5">
-
         <DialogHeader>
-          <DialogTitle className="text-xl">
-            Créer un nouvel employé
-          </DialogTitle>
+          <DialogTitle className="text-xl">Créer un nouvel employé</DialogTitle>
         </DialogHeader>
 
         {/* ✅ Responsive Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 py-6">
-
           {/* Personal Info */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-muted-foreground">
@@ -204,10 +191,7 @@ export default function CreateWorkerModal({
               <Label className="mb-3">Spécialités</Label>
               <div className="grid grid-cols-2 gap-3 mt-2">
                 {SERVICE_CATEGORIES.map((category) => (
-                  <div
-                    key={category}
-                    className="flex items-center space-x-2"
-                  >
+                  <div key={category} className="flex items-center space-x-2">
                     <Checkbox
                       id={category}
                       checked={specialties.includes(category)}
@@ -231,9 +215,7 @@ export default function CreateWorkerModal({
                 value={commissionRate}
                 onChange={(e) =>
                   setCommissionRate(
-                    e.target.value === ""
-                      ? ""
-                      : Number(e.target.value)
+                    e.target.value === "" ? "" : Number(e.target.value),
                   )
                 }
                 placeholder="15"
@@ -257,16 +239,15 @@ export default function CreateWorkerModal({
             </div>
 
             <div className="bg-muted rounded-lg p-4 text-base">
-              <strong>Note:</strong> Un compte client et employé sera créé automatiquement.
+              <strong>Note:</strong> Un compte client et employé sera créé
+              automatiquement.
             </div>
           </div>
         </div>
 
         <DialogFooter className="gap-2">
           <DialogClose asChild>
-            <Button variant="outline">
-              Annuler
-            </Button>
+            <Button variant="outline">Annuler</Button>
           </DialogClose>
 
           <Button
@@ -279,5 +260,5 @@ export default function CreateWorkerModal({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

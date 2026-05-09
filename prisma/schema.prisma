@@ -163,6 +163,8 @@ model WorkerProfile {
   reviews      Review[]
   leaves       WorkerLeave[]
   tasks        Task[] // new: tasks assigned to this worker
+  appointmentTransfers AppointmentTransfer[] @relation("TransferOriginalWorker")
+  newWorkerAppointmentTransfers AppointmentTransfer[] @relation("TransferNewWorker")
 
   @@index([isAvailable])
   @@index([position])
@@ -365,6 +367,7 @@ model Appointment {
   reviews  Review[]     @relation("appointment_reviews")
   sale    Sale?
   tasks   Task[] // new: tasks assigned to this worker
+  transfer AppointmentTransfer?
 
 
   @@index([clientId])
@@ -387,6 +390,39 @@ enum AppointmentStatus {
 enum Location {
   salon
   home
+}
+
+model AppointmentTransfer {
+  id                    String            @id @default(cuid())
+  appointmentId         String            @unique
+  originalWorkerId      String
+  newWorkerId           String
+  transferReason        String?           @db.Text
+  transferFeePercentage Float             @default(5.0) // 5% default transfer fee
+  transferFeeAmount     Float             @default(0)
+  status                TransferStatus    @default(pending)
+  requestedAt           DateTime          @default(now())
+  completedAt           DateTime?
+  notes                 String?           @db.Text
+  
+  // Relations
+  appointment    Appointment      @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  originalWorker WorkerProfile   @relation("TransferOriginalWorker", fields: [originalWorkerId], references: [id])
+  newWorker      WorkerProfile   @relation("TransferNewWorker", fields: [newWorkerId], references: [id])
+  
+  @@index([appointmentId])
+  @@index([originalWorkerId])
+  @@index([newWorkerId])
+  @@index([status])
+  @@map("appointment_transfers")
+}
+
+enum TransferStatus {
+  pending
+  accepted
+  rejected
+  completed
+  cancelled
 }
 
 // ============================================
@@ -826,6 +862,9 @@ enum NotificationType {
   appointment_reminder
   appointment_confirmed
   appointment_cancelled
+  appointment_transfer_request
+  appointment_transfer_accepted
+  appointment_transfer_rejected
   payment_received
   loyalty_reward
   marketing
