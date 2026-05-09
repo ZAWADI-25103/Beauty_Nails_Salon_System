@@ -187,9 +187,9 @@ export default function CatalogPage() {
               <TabsTrigger value="services" className="rounded-lg data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400">
                 <Scissors className="w-4 h-4 mr-2" /> Services
               </TabsTrigger>
-              <TabsTrigger value="products" className="rounded-lg data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400">
+              {/* <TabsTrigger value="products" className="rounded-lg data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400">
                 <ShoppingBag className="w-4 h-4 mr-2" /> Produits
-              </TabsTrigger>
+              </TabsTrigger> */}
               <TabsTrigger value="packages" className="rounded-lg data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400">
                 <Package className="w-4 h-4 mr-2" /> Forfaits
               </TabsTrigger>
@@ -352,7 +352,7 @@ export default function CatalogPage() {
             <TabsContent value="packages" className="space-y-12">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {packages.map(pkg => {
-                  const regularPrice = pkg.services?.reduce((sum, s) => sum + (s.price || 0), 0) || 0;
+                  const regularPrice = pkg.services?.reduce((sum : number, s: any) => sum + (s.price || 0), 0) || 0;
                   const savings = regularPrice - pkg.price;
                   return (
                     <Card key={pkg.id} className="p-6 bg-white dark:bg-gray-900 border-b border-pink-100 dark:border-pink-900 shadow-xl rounded-3xl overflow-hidden relative transform hover:scale-[1.02] transition-transform">
@@ -373,7 +373,7 @@ export default function CatalogPage() {
 
                       <div className="space-y-3 mb-8 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
                         <p className="text-base  text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Services inclus</p>
-                        {pkg.services?.slice(0, 3).map((service, idx) => ( // Show first 3 services
+                        {pkg.services?.slice(0, 3).map((service: any, idx: number) => ( // Show first 3 services
                           <div key={idx} className="flex items-center gap-3 text-lg text-gray-700 dark:text-gray-300">
                             <Sparkles className="w-4 h-4 text-pink-500 shrink-0" />
                             <span>{service.name}</span>
@@ -394,7 +394,7 @@ export default function CatalogPage() {
                         </Badge>
                       </div>
 
-                      <Link href={`/appointments?package=${pkg.id}&price=${pkg.price}`}>
+                      <Link href={`/appointments/package?id=${pkg.id}`}>
                         <Button size="sm" className="w-full bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full shadow-md">
                           Réserver Forfait
                         </Button>

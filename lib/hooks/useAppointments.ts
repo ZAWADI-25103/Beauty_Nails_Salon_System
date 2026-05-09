@@ -9,6 +9,7 @@ export function useAppointments(params?: {
   status?: string;
   workerId?: string;
   clientId?: string;
+  hasPackage?: boolean;
 }) {
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -22,6 +23,7 @@ export function useAppointments(params?: {
   } = useQuery({
     queryKey: ['appointments', params],
     queryFn: () => appointmentsApi.getAppointments(params),
+    refetchInterval: 60 * 1000, // Refetch every 60 seconds
   });
 
   // Create appointment

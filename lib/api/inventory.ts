@@ -52,4 +52,57 @@ export const inventoryApi = {
     const { data } = await axiosdb.get('/inventory/usage', { params });
     return data;
   },
+
+  // Record usage for appointment
+  recordUsage: async (appointmentId: string, items: UsageRecord[], workerId?: string): Promise<any> => {
+    const { data } = await axiosdb.post('/inventory/usage', {
+      appointmentId,
+      items,
+      workerId
+    });
+    return data;
+  },
+  
+  // Get usage records
+  getUsages: async (params?: { itemId?: string; appointmentId?: string }): Promise<InventoryUsage[]> => {
+    const { data } = await axiosdb.get('/inventory/usage', { params });
+    return data;
+  },
+  
+  // Get detailed usage history for an item
+  getItemUsageHistory: async (itemId: string, params?: { startDate?: string; endDate?: string }): Promise<InventoryUsageResponse> => {
+    const { data } = await axiosdb.get(`/inventory/${itemId}/usage`, { params });
+    return data;
+  }
 };
+
+export interface InventoryUsage {
+  id: string;
+  itemId: string;
+  quantity: number;
+  usedBy?: string;
+  usedFor?: string;
+  notes?: string;
+  createdAt: string;
+  item: {
+    name: string;
+    unit: string;
+    category: string;
+  };
+}
+
+export interface UsageRecord {
+  itemId: string;
+  quantity: number;
+  notes?: string;
+}
+
+export interface InventoryUsageResponse {
+  usages: InventoryUsage[];
+  stats: {
+    totalUsed: number;
+    uniqueAppointments: number;
+    uniqueWorkers: number;
+    averagePerAppointment: number;
+  };
+}

@@ -47,6 +47,8 @@ export async function GET(request: NextRequest,
       commissionRate: workerProfile.commissionRate,
       rating: workerProfile.rating,
       bio: workerProfile.bio,
+      avatar: workerProfile.avatar,
+      experience: workerProfile.experience,
       totalReviews: workerProfile.totalReviews,
       isAvailable: workerProfile.isAvailable,
       workingHours: workerProfile.workingHours, // This is JSON in your schema
@@ -77,12 +79,14 @@ export async function PUT(request: NextRequest,
 
     const body = await request.json();
     // Destructure allowed fields to prevent overposting
-    const { position, specialties, bio, isAvailable, workingHours, commissionRate, commissionType, commissionFrequency, commissionDay, minimumPayout, lastCommissionPaidAt } = body;
+    const { position, specialties, avatar, experience, bio, isAvailable, workingHours, commissionRate, commissionType, commissionFrequency, commissionDay, minimumPayout, lastCommissionPaidAt } = body;
 
     // Prepare data for Prisma update
     let updateData: any = {};
     if (position !== undefined) updateData.position = position;
     if (specialties !== undefined) updateData.specialties = specialties;
+    if (avatar !== undefined) updateData.avatar = avatar;
+    if (experience !== undefined) updateData.experience = experience;
     if (isAvailable !== undefined) updateData.isAvailable = isAvailable;
     if (workingHours !== undefined) updateData.workingHours = workingHours;
     if (bio !== undefined) updateData.bio = bio;
@@ -143,6 +147,8 @@ export async function PUT(request: NextRequest,
       commissionRate: updatedWorkerProfile.commissionRate,
       rating: updatedWorkerProfile.rating,
       bio: updatedWorkerProfile.bio,
+      avatar: updatedWorkerProfile.avatar,
+      experience: updatedWorkerProfile.experience,
       totalReviews: updatedWorkerProfile.totalReviews,
       isAvailable: updatedWorkerProfile.isAvailable,
       workingHours: updatedWorkerProfile.workingHours,

@@ -351,7 +351,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
             <div className="w-full text-center space-y-4">
               <div className="flex justify-center">
                 <Avatar className="w-28 h-28 border-4 border-white shadow-lg dark:border-gray-800">
-                  <AvatarImage src="" />
+                  <AvatarImage src={selectedStaff.avatar||''} />
                   <AvatarFallback className="text-3xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
                     {staff?.name.split(" ")[0]?.charAt(0) ||
                       staff?.name.charAt(0)}

@@ -264,13 +264,13 @@ export default function TodayOverview() {
         <Card className="border-0 shadow-lg rounded-2xl p-5 sm:p-6 bg-white dark:bg-gray-950 dark:border dark:border-pink-900/30">
           <h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  mb-6">Actions Rapides</h3>
           <div className="space-y-3">
-            <AppointmentModal
+            {/* <AppointmentModal
               trigger={
                 <Button className="w-full bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-pink-500/25 transition-all hover:scale-[1.02]">
                   <Plus className="w-5 h-5 mr-3" />
                   Nouveau Rendez-vous
                 </Button>
-              } />
+              } /> */}
             {/* <Button className="w-full bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-green-500/25 transition-all hover:scale-[1.02]">
               <CreditCard className="w-5 h-5 mr-3" />
               Encaisser Cliente

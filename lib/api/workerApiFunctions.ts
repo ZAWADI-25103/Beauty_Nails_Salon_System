@@ -10,6 +10,7 @@ export interface WorkerProfileUpdateData {
   commissionDay?: number;
   minimumPayout?: number;
   bio?: string;
+  experience?: number;
   workingHours?: any;
   isAvailable?: boolean;
   isActive?: boolean;

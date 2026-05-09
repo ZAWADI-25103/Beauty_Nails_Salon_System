@@ -94,16 +94,10 @@ export async function GET(request: NextRequest,
     });
 
     const totalEarnings = commissions.reduce((sum, c) => sum + c.commissionAmount, 0);
-    const totalBusiness = commissions.reduce((sum, c) => {
-
-      const buzRate = 100 - c.commissionRate
-      const buzEarnings = c.totalRevenue * buzRate / 100
-
-      return sum + buzEarnings
-    }, 0);
+    const totalBusiness = commissions.reduce((sum, c) => sum + c.businessEarnings, 0);
     const totalRevenue = commissions.reduce((sum, c) => sum + c.totalRevenue, 0);
-    const matCost = totalBusiness * 0.5;
-    const operaCost = totalBusiness * 0.5;
+    const matCost = totalBusiness * 0.05; // 5% des revenus pour les matériaux
+    const operaCost = totalBusiness * 0.05; // 5% des revenus pour les coûts opérationnels
 
     const isBusy = await prisma.appointment.findFirst({
         where: { status: "in_progress", workerId: staff.id},

@@ -25,7 +25,8 @@ import {
   CheckCircle,
   Phone,
   Copy,
-  Wallet
+  Wallet,
+  Loader2
 } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
@@ -620,10 +621,13 @@ export default function AppointmentsV3() {
         {/* Add-ons Selection */}
         {selectedServiceId && (
           <div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Services additionnels</h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Services Add-ons</h3>
             <p className="text-md text-gray-500 dark:text-gray-400 font-light  mb-4">Veillez cochez les services additionnels qui vous intéressent </p>
             {addOnsLoading ? (
-              <p className="text-gray-500 dark:text-gray-400">Chargement des add-ons...</p>
+              <div className="">
+                <Loader2 className="animate-spin h-6 w-6 text-gray-500 dark:text-gray-400 mx-auto mb-2" />
+                <p className="text-gray-500 dark:text-gray-400">Chargement des add-ons...</p>
+              </div>
             ) : addOns.length === 0 ? (
               <p className="text-gray-500 dark:text-gray-400">Malheureusement aucun add-on est disponible pour ce service</p>
             ) : (
@@ -685,7 +689,11 @@ export default function AppointmentsV3() {
           <div>
             <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Esthéticienne</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {staff.map((worker: any) => (
+              {staff.map((worker: any) => {
+                if (!worker.specialties.map((s: any) => s.toLowerCase()).includes(selectedCategory?.toLowerCase()!)) {
+                  return null;
+                }
+                return (
                 <Card
                   key={worker.id}
                   className={`p-4 cursor-pointer transition-all ${selectedWorker === worker.id
@@ -716,8 +724,8 @@ export default function AppointmentsV3() {
                       <p className="text-lg text-gray-600 dark:text-gray-400">{worker.position}</p>
                     </div>
                   </div>
-                </Card>
-              ))}
+                </Card>)
+})}
             </div>
           </div>
         )}

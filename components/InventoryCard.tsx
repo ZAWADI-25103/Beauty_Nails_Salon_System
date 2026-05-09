@@ -1,9 +1,11 @@
-import { Package, ShoppingCart, Info } from 'lucide-react';
+import { Package, ShoppingCart, Info, Eye } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { InventoryItem } from '@/prisma/generated/client';
 import { AdjustStockModal, OrderModal } from './modals/InventoryModals';
+import { useState } from 'react';
+import InventoryUsageHistoryModal from './modals/InventoryUsageHistoryModal';
 
 // Premium Color Mapping for a cleaner look
 const statusStyles = {
@@ -24,6 +26,7 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
   const style = statusStyles[item.status] || statusStyles.good;
   const progressColor = progressColors[item.status] || progressColors.good;
   const stockPercentage = Math.min((item.currentStock / item.minStock) * 100, 100);
+  const [showUsageHistory, setShowUsageHistory] = useState(false);
 
   console.log(item);
 
@@ -100,24 +103,40 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
               productName={item.name}
               supplierName={item.supplier!}
               trigger={
-                <Button className="flex-1 h-12 bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-100 dark:text-black text-white rounded-xl shadow-xl transition-all active:scale-95">
-                  <ShoppingCart className="w-4 h-4 mr-2" />
+                <Button className="flex-1 bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-100 dark:text-black text-white rounded-xl shadow-xl transition-all active:scale-95">
+                  {/* <ShoppingCart className="w-4 h-4 mr-2" /> */}
                   Réappro
                 </Button>
               }
             />
           )}
           <AdjustStockModal
+            itemId={item.id}
             productName={item.name}
             currentStock={item.currentStock}
             trigger={
-              <Button variant="outline" className="flex-1 h-12 rounded-xl border-2 hover:bg-gray-50 dark:hover:bg-gray-800 font-bold transition-all">
+              <Button variant="outline" className="flex-1 rounded-xl border-2 hover:bg-gray-50 dark:hover:bg-gray-800 font-bold transition-all">
                 Ajuster
               </Button>
             }
           />
+          {/* NEW: Usage History Button */}
+          <Button
+            variant="outline"
+            className="flex-1 rounded-xl border-2 hover:bg-gray-50 dark:hover:bg-gray-800 font-bold transition-all"
+            onClick={() => setShowUsageHistory(true)}
+          >
+            {/* <Eye className="w-4 h-4 mr-2" /> */}
+            Usages            
+          </Button>
         </div>
       </div>
+      <InventoryUsageHistoryModal
+        itemId={item.id}
+        itemName={item.name}
+        open={showUsageHistory}
+        onOpenChange={setShowUsageHistory}
+      />
     </Card>
   );
 };

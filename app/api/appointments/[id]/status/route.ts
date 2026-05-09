@@ -11,7 +11,7 @@ export async function PUT(
 ) {
   try {
     const id = (await context.params).id;
-    await requireRole(['admin', 'worker']);
+    const user = await requireRole(['admin', 'worker']);
 
     const body = await request.json();
     const { status } = body;
@@ -101,14 +101,18 @@ export async function PUT(
           },
         });
 
+        const workerCommissionAmount = (updatedAppointment.price * user?.workerProfile?.commissionRate! / 100) || 0;
+        let businessEarnings = updatedAppointment.price - workerCommissionAmount;
+        const materialsCost = businessEarnings * 0.05; // 5% des revenus pour les matériaux
+        const operationalCost = businessEarnings * 0.05; // 5% des revenus pour les coûts opérationnels
+        businessEarnings = businessEarnings - materialsCost - operationalCost; // Reste pour le salon
+
         await tx.commission.create({
           data: {
             worker: { connect: { id: updatedAppointment.workerId } },
             appointmentsCount: 1,
-            commissionAmount:
-              updatedAppointment.price *
-              updatedAppointment.service.workerCommission / 100,
-            commissionRate: updatedAppointment.service?.workerCommission ?? 0,
+            commissionAmount: workerCommissionAmount,
+            commissionRate: user.workerProfile?.commissionRate ?? 0,
             status: 'pending',
             totalRevenue: updatedAppointment.price,
             period: `${format(
@@ -116,18 +120,9 @@ export async function PUT(
               "EEEE d MMMM 'à' HH'h'mm",
               { locale: fr }
             )}`,
-            businessEarnings:
-              updatedAppointment.price -
-              (updatedAppointment.price *
-                updatedAppointment.service.workerCommission / 100),
-            materialsCost:
-              (updatedAppointment.price -
-                (updatedAppointment.price *
-                  updatedAppointment.service.workerCommission / 100)) * 0.05,
-            operationalCost:
-              (updatedAppointment.price -
-                (updatedAppointment.price *
-                  updatedAppointment.service.workerCommission / 100)) * 0.05,
+            businessEarnings: businessEarnings,
+            materialsCost: materialsCost,
+            operationalCost: operationalCost,
           },
         });
 

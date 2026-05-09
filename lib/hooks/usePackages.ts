@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { packagesApi, ServicePackage, CreatePackageData } from '../api/packages';
 import { toast } from 'sonner';
+import { appointmentsApi } from '../api/appointments';
 
 export function usePackages(params?: { active?: boolean }) {
   const queryClient = useQueryClient();
@@ -12,6 +13,7 @@ export function usePackages(params?: { active?: boolean }) {
   } = useQuery({
     queryKey: ['packages', params],
     queryFn: () => packagesApi.getPackages(params),
+    staleTime: 5 * 60 * 1000,
   });
 
   // Create package
@@ -64,10 +66,43 @@ export function usePackages(params?: { active?: boolean }) {
   };
 }
 
+// export function usePackage(id: string) {
+//   return useQuery({
+//     queryKey: ['packages', id],
+//     queryFn: () => packagesApi.getPackage(id),
+//     enabled: !!id,
+//   });
+// }
+
+
+// export function usePackages(params?: { active?: boolean }) {
+//   return useQuery({
+//     queryKey: ['packages', params],
+//     queryFn: () => packagesApi.getPackages(params),
+//     staleTime: 5 * 60 * 1000,
+//   });
+// }
+
 export function usePackage(id: string) {
   return useQuery({
     queryKey: ['packages', id],
     queryFn: () => packagesApi.getPackage(id),
     enabled: !!id,
+  });
+}
+
+export function useBookPackage() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: packagesApi.bookPackage,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['appointments'] });
+      queryClient.invalidateQueries({ queryKey: ['packages'] });
+      toast.success(data.message || 'Forfait réservé avec succès');
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.error?.message || 'Erreur lors de la réservation du forfait');
+    },
   });
 }

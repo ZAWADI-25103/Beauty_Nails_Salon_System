@@ -118,6 +118,7 @@ export function useCommission() {
   const { data: commissions = [], isLoading, refetch } = useQuery({
     queryKey: ["commission"],
     queryFn: () => commissionApi.getAll(),
+    refetchInterval: 60 * 1000, // Refetch every 60 seconds
   });
 
   const createMutation = useMutation({

@@ -74,6 +74,8 @@ import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
 import ClientModalTrigger from "../ClientModalTrigger";
 import { Appointment } from "@/lib/api/appointments";
+import PackageCard from "../PackageCard";
+import { usePackages } from "@/lib/hooks/usePackages";
 
 export default function ClientDashboardV2() {
   const [notificationOpen, setNotificationOpen] = useState(false);
@@ -172,6 +174,16 @@ export default function ClientDashboardV2() {
     rescheduleAppointment,
   } = useAppointments({
     clientId: user?.clientProfile?.id,
+  });
+
+  // Fetch appointments that were booked using packages
+  const {  packages: availablePackages = [], isLoading: isPackagesLoading } = usePackages({
+    active: true, // Only fetch active packages for booking purposes
+  });
+
+  const { appointments: packageAppointments = [], isLoading: isPackageAppointmentsLoading } = useAppointments({
+    clientId: user?.clientProfile?.id,
+    hasPackage: true, // Custom filter param you'd add to your API
   });
 
   const isAppointmentMissed = (date: string | Date, time: string) => {
@@ -880,7 +892,7 @@ export default function ClientDashboardV2() {
           {/* Secondary Stats */}
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5">
-            <div className="bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+            <div className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between">
               <CalendarIcon className="w-5 h-5 text-blue-600 dark:text-blue-400 mx-auto mb-2" />
               <p className="text-xl font-black text-gray-900 dark:text-gray-100">
                 {appointments ? appointments.length : 0}
@@ -890,17 +902,17 @@ export default function ClientDashboardV2() {
               </p>
             </div>
 
-            <div className="bg-linear-to-br from-green-50 to-emerald-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+            <div className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between">
               <DollarSign className="w-5 h-5 text-green-600 dark:text-green-400 mx-auto mb-2" />
               <p className="text-xl font-black text-gray-900 dark:text-gray-100 truncate">
-                {selectedClient?.totalSpent}
+                {Number(selectedClient?.totalSpent || 0).toFixed(2).toLocaleString()} CDF
               </p>
               <p className="text-base text-gray-500 uppercase tracking-tight">
                 Dépensé
               </p>
             </div>
 
-            <div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+            <div className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between">
               <Gift className="w-5 h-5 text-purple-600 dark:text-purple-400 mx-auto mb-2" />
               <p className="text-xl font-black text-gray-900 dark:text-gray-100">
                 {selectedClient?.giftCardBalance}
@@ -910,7 +922,7 @@ export default function ClientDashboardV2() {
               </p>
             </div>
 
-            <div className="bg-linear-to-br from-amber-50 to-orange-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+            <div className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between">
               <Wallet className="w-5 h-5 text-amber-600 dark:text-amber-400 mx-auto mb-2" />
               <p className="text-xl font-black text-gray-900 dark:text-gray-100">
                 {selectedClient?.prepaymentBalance}
@@ -931,6 +943,10 @@ export default function ClientDashboardV2() {
             <TabsTrigger value="appointments">
               <CalendarIcon className="w-4 h-4 mr-2" />
               Rendez-vous
+            </TabsTrigger>
+            <TabsTrigger value="package-appointments">
+              <CalendarIcon className="w-4 h-4 mr-2" />
+              Rendez-vous en Forfait
             </TabsTrigger>
             <TabsTrigger value="referrals">
               <Users className="w-4 h-4 mr-2" />
@@ -1602,6 +1618,56 @@ export default function ClientDashboardV2() {
                 </div>
               )}
             </Card>
+          </TabsContent>
+
+          {/* Packages Tab */}
+          <TabsContent value="package-appointmensts" className="space-y-6">
+            <div className="space-y-6">
+              {/* Section 1: Browse Available Packages */}
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Nos Forfaits Disponibles</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {availablePackages?.map((pkg) => (
+                    <PackageCard key={pkg.id} pkg={pkg} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Section 2: My Booked Package Appointments */}
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Mes Réservations de Forfaits</h2>
+                {isPackagesLoading ? (
+                  <Loader2 className="h-8 w-8 animate-spin text-pink-500" />
+                ) : packageAppointments.length === 0 ? (
+                  <p className="text-gray-500">Aucune réservation de forfait pour le moment.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {packageAppointments.map((apt) => (
+                      <Card key={apt.id} className="p-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h3 className="font-semibold">{apt.package?.name}</h3>
+                            <p className="text-sm text-gray-600">
+                              {format(new Date(apt.date), 'PPP')} à {apt.time}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              Avec: {apt.worker?.user?.name}
+                            </p>
+                          </div>
+                          <Badge variant={
+                            apt.status === 'completed' ? 'default' :
+                            apt.status === 'confirmed' ? 'secondary' : 'outline'
+                          }>
+                            {apt.status === 'completed' ? 'Terminé' :
+                            apt.status === 'confirmed' ? 'Confirmé' : 'En attente'}
+                          </Badge>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </TabsContent>
 
           {/* Referrals Tab */}

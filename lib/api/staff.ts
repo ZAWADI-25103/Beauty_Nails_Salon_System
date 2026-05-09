@@ -13,6 +13,8 @@ export interface Worker {
   workingHours?: any;
   hireDate: string;
   bio: string;
+  avatar: string | null;
+  experience: number;
   createdAt: string;
   updatedAt: string;
   totalSales: number;

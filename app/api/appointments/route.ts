@@ -12,6 +12,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status');
     const workerId = searchParams.get('workerId');
     const clientId = searchParams.get('clientId');
+    const hasPackage = searchParams.get('hasPackage') === 'true' ? { not: null } : null;
     
     const where: any = {};
     let wId = workerId;
@@ -80,7 +81,11 @@ export async function GET(request: NextRequest) {
         where.clientId = clientId;
       }
     }
-    
+
+    if (hasPackage !== null) {
+      where.packageId = hasPackage;
+    }
+
     const appointments = await prisma.appointment.findMany({
       where,
       include: {
@@ -129,7 +134,8 @@ export async function GET(request: NextRequest) {
               user: true
             }
           }
-        }}
+        }},
+        package: true
       },
       orderBy: [{ date: 'asc' }],
       cacheStrategy: { 
@@ -170,7 +176,7 @@ export async function POST(request: NextRequest) {
       receiptUrl,
     } = body;
 
-    console.log("Received appointment creation request with data:", body);
+    // console.log("Received appointment creation request with data:", body);
     
     // Only clients and admins can create appointments
     if (!['client', 'admin'].includes(user.role)) {
@@ -229,6 +235,7 @@ export async function POST(request: NextRequest) {
     
     // Calculate total price including 
     let totalPrice = service.price;
+    let additionalTime = 0;
     
     if (addOns.length > 0) {
       const addOnsData = await prisma.serviceAddOn.findMany({
@@ -239,6 +246,7 @@ export async function POST(request: NextRequest) {
       });
       
       const addOnsTotal = addOnsData.reduce((sum, addOn) => sum + addOn.price, 0);
+      additionalTime = addOnsData.reduce((sum, addOn) => sum + addOn.duration, 0);
       totalPrice += addOnsTotal;
     }
     
@@ -271,17 +279,23 @@ export async function POST(request: NextRequest) {
     }
 
     const wasRefBonusUsed = (amount: number) => {
-
       if(refBonusApplied) {
-        return amount * 0.01;
+        return amount + (amount * 0.1); // Add 10% back as bonus if ref bonus was applied
       }
       return amount
     }
     
     // Calculate final total
-    const taxAmount = (totalPrice - discountAmount) * 0.16; // 16% tax
+    const taxAmount = paymentInfo.tax; // 16% tax
     const finalTotal = wasRefBonusUsed(isFreeServiceUsed ? 0 : (totalPrice - discountAmount + taxAmount + (paymentInfo.tip || 0)));
 
+    // console.log("Price calculation details:", {
+    //   basePrice: service.price,
+    //   addOnsTotal: totalPrice - service.price,
+    //   discountAmount,
+    //   taxAmount,
+    //   finalTotal,
+    // });
 
     // Create appointment in a single transaction
     const result =await prisma.$transaction(async (tx) => {
@@ -427,6 +441,14 @@ export async function POST(request: NextRequest) {
           transactionId: transactionId || null,
         },
       });
+
+      await tx.appointment.update({
+        where: { id: appointment.id },
+        data: {
+          price: finalTotal,
+          duration: { increment: additionalTime },
+        },
+      });
       
       // Update client loyalty points
       const loyaltyPointsEarned = Math.floor(finalTotal / 1000); // 1 point per 1000 CDF
@@ -462,7 +484,7 @@ export async function POST(request: NextRequest) {
             },
           },
         }
-        console.log("Client update data for free service:", clientUpdateData.data)
+        // console.log("Client update data for free service:", clientUpdateData.data)
       } else if (isGiftCardUsed) {
         clientUpdateData.data = {
           // loyaltyPoints: {
@@ -485,7 +507,7 @@ export async function POST(request: NextRequest) {
             },
           },
         }
-        console.log("Client update data for free service:", clientUpdateData.data)
+        // console.log("Client update data for free service:", clientUpdateData.data)
       } else if (isFreeServiceUsed){
         clientUpdateData.data = {
           // loyaltyPoints: {
@@ -505,7 +527,7 @@ export async function POST(request: NextRequest) {
             },
           },
         }
-        console.log("Client update data for free service:", clientUpdateData.data)
+        // console.log("Client update data for free service:", clientUpdateData.data)
       } else {
         clientUpdateData.data = {
           // loyaltyPoints: {
@@ -522,7 +544,7 @@ export async function POST(request: NextRequest) {
             },
           },
         }
-        console.log("Client update data :", clientUpdateData.data)
+        // console.log("Client update data :", clientUpdateData.data)
       }
 
       if (paymentInfo.method === 'mobile') {
@@ -603,11 +625,11 @@ export async function POST(request: NextRequest) {
       };
     });
 
-    console.log("Result from appointment creation transaction:", {
-      ...result,
-      canGenerateReceipt: receiptUrl.length > 0 && paymentInfo.method === 'mobile',
-      receiptUrl 
-    });
+    // console.log("Result from appointment creation transaction:", {
+    //   ...result,
+    //   canGenerateReceipt: receiptUrl.length > 0 && paymentInfo.method === 'mobile',
+    //   receiptUrl 
+    // });
     
     return successResponse({
       ...result,

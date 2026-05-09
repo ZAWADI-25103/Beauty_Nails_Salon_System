@@ -3,11 +3,13 @@ import prisma from '@/lib/prisma';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+   context: { params: Promise<{ id: string; }>; }
 ) {
   try {
+
+    const id = (await context.params).id;
     const servicePackage = await prisma.servicePackage.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         services: true,
       },
@@ -70,11 +72,14 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string; }>; }
 ) {
   try {
+
+    const id = (await context.params).id;
+
     await prisma.servicePackage.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true, message: 'Package deleted successfully' });

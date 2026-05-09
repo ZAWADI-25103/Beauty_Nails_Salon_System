@@ -144,6 +144,8 @@ model WorkerProfile {
   isAvailable    Boolean  @default(true)
   workingHours   Json?
   hireDate       DateTime @default(now())
+  avatar          String?
+  experience      Int?       // in years
   bio            String?
   commissionType        String?    // Type: "percentage" | "fixed"
   commissionFrequency   String?    // How often paid: "daily" | "weekly" | "monthly"
@@ -335,6 +337,7 @@ model ServicePackage {
   services Service[] @relation("PackageServices")
 
   @@map("service_packages")
+  appointments Appointment[]
 }
 
 // ============================================
@@ -362,12 +365,14 @@ model Appointment {
   paymentIntentId String?
   paymentIntent   PaymentIntent? @relation(fields: [paymentIntentId], references: [id])
   client  ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  service Service       @relation(fields: [serviceId], references: [id])
+  service Service?       @relation(fields: [serviceId], references: [id])
   worker  WorkerProfile @relation(fields: [workerId], references: [id])
   reviews  Review[]     @relation("appointment_reviews")
   sale    Sale?
   tasks   Task[] // new: tasks assigned to this worker
   transfer AppointmentTransfer?
+  packageId     String?
+  package       ServicePackage? @relation(fields: [packageId], references: [id])
 
 
   @@index([clientId])
@@ -375,6 +380,7 @@ model Appointment {
   @@index([serviceId])
   @@index([date])
   @@index([status])
+  @@index([packageId])
   @@map("appointments")
 }
 
@@ -795,6 +801,7 @@ model InventoryUsage {
   quantity  Int
   usedBy    String?
   usedFor   String? // "Appointment ID" or "Service"
+  notes     String?  @db.Text
   createdAt DateTime @default(now())
 
   // Relations

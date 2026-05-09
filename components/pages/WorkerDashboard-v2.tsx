@@ -39,6 +39,7 @@ import {
   ArrowRight,
   ChevronUp,
   ChevronDown,
+  Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useAppointments } from "@/lib/hooks/useAppointments";
@@ -67,6 +68,7 @@ import { PayrollCountdown } from "../PayrollCountdown";
 import TransferAppointmentModal from "../modals/TransferAppointmentModal";
 import { usePendingTransfers } from "@/lib/hooks/useTransfers";
 import TransferRequestCard from "../TransferRequestCard";
+import InventorySelectionModal from "../modals/InventorySelectionModal";
 
 export default function WorkerDashboardV2() {
   const [notificationOpen, setNotificationOpen] = useState(false);
@@ -74,6 +76,7 @@ export default function WorkerDashboardV2() {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [freqComm, setFreqComm] = useState("");
   const [showTransfers, setShowTransfers] = useState(true);
+  const [showInventorySelection, setShowInventorySelection] = useState(false);
   const router = useRouter();
   // Get authenticated user
   const { user, isLoading: isAuthLoading } = useAuth();
@@ -515,7 +518,7 @@ export default function WorkerDashboardV2() {
                 staffId={worker?.id || ""}
                 trigger={
                   <Avatar className="w-12 h-12 border-4 border-white shadow-lg">
-                    <AvatarImage src="" />
+                    <AvatarImage src={worker?.avatar||''} />
                     <AvatarFallback className="text-2xl font-medium bg-gray-100 text-gray-600">
                       {worker?.name.split(" ")[0]?.charAt(0) ||
                         worker?.name.charAt(0)}
@@ -619,7 +622,7 @@ export default function WorkerDashboardV2() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
             {/* 💰 Worker Earnings */}
-            <div className="bg-linear-to-br from-green-50 to-emerald-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+            <div className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between text-center">
               <DollarSign className="w-5 h-5 text-green-600 dark:text-green-400 mx-auto mb-2" />
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 {worker?.totalEarnings?.toLocaleString()} CDF
@@ -628,7 +631,7 @@ export default function WorkerDashboardV2() {
             </div>
 
             {/* 🏢 Business Revenue */}
-            <div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+            <div className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between text-center">
               <Building className="w-5 h-5 text-purple-600 dark:text-purple-400 mx-auto mb-2" />
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 {worker?.businessRevenue?.toLocaleString()} CDF
@@ -637,7 +640,7 @@ export default function WorkerDashboardV2() {
             </div>
 
             {/* 🧴 Materials */}
-            <div className="bg-linear-to-br from-amber-50 to-orange-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+            <div className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between text-center">
               <Package className="w-5 h-5 text-amber-600 dark:text-amber-400 mx-auto mb-2" />
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 {worker?.materialsReserve?.toLocaleString()} CDF
@@ -646,7 +649,7 @@ export default function WorkerDashboardV2() {
             </div>
 
             {/* ⚙️ Operational */}
-            <div className="bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+            <div className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between text-center">
               <Settings className="w-5 h-5 text-blue-600 dark:text-blue-400 mx-auto mb-2" />
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 {worker?.operationalCosts?.toLocaleString()} CDF
@@ -842,6 +845,12 @@ export default function WorkerDashboardV2() {
                               </div>
                             )}
                           </div>
+                          {appointment.package && (
+                            <Badge className="bg-purple-500 text-white">
+                              <Sparkles className="w-3 h-3 mr-1" />
+                              Forfait: {appointment.package.name}
+                            </Badge>
+                          )}
                         </div>
                         <div className="flex flex-col gap-2 items-end">
                           {/* Status Badge */}
@@ -935,7 +944,7 @@ export default function WorkerDashboardV2() {
                                   setDetailsOpen(true);
                                 }}
                               >
-                                Détails
+                                Détails et Choix d'outils 
                               </Button>
                             </>
                           )}
@@ -1361,6 +1370,10 @@ export default function WorkerDashboardV2() {
                     </Card>
                   ) : (
                     <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+                      <p>
+                      L'historique de vos commissions après chaque prestation terminée. Cliquez sur le bouton de téléchargement pour obtenir un rapport détaillé de chaque période de commission.
+
+                      </p>
                       {[...workerCommissions]
                         .sort(
                           (a, b) =>
@@ -1514,16 +1527,24 @@ export default function WorkerDashboardV2() {
                   <>
                     <Button
                       className="flex-1 bg-purple-600 hover:bg-purple-700"
-                      onClick={() =>
+                      onClick={() => {
                         handleUpdateStatus(
                           selectedAppointment.id,
                           "in_progress",
                         )
+                        setShowInventorySelection(true)
+                      }
                       }
                     >
                       <PlayCircle className="w-4 h-4 mr-2" />
                       Commencer
                     </Button>
+                    <InventorySelectionModal
+                      appointmentId={selectedAppointment.id}
+                      workerId={selectedAppointment.workerId}
+                      open={showInventorySelection}
+                      onOpenChange={setShowInventorySelection}
+                    />
                   </>
                 )}
 

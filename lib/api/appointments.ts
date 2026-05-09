@@ -1,4 +1,4 @@
-import { ClientProfile, PaymentIntent, Review, Service, User, WorkerProfile } from '@/prisma/generated/client';
+import { PaymentIntent, Review, Service } from '@/prisma/generated/client';
 import axiosdb from '../axios';
 
 export interface Appointment {
@@ -21,6 +21,7 @@ export interface Appointment {
     newWorker: any,
     originalWorker: any
   };
+  package?: any 
   client?: any;
   service?: Service;
   worker?: any;
@@ -204,5 +205,6 @@ export const appointmentsApi = {
     } catch (error) {
       return null;
     }
-  }
+  },
+
 };

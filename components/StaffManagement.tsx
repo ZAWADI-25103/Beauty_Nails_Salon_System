@@ -247,7 +247,7 @@ export default function StaffManagement() {
                         staffId={selectedStaff?.id || ''}
                         trigger={
                           <Avatar className="w-16 h-16 mb-4 mr-4 border-4 border-white shadow-lg">
-                            <AvatarImage src="" />
+                            <AvatarImage src={selectedStaff.avatar||''} />
                             <AvatarFallback className="text-2xl font-medium bg-gray-100 text-gray-600">
                               {selectedStaff?.name.split(" ")[0]?.charAt(0) || selectedStaff?.name.charAt(0)}
                             </AvatarFallback>
@@ -314,7 +314,7 @@ export default function StaffManagement() {
                   <EditScheduleModal
                     staffId={selectedStaff.id}
                     staffName={selectedStaff.name}
-                    refetch={refetch}
+                    // refetch={refetch}
                     trigger={
                       <Button className="flex-1 bg-linear-to-r from-purple-500 to-pink-500 text-white rounded-full">
                         Modifier Horaires

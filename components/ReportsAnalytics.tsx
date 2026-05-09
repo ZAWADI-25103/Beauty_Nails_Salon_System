@@ -165,9 +165,9 @@ export default function ReportsAnalytics() {
             {revenueReport ?
               revenueReport?.totalRevenue && revenueReport?.totalRevenue > 5000000
                 ?
-                (revenueReport.totalRevenue / 1000000).toFixed(1) + 'M CDF'
+                (revenueReport.totalRevenue / 1000000).toFixed(2) + 'M CDF'
                 :
-                revenueReport?.totalRevenue + ' CDF'
+                revenueReport?.totalRevenue.toFixed(2) + ' CDF'
               : <Loader2 className="w-5 h-5 animate-spin text-purple-500 dark:text-purple-400 mx-auto mb-4" />}
           </p>
           <div className="flex items-center gap-1 mt-2">

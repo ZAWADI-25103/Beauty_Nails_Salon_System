@@ -3,41 +3,23 @@ import Link from 'next/link';
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
-import { Award, Heart, History, Shield, Sparkles, Star } from 'lucide-react';
+import { Award, Heart, Shield, Sparkles, Star } from 'lucide-react';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
-import HeroSection from '../HeroSection';
+import { useAvailableStaff } from '@/lib/hooks/useStaff';
 
 export default function About() {
-  const team = [
-    {
-      name: 'Marie Nkumu',
-      role: 'Spécialiste Ongles',
-      experience: '8 ans',
-      specialties: ['Manucure Gel', 'Nail Art', 'Extensions'],
-      image: 'https://images.unsplash.com/photo-1737214475335-8ed64d91f473?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYWlsJTIwYXJ0JTIwbWFuaWN1cmV8ZW58MXx8fHwxNzYyMzI1MTMyfDA&ixlib=rb-4.1.0&q=80&w=1080'
-    },
-    {
-      name: 'Grace Lumière',
-      role: 'Experte Cils',
-      experience: '6 ans',
-      specialties: ['Volume Russe', 'Extensions Naturelles', 'Rehaussement'],
-      image: 'https://images.unsplash.com/photo-1589710751893-f9a6770ad71b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxleWVsYXNoJTIwZXh0ZW5zaW9uc3xlbnwxfHx8fDE3NjIzNjE1OTl8MA&ixlib=rb-4.1.0&q=80&w=1080'
-    },
-    {
-      name: 'Sophie Kabila',
-      role: 'Coiffeuse Professionnelle',
-      experience: '10 ans',
-      specialties: ['Tresses', 'Tissage', 'Coiffures Créatives'],
-      image: 'https://images.unsplash.com/photo-1702236242829-a34c39814f31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYWlyJTIwYnJhaWRpbmclMjBzYWxvbnxlbnwxfHx8fDE3NjIzNjE1OTl8MA&ixlib=rb-4.1.0&q=80&w=1080'
-    },
-    {
-      name: 'Élise Makala',
-      role: 'Maquilleuse Professionnelle',
-      experience: '7 ans',
-      specialties: ['Maquillage Mariage', 'Make-up Artistique', 'Formation'],
-      image: 'https://images.unsplash.com/photo-1600637070413-0798fafbb6c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYWtldXAlMjBhcnRpc3R8ZW58MXx8fHwxNzYyMjgzMTg4fDA&ixlib=rb-4.1.0&q=80&w=1080'
-    }
-  ];
+
+  const { staff, isLoading: staffLoading } = useAvailableStaff();
+
+  const teams = staff.map((worker) => ({
+    name: worker.name,
+    role: worker.position || 'Esthéticienne',
+    experience: `${worker.experience || 1.5} ans`,
+    specialties: worker.specialties,
+    image: worker.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(worker.name)}&background=random`,
+    rating: worker.rating ? worker.rating.toFixed(1) : 'N/A',
+    reviews: worker.totalReviews || 0
+  }));
 
   const values = [
     {
@@ -75,7 +57,7 @@ export default function About() {
           alt="Beauty Nails Salon"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-pink-900/80 to-amber-900/60 flex items-center">
+        <div className="absolute inset-0 bg-linear-to-r from-pink-900/80 to-amber-900/60 flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
             <Badge className="mb-6 bg-pink-500/20 text-pink-100 border-pink-300/30 backdrop-blur-sm">
               Notre Histoire
@@ -171,11 +153,16 @@ export default function About() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {team.map((member, index) => (
-              <Card key={index} className="bg-white dark:bg-gray-950 border-b border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow">
-                <div className="relative h-48 sm:h-56 md:h-64">
-                  <ImageWithFallback
-                    src={member.image}
+            {staffLoading ? (
+              <div className="col-span-full text-center py-8">
+                <p className="text-lg text-gray-600 dark:text-gray-400">Chargement de l'équipe...</p>
+              </div>
+            ) : (
+              teams.map((member, index) => (
+                <Card key={index} className="bg-white dark:bg-gray-950 border-b border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow">
+                  <div className="relative h-48 sm:h-56 md:h-64">
+                    <ImageWithFallback
+                      src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover"
                   />
@@ -200,15 +187,15 @@ export default function About() {
                   </div>
                   <div className="flex items-center mt-3 sm:mt-4">
                     <div className="flex">
-                      {[...Array(5)].map((_, i) => (
+                      {[...Array(member.rating)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
-                    <span className="ml-2 text-base sm:text-lg text-gray-600 dark:text-gray-400">4.9/5</span>
+                    <span className="ml-2 text-base sm:text-lg text-gray-600 dark:text-gray-400">{member.rating}/5 ({member.reviews} avis)</span>
                   </div>
                 </div>
               </Card>
-            ))}
+            )))}
           </div>
         </div>
 
@@ -221,7 +208,7 @@ export default function About() {
               </h2>
               <div className="space-y-3 sm:space-y-4">
                 <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-pink-500 dark:bg-pink-600 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-6 h-6 rounded-full bg-pink-500 dark:bg-pink-600 flex items-center justify-center shrink-0 mt-1">
                     <span className="text-white text-base">✓</span>
                   </div>
                   <p className="ml-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
@@ -229,7 +216,7 @@ export default function About() {
                   </p>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-pink-500 dark:bg-pink-600 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-6 h-6 rounded-full bg-pink-500 dark:bg-pink-600 flex items-center justify-center shrink-0 mt-1">
                     <span className="text-white text-base">✓</span>
                   </div>
                   <p className="ml-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
@@ -237,7 +224,7 @@ export default function About() {
                   </p>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-pink-500 dark:bg-pink-600 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-6 h-6 rounded-full bg-pink-500 dark:bg-pink-600 flex items-center justify-center shrink-0 mt-1">
                     <span className="text-white text-base">✓</span>
                   </div>
                   <p className="ml-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
@@ -245,7 +232,7 @@ export default function About() {
                   </p>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-pink-500 dark:bg-pink-600 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-6 h-6 rounded-full bg-pink-500 dark:bg-pink-600 flex items-center justify-center shrink-0 mt-1">
                     <span className="text-white text-base">✓</span>
                   </div>
                   <p className="ml-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">

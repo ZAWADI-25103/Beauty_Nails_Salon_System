@@ -11,13 +11,13 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { useWorkerProfile } from '@/lib/hooks/useWorkerProfile';
 import { toast } from 'sonner';
-import { Plus, FileText, Eye, X, Loader2, AlertCircle, Star } from 'lucide-react';
+import { Plus, FileText, Eye, X, Loader2, AlertCircle, Star, Camera, User } from 'lucide-react';
 import MediaGrid from './MediaGrid';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { useWorker } from '@/lib/hooks/useStaff';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { put } from '@vercel/blob';
 
 // Define types based on your schema
 interface WorkingHours {
@@ -36,12 +36,15 @@ interface WorkerProfileData {
   isAvailable: boolean;
   workingHours: WorkingHours;
   bio?: string;
+  avatar?: string;
+  experience?: number;
 }
 
 export default function WorkerProfileSettings({ staffId }: { staffId: string }) {
   const { user } = useAuth()
   const { refetch: refetchWorker } = useWorker(staffId);
   const { updateProfile, isLoading, profile: workerProfile } = useWorkerProfile(staffId);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   const [formData, setFormData] = useState<WorkerProfileData>({
     position: '',
@@ -51,7 +54,9 @@ export default function WorkerProfileSettings({ staffId }: { staffId: string }) 
     commissionDay: 1,
     isAvailable: true,
     workingHours: {},
-    bio: ''
+    bio: '',
+    avatar: '',
+    experience: 0
   });
 
   const [newSpecialty, setNewSpecialty] = useState('');
@@ -68,13 +73,17 @@ export default function WorkerProfileSettings({ staffId }: { staffId: string }) 
         commissionDay: workerProfile.commissionDay || 1,
         isAvailable: workerProfile.isAvailable,
         workingHours: workerProfile.workingHours || {},
-        bio: workerProfile.bio || ''
+        bio: workerProfile.bio || '',
+        avatar: workerProfile.avatar || '',
+        experience: workerProfile.experience || 0
       });
 
       // Check if commission frequency is already set (locked)
       setIsCommissionLocked(Boolean(workerProfile.commissionFrequency));
     }
   }, [workerProfile]);
+
+  console.log(workerProfile);
 
   const handleInputChange = (field: keyof WorkerProfileData, value: any) => {
     setFormData(prev => ({
@@ -114,10 +123,58 @@ export default function WorkerProfileSettings({ staffId }: { staffId: string }) 
       return;
     }
 
+    let blob_avatar: any = {
+				url: "",
+				pathname: "",
+				size: 0,
+				type: "IMAGE",
+			};
+			const blobToken = process.env.NEXT_PUBLIC_BLOB_READ_WRITE_TOKEN;
+			if (avatarFile) {
+				if (!blobToken && avatarFile instanceof File) {
+					throw new Error(
+						"Vercel Blob token is missing. Please configure NEXT_PUBLIC_BLOB_READ_WRITE_TOKEN.",
+					);
+				}
+				if (avatarFile instanceof File) {
+					blob_avatar = await put(
+						`Beautynails/medias/${Date.now()}-${avatarFile}`,
+						avatarFile,
+						{
+							access: "public",
+							token: blobToken,
+						},
+					);
+				}
+			}
+
     // Submit to API
-    updateProfile(formData);
+    updateProfile({...formData, avatar: workerProfile?.avatar !== formData.avatar ? blob_avatar.url : formData.avatar})
     await refetchWorker(); // Refresh the data after successful update
   };
+
+  const handleFileChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		type: "avatar" | "coverImage",
+	) => {
+		if (e.target.files?.[0]) {
+			const file = e.target.files[0];
+
+			if (type === "avatar") {
+				setAvatarFile(file);
+			}
+
+			// Create preview URL
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setFormData((prev) => ({
+					...prev,
+					[type]: reader.result as string,
+				}));
+			};
+			reader.readAsDataURL(file);
+		}
+	};
 
   // Only show commission settings for worker role
   const showCommissionSettings = user?.role === 'admin';
@@ -134,10 +191,36 @@ export default function WorkerProfileSettings({ staffId }: { staffId: string }) 
 
           <div className="space-y-6">
             <div className="flex items-center gap-4">
-              <Avatar className="h-20 w-20">
-                <AvatarImage src={workerProfile?.user?.avatar || ""} alt={workerProfile?.user?.name} />
-                <AvatarFallback>{workerProfile?.user?.name?.charAt(0)}</AvatarFallback>
-              </Avatar>
+              <div className="space-y-2">
+									<label className="block text-lg font-medium">
+										Worker Avatar
+									</label>
+									<div className="relative w-24 h-24">
+										{formData.avatar ? (
+											<img
+												src={formData.avatar}
+												alt="Worker Avatar"
+												className="w-full h-full object-cover rounded-lg"
+											/>
+										) : (
+											<div className="w-full h-full bg-muted rounded-lg flex items-center justify-center">
+												<User className="h-8 w-8 text-muted-foreground" />
+											</div>
+										)}
+										<label className="absolute bottom-0 right-0 bg-primary text-primary-foreground rounded-full p-1.5 cursor-pointer hover:bg-accent">
+											<Camera className="h-4 w-4" />
+											<input
+												type="file"
+												className="hidden"
+												accept="image/*"
+												onChange={(e) => handleFileChange(e, "avatar")}
+											/>
+										</label>
+									</div>
+									<p className="text-xs text-muted-foreground">
+										Square image recommended (200x200px)
+									</p>
+								</div>
               <div className="flex-1">
                 <h3 className="font-medium text-lg">{workerProfile?.user?.name}</h3>
                 <p className="text-lg text-gray-500 dark:text-gray-400">{workerProfile?.user?.email}</p>
@@ -147,14 +230,26 @@ export default function WorkerProfileSettings({ staffId }: { staffId: string }) 
                   <span className="text-lg">{workerProfile?.rating.toFixed(1)} ({workerProfile?.totalReviews} avis)</span>
                 </div>
               </div>
-              <div>
-                <Label htmlFor="hireDate">Date d'embauche</Label>
-                <Input
-                  id="hireDate"
-                  type="text"
-                  value={workerProfile?.hireDate ? `${format(new Date(workerProfile.hireDate), "EEEE d MMMM 'à' HH'h'mm", { locale: fr })}` : workerProfile?.hireDate.split('T')[0]}
-                  disabled
-                />
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="hireDate">Date d'embauche</Label>
+                  <Input
+                    id="hireDate"
+                    type="text"
+                    value={workerProfile?.hireDate ? `${format(new Date(workerProfile.hireDate), "EEEE d MMMM 'à' HH'h'mm", { locale: fr })}` : workerProfile?.hireDate.split('T')[0]}
+                    disabled
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="experience">Années d'expérience</Label>
+                  <Input
+                    id="experience"
+                    type="number"
+                    min="0"
+                    value={workerProfile?.experience || 0}
+                    disabled={user?.role !== 'admin'} // Only admin can edit experience
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -280,22 +375,25 @@ export default function WorkerProfileSettings({ staffId }: { staffId: string }) 
               <div>
                 <Label htmlFor="commissionFrequency">Fréquence de Paiement</Label>
                 <Select
-                  value={formData.commissionFrequency}
-                  onValueChange={(value) => handleInputChange('commissionFrequency', value as any)}
-                  disabled={!showCommissionSettings && isCommissionLocked}
-                >
+                    value={formData.commissionFrequency || undefined}
+                    onValueChange={(value) =>
+                      handleInputChange("commissionFrequency", value)
+                    }
+                    disabled={!showCommissionSettings && isCommissionLocked}
+                  >
                   <SelectTrigger>
-                    <SelectValue />
+                    <SelectValue placeholder="Choisir une fréquence" />
                   </SelectTrigger>
+
                   <SelectContent>
                     <SelectItem value="daily">Quotidien</SelectItem>
                     <SelectItem value="weekly">Hebdomadaire</SelectItem>
                     <SelectItem value="monthly">Mensuel</SelectItem>
                   </SelectContent>
                 </Select>
-                {!showCommissionSettings && isCommissionLocked && (
-                  <p className="text-xs text-gray-500 mt-1">Verrouillé - non modifiable</p>
-                )}
+                  {!showCommissionSettings && isCommissionLocked && (
+                    <p className="text-xs text-gray-500 mt-1">Verrouillé - non modifiable - {workerProfile?.commissionFrequency}</p>
+                  )}
               </div>
 
               <div>

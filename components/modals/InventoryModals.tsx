@@ -259,12 +259,13 @@ export function AddProductModal({ trigger }: AddProductModalProps) {
 
 // --- Adjust Stock Modal ---
 interface AdjustStockModalProps {
+  itemId: string;
   productName?: string;
   currentStock?: number;
   trigger?: React.ReactNode;
 }
 
-export function AdjustStockModal({ productName, currentStock, trigger }: AdjustStockModalProps) {
+export function AdjustStockModal({ itemId, productName, currentStock, trigger }: AdjustStockModalProps) {
   const [reason, setReason] = useState('restock');
   const [qty, setQty] = useState<number | ''>('');
   const { updateStock, isUpdating } = useInventory();
@@ -281,7 +282,6 @@ export function AdjustStockModal({ productName, currentStock, trigger }: AdjustS
     // Assuming you have an itemId prop or context to get the current item ID
     // For this example, I'll assume it's passed as a prop or available in context
     // In a real implementation, you would get this from props or context
-    const itemId = 'some-item-id';
 
     updateStock({
       id: itemId,
@@ -350,14 +350,14 @@ export function AdjustStockModal({ productName, currentStock, trigger }: AdjustS
         </div>
 
         <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 mt-4">
-          <Button
+          {/* <Button
             type="button"
             variant="outline"
             className="w-full sm:w-auto"
             disabled={isUpdating}
           >
             Annuler
-          </Button>
+          </Button> */}
           <Button
             type="submit"
             className={`w-full sm:w-auto ${['damage', 'usage', 'correction_neg'].includes(reason)

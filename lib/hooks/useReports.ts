@@ -13,7 +13,7 @@ export function useRevenueReport(params?: {
     queryFn: () => reportsApi.getRevenueReport(params),
     enabled: !!params?.from && !!params?.to,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 1000 * 60 * 10, // 10 minutes
+    gcTime: 1000 * 60 * 10,  // 10 minutes
     structuralSharing: true, // Share data structure between renders
   });
 }
