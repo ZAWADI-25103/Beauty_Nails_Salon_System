@@ -1,9 +1,9 @@
-import ClientDashboardV2 from '@/components/pages/ClientDashboard-v2';
+import ClientDashboardV2 from "@/components/pages/ClientDashboard-v2";
 
 export const metadata = {
-  title: 'Client Dashboard - Beauty Nails',
+	title: "Client Dashboard - Beauty Nails",
 };
 
 export default async function ClientDashboardPage() {
-  return <ClientDashboardV2 />;
+	return <ClientDashboardV2 />;
 }

@@ -1,55 +1,55 @@
 interface AppointmentData {
-  id: string;
-  serviceName: string;
-  clientName: string;
-  date: string;
-  time: string;
-  price: number;
-  status: string;
+	id: string;
+	serviceName: string;
+	clientName: string;
+	date: string;
+	time: string;
+	price: number;
+	status: string;
 }
 
 interface CommissionHtmlProps {
-  worker: {
-    name: string;
-    position: string;
-    commissionType?: string;
-    commissionFrequency?: string;
-    commissionDay?: number;
-  };
-  periodLabel: string;
-  periodRange: { from: string; to: string };
-  aggregated: {
-    totalRevenue: number;
-    commissionAmount: number;
-    businessEarnings: number;
-    materialsCost: number;
-    operationalCost: number;
-    appointmentsCount: number;
-    commissionRate: number;
-    pendingCount: number;
-    paidCount: number;
-  };
-  appointments: AppointmentData[];
-  generatedAt: string;
-  isWithinPaymentWindow: boolean;
-  nextPaymentDate?: string;
+	worker: {
+		name: string;
+		position: string;
+		commissionType?: string;
+		commissionFrequency?: string;
+		commissionDay?: number;
+	};
+	periodLabel: string;
+	periodRange: { from: string; to: string };
+	aggregated: {
+		totalRevenue: number;
+		commissionAmount: number;
+		businessEarnings: number;
+		materialsCost: number;
+		operationalCost: number;
+		appointmentsCount: number;
+		commissionRate: number;
+		pendingCount: number;
+		paidCount: number;
+	};
+	appointments: AppointmentData[];
+	generatedAt: string;
+	isWithinPaymentWindow: boolean;
+	nextPaymentDate?: string;
 }
 
 export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
-  const {
-    worker,
-    periodLabel,
-    periodRange,
-    aggregated,
-    appointments,
-    generatedAt,
-    isWithinPaymentWindow,
-    nextPaymentDate,
-  } = data;
+	const {
+		worker,
+		periodLabel,
+		periodRange,
+		aggregated,
+		appointments,
+		generatedAt,
+		isWithinPaymentWindow,
+		nextPaymentDate,
+	} = data;
 
-  const hasPending = aggregated.pendingCount > 0;
+	const hasPending = aggregated.pendingCount > 0;
 
-  return `
+	return `
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -272,9 +272,11 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
       position: relative;
     }
     .status-banner {
-      ${hasPending 
-        ? `background: var(--warning-bg); border: 2px dashed #fcd34d; color: var(--warning-text);` 
-        : `background: var(--success-bg); border: 2px solid #6ee7b7; color: var(--success-text);`}
+      ${
+				hasPending
+					? `background: var(--warning-bg); border: 2px dashed #fcd34d; color: var(--warning-text);`
+					: `background: var(--success-bg); border: 2px solid #6ee7b7; color: var(--success-text);`
+			}
       border-radius: 14px;
       padding: 18px 22px;
       margin: 24px 0;
@@ -477,11 +479,15 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
               <div class="config-label">Fréquence</div>
               <div class="config-value">${worker.commissionFrequency || "daily"}</div>
             </div>
-            ${worker.commissionDay ? `
+            ${
+							worker.commissionDay
+								? `
             <div class="config-item">
               <div class="config-label">Jour de paiement</div>
               <div class="config-value">${worker.commissionDay}</div>
-            </div>` : ''}
+            </div>`
+								: ""
+						}
           </div>
         </div>
       </div>
@@ -493,10 +499,14 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
           <div>Début: <span>${periodRange.from}</span></div>
           <div>Fin: <span>${periodRange.to}</span></div>
         </div>
-        ${nextPaymentDate ? `
+        ${
+					nextPaymentDate
+						? `
         <div style="margin-top:10px;font-size:13px;color:var(--pink-700);font-weight:600;">
           🎯 Prochain paiement prévu: ${nextPaymentDate}
-        </div>` : ''}
+        </div>`
+						: ""
+				}
       </div>
 
       <!-- Financial Summary -->
@@ -539,25 +549,30 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
         <div class="commission-label">Montant Total de Commission</div>
         <div class="commission-value">${aggregated.commissionAmount.toLocaleString()} CDF</div>
         <div class="commission-sub">
-          ${aggregated.pendingCount > 0 
-            ? `Dont ${aggregated.pendingCount} commission(s) en attente de paiement` 
-            : '✓ Toutes les commissions de cette période ont été payées'}
+          ${
+						aggregated.pendingCount > 0
+							? `Dont ${aggregated.pendingCount} commission(s) en attente de paiement`
+							: "✓ Toutes les commissions de cette période ont été payées"
+					}
         </div>
       </div>
 
       <!-- Status Banner -->
       <div class="status-banner">
-        <span class="icon">${hasPending ? '⏳' : '✅'}</span>
+        <span class="icon">${hasPending ? "⏳" : "✅"}</span>
         <div>
-          ${hasPending
-            ? `<strong>Commission en attente :</strong> Ce document sert de preuve officielle que les ${aggregated.appointmentsCount} prestations listées ci-dessous ont été complétées par ${worker.name}. Le paiement de ${aggregated.commissionAmount.toLocaleString()} CDF sera effectué selon la fréquence configurée (${worker.commissionFrequency || 'daily'}).`
-            : `<strong>Paiement confirmé :</strong> Toutes les commissions de cette période ont été réglées avec succès par l'administration.`
-          }
+          ${
+						hasPending
+							? `<strong>Commission en attente :</strong> Ce document sert de preuve officielle que les ${aggregated.appointmentsCount} prestations listées ci-dessous ont été complétées par ${worker.name}. Le paiement de ${aggregated.commissionAmount.toLocaleString()} CDF sera effectué selon la fréquence configurée (${worker.commissionFrequency || "daily"}).`
+							: `<strong>Paiement confirmé :</strong> Toutes les commissions de cette période ont été réglées avec succès par l'administration.`
+					}
         </div>
       </div>
 
       <!-- Proof of Completion (Only if pending) -->
-      ${hasPending ? `
+      ${
+				hasPending
+					? `
       <div class="proof-section">
         <div class="proof-header">Preuve d'Achèvement des Prestations</div>
         <p class="proof-description">
@@ -575,29 +590,48 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
             </tr>
           </thead>
           <tbody>
-            ${appointments.map(apt => `
+            ${appointments
+							.map(
+								(apt) => `
               <tr>
                 <td><span class="service-name">${apt.serviceName}</span></td>
                 <td>${apt.clientName}</td>
-                <td>${new Date(apt.date).toLocaleDateString("fr-FR", { 
-                  day: '2-digit', month: 'short', year: 'numeric' 
-                })}</td>
+                <td>${new Date(apt.date).toLocaleDateString("fr-FR", {
+									day: "2-digit",
+									month: "short",
+									year: "numeric",
+								})}</td>
                 <td>${apt.time}</td>
                 <td class="amount">${apt.price.toLocaleString()} CDF</td>
               </tr>
-            `).join("")}
+            `,
+							)
+							.join("")}
           </tbody>
         </table>
-      </div>` : ''}
+      </div>`
+					: ""
+			}
 
       <!-- Paid Confirmation -->
-      ${!hasPending && aggregated.paidCount > 0 ? `
+      ${
+				!hasPending && aggregated.paidCount > 0
+					? `
       <div class="payment-info">
         <div class="label">✅ Paiement effectué avec succès</div>
-        <div class="date">Dernier paiement: ${new Date().toLocaleDateString("fr-FR", {
-          day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
-        })}</div>
-      </div>` : ''}
+        <div class="date">Dernier paiement: ${new Date().toLocaleDateString(
+					"fr-FR",
+					{
+						day: "2-digit",
+						month: "long",
+						year: "numeric",
+						hour: "2-digit",
+						minute: "2-digit",
+					},
+				)}</div>
+      </div>`
+					: ""
+			}
     </div>
 
     <!-- Footer -->
@@ -607,10 +641,14 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
         Document généré le ${generatedAt}<br/>
         Toute reproduction non autorisée est interdite • Réf: COMM-${Date.now().toString(36).toUpperCase()}
       </div>
-      ${hasPending ? `
+      ${
+				hasPending
+					? `
       <div class="warning">
         ⚠️ Ce document ne constitue pas un reçu de paiement — il atteste uniquement de l'achèvement des services
-      </div>` : ''}
+      </div>`
+					: ""
+			}
     </div>
   </div>
   

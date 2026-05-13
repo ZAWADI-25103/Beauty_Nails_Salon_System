@@ -1,9 +1,9 @@
-import Terms from '@/components/pages/Terms';
+import Terms from "@/components/pages/Terms";
 
 export const metadata = {
-  title: 'Terms of Service - Beauty Nails',
+	title: "Terms of Service - Beauty Nails",
 };
 
 export default function TermsPage() {
-  return <Terms />;
+	return <Terms />;
 }

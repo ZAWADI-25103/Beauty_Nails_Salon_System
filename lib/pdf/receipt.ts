@@ -1,20 +1,20 @@
 export function generateReceiptHTML({
-  paymentIntent,
-  appointment,
-  serviceName,
-  workerName,
-  clientName,
-  subtotal,
-  discount,
-  tax,
-  tip,
-  total,
-  qrBase64,
-  logoUrl
+	paymentIntent,
+	appointment,
+	serviceName,
+	workerName,
+	clientName,
+	subtotal,
+	discount,
+	tax,
+	tip,
+	total,
+	qrBase64,
+	logoUrl,
 }: any) {
-  const hasAppointment = !!appointment;
+	const hasAppointment = !!appointment;
 
-  return `
+	return `
   <!DOCTYPE html>
   <html>
   <head>
@@ -126,8 +126,8 @@ export function generateReceiptHTML({
       </div>
 
       ${
-        hasAppointment
-          ? `
+				hasAppointment
+					? `
       <!-- APPOINTMENT -->
       <div class="section">
         <div class="section-title">Appointment</div>
@@ -137,22 +137,26 @@ export function generateReceiptHTML({
       </div>
 
       ${
-        appointment.addOns?.length
-          ? `
+				appointment.addOns?.length
+					? `
       <div class="section">
         <div class="section-title">Add-ons</div>
-        ${appointment.addOns.map((a: any) => `
+        ${appointment.addOns
+					.map(
+						(a: any) => `
           <div class="row"><span>${a.name}</span><span>${a.price} CDF</span></div>
-        `).join("")}
+        `,
+					)
+					.join("")}
       </div>
       `
-          : ""
-      }
+					: ""
+			}
       `
-          : `
+					: `
       <div class="muted">⏳ Appointment not yet scheduled</div>
       `
-      }
+			}
 
       <!-- PAYMENT SUMMARY -->
       <div class="section">

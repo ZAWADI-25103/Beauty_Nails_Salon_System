@@ -1,7 +1,7 @@
 export function CommissionHtml(c: any) {
-  const isPaid = c.status === "paid";
+	const isPaid = c.status === "paid";
 
-  return `
+	return `
   <!DOCTYPE html>
   <html>
   <head>
@@ -87,10 +87,10 @@ export function CommissionHtml(c: any) {
         padding: 20px;
         border-radius: 12px;
         background: ${
-          isPaid
-            ? "linear-gradient(135deg,#16a34a,#22c55e)"
-            : "linear-gradient(135deg,#f59e0b,#fbbf24)"
-        };
+					isPaid
+						? "linear-gradient(135deg,#16a34a,#22c55e)"
+						: "linear-gradient(135deg,#f59e0b,#fbbf24)"
+				};
         color: white;
         text-align: center;
         margin-top: 25px;
@@ -166,10 +166,10 @@ export function CommissionHtml(c: any) {
 
       <div class="highlight">
         ${
-          isPaid
-            ? "Paiement effectué avec succès par l'administration"
-            : "Cette commission est en attente de paiement"
-        }
+					isPaid
+						? "Paiement effectué avec succès par l'administration"
+						: "Cette commission est en attente de paiement"
+				}
         <br/>
         <div class="amount">
           ${c.commissionAmount.toLocaleString()} CDF
@@ -177,13 +177,13 @@ export function CommissionHtml(c: any) {
       </div>
 
       ${
-        isPaid
-          ? `<div class="section card">
+				isPaid
+					? `<div class="section card">
               <strong>Date de paiement</strong><br/>
               ${new Date(c.paidAt).toLocaleString()}
             </div>`
-          : ""
-      }
+					: ""
+			}
 
       <div class="footer">
         Généré automatiquement • Système ERP K-Corp
@@ -193,4 +193,4 @@ export function CommissionHtml(c: any) {
   </body>
   </html>
   `;
-};
+}

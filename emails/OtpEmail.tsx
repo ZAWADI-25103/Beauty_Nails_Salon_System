@@ -1,67 +1,106 @@
 import {
-  Body,
-  Container,
-  Head,
-  Heading,
-  Hr,
-  Html,
-  Preview,
-  Section,
-  Text,
-} from '@react-email/components';
+	Body,
+	Container,
+	Head,
+	Heading,
+	Hr,
+	Html,
+	Preview,
+	Section,
+	Text,
+} from "@react-email/components";
 
 interface OtpEmailProps {
-  verificationCode?: string;
+	verificationCode?: string;
 }
 
 export const OtpEmail = ({ verificationCode }: OtpEmailProps) => {
-  return (
-    <Html>
-      <Head />
-      <Preview>Your login verification code for Beauty Nails System</Preview>
-      <Body style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#f4f4f5', color: '#212121', padding: '20px' }}>
-        <Container style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '8px', maxWidth: '600px' }}>
-          <Heading style={{ color: '#1f2937', fontSize: '20px', fontWeight: '600', marginBottom: '16px' }}>
-            Verify Your Login
-          </Heading>
+	return (
+		<Html>
+			<Head />
+			<Preview>Your login verification code for Beauty Nails System</Preview>
+			<Body
+				style={{
+					fontFamily: "Arial, sans-serif",
+					backgroundColor: "#f4f4f5",
+					color: "#212121",
+					padding: "20px",
+				}}
+			>
+				<Container
+					style={{
+						backgroundColor: "#ffffff",
+						padding: "24px",
+						borderRadius: "8px",
+						maxWidth: "600px",
+					}}
+				>
+					<Heading
+						style={{
+							color: "#1f2937",
+							fontSize: "20px",
+							fontWeight: "600",
+							marginBottom: "16px",
+						}}
+					>
+						Verify Your Login
+					</Heading>
 
-          <Text style={{ fontSize: '14px', marginBottom: '20px', color: '#374151' }}>
-            Please use the following code to complete your login to <strong>Beauty Nails System</strong>.
-            If you didn’t request this code, you can safely ignore this email.
-          </Text>
+					<Text
+						style={{ fontSize: "14px", marginBottom: "20px", color: "#374151" }}
+					>
+						Please use the following code to complete your login to{" "}
+						<strong>Beauty Nails System</strong>. If you didn’t request this
+						code, you can safely ignore this email.
+					</Text>
 
-          <Section style={{ textAlign: 'center', margin: '24px 0' }}>
-            <Text style={{ fontSize: '14px', color: '#6b7280', marginBottom: '8px' }}>Your verification code</Text>
-            <Text style={{ fontSize: '32px', fontWeight: '700', color: '#111827', letterSpacing: '2px' }}>
-              {verificationCode}
-            </Text>
-            <Text style={{ fontSize: '13px', color: '#6b7280', marginTop: '8px' }}>
-              This code is valid for 10 minutes.
-            </Text>
-          </Section>
+					<Section style={{ textAlign: "center", margin: "24px 0" }}>
+						<Text
+							style={{
+								fontSize: "14px",
+								color: "#6b7280",
+								marginBottom: "8px",
+							}}
+						>
+							Your verification code
+						</Text>
+						<Text
+							style={{
+								fontSize: "32px",
+								fontWeight: "700",
+								color: "#111827",
+								letterSpacing: "2px",
+							}}
+						>
+							{verificationCode}
+						</Text>
+						<Text
+							style={{ fontSize: "13px", color: "#6b7280", marginTop: "8px" }}
+						>
+							This code is valid for 10 minutes.
+						</Text>
+					</Section>
 
-          <Hr style={{ borderTop: '1px solid #e5e7eb', margin: '24px 0' }} />
+					<Hr style={{ borderTop: "1px solid #e5e7eb", margin: "24px 0" }} />
 
-          <Text style={{ fontSize: '12px', color: '#6b7280' }}>
-            You’re receiving this email because you have an account at <a href="https://beauty-nails-salon.vercel.app" style={{ color: '#2563eb' }}>beauty-nails-salon.vercel.app</a>.
-            Beauty Nails System will never ask for your password or payment details by email.
-          </Text>
-        </Container>
-      </Body>
-    </Html>
-  );
+					<Text style={{ fontSize: "12px", color: "#6b7280" }}>
+						You’re receiving this email because you have an account at{" "}
+						<a
+							href="https://beauty-nails-salon.vercel.app"
+							style={{ color: "#2563eb" }}
+						>
+							beauty-nails-salon.vercel.app
+						</a>
+						. Beauty Nails System will never ask for your password or payment
+						details by email.
+					</Text>
+				</Container>
+			</Body>
+		</Html>
+	);
 };
 
 export default OtpEmail;
-
-
-
-
-
-
-
-
-
 
 // import {
 //   Body,

@@ -1,35 +1,40 @@
-"use server"
-import { NextRequest } from 'next/server';
-import prisma from '@/lib/prisma';
-import { getAuthenticatedUser, successResponse, handleApiError, errorResponse } from '@/lib/api/helpers';
+"use server";
+import type { NextRequest } from "next/server";
+import {
+	errorResponse,
+	getAuthenticatedUser,
+	handleApiError,
+	successResponse,
+} from "@/lib/api/helpers";
+import prisma from "@/lib/prisma";
 
 export async function GET(_request: NextRequest) {
-  try {
-    const user = await getAuthenticatedUser();
+	try {
+		const user = await getAuthenticatedUser();
 
-    const client = await prisma.clientProfile.findUnique({
-      where: { userId: user.id },
-      select: {
-        id: true,
-        referralCode: true,
-        referrals: true,
-      }
-    });
+		const client = await prisma.clientProfile.findUnique({
+			where: { userId: user.id },
+			select: {
+				id: true,
+				referralCode: true,
+				referrals: true,
+			},
+		});
 
-    if (!client) {
-      return errorResponse('Client non trouvé', 404);
-    }
+		if (!client) {
+			return errorResponse("Client non trouvé", 404);
+		}
 
-    console.log("Returned data:", {
-      code: client.referralCode,
-      referrals: client.referrals || 0,
-    });
+		console.log("Returned data:", {
+			code: client.referralCode,
+			referrals: client.referrals || 0,
+		});
 
-    return successResponse({
-      code: client.referralCode,
-      referrals: client.referrals || 0,
-    });
-  } catch (error) {
-    return handleApiError(error);
-  }
+		return successResponse({
+			code: client.referralCode,
+			referrals: client.referrals || 0,
+		});
+	} catch (error) {
+		return handleApiError(error);
+	}
 }

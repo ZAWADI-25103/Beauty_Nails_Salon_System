@@ -1,126 +1,124 @@
-import { generateReceiptHTML } from "@/lib/pdf/receipt";
-import prisma from "@/lib/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 import QRCode from "qrcode";
-
+import { generateReceiptHTML } from "@/lib/pdf/receipt";
+import prisma from "@/lib/prisma";
 
 export async function GET(req: NextRequest) {
-  try {
-    const { searchParams } = new URL(req.url);
+	try {
+		const { searchParams } = new URL(req.url);
 
-    const phone = searchParams.get("phone");
-    const transactionId = searchParams.get("transactionId");
-    const subtotal = searchParams.get("subtotal");
-    const discount = searchParams.get("discount");
-    const tax = searchParams.get("tax");
-    const tip = searchParams.get("tip");
-    const total = searchParams.get("total");
-    const serviceName = searchParams.get("serviceName");
-    const workerName = searchParams.get("workerName");
-    const clientName = searchParams.get("clientName");
+		const phone = searchParams.get("phone");
+		const transactionId = searchParams.get("transactionId");
+		const subtotal = searchParams.get("subtotal");
+		const discount = searchParams.get("discount");
+		const tax = searchParams.get("tax");
+		const tip = searchParams.get("tip");
+		const total = searchParams.get("total");
+		const serviceName = searchParams.get("serviceName");
+		const workerName = searchParams.get("workerName");
+		const clientName = searchParams.get("clientName");
 
-    if (!phone) {
-      return NextResponse.json({ error: "Phone is required" }, { status: 400 });
-    }
+		if (!phone) {
+			return NextResponse.json({ error: "Phone is required" }, { status: 400 });
+		}
 
-    const phoneNumber = phone.replace(/\D/g, "+"); // Remove non-digit characters
+		const phoneNumber = phone.replace(/\D/g, "+"); // Remove non-digit characters
 
-    // 🔍 Find payment intent FIRST (source of truth)
-    const paymentIntent = await prisma.paymentIntent.findFirst({
-      where: {
-        phoneNumber,
-        transactionId,
-        status: "success",
-      },
-      
-      orderBy: { createdAt: "desc" },
-    });
+		// 🔍 Find payment intent FIRST (source of truth)
+		const paymentIntent = await prisma.paymentIntent.findFirst({
+			where: {
+				phoneNumber,
+				transactionId,
+				status: "success",
+			},
 
-    if (!paymentIntent) {
-      return NextResponse.json(
-        { error: "No successful payment found" },
-        { status: 404 }
-      );
-    }
+			orderBy: { createdAt: "desc" },
+		});
 
-    // 🔍 Try to find linked appointment (optional)
-    const appointment = await prisma.appointment.findFirst({
-      where: { paymentIntentId: paymentIntent.id },
-      include: {
-        service: {
-          include:{
-            addOns: true
-          }
-        },
-        client: {
-          select: {
-            user: {
-              select: {
-                name: true,
-              }
-            },
-          },
-        },
-        worker: {
-          select: {
-            user: {
-              select: {
-                name: true,
-              }
-            },
-          },
-        },
-      },
-    });
+		if (!paymentIntent) {
+			return NextResponse.json(
+				{ error: "No successful payment found" },
+				{ status: 404 },
+			);
+		}
 
-    // 🎯 QR = transactionId (NOT receipt)
-    const qrData = paymentIntent.transactionId || paymentIntent.id;
-    const qrBase64 = await QRCode.toDataURL(qrData);
+		// 🔍 Try to find linked appointment (optional)
+		const appointment = await prisma.appointment.findFirst({
+			where: { paymentIntentId: paymentIntent.id },
+			include: {
+				service: {
+					include: {
+						addOns: true,
+					},
+				},
+				client: {
+					select: {
+						user: {
+							select: {
+								name: true,
+							},
+						},
+					},
+				},
+				worker: {
+					select: {
+						user: {
+							select: {
+								name: true,
+							},
+						},
+					},
+				},
+			},
+		});
 
-    const html = generateReceiptHTML({
-      paymentIntent,
-      appointment,
-      serviceName,
-      workerName,
-      clientName,
-      subtotal,
-      discount,
-      tax,
-      tip,
-      total,
-      qrBase64,
-      logoUrl: "/Bnails_ white.png"
-    });
+		// 🎯 QR = transactionId (NOT receipt)
+		const qrData = paymentIntent.transactionId || paymentIntent.id;
+		const qrBase64 = await QRCode.toDataURL(qrData);
 
-    // 🚀 Launch browser
-    const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+		const html = generateReceiptHTML({
+			paymentIntent,
+			appointment,
+			serviceName,
+			workerName,
+			clientName,
+			subtotal,
+			discount,
+			tax,
+			tip,
+			total,
+			qrBase64,
+			logoUrl: "/Bnails_ white.png",
+		});
 
-    const page = await browser.newPage();
+		// 🚀 Launch browser
+		const browser = await puppeteer.launch({
+			args: ["--no-sandbox", "--disable-setuid-sandbox"],
+		});
 
-    await page.setContent(html, { waitUntil: "networkidle0" });
+		const page = await browser.newPage();
 
-    const pdfBuffer = await page.pdf({
-      format: "A4",
-      printBackground: true,
-    });
+		await page.setContent(html, { waitUntil: "networkidle0" });
 
-    await browser.close();
+		const pdfBuffer = await page.pdf({
+			format: "A4",
+			printBackground: true,
+		});
 
-    return new NextResponse(Buffer.from(pdfBuffer), {
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `inline; filename=receipt-${paymentIntent.id}.pdf`,
-      },
-    });
+		await browser.close();
 
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json(
-      { error: "Failed to generate receipt" },
-      { status: 500 }
-    );
-  }
+		return new NextResponse(Buffer.from(pdfBuffer), {
+			headers: {
+				"Content-Type": "application/pdf",
+				"Content-Disposition": `inline; filename=receipt-${paymentIntent.id}.pdf`,
+			},
+		});
+	} catch (err) {
+		console.error(err);
+		return NextResponse.json(
+			{ error: "Failed to generate receipt" },
+			{ status: 500 },
+		);
+	}
 }

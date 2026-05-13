@@ -1,21 +1,20 @@
-import { PrismaClient } from "@/prisma/generated/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
+import { PrismaClient } from "@/prisma/generated/client";
 
 // Learn more about instantiating PrismaClient in Next.js here: https://www.prisma.io/docs/data-platform/accelerate/getting-started
 
 const prismaClientSingleton = () => {
-
-  return new PrismaClient({
-    accelerateUrl:`${process.env.DATABASE_URL}`,
-    transactionOptions:{
-      timeout:14000,
-      maxWait:15000,
-    }
-  }).$extends(withAccelerate())
-}
+	return new PrismaClient({
+		accelerateUrl: `${process.env.DATABASE_URL}`,
+		transactionOptions: {
+			timeout: 14000,
+			maxWait: 15000,
+		},
+	}).$extends(withAccelerate());
+};
 
 declare const globalThis: {
-  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+	prismaGlobal: ReturnType<typeof prismaClientSingleton>;
 } & typeof global;
 
 const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();

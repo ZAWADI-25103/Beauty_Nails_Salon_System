@@ -1,30 +1,34 @@
-"use server"
-import { NextRequest } from 'next/server';
-import prisma from '@/lib/prisma';
-import { requireRole, successResponse, handleApiError } from '@/lib/api/helpers';
+"use server";
+import type { NextRequest } from "next/server";
+import {
+	handleApiError,
+	requireRole,
+	successResponse,
+} from "@/lib/api/helpers";
+import prisma from "@/lib/prisma";
 
 export async function PATCH(
-  request: NextRequest,
-  context: { params: Promise<{ id: string; }>; }
+	request: NextRequest,
+	context: { params: Promise<{ id: string }> },
 ) {
-  try {
-    const id = (await context.params).id;
+	try {
+		const id = (await context.params).id;
 
-    await requireRole(['admin', 'worker']);
+		await requireRole(["admin", "worker"]);
 
-    const body = await request.json();
-    const { notes } = body;
+		const body = await request.json();
+		const { notes } = body;
 
-    const client = await prisma.clientProfile.update({
-      where: { userId: id },
-      data: { notes },
-    });
+		const client = await prisma.clientProfile.update({
+			where: { userId: id },
+			data: { notes },
+		});
 
-    return successResponse({
-      message: 'Notes mises à jour',
-      client,
-    });
-  } catch (error) {
-    return handleApiError(error);
-  }
+		return successResponse({
+			message: "Notes mises à jour",
+			client,
+		});
+	} catch (error) {
+		return handleApiError(error);
+	}
 }

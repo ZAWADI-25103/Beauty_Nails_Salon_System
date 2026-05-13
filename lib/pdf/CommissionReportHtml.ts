@@ -1,23 +1,23 @@
 export function CommissionReportHtml(data: {
-  commission: any;
-  appointments?: Array<{
-    id: string;
-    serviceName: string;
-    clientName: string;
-    date: string;
-    time: string;
-    price: number;
-    status: string;
-  }>;
+	commission: any;
+	appointments?: Array<{
+		id: string;
+		serviceName: string;
+		clientName: string;
+		date: string;
+		time: string;
+		price: number;
+		status: string;
+	}>;
 }) {
-  const { commission, appointments = [] } = data;
-  const isPaid = commission.status === "paid";
-  const generatedAt = new Date().toLocaleString("fr-FR", {
-    dateStyle: "long",
-    timeStyle: "medium",
-  });
+	const { commission, appointments = [] } = data;
+	const isPaid = commission.status === "paid";
+	const generatedAt = new Date().toLocaleString("fr-FR", {
+		dateStyle: "long",
+		timeStyle: "medium",
+	});
 
-  return `
+	return `
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -80,9 +80,11 @@ export function CommissionReportHtml(data: {
       font-size: 13px;
       font-weight: 600;
       margin-top: 16px;
-      ${isPaid 
-        ? "background: rgba(16, 185, 129, 0.15); color: var(--success);" 
-        : "background: rgba(245, 158, 11, 0.15); color: var(--warning);"}
+      ${
+				isPaid
+					? "background: rgba(16, 185, 129, 0.15); color: var(--success);"
+					: "background: rgba(245, 158, 11, 0.15); color: var(--warning);"
+			}
     }
     .status-badge::before {
       content: "";
@@ -347,13 +349,14 @@ export function CommissionReportHtml(data: {
       </div>
 
       <!-- Payment Status -->
-      ${isPaid 
-        ? `
+      ${
+				isPaid
+					? `
         <div class="paid-info">
           <div class="label">✅ Paiement effectué avec succès par l'administration</div>
           <div class="date">${new Date(commission.paidAt).toLocaleString("fr-FR")}</div>
-        </div>` 
-        : `
+        </div>`
+					: `
         <div class="proof-section">
           <div class="proof-title">Preuve d'Achèvement des Services</div>
           <p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;">
@@ -371,7 +374,9 @@ export function CommissionReportHtml(data: {
               </tr>
             </thead>
             <tbody>
-              ${appointments.map(apt => `
+              ${appointments
+								.map(
+									(apt) => `
                 <tr>
                   <td><strong>${apt.serviceName}</strong></td>
                   <td>${apt.clientName}</td>
@@ -379,17 +384,23 @@ export function CommissionReportHtml(data: {
                   <td>${apt.time}</td>
                   <td style="text-align:right;font-weight:600;">${apt.price.toLocaleString()} CDF</td>
                 </tr>
-              `).join("")}
+              `,
+								)
+								.join("")}
             </tbody>
           </table>
         </div>`
-      }
+			}
 
       <!-- Paid At (if applicable) -->
-      ${isPaid && commission.paidAt ? `
+      ${
+				isPaid && commission.paidAt
+					? `
         <div style="text-align:center;margin-top:20px;font-size:13px;color:var(--gray-600);">
           Référence de paiement: <strong style="color:var(--pink-dark);">${commission.id.slice(-8).toUpperCase()}</strong>
-        </div>` : ""}
+        </div>`
+					: ""
+			}
     </div>
 
     <!-- Footer -->

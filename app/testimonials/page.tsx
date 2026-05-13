@@ -1,9 +1,9 @@
-import Testimonials from '@/components/pages/Testimonials';
+import Testimonials from "@/components/pages/Testimonials";
 
 export const metadata = {
-  title: 'Testimonials - Beauty Nails',
+	title: "Testimonials - Beauty Nails",
 };
 
 export default function TestimonialsPage() {
-  return <Testimonials />;
+	return <Testimonials />;
 }

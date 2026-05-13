@@ -1,14 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
+
 // import { getSession } from 'next-auth/react';
 
-const baseurl = process.env.NEXT_PUBLIC_API_URL || '';
+const baseurl = process.env.NEXT_PUBLIC_API_URL || "";
 const axiosdb = axios.create({
-  baseURL: baseurl,
-  timeout: 30000,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
+	baseURL: baseurl,
+	timeout: 30000,
+	headers: {
+		"Content-Type": "application/json",
+		Accept: "application/json",
+	},
 });
 
 // // Request interceptor to add auth token
