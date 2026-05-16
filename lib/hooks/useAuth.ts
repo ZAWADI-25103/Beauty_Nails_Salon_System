@@ -23,12 +23,12 @@ export function useAuth() {
 		mutationFn: authApi.login,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["auth", "me"], data.user);
-			toast.success(`Bienvenue, ${data.user.name} !`);
+			toast.success(`Welcome, ${data.user.name} !`);
 			window.location.href = `/dashboard/${data.user.role}`;
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de connexion",
+				error.response?.data?.error?.message || "Login error",
 			);
 		},
 	});
@@ -38,12 +38,12 @@ export function useAuth() {
 		mutationFn: authApi.register,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["auth", "me"], data.user);
-			toast.success(data.message || "Compte créé avec succès !");
+			toast.success(data.message || "Account created successfully!");
 			window.location.href = "/dashboard/client";
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur lors de l'inscription",
+				error.response?.data?.error?.message || "Registration error",
 			);
 		},
 	});
@@ -57,7 +57,7 @@ export function useAuth() {
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de mise à jour",
+				error.response?.data?.error?.message || "Update error",
 			);
 		},
 	});
@@ -67,7 +67,7 @@ export function useAuth() {
 		mutationFn: authApi.logout,
 		onSuccess: () => {
 			queryClient.clear();
-			toast.success("Déconnexion réussie");
+			toast.success("Logged out successfully");
 			window.location.href = "/auth/login";
 		},
 	});
@@ -95,7 +95,7 @@ export function useForgotPassword() {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error ||
-					"Erreur lors de la demande de réinitialisation",
+					"Error sending reset link",
 			);
 		},
 	});
@@ -116,7 +116,7 @@ export function useResetPassword() {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error ||
-					"Erreur lors de la réinitialisation du mot de passe",
+					"Error resetting password",
 			);
 		},
 	});
@@ -130,7 +130,7 @@ export function useSendOtp() {
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error || "Erreur lors de l'envoi du code OTP",
+				error.response?.data?.error || "Error sending OTP code",
 			);
 		},
 	});
@@ -144,7 +144,7 @@ export function useVerifyOtp() {
 			toast.success(data.message);
 		},
 		onError: (error: any) => {
-			toast.error(error.response?.data?.error || "Code OTP invalide");
+			toast.error(error.response?.data?.error || "Invalid OTP code");
 		},
 	});
 }
@@ -158,7 +158,7 @@ export function useSendWelcomeEmail() {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error ||
-					"Erreur lors de l'envoi de l'email de bienvenue",
+					"Error sending welcome email",
 			);
 		},
 	});

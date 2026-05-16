@@ -33,12 +33,12 @@ export function useWorkerProfile(userId: string) {
 		onSuccess: (updatedProfile) => {
 			queryClient.setQueryData(["worker-profile", userId], updatedProfile);
 			queryClient.invalidateQueries({ queryKey: ["workers"] });
-			toast.success("Profil mis à jour avec succès");
+			toast.success("Profile updated successfully");
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors de la mise à jour du profil",
+					"Error updating profile",
 			);
 		},
 	});

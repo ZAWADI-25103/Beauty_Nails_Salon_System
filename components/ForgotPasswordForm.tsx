@@ -29,16 +29,14 @@ export default function ForgotPasswordForm() {
 					>
 						<Logo width={250} height={70} />
 					</Link>
-				</div>
-				<Card className="p-6 sm:p-8 border-b border-pink-100 dark:border-pink-900 bg-white dark:bg-gray-950 shadow-2xl rounded-3xl">
-					<div className="text-center mb-6 sm:mb-8">
-						<h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-							Réinitialiser votre mot de passe
+					<h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+							Reset Your Password
 						</h1>
 						<p className="text-lg sm:text-base text-gray-600 dark:text-gray-400">
-							Entrez votre email pour recevoir un lien de réinitialisation
+							Enter your email address and we'll send you a link to reset your password.
 						</p>
-					</div>
+				</div>
+				<Card className="p-6 sm:p-8 border-b border-pink-100 dark:border-pink-900 bg-white dark:bg-gray-950 shadow-2xl rounded-3xl">
 
 					<form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
 						<div>
@@ -62,11 +60,11 @@ export default function ForgotPasswordForm() {
 						<Button
 							type="submit"
 							disabled={isPending}
-							className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-3 rounded-xl font-medium"
+							className="w-full bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-3 rounded-xl font-medium"
 						>
 							{isPending
-								? "Envoi en cours..."
-								: "Envoyer le lien de réinitialisation"}
+								? "Sending..."
+								: "Send Reset Link"}
 						</Button>
 					</form>
 
@@ -76,7 +74,7 @@ export default function ForgotPasswordForm() {
 							className="text-base sm:text-lg text-purple-600 dark:text-purple-400 hover:underline flex items-center justify-center gap-1"
 						>
 							<ArrowLeft className="w-4 h-4" />
-							Retour à la connexion
+							Back to login
 						</Link>
 					</div>
 				</Card>

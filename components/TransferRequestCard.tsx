@@ -87,7 +87,7 @@ export default function TransferRequestCard({
 
 					<div className="min-w-0">
 						<h4 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-							Demande de transfert
+							Transfer Request
 						</h4>
 
 						<p className="text-sm sm:text-base text-pink-700 dark:text-pink-300 mt-1 break-words">
@@ -100,7 +100,7 @@ export default function TransferRequestCard({
 				</div>
 
 				<Badge className="w-fit rounded-full bg-gradient-to-r from-amber-400 to-orange-400 text-white border-0 px-4 py-1.5 text-sm shadow-md">
-					En attente
+					Pending
 				</Badge>
 			</div>
 
@@ -131,7 +131,7 @@ export default function TransferRequestCard({
 						<Clock className="w-5 h-5 text-pink-500 mt-0.5 shrink-0" />
 
 						<div className="text-gray-700 dark:text-gray-300">
-							<p className="font-medium">Date & Heure</p>
+							<p className="font-medium">Date & Time</p>
 							<p className="text-sm text-muted-foreground">
 								{format(new Date(appointment.date), "PPP", {
 									locale: fr,
@@ -147,9 +147,9 @@ export default function TransferRequestCard({
 						<MapPin className="w-5 h-5 text-pink-500 mt-0.5 shrink-0" />
 
 						<div className="text-gray-700 dark:text-gray-300">
-							<p className="font-medium">Lieu</p>
+							<p className="font-medium">Location</p>
 							<p className="text-sm text-muted-foreground">
-								{appointment.location === "salon" ? "Salon" : "À domicile"}
+								{appointment.location === "salon" ? "Salon" : "At home"}
 							</p>
 						</div>
 					</div>
@@ -158,7 +158,7 @@ export default function TransferRequestCard({
 						<Phone className="w-5 h-5 text-pink-500 mt-0.5 shrink-0" />
 
 						<div className="text-gray-700 dark:text-gray-300 min-w-0">
-							<p className="font-medium">Téléphone</p>
+							<p className="font-medium">Phone</p>
 							<p className="text-sm text-muted-foreground break-all">
 								{appointment.client?.user?.phone}
 							</p>
@@ -167,7 +167,7 @@ export default function TransferRequestCard({
 
 					<div className="flex items-start gap-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 p-3 text-white shadow-md">
 						<div>
-							<p className="font-medium">Montant</p>
+							<p className="font-medium">Amount</p>
 
 							<p className="text-lg sm:text-xl font-bold">
 								{appointment.price.toLocaleString()} CDF
@@ -181,7 +181,7 @@ export default function TransferRequestCard({
 			{transfer.transferReason && (
 				<div className="mb-5 rounded-2xl border border-amber-200 dark:border-amber-900/30 bg-amber-50 dark:bg-amber-950/10 p-4">
 					<p className="text-sm sm:text-base text-amber-800 dark:text-amber-200 leading-relaxed">
-						<strong>Raison :</strong> {transfer.transferReason}
+						<strong>Reason:</strong> {transfer.transferReason}
 					</p>
 				</div>
 			)}
@@ -190,7 +190,7 @@ export default function TransferRequestCard({
 			{transfer.transferFeeAmount > 0 && (
 				<div className="mb-5 rounded-2xl border border-green-200 dark:border-green-900/30 bg-green-50 dark:bg-green-950/10 p-4">
 					<p className="text-sm sm:text-base text-green-800 dark:text-green-200 leading-relaxed">
-						<strong>Commission pour vous :</strong>{" "}
+						<strong>Commission for you:</strong>{" "}
 						{transfer.transferFeeAmount.toLocaleString()} CDF (
 						{transfer.transferFeePercentage}%)
 					</p>
@@ -201,13 +201,13 @@ export default function TransferRequestCard({
 			{showNotes && (
 				<div className="mb-5">
 					<label className="block text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300 mb-3">
-						Raison du refus
+						Rejection Reason
 					</label>
 
 					<textarea
 						value={rejectionNote}
 						onChange={(e) => setRejectionNote(e.target.value)}
-						placeholder="Expliquez pourquoi vous ne pouvez pas accepter ce transfert..."
+						placeholder="Explain why you cannot accept this transfer..."
 						rows={4}
 						className="w-full rounded-2xl border border-pink-200 dark:border-pink-900/30 bg-white dark:bg-gray-900 p-4 text-sm sm:text-base text-gray-900 dark:text-white outline-none ring-0 focus:border-pink-400 focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-900/30 transition-all resize-none"
 					/>
@@ -223,7 +223,7 @@ export default function TransferRequestCard({
 				>
 					<CheckCircle className="w-5 h-5 mr-2" />
 
-					{respondToTransfer.isPending ? "Traitement..." : "Accepter"}
+					{respondToTransfer.isPending ? "Processing..." : "Accept"}
 				</Button>
 
 				{!showNotes ? (
@@ -233,7 +233,7 @@ export default function TransferRequestCard({
 						className="flex-1 h-12 sm:h-14 rounded-2xl border-red-200 text-red-500 hover:bg-red-50 dark:border-red-900/40 dark:hover:bg-red-900/20 text-base font-semibold"
 					>
 						<XCircle className="w-5 h-5 mr-2" />
-						Refuser
+						Reject
 					</Button>
 				) : (
 					<>
@@ -244,7 +244,7 @@ export default function TransferRequestCard({
 							className="flex-1 h-12 sm:h-14 rounded-2xl text-base font-semibold"
 						>
 							<XCircle className="w-5 h-5 mr-2" />
-							Confirmer
+							Confirm
 						</Button>
 
 						<Button
@@ -255,7 +255,7 @@ export default function TransferRequestCard({
 							variant="outline"
 							className="flex-1 h-12 sm:h-14 rounded-2xl text-base font-semibold"
 						>
-							Annuler
+							Cancel
 						</Button>
 					</>
 				)}

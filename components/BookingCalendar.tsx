@@ -125,7 +125,7 @@ export default function BookingCalendar() {
 		}));
 	}, [allAppointments]);
 
-	// console.log("processed rendez-vous: ", processedAppointments)
+	// console.log("processed appointments: ", processedAppointments)
 
 	// Generate days of the week (excluding Sunday)
 	const daysOfWeek = useMemo(() => {
@@ -167,7 +167,7 @@ export default function BookingCalendar() {
 		return grouped;
 	}, [daysOfWeek, filteredStaff, processedAppointments]);
 
-	// console.log("rendez-vous par staff: ", appointmentsByDayAndStaff)
+	// console.log("appointments par staff: ", appointmentsByDayAndStaff)
 
 	// Navigation functions
 	const goToPreviousWeek = () => {
@@ -229,7 +229,7 @@ export default function BookingCalendar() {
 							variant="outline"
 							className="rounded-full"
 						>
-							Cette semaine
+							This Week
 						</Button>
 					</div>
 
@@ -240,10 +240,10 @@ export default function BookingCalendar() {
 								onValueChange={setSelectedStaffFilter}
 							>
 								<SelectTrigger className="lg:w-48 rounded-full">
-									<SelectValue placeholder="Tous les employés" />
+									<SelectValue placeholder="All Staff" />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="all">Tous les employés</SelectItem>
+									<SelectItem value="all">All Staff</SelectItem>
 									{filteredStaff.map((s) => (
 										<SelectItem key={s.id} value={s.id}>
 											{s.name}
@@ -258,7 +258,7 @@ export default function BookingCalendar() {
 								className="bg-linear-to-r from-pink-500 to-purple-500 text-white rounded-full"
 								onClick={() => setIsNewAppointmentOpen(true)}
 							>
-								+ Nouveau RDV
+								+ New Appointment
 							</Button>
 						)}
 					</div>
@@ -352,7 +352,7 @@ export default function BookingCalendar() {
 													>
 														<div className="flex items-center justify-between">
 															<span className="text-lg font-medium text-gray-900 dark:text-white">
-																{appointments.length} RDV
+																{appointments.length} Appt
 															</span>
 															{appointments.length > 0 && (
 																<Badge className="text-base bg-pink-500 text-white">
@@ -372,7 +372,7 @@ export default function BookingCalendar() {
 															{staff.name} - {day.formattedDate}
 														</h3>
 														<p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
-															{appointments.length} rendez-vous
+															{appointments.length} appointments
 														</p>
 
 														<div className="space-y-3 max-h-60 overflow-y-auto">
@@ -400,14 +400,14 @@ export default function BookingCalendar() {
 																				} text-white`}
 																			>
 																				{apt.status === "confirmed"
-																					? "Confirmé"
+																					? "Confirmed"
 																					: apt.status === "pending"
-																						? "En attente"
+																						? "Pending"
 																						: apt.status === "completed"
-																							? "Complété"
+																							? "Completed"
 																							: apt.status === "in_progress"
-																								? "En cours"
-																								: "Annulé"}
+																								? "In Progress"
+																								: "Cancelled"}
 																			</Badge>
 																		</div>
 																		<p className="text-lg text-gray-900 dark:text-white">
@@ -420,7 +420,7 @@ export default function BookingCalendar() {
 																))
 															) : (
 																<p className="text-gray-500 dark:text-gray-400 text-center py-4">
-																	Aucun rendez-vous
+																	Aucun appointments
 																</p>
 															)}
 														</div>

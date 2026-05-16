@@ -67,7 +67,7 @@ export function CreateCampaignModal({
 			<DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{campaign ? "Modifier Campagne" : "Nouvelle Campagne"}
+						{campaign ? "Edit Campaign" : "New Campaign"}
 					</DialogTitle>
 				</DialogHeader>
 				<div className="space-y-4">

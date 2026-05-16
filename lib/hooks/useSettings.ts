@@ -19,12 +19,12 @@ export function useUpdateSalonProfile() {
 		onSuccess: (data) => {
 			queryClient.setQueryData(["settings", "profile"], data);
 			queryClient.invalidateQueries({ queryKey: ["settings", "profile"] });
-			toast.success("Profil mis à jour avec succès");
+			toast.success("Profile updated successfully");
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors de la mise à jour du profil",
+					"Error updating profile",
 			);
 		},
 	});
@@ -47,12 +47,12 @@ export function useUpdateSystemSettings() {
 		onSuccess: (data) => {
 			queryClient.setQueryData(["settings", "system"], data);
 			queryClient.invalidateQueries({ queryKey: ["settings", "system"] });
-			toast.success("Paramètres mis à jour avec succès");
+			toast.success("Settings updated successfully");
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors de la mise à jour des paramètres",
+					"Error updating settings",
 			);
 		},
 	});

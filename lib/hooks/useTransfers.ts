@@ -31,14 +31,14 @@ export function useRespondToTransfer() {
 
 			toast.success(
 				variables.action === "accept"
-					? "✓ Transfert accepté - Rendez-vous ajouté à votre planning"
-					: "✗ Transfert refusé",
+					? "✓ Transfer accepted - Appointment added to your schedule"
+					: "✗ Transfer rejected",
 			);
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors du traitement du transfert",
+					"Error processing transfer",
 			);
 		},
 	});

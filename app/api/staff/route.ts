@@ -155,7 +155,7 @@ export async function GET(request: NextRequest) {
 				email: s.user.email,
 				workingDays: daysToWorks,
 				workingHoursString:
-					typeof s.workingHours === "string" ? s.workingHours : "Non défini",
+					typeof s.workingHours === "string" ? s.workingHours : "Not defined",
 				appointmentsCount: completedApps.length,
 				revenue: totalRevenue.toString(),
 				clientRetention: `${retention}%`,
@@ -187,7 +187,7 @@ export async function POST(request: NextRequest) {
 
 		// Validation
 		if (!name || !email || !phone || !password) {
-			return errorResponse("Tous les champs sont requis", 400);
+			return errorResponse("All fields are required", 400);
 		}
 
 		// Check if user exists
@@ -203,7 +203,7 @@ export async function POST(request: NextRequest) {
 		});
 
 		if (existingUser) {
-			return successResponse("Email ou téléphone déjà utilisé", 202);
+			return successResponse("Email or phone already in use", 202);
 		}
 
 		// Hash password
@@ -251,7 +251,7 @@ export async function POST(request: NextRequest) {
 		return successResponse(
 			{
 				user: userWithoutPassword,
-				message: "Compte créé avec succès",
+				message: "Account created successfully",
 			},
 			201,
 		);

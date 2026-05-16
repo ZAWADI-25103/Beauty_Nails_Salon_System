@@ -306,7 +306,7 @@ export default function ClientManagement() {
 												variant="outline"
 												className="rounded-full py-5 px-6 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300  transition-all text-lg"
 											>
-												Modifier
+												Edit
 											</Button>
 										</ClientModalTrigger>
 									</div>
@@ -417,7 +417,7 @@ export default function ClientManagement() {
 									<Card className="p-6 bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 border border-purple-100 dark:border-purple-900/30 rounded-3xl">
 										<h4 className="text-lg font-black text-gray-900 dark:text-gray-100 mb-4 uppercase tracking-widest flex items-center gap-2">
 											<DollarSign className="w-4 h-4 text-purple-500" />
-											Abonnement
+											Membership
 										</h4>
 										<ManageClientMembership clientId={selectedClient.id} />
 									</Card>
@@ -447,7 +447,7 @@ export default function ClientManagement() {
 								<div className="flex items-center justify-between">
 									<h4 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  flex items-center gap-2">
 										<Calendar className="w-5 h-5 text-pink-500" />
-										Historique des Visites
+										Visit History
 									</h4>
 									<Button
 										variant="outline"
@@ -543,7 +543,7 @@ export default function ClientManagement() {
 											</div>
 											<div>
 												<p className="text-base font-black text-green-600 dark:text-green-400 uppercase tracking-widest">
-													Solde Prépayé
+													Prepaid Balance
 												</p>
 												<p className="text-2xl font-black text-gray-900 dark:text-gray-100">
 													{selectedClient.prepaymentBalance}
@@ -564,7 +564,7 @@ export default function ClientManagement() {
 											</div>
 											<div>
 												<p className="text-base font-black text-purple-600 dark:text-purple-400 uppercase tracking-widest">
-													Carte Cadeau
+													Gift Card
 												</p>
 												<p className="text-2xl font-black text-gray-900 dark:text-gray-100">
 													{selectedClient.giftCardBalance}
@@ -583,7 +583,7 @@ export default function ClientManagement() {
 								<Card className="p-6 bg-linear-to-br from-amber-50 to-orange-50 dark:from-amber-900/10 dark:to-orange-900/10 border-amber-100 dark:border-amber-900/30 rounded-3xl">
 									<h4 className="text-lg font-black text-gray-900 dark:text-gray-100 mb-4 uppercase tracking-widest flex items-center gap-2">
 										<Award className="w-4 h-4 text-amber-500" />
-										Programme de Fidélité
+										Loyalty Program
 									</h4>
 									<div className="space-y-4">
 										<div className="flex justify-between items-center">
@@ -604,7 +604,7 @@ export default function ClientManagement() {
 										</div>
 										<p className="text-base text-gray-600 dark:text-gray-400 italic">
 											Encore {500 - selectedClient.loyaltyPoints} points pour
-											votre prochaine récompense !
+											your next reward!
 										</p>
 									</div>
 								</Card>

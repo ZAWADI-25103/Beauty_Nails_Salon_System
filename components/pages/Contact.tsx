@@ -87,7 +87,7 @@ export default function Contact() {
 						Contact
 					</Badge>
 					<h1 className="text-5xl text-gray-900 dark:text-gray-100 mb-6">
-						Contactez-nous
+						Contact Us
 					</h1>
 					<p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
 						Une question ? Une demande spéciale ? Nous sommes là pour vous
@@ -241,7 +241,7 @@ export default function Contact() {
 									WhatsApp
 								</h3>
 								<p className="text-lg sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-									Contactez-nous directement pour une réponse rapide
+									Contact Us directement pour une réponse rapide
 								</p>
 								<a
 									href="https://wa.me/243123456789"

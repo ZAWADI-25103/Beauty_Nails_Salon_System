@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 		const workerId = searchParams.get("workerId");
 
 		if (!date || !workerId) {
-			return errorResponse("Date et ID employé requis", 400);
+			return errorResponse("Date and worker ID required", 400);
 		}
 
 		// Get worker's schedule for the day

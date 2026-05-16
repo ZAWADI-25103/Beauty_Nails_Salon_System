@@ -173,7 +173,7 @@ export function EditScheduleModal({
 				<DialogHeader>
 					<DialogTitle className="flex justify-between items-center">
 						<span className="text-gray-900 dark:text-gray-100">
-							Modifier Planning - {staffName || "Employée"}
+							Edit Schedule - {staffName || "Staff"}
 						</span>
 
 						{/* <Button
@@ -553,7 +553,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 										staffName={staff?.name}
 										trigger={
 											<Button className="w-full bg-purple-500 hover:bg-purple-600 text-white dark:bg-purple-600 dark:hover:bg-purple-700">
-												Modifier Horaires
+												Edit Hours
 											</Button>
 										}
 									/>
@@ -599,7 +599,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 													{getCommissionForMonth(selectedMonth)?.status ===
 													"paid"
 														? "Payé"
-														: "En attente"}
+														: "Pending"}
 													)
 												</h5>
 												<div className="space-y-3">
@@ -715,7 +715,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 										variant="outline"
 										className="w-full mt-4 border-dashed py-6 text-gray-500 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 hover:border-pink-300 dark:hover:border-pink-400"
 									>
-										+ Ajouter un document
+										+ Add Document
 									</Button>
 								</TabsContent>
 							</Tabs>

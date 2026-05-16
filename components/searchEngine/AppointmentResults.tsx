@@ -51,7 +51,7 @@ export function AppointmentResults({ data }: { data: Appointment[] }) {
 
 	if (!data?.length) {
 		return (
-			<p className="text-sm text-gray-500 mt-4">Aucun rendez-vous trouvé</p>
+			<p className="text-sm text-gray-500 mt-4">No appointments found</p>
 		);
 	}
 
@@ -72,7 +72,7 @@ export function AppointmentResults({ data }: { data: Appointment[] }) {
 				return (
 					<Badge className="bg-green-100 text-green-700 hover:bg-green-100">
 						<CheckCircle className="w-3 h-3 mr-1" />
-						Confirmé
+						Confirmed
 					</Badge>
 				);
 			case "pending":
@@ -93,7 +93,7 @@ export function AppointmentResults({ data }: { data: Appointment[] }) {
 				return (
 					<Badge className="bg-red-100 text-red-700 hover:bg-red-100">
 						<XCircle className="w-3 h-3 mr-1" />
-						Annulé
+						Cancelled
 					</Badge>
 				);
 			default:
@@ -108,9 +108,9 @@ export function AppointmentResults({ data }: { data: Appointment[] }) {
 				className="p-2 border rounded-lg"
 			>
 				<option value="">Tous</option>
-				<option value="completed">Complété</option>
+				<option value="completed">Completed</option>
 				<option value="confirmed">Confirmé</option>
-				<option value="missed">Manqué</option>
+				<option value="missed">Missed</option>
 				<option value="cancelled">Annulé</option>
 			</select>
 			{filteredAppointments?.map((appointment: any) => {

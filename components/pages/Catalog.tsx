@@ -97,16 +97,16 @@ const AddOnModal = ({
 				<div className="p-6">
 					<h4 className="text-lg  text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
 						<Plus className="w-5 h-5 text-pink-500" />
-						Add-ons disponibles
+						Available add-ons
 					</h4>
 
 					{isLoading ? (
 						<p className="text-gray-500 dark:text-gray-400">
-							Chargement des add-ons...
+							Loading add-ons...
 						</p>
 					) : addOns.length === 0 ? (
 						<p className="text-gray-500 dark:text-gray-400">
-							Aucun add-on disponible pour ce service
+							No add-on available for this service
 						</p>
 					) : (
 						<div className="space-y-3">
@@ -137,7 +137,7 @@ const AddOnModal = ({
 				<div className="p-6 border-t border-gray-200 dark:border-gray-700">
 					<Link href={`/appointments?service=${service.id}`}>
 						<Button className="w-full bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full py-6  shadow-md">
-							Réserver
+							Book
 						</Button>
 					</Link>
 				</div>
@@ -208,10 +208,10 @@ export default function CatalogPage() {
 			<section className="bg-linear-to-b from-pink-50 to-white dark:from-gray-900 dark:to-gray-950 py-16 sm:py-24">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 					<h1 className="text-4xl sm:text-5xl md:text-6xl text-gray-900 dark:text-gray-100 mb-6">
-						Notre Catalogue
+						Our Catalog
 					</h1>
 					<p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-						Explorez nos services, produits, forfaits et offres spéciales.
+						Explore our services, products, packages and special offers.
 					</p>
 				</div>
 			</section>
@@ -221,7 +221,7 @@ export default function CatalogPage() {
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					{/* Tabs */}
 					<p className=" dark:text-pink-400 text-xs sm:text-xs">
-						{"glisser  <--- | --->"}
+						{"swipe  <--- | --->"}
 					</p>
 					<Tabs
 						value={activeTab}
@@ -242,7 +242,7 @@ export default function CatalogPage() {
 								value="packages"
 								className="rounded-lg data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400"
 							>
-								<Package className="w-4 h-4 mr-2" /> Forfaits
+								<Package className="w-4 h-4 mr-2" /> Packages
 							</TabsTrigger>
 							<TabsTrigger
 								value="promotions"
@@ -254,7 +254,7 @@ export default function CatalogPage() {
 								value="loyalty"
 								className="rounded-lg data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400"
 							>
-								<Award className="w-4 h-4 mr-2" /> Fidélité
+								<Award className="w-4 h-4 mr-2" /> Loyalty
 							</TabsTrigger>
 						</TabsList>
 
@@ -315,7 +315,7 @@ export default function CatalogPage() {
 															setSelectedService(service);
 														}}
 													>
-														Voir détails
+														See details
 													</Button>
 												</Card>
 											))}
@@ -453,7 +453,7 @@ export default function CatalogPage() {
 												<Badge
 													className={`${pkg.isActive ? "bg-green-500 dark:bg-green-600" : "bg-gray-400"} text-white border-0 px-3 py-1`}
 												>
-													{pkg.isActive ? "Actif" : "Inactif"}
+													{pkg.isActive ? "Active" : "Inactive"}
 												</Badge>
 											</div>
 
@@ -467,7 +467,7 @@ export default function CatalogPage() {
 
 											<div className="space-y-3 mb-8 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
 												<p className="text-base  text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-													Services inclus
+													Included services
 												</p>
 												{pkg.services?.slice(0, 3).map(
 													(
@@ -485,7 +485,7 @@ export default function CatalogPage() {
 												)}
 												{pkg.services && pkg.services.length > 3 && (
 													<p className="text-base text-gray-500 dark:text-gray-400">
-														+ {pkg.services.length - 3} autres
+														+ {pkg.services.length - 3} more
 													</p>
 												)}
 											</div>
@@ -503,7 +503,7 @@ export default function CatalogPage() {
 													</span>
 												</div>
 												<Badge className="bg-green-500 dark:bg-green-600 text-white border-0 w-full justify-center py-1.5">
-													Économisez{" "}
+													Save{" "}
 													{savings > 0 ? savings.toLocaleString() : "N/A"} CDF
 												</Badge>
 											</div>
@@ -513,7 +513,7 @@ export default function CatalogPage() {
 													size="sm"
 													className="w-full bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full shadow-md"
 												>
-													Réserver Forfait
+													Book Package
 												</Button>
 											</Link>
 										</Card>
@@ -542,7 +542,7 @@ export default function CatalogPage() {
 													<Badge
 														className={`${promo.isActive ? "bg-green-500 dark:bg-green-600" : "bg-gray-400"} text-white border-0`}
 													>
-														{promo.isActive ? "Actif" : "Inactif"}
+														{promo.isActive ? "Active" : "Inactive"}
 													</Badge>
 												</div>
 												<p className="text-lg text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-900 inline-block px-3 py-1 rounded-lg border border-amber-100 dark:border-amber-900/30">
@@ -558,8 +558,8 @@ export default function CatalogPage() {
 												</p>
 												<p className="text-[10px] sm:text-base  text-gray-500 dark:text-gray-400 uppercase tracking-widest">
 													{promo.type === "percentage"
-														? "Réduction %"
-														: "Réduction Fixe"}
+														? "Discount %"
+														: "Fixed Discount"}
 												</p>
 											</div>
 										</div>
@@ -567,7 +567,7 @@ export default function CatalogPage() {
 										<div className="grid grid-cols-2 gap-4 text-lg mb-6">
 											<div className="p-3 bg-white dark:bg-gray-900 rounded-xl border border-amber-100 dark:border-amber-900/30 text-center">
 												<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  mb-1">
-													Début
+													Start
 												</p>
 												<p className="text-gray-900 dark:text-gray-100 font-semibold">
 													{new Date(promo.startDate).toLocaleDateString()}
@@ -575,7 +575,7 @@ export default function CatalogPage() {
 											</div>
 											<div className="p-3 bg-white dark:bg-gray-900 rounded-xl border border-amber-100 dark:border-amber-900/30 text-center">
 												<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  mb-1">
-													Fin
+													End
 												</p>
 												<p className="text-gray-900 dark:text-gray-100 font-semibold">
 													{new Date(promo.endDate).toLocaleDateString()}
@@ -598,13 +598,13 @@ export default function CatalogPage() {
 													navigator.clipboard.writeText(
 														`${promo.code.toUpperCase}`,
 													);
-													toast.success("Code Promotion Copié !");
+													toast.success("Promo Code Copied!");
 												}}
 												size="sm"
 												variant="outline"
 												className="flex-1 rounded-full py-5 bg-white dark:bg-gray-900 dark:border-gray-700 dark:text-gray-300"
 											>
-												Copier Code
+												Copy Code
 											</Button>
 											{/* <Button size="sm" variant="outline" className="flex-1 rounded-full py-5 text-red-600 bg-white dark:bg-gray-900 dark:border-red-900/30">
                         Désactiver
@@ -624,7 +624,7 @@ export default function CatalogPage() {
 											<Award className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
 										</div>
 										<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100">
-											Programme Actuel
+											Current Program
 										</h3>
 									</div>
 
@@ -634,27 +634,27 @@ export default function CatalogPage() {
 												Points par dépense
 											</p>
 											<p className="text-base sm:text-2xl font-black text-gray-900 dark:text-gray-100">
-												{loyaltyRules.pointsPerSpend} point / 1 000 CDF dépensé
+												{loyaltyRules.pointsPerSpend} point per 1,000 CDF spent
 											</p>
 										</Card>
 
 										<Card className="bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 border border-blue-100 dark:border-blue-900/30 p-4 sm:p-5 rounded-2xl">
 											<p className="text-[10px] sm:text-base  text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">
-												Récompense par visites
+												Reward per visits
 											</p>
 											<p className="text-base sm:text-2xl font-black text-gray-900 dark:text-gray-100">
-												Service gratuit après{" "}
-												{loyaltyRules.appointmentsForReward} rendez-vous
+												Free service after{" "}
+												{loyaltyRules.appointmentsForReward} appointments
 											</p>
 										</Card>
 
 										<Card className="bg-linear-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-800/50 border border-green-100 dark:border-green-900/30 p-4 sm:p-5 rounded-2xl">
 											<p className="text-[10px] sm:text-base  text-green-600 dark:text-green-400 uppercase tracking-widest mb-1">
-												Récompense par parrainages
+												Reward per referrals
 											</p>
 											<p className="text-base sm:text-2xl font-black text-gray-900 dark:text-gray-100">
-												Service gratuit après {loyaltyRules.referralsForReward}{" "}
-												parrainages
+												Free service after {loyaltyRules.referralsForReward}{" "}
+												referrals
 											</p>
 										</Card>
 									</div>
@@ -666,7 +666,7 @@ export default function CatalogPage() {
 											<Gift className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
 										</div>
 										<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100">
-											Paliers de Récompenses
+											Reward Tiers
 										</h3>
 									</div>
 
@@ -683,7 +683,7 @@ export default function CatalogPage() {
 														</p>
 														<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 flex items-center gap-1">
 															<Target className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-500" />
-															{reward.points} points requis
+															{reward.points} points required
 														</p>
 													</div>
 													<Badge className="bg-amber-500 dark:bg-amber-600 text-white border-0 font-black px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg shadow-amber-500/20 text-[10px] sm:text-base">
@@ -698,7 +698,7 @@ export default function CatalogPage() {
 								<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 lg:col-span-2">
 									<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100 mb-8 flex items-center gap-2">
 										<TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-pink-500" />
-										Statistiques Programme Fidélité
+										Statistiques Programme Loyalty
 									</h3>
 									<div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
 										<div className="bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-blue-100 dark:border-blue-900/30 text-center">
@@ -708,7 +708,7 @@ export default function CatalogPage() {
 											</p>{" "}
 											{/* Use real count */}
 											<p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-												Membres Actifs
+												Membres Actives
 											</p>
 										</div>
 										<div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-800/50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-purple-100 dark:border-purple-900/30 text-center">
@@ -717,7 +717,7 @@ export default function CatalogPage() {
 												{loyaltyPoints}
 											</p>
 											<p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-												Points Totaux
+												Total Points
 											</p>
 										</div>
 										<div className="bg-linear-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-800/50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-green-100 dark:border-green-900/30 text-center">
@@ -726,7 +726,7 @@ export default function CatalogPage() {
 												38 {/* Replace with real count from API */}
 											</p>
 											<p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-												Utilisées
+												Redeemed
 											</p>
 										</div>
 										<div className="bg-linear-to-br from-amber-50 to-orange-50 dark:from-gray-800 dark:to-gray-800/50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-amber-100 dark:border-amber-900/30 text-center">
@@ -735,7 +735,7 @@ export default function CatalogPage() {
 												+15%
 											</p>
 											<p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-												Rétention
+												Retention
 											</p>
 										</div>
 									</div>

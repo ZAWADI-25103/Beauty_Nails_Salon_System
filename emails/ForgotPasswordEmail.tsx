@@ -21,7 +21,7 @@ export const ForgotPasswordEmail = ({
 	return (
 		<Html>
 			<Head />
-			<Preview>Réinitialisez votre mot de passe Beauty Nails</Preview>
+			<Preview>Reset Your Beauty Nails Password</Preview>
 			<Body
 				style={{
 					fontFamily: "Arial, sans-serif",
@@ -41,7 +41,7 @@ export const ForgotPasswordEmail = ({
 						<h1
 							style={{ color: "#ec4899", fontSize: "24px", fontWeight: "bold" }}
 						>
-							Beauty Nails
+							Beauty Nails - Password Reset Request
 						</h1>
 					</Section>
 
@@ -49,15 +49,15 @@ export const ForgotPasswordEmail = ({
 						<Text
 							style={{ fontSize: "16px", fontWeight: "bold", color: "#212121" }}
 						>
-							Bonjour {userFirstname},
+							Hello {userFirstname},
 						</Text>
 
 						<Text
 							style={{ fontSize: "16px", fontWeight: "300", color: "#404040" }}
 						>
-							Vous avez demandé la réinitialisation de votre mot de passe.
-							Cliquez sur le bouton ci-dessous pour créer un nouveau mot de
-							passe.
+			You have requested to reset your password.
+			Click the button below to create a new
+			password.
 						</Text>
 					</Section>
 
@@ -74,7 +74,7 @@ export const ForgotPasswordEmail = ({
 								fontWeight: "bold",
 							}}
 						>
-							Réinitialiser le mot de passe
+							Reset Password
 						</Button>
 					</Section>
 
@@ -82,8 +82,8 @@ export const ForgotPasswordEmail = ({
 						<Text
 							style={{ fontSize: "14px", color: "#6b7280", lineHeight: "1.5" }}
 						>
-							Si vous n'avez pas demandé à changer votre mot de passe ou si vous
-							n'avez pas fait cette demande, ignorez et supprimez ce message.
+							If you did not request to change your password or if you
+							did not make this request, please ignore and delete this message.
 						</Text>
 
 						<Text
@@ -94,8 +94,8 @@ export const ForgotPasswordEmail = ({
 								marginTop: "10px",
 							}}
 						>
-							Pour protéger votre compte, veuillez ne transmettre cet email à
-							personne.
+							To protect your account, please do not forward this email to
+							anyone.
 						</Text>
 
 						<Text
@@ -106,7 +106,7 @@ export const ForgotPasswordEmail = ({
 								marginTop: "20px",
 							}}
 						>
-							Merci d'utiliser Beauty Nails!
+							Thank you for using Beauty Nails!
 						</Text>
 					</Section>
 				</Container>

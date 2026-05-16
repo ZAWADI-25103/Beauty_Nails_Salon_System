@@ -90,7 +90,7 @@ export function useCustomReport() {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur de génération du rapport",
+					"Error generating report",
 			);
 		},
 	});
@@ -167,10 +167,10 @@ export function useDownloadPdf() {
 			a.click();
 			window.URL.revokeObjectURL(url);
 			document.body.removeChild(a);
-			toast.success("PDF téléchargé avec succès");
+			toast.success("PDF downloaded successfully");
 		},
 		onError: (error: any) => {
-			toast.error(error.message || "Erreur lors du téléchargement du PDF");
+			toast.error(error.message || "Error downloading PDF");
 		},
 	});
 

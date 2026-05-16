@@ -95,7 +95,7 @@ export default function InventoryManagement() {
 			contact: "Sophie Nzuzi",
 			email: "orders@makeuppro.cd",
 			phone: "+243 840 456 789",
-			products: ["Maquillage", "Pinceaux", "Démaquillants"],
+			products: ["Makeup", "Brushes", "Makeup Removers"],
 			rating: 4.6,
 		},
 	];
@@ -136,13 +136,13 @@ export default function InventoryManagement() {
 		<div className="space-y-6">
 			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 				<h2 className="text-2xl  sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
-					Gestion de l'Inventaire
+					Inventory Management
 				</h2>
-				<CreateInventoryModal triggerLabel="+ Ajouter Produit" />
+				<CreateInventoryModal triggerLabel="+ Add Product" />
 				{/* <AddProductModal
           trigger={
             <Button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full">
-              + Ajouter Produit
+              + Add Product
             </Button>
           }
         /> */}
@@ -157,11 +157,11 @@ export default function InventoryManagement() {
 						</div>
 						<div className="flex-1">
 							<h3 className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 mb-2">
-								Alertes Stock
+								Inventory Alerts
 							</h3>
 							<p className="text-gray-700 dark:text-gray-300 mb-4 text-lg sm:text-base">
-								{alertItems.length} produit(s) nécessite(nt) un
-								réapprovisionnement immédiat
+								{alertItems.length} product(s) require
+								immediate restocking
 							</p>
 							<div className="flex flex-wrap gap-2">
 								{alertItems.map((item) => (
@@ -229,8 +229,8 @@ export default function InventoryManagement() {
 					>
 						Stock
 					</TabsTrigger>
-					{/* <TabsTrigger value="suppliers" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Fournisseurs</TabsTrigger>
-          <TabsTrigger value="usage" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Rapport d'Utilisation</TabsTrigger> */}
+					{/* <TabsTrigger value="suppliers" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Fournisseurs</TabsTrigger> */}
+          {/* <TabsTrigger value="usage" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Rapport d'Utilisation</TabsTrigger> */}
 				</TabsList>
 
 				{/* Stock Tab */}
@@ -323,7 +323,7 @@ export default function InventoryManagement() {
 										variant="outline"
 										className="flex-1 rounded-full py-6  dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 transition-all"
 									>
-										Contacter
+										Contact
 									</Button>
 								</div>
 							</Card>
@@ -331,7 +331,7 @@ export default function InventoryManagement() {
 					</div>
 
 					<Button className="w-full mt-8 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full py-7 text-lg  shadow-lg shadow-pink-500/20 transition-all">
-						+ Ajouter Fournisseur
+						+ Add Supplier
 					</Button>
 				</TabsContent>
 

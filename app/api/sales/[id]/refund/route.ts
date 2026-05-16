@@ -35,8 +35,8 @@ export async function POST(
 				data: {
 					paymentStatus: "refunded",
 					notes: sale.notes
-						? `${sale.notes}\n[Remboursement] ${reason || "Aucune raison spécifiée"}`
-						: `[Remboursement] ${reason || "Aucune raison spécifiée"}`,
+						? `${sale.notes}\n[Refund] ${reason || "No reason specified"}`
+						: `[Refund] ${reason || "No reason specified"}`,
 				},
 			});
 
@@ -68,7 +68,7 @@ export async function POST(
 						clientId: sale.clientId,
 						points: sale.loyaltyPointsUsed,
 						type: "adjustment",
-						description: `Restitution points suite remboursement vente ${sale.receiptNumber}`,
+						description: `Points refund for sale ${sale.receiptNumber}`,
 						relatedId: sale.id,
 					},
 				});
@@ -79,7 +79,7 @@ export async function POST(
 
 		return NextResponse.json({
 			sale: updatedSale,
-			message: "Vente remboursée avec succès",
+			message: "Sale refunded successfully",
 		});
 	} catch (error: any) {
 		return NextResponse.json(

@@ -164,7 +164,7 @@ export default function SystemSettings() {
 		<div className="space-y-6">
 			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 				<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-					Paramètres Système
+					System Settings
 				</h2>
 				<div className="flex gap-3">
 					<Button
@@ -179,59 +179,47 @@ export default function SystemSettings() {
 						className="bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full"
 					>
 						{updatingProfile || updatingSettings
-							? "Enregistrement..."
-							: "Enregistrer"}
+							? "Saving..."
+							: "Save"}
 					</Button>
 				</div>
 			</div>
 
 			<p className=" dark:text-pink-400 text-xs sm:text-xs">
-				{"glisser  <--- | --->"}
+				{"swipe  <--- | --->"}
 			</p>
 			<Tabs defaultValue="general" className="w-full">
 				<TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
 					<TabsTrigger
 						value="general"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
-					>
-						Général
-					</TabsTrigger>
+					>General</TabsTrigger>
 					<TabsTrigger
 						value="commissions"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
-					>
-						Commissions
-					</TabsTrigger>
+					>Commissions</TabsTrigger>
 					{/* <TabsTrigger
             value="registers"
             className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
           >
-            Registres
+            Registers
           </TabsTrigger> */}
 					<TabsTrigger
 						value="payments"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
-					>
-						Paiements
-					</TabsTrigger>
+					>Payments</TabsTrigger>
 					<TabsTrigger
 						value="memberships"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
-					>
-						Adhésions
-					</TabsTrigger>
+					>Memberships</TabsTrigger>
 					<TabsTrigger
 						value="reviews"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
-					>
-						Les Avis
-					</TabsTrigger>
+					>Reviews</TabsTrigger>
 					<TabsTrigger
 						value="users"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
-					>
-						Utilisateurs
-					</TabsTrigger>
+					>Users</TabsTrigger>
 				</TabsList>
 
 				{/* General Settings Tab */}
@@ -240,38 +228,38 @@ export default function SystemSettings() {
 						{/* Salon Profile Section */}
 						<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
 							<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
-								Profil du Salon
+								Salon Profile
 							</h3>
 
 							<form onSubmit={handleProfileSubmit} className="space-y-4">
 								<div>
-									<Label htmlFor="name">Nom du Salon</Label>
+									<Label htmlFor="name">Salon Name</Label>
 									<Input
 										id="name"
 										value={formData.name}
 										onChange={(e) =>
 											setFormData({ ...formData, name: e.target.value })
 										}
-										placeholder="Nom du salon"
+										placeholder="Salon name"
 									/>
 								</div>
 
 								<div>
-									<Label htmlFor="address">Adresse</Label>
+									<Label htmlFor="address">Address</Label>
 									<Textarea
 										id="address"
 										value={formData.address}
 										onChange={(e) =>
 											setFormData({ ...formData, address: e.target.value })
 										}
-										placeholder="Adresse complète du salon"
+										placeholder="Full salon address"
 										rows={3}
 									/>
 								</div>
 
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 									<div>
-										<Label htmlFor="phone">Téléphone</Label>
+										<Label htmlFor="phone">Phone</Label>
 										<Input
 											id="phone"
 											value={formData.phone}
@@ -296,7 +284,7 @@ export default function SystemSettings() {
 								</div>
 
 								<div>
-									<Label htmlFor="website">Site Web</Label>
+									<Label htmlFor="website">Website</Label>
 									<Input
 										id="website"
 										value={formData.website}
@@ -315,14 +303,14 @@ export default function SystemSettings() {
 										onChange={(e) =>
 											setFormData({ ...formData, description: e.target.value })
 										}
-										placeholder="Description du salon"
+										placeholder="Salon description"
 										rows={3}
 									/>
 								</div>
 
 								<div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 									<div>
-										<Label htmlFor="currency">Devise</Label>
+										<Label htmlFor="currency">Currency</Label>
 										<Select
 											value={formData.currency}
 											onValueChange={(value) =>
@@ -341,7 +329,7 @@ export default function SystemSettings() {
 									</div>
 
 									<div>
-										<Label htmlFor="timezone">Fuseau Horaire</Label>
+										<Label htmlFor="timezone">Timezone</Label>
 										<Select
 											value={formData.timezone}
 											onValueChange={(value) =>
@@ -364,7 +352,7 @@ export default function SystemSettings() {
 									</div>
 
 									<div>
-										<Label htmlFor="language">Langue</Label>
+										<Label htmlFor="language">Language</Label>
 										<Select
 											value={formData.language}
 											onValueChange={(value) =>
@@ -375,7 +363,7 @@ export default function SystemSettings() {
 												<SelectValue />
 											</SelectTrigger>
 											<SelectContent>
-												<SelectItem value="fr">Français</SelectItem>
+												<SelectItem value="fr">French</SelectItem>
 												<SelectItem value="en">English</SelectItem>
 											</SelectContent>
 										</Select>
@@ -386,9 +374,7 @@ export default function SystemSettings() {
 
 						{/* System Settings Section */}
 						<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
-							<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
-								Paramètres Système
-							</h3>
+							<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">System Settings</h3>
 
 							<div className="space-y-6">
 								{/* Notification Settings */}
@@ -404,7 +390,7 @@ export default function SystemSettings() {
 													SMS Notifications
 												</Label>
 												<p className="text-sm text-gray-600 dark:text-gray-400">
-													Envoyer des notifications SMS aux clients
+													Send SMS notifications to clients
 												</p>
 											</div>
 											<Switch
@@ -421,7 +407,7 @@ export default function SystemSettings() {
 													Email Notifications
 												</Label>
 												<p className="text-sm text-gray-600 dark:text-gray-400">
-													Envoyer des notifications par email
+													Send email notifications
 												</p>
 											</div>
 											<Switch
@@ -438,10 +424,10 @@ export default function SystemSettings() {
 										<div className="flex items-center justify-between">
 											<div>
 												<Label className="text-gray-900 dark:text-gray-100">
-													Rappels Automatiques
+													Automatic Reminders
 												</Label>
 												<p className="text-sm text-gray-600 dark:text-gray-400">
-													Envoyer des rappels automatiques avant les rendez-vous
+													Send automatic reminders before appointments
 												</p>
 											</div>
 											<Switch
@@ -456,18 +442,16 @@ export default function SystemSettings() {
 
 								{/* Booking Settings */}
 								<div className="border-b border-gray-200 dark:border-gray-700 pb-6">
-									<h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-										Réservations
-									</h4>
+									<h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Bookings</h4>
 
 									<div className="space-y-4">
 										<div className="flex items-center justify-between">
 											<div>
 												<Label className="text-gray-900 dark:text-gray-100">
-													Réservations en Ligne
+													Online Bookings
 												</Label>
 												<p className="text-sm text-gray-600 dark:text-gray-400">
-													Autoriser les clients à réserver en ligne
+													Allow clients to book online
 												</p>
 											</div>
 											<Switch
@@ -481,10 +465,10 @@ export default function SystemSettings() {
 										<div className="flex items-center justify-between">
 											<div>
 												<Label className="text-gray-900 dark:text-gray-100">
-													Confirmation Requise
+													Require Confirmation
 												</Label>
 												<p className="text-sm text-gray-600 dark:text-gray-400">
-													Exiger une confirmation manuelle des réservations
+													Require manual booking confirmation
 												</p>
 											</div>
 											<Switch
@@ -500,17 +484,17 @@ export default function SystemSettings() {
 								{/* Additional Settings */}
 								<div>
 									<h4 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-										Paramètres Avancés
+										Advanced Settings
 									</h4>
 
 									<div className="space-y-4">
 										<div className="flex items-center justify-between">
 											<div>
 												<Label className="text-gray-900 dark:text-gray-100">
-													Mode Maintenance
+													Maintenance Mode
 												</Label>
 												<p className="text-sm text-gray-600 dark:text-gray-400">
-													Mettre le site en mode maintenance
+													Put the site in maintenance mode
 												</p>
 											</div>
 											<Switch
@@ -524,10 +508,10 @@ export default function SystemSettings() {
 										<div className="flex items-center justify-between">
 											<div>
 												<Label className="text-gray-900 dark:text-gray-100">
-													Historique des Rendez-vous
+													Appointment History
 												</Label>
 												<p className="text-sm text-gray-600 dark:text-gray-400">
-													Afficher les anciens rendez-vous
+													Show past appointments
 												</p>
 											</div>
 											<Switch
@@ -557,7 +541,7 @@ export default function SystemSettings() {
 							<div className="relative w-full sm:w-64">
 								<Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
 								<Input
-									placeholder="Rechercher une commission..."
+									placeholder="Search commissions..."
 									className="pl-9 rounded-full bg-white"
 								/>
 							</div>
@@ -568,20 +552,18 @@ export default function SystemSettings() {
 								<thead>
 									<tr className="border-b border-gray-200 dark:border-gray-700">
 										<th className="text-left py-3 px-4">Period</th>
-										<th className="text-left py-3 px-4">Employé</th>
-										<th className="text-left py-3 px-4">Revenu Total</th>
-										<th className="3 px-4">Taux</th>
-										<th className="text-left py-3 px-4">Montant</th>
-										<th className="text-left py-3 px-4">Statut</th>
+										<th className="text-left py-3 px-4">Employee</th>
+										<th className="text-left py-3 px-4">Total Revenue</th>
+										<th className="3 px-4">Rate</th>
+										<th className="text-left py-3 px-4">Amount</th>
+										<th className="text-left py-3 px-4">Status</th>
 										{/* <th className="text-left py-3 px-4">Actions</th> */}
 									</tr>
 								</thead>
 								<tbody>
 									{commissionsLoading ? (
 										<tr>
-											<td colSpan={7} className="text-center py-6">
-												Chargement...
-											</td>
+											<td colSpan={7} className="text-center py-6">Loading...</td>
 										</tr>
 									) : (
 										commissions?.map((commission: any) => (
@@ -593,7 +575,7 @@ export default function SystemSettings() {
 												<td className="py-3 px-4">
 													{workers?.find(
 														(w: any) => w.id === commission.workerId,
-													)?.user?.name || "Inconnu"}
+													)?.user?.name || "Unknown"}
 												</td>
 												<td className="py-3 px-4">
 													{commission.totalRevenue.toLocaleString()} CDF
@@ -615,10 +597,10 @@ export default function SystemSettings() {
 														}`}
 													>
 														{commission.status === "paid"
-															? "Payé"
+															? "Paid"
 															: commission.status === "approved"
-																? "Approuvé"
-																: "En attente"}
+																? "Approved"
+																: "Pending"}
 													</span>
 												</td>
 												{/* <td className="py-3 px-4">
@@ -647,12 +629,12 @@ export default function SystemSettings() {
           <Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Registres Quotidiens
+                Daily Registers
               </h3>
               <div className="relative w-full sm:w-64">
                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
                 <Input
-                  placeholder="Rechercher un registre..."
+                  placeholder="Search registers..."
                   className="pl-9 rounded-full bg-white"
                 />
               </div>
@@ -666,7 +648,7 @@ export default function SystemSettings() {
                     <th className="text-left py-3 px-4">Ouverture</th>
                     <th className="text-left py-3 px-4">Fermeture</th>
                     <th className="text-left py-3 px-4">Attendu</th>
-                    <th className="text-left py-3 px-4">Écart</th>
+                    <th className="text-left py-3 px-4">Variance</th>
                     <th className="text-left py-3 px-4">Ventes</th>
                   </tr>
                 </thead>
@@ -674,7 +656,7 @@ export default function SystemSettings() {
                   {registersLoading ? (
                     <tr>
                       <td colSpan={7} className="text-center py-6">
-                        Chargement...
+                        Loading...
                       </td>
                     </tr>
                   ) : (
@@ -723,12 +705,12 @@ export default function SystemSettings() {
 					<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
 						<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
 							<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-								Paiements
+								Payments
 							</h3>
 							<div className="relative w-full sm:w-64">
 								<Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
 								<Input
-									placeholder="Rechercher un paiement..."
+									placeholder="Search payments..."
 									className="pl-9 rounded-full bg-white"
 								/>
 							</div>
@@ -739,9 +721,9 @@ export default function SystemSettings() {
 								<thead>
 									<tr className="border-b border-gray-200 dark:border-gray-700">
 										<th className="text-left py-3 px-4">Date</th>
-										<th className="text-left py-3 px-4">Montant</th>
-										<th className="text-left py-3 px-4">Méthode</th>
-										<th className="text-left py-3 px-4">Statut</th>
+										<th className="text-left py-3 px-4">Amount</th>
+										<th className="text-left py-3 px-4">Method</th>
+										<th className="text-left py-3 px-4">Status</th>
 										<th className="text-left py-3 px-4">Transaction</th>
 										{/* <th className="text-left py-3 px-4">Actions</th> */}
 									</tr>
@@ -749,9 +731,7 @@ export default function SystemSettings() {
 								<tbody>
 									{paymentsLoading ? (
 										<tr>
-											<td colSpan={6} className="text-center py-6">
-												Chargement...
-											</td>
+											<td colSpan={6} className="text-center py-6">Loading...</td>
 										</tr>
 									) : (
 										payments?.map((payment: any) => (
@@ -767,12 +747,12 @@ export default function SystemSettings() {
 												</td>
 												<td className="py-3 px-4">
 													{payment.method === "cash"
-														? "Espèces"
+														? "Cash"
 														: payment.method === "card"
-															? "Carte"
+															? "Card"
 															: payment.method === "mobile"
 																? "Mobile"
-																: "Mixte"}
+																: "Mixed"}
 												</td>
 												<td className="py-3 px-4">
 													<span
@@ -785,10 +765,9 @@ export default function SystemSettings() {
 														}`}
 													>
 														{payment.status === "completed"
-															? "Complété"
+															? "Completed"
 															: payment.status === "pending"
-																? "En attente"
-																: "Échoué"}
+																?"Pending" : "Failed"}
 													</span>
 												</td>
 												<td className="py-3 px-4">
@@ -819,13 +798,11 @@ export default function SystemSettings() {
 				<TabsContent value="memberships" className="space-y-6">
 					<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
 						<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-							<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-								Adhésions
-							</h3>
+							<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Memberships</h3>
 							<div className="relative w-full sm:w-64">
 								<Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
 								<Input
-									placeholder="Rechercher une adhésion..."
+									placeholder="Search membership..."
 									className="pl-9 rounded-full bg-white"
 								/>
 							</div>
@@ -836,19 +813,17 @@ export default function SystemSettings() {
 								<thead>
 									<tr className="border-b border-gray-200 dark:border-gray-700">
 										<th className="text-left py-3 px-4">Client</th>
-										<th className="text-left py-3 px-4">Adhésion</th>
-										<th className="text-left py-3 px-4">Date de Début</th>
-										<th className="text-left py-3 px-4">Date de Fin</th>
-										<th className="text-left py-3 px-4">Statut</th>
+										<th className="text-left py-3 px-4">Membership</th>
+										<th className="text-left py-3 px-4">Start Date</th>
+										<th className="text-left py-3 px-4">End Date</th>
+										<th className="text-left py-3 px-4">Status</th>
 										{/* <th className="text-left py-3 px-4">Actions</th> */}
 									</tr>
 								</thead>
 								<tbody>
 									{membershipsLoading ? (
 										<tr>
-											<td colSpan={6} className="text-center py-6">
-												Chargement...
-											</td>
+											<td colSpan={6} className="text-center py-6">Loading...</td>
 										</tr>
 									) : (
 										memberships?.map((membership: any) => (
@@ -859,12 +834,12 @@ export default function SystemSettings() {
 												<td className="py-3 px-4">
 													{clients?.find(
 														(c: any) => c.id === membership.clientId,
-													)?.user?.name || "Inconnu"}
+													)?.user?.name || "Unknown"}
 												</td>
 												<td className="py-3 px-4">
 													{services?.find(
 														(s) => s.id === membership.membershipId,
-													)?.name || "Inconnu"}
+													)?.name || "Unknown"}
 												</td>
 												<td className="py-3 px-4">
 													{new Date(membership.startDate).toLocaleDateString()}
@@ -883,10 +858,10 @@ export default function SystemSettings() {
 														}`}
 													>
 														{membership.status === "active"
-															? "Actif"
+															? "Active"
 															: membership.status === "expired"
-																? "Expiré"
-																: "En attente"}
+																? "Expired"
+																: "Pending"}
 													</span>
 												</td>
 												{/* <td className="py-3 px-4">
@@ -914,12 +889,12 @@ export default function SystemSettings() {
 					<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
 						<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
 							<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-								Avis des Clients
+								Client Reviews
 							</h3>
 							<div className="relative w-full sm:w-64">
 								<Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
 								<Input
-									placeholder="Rechercher un avis..."
+									placeholder="Search reviews..."
 									className="pl-9 rounded-full bg-white"
 								/>
 							</div>
@@ -930,19 +905,17 @@ export default function SystemSettings() {
 								<thead>
 									<tr className="border-b border-gray-200 dark:border-gray-700">
 										<th className="text-left py-3 px-4">Client</th>
-										<th className="text-left py-3 px-4">Employé</th>
-										<th className="text-left py-3 px-4">Note</th>
-										<th className="text-left py-3 px-4">Commentaire</th>
-										<th className="text-left py-3 px-4">Publié</th>
+										<th className="text-left py-3 px-4">Employee</th>
+										<th className="text-left py-3 px-4">Rating</th>
+										<th className="text-left py-3 px-4">Comment</th>
+										<th className="text-left py-3 px-4">Published</th>
 										{/* <th className="text-left py-3 px-4">Actions</th> */}
 									</tr>
 								</thead>
 								<tbody>
 									{reviewsLoading ? (
 										<tr>
-											<td colSpan={6} className="text-center py-6">
-												Chargement...
-											</td>
+											<td colSpan={6} className="text-center py-6">Loading...</td>
 										</tr>
 									) : (
 										reviews?.map((review) => (
@@ -952,11 +925,11 @@ export default function SystemSettings() {
 											>
 												<td className="py-3 px-4">
 													{clients?.find((c) => c.id === review.clientId)?.user
-														?.name || "Inconnu"}
+														?.name || "Unknown"}
 												</td>
 												<td className="py-3 px-4">
 													{workers?.find((w) => w.id === review.workerId)?.user
-														?.name || "Inconnu"}
+														?.name || "Unknown"}
 												</td>
 												<td className="py-3 px-4">
 													<div className="flex items-center">
@@ -980,7 +953,7 @@ export default function SystemSettings() {
 																: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200"
 														}`}
 													>
-														{review.isPublished ? "Publié" : "Masqué"}
+														{review.isPublished ? "Published" : "Hidden"}
 													</span>
 												</td>
 												{/* <td className="py-3 px-4">
@@ -1008,12 +981,12 @@ export default function SystemSettings() {
 					<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
 						<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
 							<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-								Utilisateurs
+								Users
 							</h3>
 							<div className="relative w-full sm:w-64">
 								<Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
 								<Input
-									placeholder="Rechercher un utilisateur..."
+									placeholder="Search users..."
 									className="pl-9 rounded-full bg-white"
 								/>
 							</div>
@@ -1023,20 +996,18 @@ export default function SystemSettings() {
 							<table className="w-full">
 								<thead>
 									<tr className="border-b border-gray-200 dark:border-gray-700">
-										<th className="text-left py-3 px-4">Nom</th>
+										<th className="text-left py-3 px-4">Name</th>
 										<th className="text-left py-3 px-4">Email</th>
-										<th className="text-left py-3 px-4">Téléphone</th>
-										<th className="text-left py-3 px-4">Rôle</th>
-										<th className="text-left py-3 px-4">Statut</th>
+										<th className="text-left py-3 px-4">Phone</th>
+										<th className="text-left py-3 px-4">Role</th>
+										<th className="text-left py-3 px-4">Status</th>
 										{/* <th className="text-left py-3 px-4">Actions</th> */}
 									</tr>
 								</thead>
 								<tbody>
 									{usersLoading ? (
 										<tr>
-											<td colSpan={6} className="text-center py-6">
-												Chargement...
-											</td>
+											<td colSpan={6} className="text-center py-6">Loading...</td>
 										</tr>
 									) : (
 										users?.map((user: any) => (
@@ -1058,9 +1029,9 @@ export default function SystemSettings() {
 														}`}
 													>
 														{user.role === "admin"
-															? "Administrateur"
+															? "Administrator"
 															: user.role === "worker"
-																? "Employé"
+																? "Employee"
 																: "Client"}
 													</span>
 												</td>
@@ -1072,7 +1043,7 @@ export default function SystemSettings() {
 																: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200"
 														}`}
 													>
-														{user.isActive ? "Actif" : "Inactif"}
+														{user.isActive											? "Active" : "Inactive"}
 													</span>
 												</td>
 												{/* <td className="py-3 px-4">

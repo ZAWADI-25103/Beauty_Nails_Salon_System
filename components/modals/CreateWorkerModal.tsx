@@ -29,7 +29,7 @@ const POSITIONS = ["Spécialiste", "Réceptionniste", "Manager", "Assistant"];
 const SERVICE_CATEGORIES = ["Onglerie", "Cils", "Tresses", "Maquillage"];
 
 export default function CreateWorkerModal({
-	triggerLabel = "Ajouter un employé",
+	triggerLabel = "Add Staff",
 }: {
 	triggerLabel?: string;
 }) {
@@ -73,7 +73,7 @@ export default function CreateWorkerModal({
 		}
 
 		if (password.length < 6) {
-			toast.error("Le mot de passe doit contenir au moins 6 caractères");
+			toast.error("The password must be at least 6 characters");
 			return;
 		}
 
@@ -114,7 +114,7 @@ export default function CreateWorkerModal({
 			{/* ✅ Bigger + Responsive */}
 			<DialogContent className="sm:max-w-3xl w-[95vw] max-h-[90vh] overflow-y-auto  dark:bg-gray-950 p-5">
 				<DialogHeader>
-					<DialogTitle className="text-xl">Créer un nouvel employé</DialogTitle>
+					<DialogTitle className="text-xl">Create a New Employee</DialogTitle>
 				</DialogHeader>
 
 				{/* ✅ Responsive Grid */}
@@ -154,7 +154,7 @@ export default function CreateWorkerModal({
 						</div>
 
 						<div>
-							<Label className="mb-3">Mot de passe *</Label>
+							<Label className="mb-3">Password *</Label>
 							<Input
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}

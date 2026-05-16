@@ -61,7 +61,7 @@ export default function Home() {
 		{
 			id: "onglerie",
 			name: "Onglerie",
-			description: "Manucure, pédicure, nail art et extensions",
+			description: "Manicure, pedicure, nail art and extensions",
 			icon: "💅",
 			image:
 				"https://images.unsplash.com/photo-1737214475335-8ed64d91f473?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYWlsJTIwYXJ0JTIwbWFuaWN1cmV8ZW58MXx8fHwxNzYyMzI1MTMyfDA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -70,7 +70,7 @@ export default function Home() {
 		{
 			id: "cils",
 			name: "Cils",
-			description: "Extensions de cils, teinture et rehaussement",
+			description: "Eyelash extensions, tinting and lifting",
 			icon: "👁️",
 			image:
 				"https://images.unsplash.com/photo-1589710751893-f9a6770ad71b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxleWVsYXNoJTIwZXh0ZW5zaW9uc3xlbnwxfHx8fDE3NjIzNjE1OTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -79,7 +79,7 @@ export default function Home() {
 		{
 			id: "tresses",
 			name: "Tresses",
-			description: "Tressage, tissage et coiffure créative",
+			description: "Braiding, weaving and creative hairstyling",
 			icon: "💇‍♀️",
 			image:
 				"https://images.unsplash.com/photo-1702236242829-a34c39814f31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYWlyJTIwYnJhaWRpbmclMjBzYWxvbnxlbnwxfHx8fDE3NjIzNjE1OTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -336,7 +336,7 @@ export default function Home() {
 										{service.description}
 									</p>
 									<div className="flex items-center text-pink-500 group-hover:text-pink-600">
-										<span className="mr-2">En savoir plus</span>
+										<span className="mr-2">Learn more</span>
 										<span className="group-hover:translate-x-1 transition-transform">
 											→
 										</span>
@@ -352,13 +352,13 @@ export default function Home() {
 			<section className="py-16 bg-background dark:bg-gray-950">
 				<div className="text-center mb-16">
 					<Badge className="mb-4 bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-200">
-						Nos Abonnements
+						Our Memberships
 					</Badge>
 					<h2 className="text-3xl sm:text-4xl font-medium font-semibold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
 						Rejoignez notre cercle de clientes privilégiées
 					</h2>
 					<p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-						Économisez jusqu'à 30% sur vos soins préférés et profitez
+						Save up to 30% on your favorite treatments et profitez
 						d'avantages exclusifs avec nos formules.
 					</p>
 				</div>
@@ -551,7 +551,7 @@ export default function Home() {
 
 					<div>
 						<Badge className="mb-4 bg-pink-100 text-pink-600">
-							Notre Histoire
+							Our Story
 						</Badge>
 						<h2 className="text-3xl sm:text-4xl font-medium font-semibold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
 							La beauté au service du bien-être
@@ -562,7 +562,7 @@ export default function Home() {
 							confiante.
 						</p>
 						<p className="text-lg text-gray-600 dark:text-gray-200 mb-8">
-							Notre équipe de professionnels qualifiés utilise les meilleures
+							Our team of qualified professionals uses the best
 							techniques et produits pour vous offrir une expérience luxueuse et
 							des résultats exceptionnels.
 						</p>
@@ -587,7 +587,7 @@ export default function Home() {
 								size="lg"
 								className="bg-linear-to-br from-gray-900 via-pink-800 to-pink-600 hover:from-pink-600 hover:via-pink-800 hover:to-gray-900 text-white rounded-full px-8"
 							>
-								Découvrir notre équipe
+								Meet our team
 							</Button>
 						</Link>
 					</div>

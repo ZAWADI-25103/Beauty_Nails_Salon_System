@@ -76,7 +76,7 @@ export default function TransferAppointmentModal({
 
 	const handleRequestTransfer = () => {
 		if (!selectedWorker) {
-			toast.error("Veuillez sélectionner un employé");
+			toast.error("Please select an employee");
 			return;
 		}
 
@@ -119,7 +119,7 @@ export default function TransferAppointmentModal({
 
 								<div className="min-w-0">
 									<DialogTitle className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-										Transférer le rendez-vous
+										Transfer Appointment
 									</DialogTitle>
 
 									<p className="mt-1 text-xs sm:text-sm text-pink-700 dark:text-pink-300">
@@ -204,7 +204,7 @@ export default function TransferAppointmentModal({
 														<p className="text-xs sm:text-sm text-muted-foreground">
 															{appointment.location === "salon"
 																? "Salon"
-																: "À domicile"}
+																: "At home"}
 														</p>
 													</div>
 												</div>
@@ -351,7 +351,7 @@ export default function TransferAppointmentModal({
 									>
 										<Wand2 className="w-4 h-4 mr-2" />
 
-										{requestTransfer.isPending ? "Envoi..." : "Transférer"}
+										{requestTransfer.isPending ? "Sending..." : "Transfer"}
 									</Button>
 								)}
 							</div>

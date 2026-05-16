@@ -2,12 +2,12 @@ import { Card } from "../ui/card";
 
 export function WorkerResults({ data }: any) {
 	if (!data?.length) {
-		return <p className="text-sm text-gray-500 mt-4">Aucun employé trouvé</p>;
+		return <p className="text-sm text-gray-500 mt-4">No employees found</p>;
 	}
 
 	return (
 		<Card className="mt-4 p-6 border border-pink-100 dark:border-pink-900 bg-white dark:bg-gray-950">
-			<h3 className="text-xl font-semibold mb-4">Employés</h3>
+			<h3 className="text-xl font-semibold mb-4">Employees</h3>
 
 			<div className="overflow-x-auto">
 				<table className="w-full text-sm">
@@ -15,8 +15,8 @@ export function WorkerResults({ data }: any) {
 						<tr className="border-b border-gray-200 dark:border-gray-700">
 							<th className="text-left py-3 px-4">Nom</th>
 							<th className="text-left py-3 px-4">Email</th>
-							<th className="text-left py-3 px-4">Téléphone</th>
-							<th className="text-left py-3 px-4">Spécialité</th>
+							<th className="text-left py-3 px-4">Phone</th>
+							<th className="text-left py-3 px-4">Specialty</th>
 							<th className="text-left py-3 px-4">Statut</th>
 						</tr>
 					</thead>

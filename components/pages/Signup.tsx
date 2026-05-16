@@ -69,7 +69,7 @@ export default function Signup() {
 				isFirstAdmin,
 			);
 			if (result?.success) {
-				toast.success("Connecté avec succès");
+				toast.success("Logged in successfully");
 				router.push(result?.redirectUrl);
 				router.refresh();
 			} else {
@@ -96,10 +96,10 @@ export default function Signup() {
 						<Logo width={250} height={70} />
 					</Link>
 					<h1 className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">
-						Créer un compte
+						Create Account
 					</h1>
 					<p className="text-lg sm:text-base text-gray-600 dark:text-gray-300">
-						Rejoignez notre communauté beauté
+						Join our beauty community
 					</p>
 				</div>
 
@@ -108,7 +108,7 @@ export default function Signup() {
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 							<div>
 								<Label htmlFor="name" className="dark:text-gray-200">
-									Nom complet
+									Full Name
 								</Label>
 								<Input
 									id="name"
@@ -138,7 +138,7 @@ export default function Signup() {
 
 							<div className="sm:col-span-2">
 								<Label htmlFor="phone" className="dark:text-gray-200">
-									Téléphone
+									Phone
 								</Label>
 								<div className="flex gap-2 mt-2">
 									{/* Shadcn Select for Country Code */}
@@ -185,7 +185,7 @@ export default function Signup() {
 
 								{/* Visual Preview */}
 								<p className="text-xs font-medium text-pink-600 dark:text-pink-400 mt-2 ml-1">
-									Numéro enregistré :{" "}
+									Registered number:{" "}
 									<span className="underline">
 										{formData.countryCode}
 										{formData.phone}
@@ -201,7 +201,7 @@ export default function Signup() {
 										title="password"
 										className="dark:text-gray-200"
 									>
-										Mot de passe
+										Password
 									</Label>
 									<div className="relative mt-2">
 										<Input
@@ -222,7 +222,7 @@ export default function Signup() {
 										</button>
 									</div>
 									<p className="text-sm text-gray-500 dark:text-gray-400 mt-1.5 ml-1">
-										Minimum 8 caractères
+										Minimum 8 characters
 									</p>
 								</div>
 
@@ -233,7 +233,7 @@ export default function Signup() {
 										title="confirmPassword"
 										className="dark:text-gray-200"
 									>
-										Confirmer le mot de passe
+										Confirm Password
 									</Label>
 									<div className="relative mt-2">
 										<Input
@@ -252,7 +252,7 @@ export default function Signup() {
 							{formData.refCode && (
 								<div className="sm:col-span-2 mt-2">
 									<Label className="dark:text-gray-200">
-										Vous avez été parrainé par
+										Sponsored by
 									</Label>
 
 									<div className="mt-2 flex items-center justify-between rounded-xl border border-pink-200 dark:border-pink-800 bg-pink-50 dark:bg-gray-800 px-4 py-3">
@@ -279,19 +279,19 @@ export default function Signup() {
 								htmlFor="terms"
 								className="text-base sm:text-lg text-gray-600 dark:text-gray-300 cursor-pointer"
 							>
-								J'accepte les{" "}
+								I accept the{" "}
 								<Link
 									href="/terms"
 									className="text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 underline"
 								>
-									conditions d'utilisation
+									terms of service
 								</Link>{" "}
-								et la{" "}
+								and the{" "}
 								<Link
 									href="/privacy"
 									className="text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 underline"
 								>
-									politique de confidentialité
+									privacy policy
 								</Link>
 							</label>
 						</div>
@@ -306,11 +306,11 @@ export default function Signup() {
 									<Alert className="border-amber-200 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-900 shadow-sm rounded-2xl p-6">
 										<Sparkles className="h-6 w-6 text-amber-600 dark:text-amber-400" />
 										<AlertTitle className="text-xl font-bold text-amber-800 dark:text-amber-200 ml-2">
-											Configuration du Premier Administrateur
+											First Administrator Setup
 										</AlertTitle>
 										<AlertDescription className="mt-3 text-amber-700 dark:text-amber-300 space-y-2">
 											<p className="font-medium text-lg">
-												Bienvenue dans{" "}
+												Welcome to{" "}
 												<strong>Beauty Nails Salon Management</strong>. Aucun
 												utilisateur n'a été détecté : vous créez actuellement le
 												**compte maître** du système.
@@ -319,15 +319,13 @@ export default function Signup() {
 												<div className="flex items-start gap-2 text-sm bg-white/50 dark:bg-black/20 p-3 rounded-xl border border-amber-100 dark:border-amber-800">
 													<ShieldCheck className="h-5 w-5 mt-0.5 text-amber-600" />
 													<span>
-														<strong>Contrôle Total :</strong> Gestion des
-														services, prix et stocks.
+														<strong>Full Control:</strong>Manage services, prices, and inventory.
 													</span>
 												</div>
 												<div className="flex items-start gap-2 text-sm bg-white/50 dark:bg-black/20 p-3 rounded-xl border border-amber-100 dark:border-amber-800">
 													<Info className="h-5 w-5 mt-0.5 text-amber-600" />
 													<span>
-														<strong>Supervision :</strong> Approbation des
-														réservations et accès aux rapports financiers.
+														<strong>Supervision:</strong>Approve bookings and access financial reports.
 													</span>
 												</div>
 											</div>
@@ -337,7 +335,7 @@ export default function Signup() {
 									{/* Hidden Role Field or Read-only Display */}
 									<div className="group relative">
 										<Label className="text-pink-600 dark:text-pink-400 font-bold uppercase tracking-widest text-xs">
-											Rôle Attribué
+											Assigned Role
 										</Label>
 										<div className="mt-2 flex items-center gap-3 p-4 bg-linear-to-r from-pink-50 to-purple-50 dark:from-pink-950/20 dark:to-purple-950/20 border border-pink-200 dark:border-pink-900 rounded-2xl">
 											<div className="p-2 bg-pink-500 rounded-lg text-white shadow-lg shadow-pink-200 dark:shadow-none">
@@ -345,10 +343,10 @@ export default function Signup() {
 											</div>
 											<div>
 												<p className="font-bold text-gray-900 dark:text-white">
-													Propriétaire / Administrateur Système
+													Owner / System Administrator
 												</p>
 												<p className="text-xs text-gray-500 dark:text-gray-400">
-													Permissions maximales activées par défaut
+													Maximum permissions enabled by default
 												</p>
 											</div>
 										</div>
@@ -363,7 +361,7 @@ export default function Signup() {
 							type="submit"
 							className="w-full bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full py-5 sm:py-6 mt-4 sm:mt-6 text-lg sm:text-base"
 						>
-							{isPending ? "Création..." : "Créer un compte"}
+							{isPending ? "Creating..." : "Create Account"}
 						</Button>
 					</form>
 
@@ -374,7 +372,7 @@ export default function Signup() {
 							</div>
 							<div className="relative flex justify-center text-base sm:text-lg">
 								<span className="px-3 sm:px-4 bg-white dark:bg-gray-950 text-gray-500 dark:text-gray-400">
-									Ou
+									Or
 								</span>
 							</div>
 						</div>
@@ -403,7 +401,7 @@ export default function Signup() {
 										d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 									/>
 								</svg>
-								Continuer avec Google
+								Continue with Google
 							</Button>
 
 							<Button
@@ -418,19 +416,19 @@ export default function Signup() {
 								>
 									<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
 								</svg>
-								Continuer avec Facebook
+								Continue with Facebook
 							</Button>
 						</div>
 					</div>
 				</Card>
 
 				<p className="text-center mt-4 sm:mt-6 text-lg sm:text-base text-gray-600 dark:text-gray-300">
-					Vous avez déjà un compte ?{" "}
+					Already have an account?{" "}
 					<Link
 						href={`/auth/login${redirect ? "?redirect=appointments" : ""}`}
 						className="text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 font-medium"
 					>
-						Se connecter
+						Sign In
 					</Link>
 				</p>
 			</div>

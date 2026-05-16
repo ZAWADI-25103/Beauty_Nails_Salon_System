@@ -24,7 +24,7 @@ import {
 import { Textarea } from "../ui/textarea";
 
 export default function CreateClientModal({
-	triggerLabel = "Créer un client",
+	triggerLabel = "Create a Client",
 }: {
 	triggerLabel?: string;
 }) {
@@ -100,7 +100,7 @@ export default function CreateClientModal({
 
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Créer un nouveau client</DialogTitle>
+					<DialogTitle>Create a New Client</DialogTitle>
 				</DialogHeader>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
@@ -182,7 +182,7 @@ export default function CreateClientModal({
 					</div>
 
 					<div>
-						<Label>Solde carte cadeau</Label>
+						<Label>Gift Card Balance</Label>
 						<Input
 							type="number"
 							value={giftCardBalance === "" ? "" : String(giftCardBalance)}
@@ -195,7 +195,7 @@ export default function CreateClientModal({
 					</div>
 
 					<div>
-						<Label>Parrainages</Label>
+						<Label>Referrals</Label>
 						<Input
 							type="number"
 							value={referrals === "" ? "" : String(referrals)}

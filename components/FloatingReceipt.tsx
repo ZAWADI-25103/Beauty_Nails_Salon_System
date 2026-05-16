@@ -89,7 +89,7 @@ export default function FloatingReceipt() {
 									<Download className="w-7 h-7 mb-1" />
 
 									<span className="text-[10px] font-bold uppercase tracking-tight">
-										{visible ? "Reçu prêt" : "Voir reçu"}
+										{visible ? "Receipt ready" : "View receipt"}
 									</span>
 
 									{/* Glow pulse */}

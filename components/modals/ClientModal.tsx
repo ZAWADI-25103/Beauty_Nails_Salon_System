@@ -215,7 +215,7 @@ export default function ClientModal({
 		<div className="flex items-center justify-center ">
 			<Card className="w-full sm:max-w-3xl p-6 bg-white dark:bg-gray-950 rounded-xl ">
 				<h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-					{edit ? `Modifier ${client?.name}` : "Nouveau Client"}
+					{edit ? `Edit ${client?.name}` : "New Client"}
 				</h2>
 
 				<form onSubmit={handleSubmit} className="space-y-6">
@@ -321,7 +321,7 @@ export default function ClientModal({
 						</div>
 
 						<div>
-							<Label htmlFor="referrals">Parrainages</Label>
+							<Label htmlFor="referrals">Referrals</Label>
 							<Input
 								id="referrals"
 								type="number"
@@ -442,7 +442,7 @@ export default function ClientModal({
 
 							<div>
 								<Label htmlFor="giftCardBalance">
-									Solde Carte Cadeau (CDF)
+									Gift Card Balance (CDF)
 								</Label>
 								<Input
 									id="giftCardBalance"

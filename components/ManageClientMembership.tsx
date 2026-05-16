@@ -78,10 +78,10 @@ export default function ManageClientMembership({
 				<div className="rounded-2xl border border-purple-200/30 dark:border-purple-800/30 p-6 bg-white dark:bg-gray-900 shadow-lg space-y-5">
 					<div>
 						<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-							Aucun abonnement actif
+							No active membership
 						</h3>
 						<p className="text-lg text-gray-600 dark:text-gray-400 mt-1">
-							Sélectionnez un abonnement premium pour ce client.
+							Select a premium membership for this client.
 						</p>
 					</div>
 
@@ -92,7 +92,7 @@ export default function ManageClientMembership({
 								onValueChange={setSelectedMembershipId}
 							>
 								<SelectTrigger>
-									<SelectValue placeholder="Choisir un abonnement" />
+									<SelectValue placeholder="Choose a membership" />
 								</SelectTrigger>
 
 								<SelectContent className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-lg">
@@ -112,7 +112,7 @@ export default function ManageClientMembership({
               onChange={(e) => setSelectedMembershipId(e.target.value)}
               className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-lg"
             >
-              <option value="">Choisir un abonnement</option>
+              <option value="">Choose a membership</option>
               {memberships
                 .filter(m => m.isActive)
                 .map(m => (
@@ -155,7 +155,7 @@ export default function ManageClientMembership({
 						<div className="flex justify-between items-start">
 							<div>
 								<h3 className="text-xl font-semibold tracking-wide">
-									{activePurchase.membership?.name || "Abonnement"}
+									{activePurchase.membership?.name || "Membership"}
 								</h3>
 								<p className="text-lg text-purple-100 mt-1">
 									{new Date(activePurchase.startDate).toLocaleDateString()} →{" "}
@@ -220,7 +220,7 @@ export default function ManageClientMembership({
 								>
 									<SelectTrigger>
 										<SelectValue
-											placeholder="Choisir un abonnement"
+											placeholder="Choose a membership"
 											className="text-gray-400"
 										/>
 									</SelectTrigger>

@@ -46,12 +46,12 @@ export function useRecordUsage() {
 				queryKey: ["appointments", variables.appointmentId],
 			});
 
-			toast.success("Utilisation des articles enregistrée");
+			toast.success("Item usage recorded");
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors de l'enregistrement",
+					"Error recording usage",
 			);
 		},
 	});

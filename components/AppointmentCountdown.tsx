@@ -87,7 +87,7 @@ export default function AppointmentCountdown({
 			}`}
 		>
 			<p className="text-base uppercase tracking-wide opacity-70">
-				{missed ? "Manqué depuis" : "Temps restant"}
+				{missed ? "Missed since" : "Time remaining"}
 			</p>
 
 			<p className="text-3xl font-semibold tracking-tight">{display}</p>

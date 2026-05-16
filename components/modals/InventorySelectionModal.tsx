@@ -124,7 +124,7 @@ export default function InventorySelectionModal({
 
 	const handleSubmit = async () => {
 		if (selectedItems.length === 0) {
-			toast.info("Veuillez sélectionner au moins un article");
+			toast.info("Please select at least one item");
 			return;
 		}
 
@@ -217,7 +217,7 @@ export default function InventorySelectionModal({
 							{/* Quantity input for selected items */}
 							{isSelected && !item.isShared && (
 								<div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
-									<Label className="text-xs">Quantité</Label>
+									<Label className="text-xs">Quantity</Label>
 									<Input
 										type="number"
 										min="1"
@@ -258,7 +258,7 @@ export default function InventorySelectionModal({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
-					<DialogTitle>Articles utilisés pour ce service</DialogTitle>
+					<DialogTitle>Items used for this service</DialogTitle>
 					<p className="text-sm text-gray-500 dark:text-gray-400">
 						Sélectionnez les consommables et outils utilisés pendant ce
 						rendez-vous
@@ -282,7 +282,7 @@ export default function InventorySelectionModal({
 							onChange={(e) => setCategoryFilter(e.target.value)}
 							className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm"
 						>
-							<option value="all">Toutes catégories</option>
+							<option value="all">All categories</option>
 							<option value="onglerie">Onglerie</option>
 							<option value="cils">Cils</option>
 							<option value="tresses">Tresses</option>
@@ -293,7 +293,7 @@ export default function InventorySelectionModal({
 					{/* Shared Resources Section */}
 					{sharedResources.length > 0 &&
 						renderInventorySection(
-							"Ressources Partagées",
+							"Shared Resources",
 							sharedResources,
 							<Package className="w-4 h-4 text-amber-500" />,
 						)}

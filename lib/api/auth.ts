@@ -120,7 +120,7 @@ export const authApi = {
 
 	// Forgot password
 	forgotPassword: async (email: string): Promise<{ message: string }> => {
-		const response = await axiosdb.post("/api/mail/forgot-password", { email });
+		const response = await axiosdb.post("/mail/forgot-password", { email });
 		return response.data;
 	},
 
@@ -129,7 +129,7 @@ export const authApi = {
 		token: string,
 		newPassword: string,
 	): Promise<{ message: string }> => {
-		const response = await axiosdb.post("/api/auth/reset-password", {
+		const response = await axiosdb.post("/auth/reset-password", {
 			token,
 			newPassword,
 		});
@@ -138,7 +138,7 @@ export const authApi = {
 
 	// Send OTP
 	sendOtp: async (email: string): Promise<{ message: string }> => {
-		const response = await axiosdb.post("/api/mail/otp", { email });
+		const response = await axiosdb.post("/mail/otp", { email });
 		return response.data;
 	},
 
@@ -148,14 +148,14 @@ export const authApi = {
 		otp: string,
 	): Promise<{ message: string }> => {
 		const response = await axiosdb.get(
-			`/api/mail/verify-otp?email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}`,
+			`/mail/verify-otp?email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}`,
 		);
 		return response.data;
 	},
 
 	// Send welcome email
 	sendWelcomeEmail: async (email: string): Promise<{ message: string }> => {
-		const response = await axiosdb.post("/api/mail/welcome", { email });
+		const response = await axiosdb.post("/mail/welcome", { email });
 		return response.data;
 	},
 };

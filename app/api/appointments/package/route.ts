@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
 		// Validation
 		if (!packageId || !workerId || !date || !time || !clientId) {
-			return errorResponse("Données manquantes", 400);
+			return errorResponse("Missing data", 400);
 		}
 
 		// Get package details with included services
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 		});
 
 		if (!servicePackage) {
-			return errorResponse("Forfait non trouvé ou inactif", 404);
+			return errorResponse("Package not found or inactive", 404);
 		}
 
 		// Calculate total duration (sum of all services in package + add-ons)
@@ -90,19 +90,19 @@ export async function POST(request: NextRequest) {
 			});
 
 			if (!discount || !discount.isActive || discount.endDate < new Date()) {
-				return errorResponse("Code de réduction invalide ou expiré", 400);
+				return errorResponse("Invalid or expired discount code", 400);
 			}
 
 			if (
 				discount.usedCount &&
 				discount.usedCount >= (discount.maxUses || 1000)
 			) {
-				return errorResponse("Limite d'utilisation du code atteinte", 400);
+				return errorResponse("Code usage limit reached", 400);
 			}
 
 			if (discount.minPurchase && totalPrice < Number(discount.minPurchase)) {
 				return errorResponse(
-					"Montant minimum requis pour utiliser ce code",
+					"Minimum amount required to use this code",
 					400,
 				);
 			}
@@ -291,7 +291,7 @@ export async function POST(request: NextRequest) {
 						create: {
 							points: loyaltyPointsEarned,
 							type: "earned_appointment",
-							description: `Bonus pour avoir réservé le forfait "${servicePackage.name}"`,
+							description: `Bonus for booking the package "${servicePackage.name}"`,
 						},
 					},
 				},
@@ -316,8 +316,8 @@ export async function POST(request: NextRequest) {
 				data: {
 					userId: appointmentWithRelations.client.user.id,
 					type: "appointment_created",
-					title: "Forfait réservé avec succès !",
-					message: `Votre forfait "${servicePackage.name}" est confirmé pour le ${new Date(date).toLocaleDateString("fr-FR")} à ${time}.`,
+					title: "Package Booked Successfully!",
+					message: `Your package "${servicePackage.name}" is confirmed for ${new Date(date).toLocaleDateString("en-US")} at ${time}.`,
 					link: `/dashboard/client?appointment=confirm&id=${appointment.id}`,
 				},
 			});
@@ -327,8 +327,8 @@ export async function POST(request: NextRequest) {
 				data: {
 					userId: appointmentWithRelations.worker.user.id,
 					type: "appointment_assigned",
-					title: "Nouveau forfait assigné",
-					message: `Un nouveau forfait "${servicePackage.name}" a été assigné à vous le ${new Date(date).toLocaleDateString("fr-FR")} à ${time}.`,
+					title: "New Package Assigned",
+					message: `A new package "${servicePackage.name}" has been assigned to you on ${new Date(date).toLocaleDateString("en-US")} at ${time}.`,
 					link: `/dashboard/worker?appointment=${appointment.id}`,
 				},
 			});
@@ -340,8 +340,8 @@ export async function POST(request: NextRequest) {
 					data: {
 						userId: adminUser.id,
 						type: "appointment_created",
-						title: "Nouveau forfait réservé",
-						message: `Un nouveau forfait "${servicePackage.name}" a été réservé le ${new Date(date).toLocaleDateString("fr-FR")} à ${time}.`,
+					title: "New Package Booked",
+					message: `A new package "${servicePackage.name}" has been booked on ${new Date(date).toLocaleDateString("en-US")} at ${time}.`,
 						link: `/dashboard/admin/appointments?appointment=${appointment.id}`,
 					},
 				});
@@ -352,7 +352,7 @@ export async function POST(request: NextRequest) {
 
 		return successResponse({
 			...result,
-			message: "Forfait réservé avec succès",
+			message: "Package booked successfully",
 		});
 	} catch (error) {
 		return handleApiError(error);

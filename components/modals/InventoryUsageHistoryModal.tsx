@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import {
 	Calendar,
 	Droplet,
@@ -74,7 +74,7 @@ export default function InventoryUsageHistoryModal({
 	} = useAppointments();
 
 	const formatDate = (dateString: string) => {
-		return format(new Date(dateString), "PPP à HH:mm", { locale: fr });
+		return format(new Date(dateString), "PPP 'at' HH:mm", { locale: enUS });
 	};
 
 	const getAppointmentServiceName = (appointmentId: string) => {
@@ -105,7 +105,7 @@ export default function InventoryUsageHistoryModal({
 								<div className="text-2xl font-bold text-pink-600">
 									{data.stats.totalUsed}
 								</div>
-								<div className="text-xs text-gray-500">Total utilisé</div>
+								<div className="text-xs text-gray-500">Total used</div>
 							</Card>
 							<Card className="p-4 text-center">
 								<div className="text-2xl font-bold text-blue-600">
@@ -117,7 +117,7 @@ export default function InventoryUsageHistoryModal({
 								<div className="text-2xl font-bold text-purple-600">
 									{data.stats.uniqueWorkers}
 								</div>
-								<div className="text-xs text-gray-500">Esthéticiennes</div>
+								<div className="text-xs text-gray-500">Estheticians</div>
 							</Card>
 							<Card className="p-4 text-center">
 								<div className="text-2xl font-bold text-amber-600">
@@ -135,7 +135,7 @@ export default function InventoryUsageHistoryModal({
 							onValueChange={(v: any) => setDateRange(v)}
 						>
 							<SelectTrigger className="w-full sm:w-48">
-								<SelectValue placeholder="Période" />
+								<SelectValue placeholder="Period" />
 							</SelectTrigger>
 							<SelectContent>
 								<SelectItem value="week">Cette semaine</SelectItem>
@@ -158,7 +158,7 @@ export default function InventoryUsageHistoryModal({
 						) : data?.usages?.length === 0 ? (
 							<Card className="p-6 text-center">
 								<Package className="w-12 h-12 mx-auto text-gray-400 mb-2" />
-								<p className="text-gray-500">Aucune utilisation enregistrée</p>
+								<p className="text-gray-500">No usage recorded</p>
 							</Card>
 						) : (
 							data?.usages?.map((usage) => (

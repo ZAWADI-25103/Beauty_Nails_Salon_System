@@ -20,11 +20,11 @@ export async function handleSignup(
 	const role = isFirstAdmin ? "admin" : "client";
 
 	if (!name || !email || !phone || !password) {
-		return { error: "Veuillez remplir tous les champs" };
+		return { error: "Please fill in all required fields" };
 	}
 
 	if (password !== confirmPassword) {
-		return { error: "Les mots de passe ne correspondent pas" };
+		return { error: "Passwords do not match" };
 	}
 
 	// if (!acceptTerms) {
@@ -41,7 +41,7 @@ export async function handleSignup(
 		});
 
 		if (res.status === 202) {
-			return { error: "Email ou téléphone déjà utilisé" };
+			return { error: "Email or phone number already in use" };
 		}
 
 		// Auto login
@@ -51,19 +51,19 @@ export async function handleSignup(
 			redirect: false,
 		});
 		if (result?.error) {
-			return { error: "Email ou mot de passe incorrect" };
+			return { error: "Invalid email or password" };
 		}
 	} catch (e) {
 		return {
 			error:
-				"Incorrect Email or Password, verifier votre role et essayez encore une fois...",
+				"Incorrect Email or Password, please verify your role and try again...",
 		};
 	}
 
 	// const res = await axiosdb.post('/mail/welcome', { email : email})
 
 	// if (!(await res).data.success){
-	//   return { error: "Echec de l'envoi du mail de bienvenue, mais "}
+	//   return { error: "Failed to send welcome email, but "}
 	// }
 
 	if (!redirect) {

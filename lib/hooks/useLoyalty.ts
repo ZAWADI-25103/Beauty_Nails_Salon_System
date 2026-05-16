@@ -29,7 +29,7 @@ export function useLoyalty() {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Bonus de parrainage pas accorder",
+					"Referral bonus not granted",
 			);
 		},
 	});
@@ -42,7 +42,7 @@ export function useLoyalty() {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Bonus de parrainage pas accorder",
+					"Referral bonus not granted",
 			);
 		},
 	});
@@ -76,7 +76,7 @@ export function useReferral() {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Bonus de parrainage pas accorder",
+					"Referral bonus not granted",
 			);
 		},
 	});

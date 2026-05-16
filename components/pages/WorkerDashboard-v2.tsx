@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { fr, tr } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import {
 	AlertCircle,
 	AlertTriangle,
@@ -174,13 +174,13 @@ export default function WorkerDashboardV2() {
 		}
 		// Fallback: Generate empty data for the chart
 		return [
-			{ day: "Lun", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Mar", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Mer", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Jeu", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Ven", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Sam", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Dim", rendezVous: 0, commission: 0, totalRevenue: 0 },
+			{ day: "Mon", rendezVous: 0, commission: 0, totalRevenue: 0 },
+			{ day: "Tue", rendezVous: 0, commission: 0, totalRevenue: 0 },
+			{ day: "Wed", rendezVous: 0, commission: 0, totalRevenue: 0 },
+			{ day: "Thu", rendezVous: 0, commission: 0, totalRevenue: 0 },
+			{ day: "Fri", rendezVous: 0, commission: 0, totalRevenue: 0 },
+			{ day: "Sat", rendezVous: 0, commission: 0, totalRevenue: 0 },
+			{ day: "Sun", rendezVous: 0, commission: 0, totalRevenue: 0 },
 		];
 	}, [weeklyCommissionData]);
 
@@ -192,13 +192,13 @@ export default function WorkerDashboardV2() {
 	// Calculate next payment date based on profile settings (placeholder logic)
 	const getNextPaymentDate = () => {
 		if (!workerProfile?.commissionFrequency || !workerProfile?.commissionDay)
-			return "À configurer";
+			return "To configure";
 		// This is simplified - actual calculation would depend on frequency and day
 		if (freqComm === "monthly")
-			return `Le ${workerProfile.commissionDay}e de chaque mois`;
+			return `On the ${workerProfile.commissionDay}th of each month`;
 		else if (freqComm === "weekly")
-			return `Chaque Samedi soumettez la demande de payement`;
-		else return `Ce Soir, soumettez la demande de payement`;
+			return `Every Saturday - submit your payment request`;
+		else return `Tonight - submit your payment request`;
 	};
 
 	// Handle saving commission settings (example action)
@@ -206,7 +206,7 @@ export default function WorkerDashboardV2() {
 		// Navigate to profile edit or open a specific modal
 		// Example: router.push('/profile/edit') or setOpenCommissionSetupModal(true)
 		toast.info(
-			"Veuillez configurer vos paramètres de commission dans le profil.",
+			"Please configure your commission settings in your profile.",
 		);
 	};
 
@@ -279,7 +279,7 @@ export default function WorkerDashboardV2() {
 			},
 			{
 				onSuccess: () => {
-					toast.success("Statut mis à jour");
+					toast.success("Status updated");
 					setDetailsOpen(false);
 					refetch();
 					router.refresh();
@@ -295,42 +295,42 @@ export default function WorkerDashboardV2() {
 				return (
 					<Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">
 						<Clock className="w-3 h-3 mr-1" />
-						Confirmé
+						Confirmed
 					</Badge>
 				);
 			case "in_progress":
 				return (
 					<Badge className="bg-purple-100 text-purple-700 hover:bg-purple-100">
 						<PlayCircle className="w-3 h-3 mr-1" />
-						En cours
+						In Progress
 					</Badge>
 				);
 			case "completed":
 				return (
 					<Badge className="bg-green-100 text-green-700 hover:bg-green-100">
 						<CheckCircle className="w-3 h-3 mr-1" />
-						Terminé
+						Completed
 					</Badge>
 				);
 			case "cancelled":
 				return (
 					<Badge className="bg-red-100 text-red-700 hover:bg-red-100">
 						<XCircle className="w-3 h-3 mr-1" />
-						Annulé
+						Cancelled
 					</Badge>
 				);
 			case "no_show":
 				return (
 					<Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100">
 						<AlertCircle className="w-3 h-3 mr-1" />
-						Absent
+						No Show
 					</Badge>
 				);
 			case "pending":
 				return (
 					<Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">
 						<Clock className="w-3 h-3 mr-1" />
-						En attente
+						Pending
 					</Badge>
 				);
 			default:
@@ -352,7 +352,7 @@ export default function WorkerDashboardV2() {
 
 	// Format date
 	const formatDate = (dateString: string) => {
-		return new Date(dateString).toLocaleDateString("fr-FR", {
+		return new Date(dateString).toLocaleDateString("en-US", {
 			day: "numeric",
 			month: "long",
 		});
@@ -384,7 +384,7 @@ export default function WorkerDashboardV2() {
 	//   const serviceCounts: Record<string, number> = {};
 
 	//   weeklyAppointments.forEach(apt => {
-	//     const serviceName = apt.service?.name || 'Autre';
+	//     const serviceName = apt.service?.name || 'Other';
 	//     serviceCounts[serviceName] = (serviceCounts[serviceName] || 0) + 1;
 	//   });
 
@@ -450,10 +450,10 @@ export default function WorkerDashboardV2() {
 					<div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
 						<div>
 							<h1 className="text-3xl font-semibold sm:text-4xl  bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-								Espace Employé
+								Staff Dashboard
 							</h1>
 							<p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg">
-								Bonjour, {user?.name} 👋
+								Hello, {user?.name} 👋
 							</p>
 						</div>
 
@@ -483,7 +483,7 @@ export default function WorkerDashboardV2() {
 											{notificationList.length === 0 ? (
 												<div className="text-center py-12 text-gray-500 dark:text-gray-400">
 													<Bell className="w-12 h-12 mx-auto mb-4 opacity-20" />
-													<p>Aucune notification</p>
+													<p>No notifications</p>
 												</div>
 											) : (
 												notificationList.map((notification) => (
@@ -540,7 +540,7 @@ export default function WorkerDashboardV2() {
 							</div>
 
 							<p className="text-lg sm:text-lg font-medium text-gray-600 dark:text-gray-300">
-								Aujourd'hui
+								Today
 							</p>
 
 							<p className="text-2xl sm:text-4xl font-semibold text-gray-900 dark:text-gray-100">
@@ -548,7 +548,7 @@ export default function WorkerDashboardV2() {
 							</p>
 
 							<p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mt-1">
-								{stats.completed} terminés
+								{stats.completed} completed
 							</p>
 						</Card>
 
@@ -561,7 +561,7 @@ export default function WorkerDashboardV2() {
 							</div>
 
 							<p className="text-lg sm:text-lg font-medium text-gray-600 dark:text-gray-300">
-								Complétés
+								Completed
 							</p>
 
 							<p className="text-2xl sm:text-4xl font-semibold text-gray-900 dark:text-gray-100">
@@ -569,7 +569,7 @@ export default function WorkerDashboardV2() {
 							</p>
 
 							<p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mt-1">
-								rendez-vous
+								appointments
 							</p>
 						</Card>
 
@@ -582,7 +582,7 @@ export default function WorkerDashboardV2() {
 							</div>
 
 							<p className="text-lg sm:text-lg font-medium text-gray-600 dark:text-gray-300">
-								En attente
+								Pending
 							</p>
 
 							<p className="text-2xl sm:text-4xl font-semibold text-gray-900 dark:text-gray-100">
@@ -590,7 +590,7 @@ export default function WorkerDashboardV2() {
 							</p>
 
 							<p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mt-1">
-								{missedAppointments.length} manqués
+								{missedAppointments.length} missed
 							</p>
 						</Card>
 
@@ -604,7 +604,7 @@ export default function WorkerDashboardV2() {
 							</div>
 
 							<p className="text-lg sm:text-lg font-medium opacity-90">
-								Revenus Générés
+								Revenue Generated
 							</p>
 
 							<p className="text-2xl sm:text-4xl font-semibold">
@@ -613,10 +613,10 @@ export default function WorkerDashboardV2() {
 
 							<p className="text-sm sm:text-base opacity-80 mt-1">
 								{user?.workerProfile?.commissionFrequency === "mothly"
-									? "Ce dernier Mois"
+									? "This Month"
 									: user?.workerProfile?.commissionFrequency === "weekly"
-										? "Le 7 dernier jours"
-										: "Aujourd'hui"}
+										? "Last 7 Days"
+										: "Today"}
 							</p>
 						</Card>
 					</div>
@@ -627,7 +627,7 @@ export default function WorkerDashboardV2() {
 							<p className="text-xl font-bold text-gray-900 dark:text-gray-100">
 								{worker?.totalEarnings?.toLocaleString()} CDF
 							</p>
-							<p className="text-sm text-gray-500 uppercase">Vos gains</p>
+							<p className="text-sm text-gray-500 uppercase">Your Earnings</p>
 						</div>
 
 						{/* 🏢 Business Revenue */}
@@ -636,7 +636,7 @@ export default function WorkerDashboardV2() {
 							<p className="text-xl font-bold text-gray-900 dark:text-gray-100">
 								{worker?.businessRevenue?.toLocaleString()} CDF
 							</p>
-							<p className="text-sm text-gray-500 uppercase">Part du salon</p>
+							<p className="text-sm text-gray-500 uppercase">Salon Share</p>
 						</div>
 
 						{/* 🧴 Materials */}
@@ -645,7 +645,7 @@ export default function WorkerDashboardV2() {
 							<p className="text-xl font-bold text-gray-900 dark:text-gray-100">
 								{worker?.materialsReserve?.toLocaleString()} CDF
 							</p>
-							<p className="text-sm text-gray-500 uppercase">Produits</p>
+							<p className="text-sm text-gray-500 uppercase">Materials</p>
 						</div>
 
 						{/* ⚙️ Operational */}
@@ -654,7 +654,7 @@ export default function WorkerDashboardV2() {
 							<p className="text-xl font-bold text-gray-900 dark:text-gray-100">
 								{worker?.operationalCosts?.toLocaleString()} CDF
 							</p>
-							<p className="text-sm text-gray-500 uppercase">Charges</p>
+							<p className="text-sm text-gray-500 uppercase">Operating Costs</p>
 						</div>
 					</div>
 				</div>
@@ -674,11 +674,11 @@ export default function WorkerDashboardV2() {
 
 									<div>
 										<h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-											Demandes de transfert
+											Transfer Requests
 										</h3>
 
 										<p className="text-base text-pink-700 dark:text-pink-300 mt-1">
-											Vous avez {pendingTransfers.length} demande
+											You have {pendingTransfers.length} pending transfere
 											{pendingTransfers.length > 1 ? "s" : ""} en attente
 										</p>
 									</div>
@@ -779,7 +779,7 @@ export default function WorkerDashboardV2() {
 							{todaySchedule.length === 0 ? (
 								<div className="text-center py-12 text-gray-500">
 									<CalendarIcon className="w-16 h-16 mx-auto mb-4 opacity-20" />
-									<p>Aucun rendez-vous aujourd'hui</p>
+									<p>No appointments today</p>
 								</div>
 							) : (
 								<div className="space-y-4">
@@ -832,7 +832,7 @@ export default function WorkerDashboardV2() {
 																<CalendarIcon className="w-4 h-4" />
 																{appointment.date
 																	? format(new Date(appointment.date), "PPP", {
-																			locale: fr,
+																			locale: enUS,
 																		})
 																	: "Date non définie"}
 															</div>
@@ -864,7 +864,7 @@ export default function WorkerDashboardV2() {
 															className="flex items-center gap-1"
 														>
 															<ArrowRight className="w-3 h-3" />
-															Votre demande de transfert pour le rendez-vous a{" "}
+															Votre demande de transfert pour le appointments a{" "}
 															{appointment.transfer?.newWorker?.user?.name} est
 															en cours..
 														</Badge>
@@ -876,7 +876,7 @@ export default function WorkerDashboardV2() {
 															className="flex items-center gap-1"
 														>
 															<ArrowRight className="w-3 h-3" />
-															Vous avez transferer ce rendez-vous a{" "}
+															Vous avez transferer ce appointments a{" "}
 															{appointment.transfer?.newWorker?.user?.name}.
 														</Badge>
 													)}
@@ -886,7 +886,7 @@ export default function WorkerDashboardV2() {
 															className="flex items-center gap-1"
 														>
 															<ArrowRight className="w-3 h-3" />
-															Ce rendez-vous vous a etez transfere par{" "}
+															Ce appointments vous a etez transfere par{" "}
 															{appointment.transfer?.originalWorker?.user?.name}
 														</Badge>
 													)}
@@ -905,11 +905,11 @@ export default function WorkerDashboardV2() {
 															}
 														>
 															{appointment.transfer.status === "pending" &&
-																"🔄 En transfert"}
+																"													🔄 Transferring"}
 															{appointment.transfer.status === "accepted" &&
-																"✓ Transféré"}
+																"✓						Transferred"}
 															{appointment.transfer.status === "rejected" &&
-																"✗ Refusé"}
+																"✗						Declined"}
 														</Badge>
 													)}
 
@@ -927,7 +927,7 @@ export default function WorkerDashboardV2() {
 																		className="text-pink-600 hover:text-pink-700"
 																	>
 																		<ArrowRight className="w-4 h-4 mr-1" />
-																		Transférer
+																		Transfer
 																	</Button>
 																}
 															/>
@@ -944,7 +944,7 @@ export default function WorkerDashboardV2() {
 																	setDetailsOpen(true);
 																}}
 															>
-																Détails et Choix d'outils
+																Details & Tool Selection
 															</Button>
 														</>
 													)}
@@ -961,7 +961,7 @@ export default function WorkerDashboardV2() {
 							<Card className="p-6">
 								<h3 className="text-lg font-semibold mb-4 flex items-center text-cyan-800 dark:text-cyan-400">
 									<AlertCircle className="w-5 h-5 mr-2" />
-									En attente ({pendingAppointments.length})
+									Pending ({pendingAppointments.length})
 								</h3>
 								<div className="space-y-3">
 									{pendingAppointments.map((appointment) => (
@@ -977,12 +977,12 @@ export default function WorkerDashboardV2() {
 													{appointment.service?.name} - {appointment.time}
 												</p>
 												<p className="text-lg text-gray-600 dark:text-gray-300">
-													date :{" "}
+													Date:{" "}
 													{appointment.date
 														? format(new Date(appointment.date), "PPP", {
-																locale: fr,
+																locale: enUS,
 															})
-														: "Date non définie"}
+														: "Date not set"}
 												</p>
 											</div>
 											<AppointmentCountdown
@@ -999,8 +999,7 @@ export default function WorkerDashboardV2() {
 						{completedAppointments.length > 0 && (
 							<Card className="p-6">
 								<h3 className="text-lg font-semibold mb-4 flex items-center text-green-800 dark:text-green-400">
-									<AlertCircle className="w-5 h-5 mr-2" />
-									Prestation Terminer ({completedAppointments.length})
+									<AlertCircle className="w-5 h-5 mr-2" />														Completed Services ({completedAppointments.length})
 								</h3>
 								<div className="space-y-3">
 									{completedAppointments.map((appointment) => (
@@ -1016,17 +1015,17 @@ export default function WorkerDashboardV2() {
 													{appointment.service?.name} - {appointment.time}
 												</p>
 												<p className="text-lg text-gray-600 dark:text-gray-300">
-													date :{" "}
+													Date:{" "}
 													{appointment.date
 														? format(new Date(appointment.date), "PPP", {
-																locale: fr,
+																locale: enUS,
 															})
-														: "Date non définie"}
+														: "Date not set"}
 												</p>
 											</div>
 											<div className="flex gap-2">
 												<Button size="sm" variant="secondary">
-													Terminee
+													Completed
 												</Button>
 											</div>
 										</div>
@@ -1038,8 +1037,7 @@ export default function WorkerDashboardV2() {
 						{cancelledAppointments.length > 0 && (
 							<Card className="p-6">
 								<h3 className="text-lg font-semibold mb-4 flex items-center text-red-800 dark:text-red-400">
-									<AlertCircle className="w-5 h-5 mr-2" />
-									Prestation Annulée ({cancelledAppointments.length})
+									<AlertCircle className="w-5 h-5 mr-2" />											Cancelled Services ({cancelledAppointments.length})
 								</h3>
 								<div className="space-y-3">
 									{cancelledAppointments.slice(0, 5).map((appointment) => (
@@ -1055,17 +1053,17 @@ export default function WorkerDashboardV2() {
 													{appointment.service?.name} - {appointment.time}
 												</p>
 												<p className="text-lg text-gray-600 dark:text-gray-300">
-													date :{" "}
+													Date:{" "}
 													{appointment.date
 														? format(new Date(appointment.date), "PPP", {
-																locale: fr,
+																locale: enUS,
 															})
-														: "Date non définie"}
+														: "Date not set"}
 												</p>
 											</div>
 											<div className="flex gap-2">
 												<Button size="sm" disabled variant="destructive">
-													Annulée
+													Cancelled
 												</Button>
 											</div>
 										</div>
@@ -1093,7 +1091,7 @@ export default function WorkerDashboardV2() {
 							<Card className="p-6 text-center">
 								<AlertTriangle className="w-12 h-12 mx-auto text-red-500 mb-4" />
 								<p className="text-red-500">
-									Erreur de chargement des données de profil ou de commission.
+									Error loading profile or commission data.
 								</p>
 							</Card>
 						) : (
@@ -1105,13 +1103,13 @@ export default function WorkerDashboardV2() {
 											<AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
 											<div className="flex-1">
 												<h3 className="font-medium text-amber-800 dark:text-amber-200">
-													Configuration requise
+													Configuration Required
 												</h3>
 												<p className="text-lg text-amber-700 dark:text-amber-300 mt-1">
-													Vos paramètres de commission (fréquence, jour de
-													paiement, seuil) ne sont pas encore configurés. Ces
-													informations sont nécessaires pour calculer vos
-													paiements et générer les rapports.
+									Your commission settings (frequency, payment
+									day, threshold) are not yet configured. This
+									information is needed to calculate your
+									payments and generate reports.
 												</p>
 
 												<StaffModal
@@ -1124,7 +1122,7 @@ export default function WorkerDashboardV2() {
 															onClick={handleConfigureCommission}
 														>
 															<ExternalLink className="h-4 w-4 mr-2" />
-															Configurer maintenant
+															Configure Now
 														</Button>
 													}
 												/>
@@ -1137,12 +1135,12 @@ export default function WorkerDashboardV2() {
 								<Card className="p-6">
 									<div className="flex flex-wrap items-center justify-between gap-4 mb-6">
 										<h2 className="text-2xl font-bold">
-											Mes Commissions & Performance
+											My Commissions & Performance
 										</h2>
 										<div className="flex items-center gap-2">
 											<Info className="h-4 w-4 text-gray-500" />
 											<span className="text-lg text-gray-600 dark:text-gray-400">
-												Prochain paiement: {getNextPaymentDate()}
+												Next payment: {getNextPaymentDate()}
 											</span>
 										</div>
 									</div>
@@ -1152,7 +1150,7 @@ export default function WorkerDashboardV2() {
 											<div className="flex items-center gap-2 mb-2">
 												<DollarSign className="h-5 w-5 text-pink-500" />
 												<p className="text-lg text-gray-600 dark:text-gray-300">
-													Commission Attendue
+													Expected Commission
 												</p>
 											</div>
 											<p className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
@@ -1162,8 +1160,8 @@ export default function WorkerDashboardV2() {
 												CDF
 											</p>
 											<p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
-												Ta commission varie selon le taux de commision par
-												service, Taux est {workerProfile?.commissionRate || 0}%
+											Your commission varies based on the rate per
+										service. Rate is {workerProfile?.commissionRate || 0}%
 											</p>
 										</Card>
 
@@ -1171,7 +1169,7 @@ export default function WorkerDashboardV2() {
 											<div className="flex items-center gap-2 mb-2">
 												<TrendingUp className="h-5 w-5 text-blue-500" />
 												<p className="text-lg text-gray-600 dark:text-gray-300">
-													Revenus Générés
+													Revenue Generated
 												</p>
 											</div>
 											<p className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
@@ -1180,7 +1178,7 @@ export default function WorkerDashboardV2() {
 											</p>
 											<p className="text-lg text-gray-600 dark:text-gray-300 mt-2">
 												{currentPeriodCommissionData?.appointmentsCount || 0}{" "}
-												rendez-vous
+												appointments
 											</p>
 										</Card>
 
@@ -1188,14 +1186,14 @@ export default function WorkerDashboardV2() {
 											<div className="flex items-center gap-2 mb-2">
 												<Star className="h-5 w-5 text-amber-500" />
 												<p className="text-lg text-gray-600 dark:text-gray-300">
-													Note Moyenne
+													Average Rating
 												</p>
 											</div>
 											<p className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
 												{stats.rating.toFixed(1)}
 											</p>
 											<p className="text-lg text-gray-600 dark:text-gray-300 mt-2">
-												Basé sur {workerProfile?.totalReviews || 0} avis
+												Based on {workerProfile?.totalReviews || 0} reviews
 											</p>
 										</Card>
 									</div>
@@ -1203,18 +1201,18 @@ export default function WorkerDashboardV2() {
 
 								{/* Performance Chart */}
 								{/* <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Performance Hebdomadaire</h3>
+                  <h3 className="text-lg font-semibold mb-4">Weekly Performance</h3>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={weeklyData}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="day" />
                         <YAxis />
-                        <Tooltip formatter={(value) => [`${value}`, 'Valeur']} labelFormatter={(label) => `Jour: ${label}`} />
+                        <Tooltip formatter={(value) => [`${value}`, 'Value']} labelFormatter={(label) => `Day: ${label}`} />
                         <Legend />
-                        <Bar dataKey="rendezVous" fill="#a855f7" name="Rendez-vous" />
+                        <Bar dataKey="rendezVous" fill="#a855f7" name="Appointments" />
                         <Bar dataKey="commission" fill="#10b981" name="Commission (CDF)" />
-                        <Bar dataKey="totalRevenue" fill="#3b82f6" name="Revenu (CDF)" />
+                        <Bar dataKey="totalRevenue" fill="#3b82f6" name="Revenue (CDF)" />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -1223,7 +1221,7 @@ export default function WorkerDashboardV2() {
 								{/* Current Period Summary */}
 								<Card className="p-6">
 									<h3 className="text-lg font-semibold mb-4">
-										Période Actuelle
+										Current Period
 									</h3>
 
 									<Card className="p-4 border border-pink-100 dark:border-pink-900 shadow-sm space-y-4">
@@ -1231,15 +1229,15 @@ export default function WorkerDashboardV2() {
 											<div>
 												<p className="font-medium text-gray-900 dark:text-gray-100">
 													{freqComm === "daily"
-														? "Aujourd'hui"
-														: freqComm === "weekly"
-															? "Cette semaine"
-															: "Ce mois-ci"}
+										? "Today"
+										: freqComm === "weekly"
+											? "This Week"
+											: "This Month"}
 												</p>
 
 												<p className="text-lg text-gray-600 dark:text-gray-400">
 													{currentPeriodCommissionData?.appointmentsCount || 0}{" "}
-													rendez-vous complétés
+													appointments completed
 												</p>
 											</div>
 
@@ -1266,7 +1264,7 @@ export default function WorkerDashboardV2() {
 													size="default"
 													className="w-full bg-green-500 hover:bg-green-600 text-white"
 												>
-													Soumettez votre demande de paiement
+													Submit Payment Request
 												</Button>
 											}
 										/>
@@ -1277,13 +1275,13 @@ export default function WorkerDashboardV2() {
 								{workerProfile && !isCommissionConfigIncomplete && (
 									<Card className="p-6">
 										<h3 className="text-lg font-semibold mb-4">
-											Paiements Attendus
+											Pending Payments
 										</h3>
 										<Card className="p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
 											<div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
 												<div>
 													<p className="font-medium text-gray-900 dark:text-gray-100">
-														Prochain paiement
+														Next Payment
 													</p>
 													<p className="text-lg text-gray-600 dark:text-gray-400">
 														{getNextPaymentDate()}
@@ -1300,7 +1298,7 @@ export default function WorkerDashboardV2() {
 														CDF
 													</p>
 													<Badge variant="outline" className="text-base">
-														Estimé
+														Estimated
 													</Badge>
 												</div>
 											</div>
@@ -1312,7 +1310,7 @@ export default function WorkerDashboardV2() {
 								<Card className="p-6">
 									<div className="flex flex-wrap items-center justify-between gap-4 mb-4">
 										<h3 className="text-lg font-semibold">
-											Historique des Commissions
+											Commission History
 										</h3>
 										<div className="flex items-center gap-2">
 											<Select
@@ -1320,17 +1318,17 @@ export default function WorkerDashboardV2() {
 												onValueChange={setSelectedPeriod}
 											>
 												<SelectTrigger className="w-45">
-													<SelectValue placeholder="Sélectionner période" />
+													<SelectValue placeholder="Select period" />
 												</SelectTrigger>
 												<SelectContent>
 													<SelectItem value="daily">
-														Commission quotidienne
+														Daily Commission
 													</SelectItem>
 													<SelectItem value="weekly">
-														Commission hebdomadaire
+														Weekly Commission
 													</SelectItem>
 													<SelectItem value="monthly">
-														Commission mensuelle
+														Monthly Commission
 													</SelectItem>
 													{/* Add more options based on actual available periods */}
 												</SelectContent>
@@ -1340,15 +1338,15 @@ export default function WorkerDashboardV2() {
 												size="sm"
 												onClick={() => {
 													if (workerCommissions.length === 0) {
-														toast("Aucune commission disponible", {
-															description:
-																"Il n'y a pas de commissions à imprimer pour le moment.",
+													toast("No commissions available", {
+														description:
+															"There are no commissions to print at the moment.",
 														});
 													} else printCommissionReportV2();
 												}}
 											>
 												<Download className="h-4 w-4 mr-2" />
-												Rapport
+												Report
 											</Button>
 										</div>
 									</div>
@@ -1361,20 +1359,20 @@ export default function WorkerDashboardV2() {
 										<Card className="p-8 text-center border-2 border-dashed border-gray-300 dark:border-gray-700">
 											<FileText className="w-12 h-12 mx-auto text-gray-400 mb-4" />
 											<p className="text-gray-500">
-												Aucune commission enregistrée pour le moment.
+												No commissions recorded yet.
 											</p>
 											<p className="text-lg text-gray-500 mt-1">
-												Les commissions apparaîtront ici après que vous aurez
-												terminé des rendez-vous.
+										Commissions will appear here after you
+										complete appointments.
 											</p>
 										</Card>
 									) : (
 										<div className="space-y-3 max-h-96 overflow-y-auto pr-2">
 											<p>
-												L'historique de vos commissions après chaque prestation
-												terminée. Cliquez sur le bouton de téléchargement pour
-												obtenir un rapport détaillé de chaque période de
-												commission.
+										Your commission history after each completed
+									service. Click the download button to
+									get a detailed report for each commission
+									period.
 											</p>
 											{[...workerCommissions]
 												.sort(
@@ -1393,9 +1391,9 @@ export default function WorkerDashboardV2() {
 																	{commission.period}
 																</p>
 																<p className="text-lg text-gray-600 dark:text-gray-400">
-																	{commission.appointmentsCount} RDV •{" "}
-																	{commission.totalRevenue.toLocaleString()} CDF
-																	généré(s)
+															{commission.appointmentsCount} apps •{" "}
+															{commission.totalRevenue.toLocaleString()} CDF
+															generated
 																</p>
 															</div>
 															<div className="flex items-center gap-4">
@@ -1422,10 +1420,10 @@ export default function WorkerDashboardV2() {
 																		}
 																	>
 																		{commission.status === "paid"
-																			? "Payé"
-																			: commission.status === "pending"
-																				? "En attente"
-																				: "Inconnu"}
+															? "Paid"
+															: commission.status === "pending"
+																? "Pending"
+																: "Unknown"}
 																	</Badge>
 																	<Button
 																		variant="ghost"
@@ -1455,40 +1453,39 @@ export default function WorkerDashboardV2() {
 			<Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
 				<DialogContent className="max-w-2xl">
 					<DialogHeader>
-						<DialogTitle>Détails du rendez-vous</DialogTitle>
+						<DialogTitle>						Appointment Details</DialogTitle>
 					</DialogHeader>
 
 					{selectedAppointment && (
 						<div className="space-y-4">
 							<div className="grid grid-cols-2 gap-4">
-								<div>
-									<label className="text-lg text-gray-600  dark:text-gray-300 ">
-										Client
-									</label>
-									<p className="font-semibold">
-										{selectedAppointment.client?.user?.name}
-									</p>
-								</div>
-								<div>
-									<label className="text-lg text-gray-600 dark:text-gray-300">
-										Service
-									</label>
+								<div>								<label className="text-lg text-gray-600 dark:text-gray-300">
+									Client
+								</label>
+								<p className="font-semibold">
+									{selectedAppointment.client?.user?.name}
+								</p>
+							</div>
+							<div>
+								<label className="text-lg text-gray-600 dark:text-gray-300">
+									Service
+								</label>
 									<p className="font-semibold">
 										{selectedAppointment.service?.name}
 									</p>
 								</div>
 								<div>
 									<label className="text-lg text-gray-600 dark:text-gray-300">
-										Date & Heure
+										Date & Time
 									</label>
 									<p className="font-semibold">
-										{formatDate(selectedAppointment.date)} à{" "}
+										{formatDate(selectedAppointment.date)} at{" "}
 										{selectedAppointment.time}
 									</p>
 								</div>
 								<div>
 									<label className="text-lg text-gray-600 dark:text-gray-300">
-										Durée
+										Duration
 									</label>
 									<p className="font-semibold">
 										{selectedAppointment.duration} min
@@ -1496,17 +1493,17 @@ export default function WorkerDashboardV2() {
 								</div>
 								<div>
 									<label className="text-lg text-gray-600 dark:text-gray-300">
-										Lieu
+										Location
 									</label>
 									<p className="font-semibold">
 										{selectedAppointment.location === "salon"
-											? "Salon"
-											: "Domicile"}
+											? "At Salon"
+											: "At Home"}
 									</p>
 								</div>
 								<div>
 									<label className="text-lg text-gray-600 dark:text-gray-300">
-										Prix
+										Price
 									</label>
 									<p className="font-semibold">
 										{selectedAppointment.price?.toLocaleString()} CDF
@@ -1538,7 +1535,7 @@ export default function WorkerDashboardV2() {
 											}}
 										>
 											<PlayCircle className="w-4 h-4 mr-2" />
-											Commencer
+											Start
 										</Button>
 										<InventorySelectionModal
 											appointmentId={selectedAppointment.id}
@@ -1557,7 +1554,7 @@ export default function WorkerDashboardV2() {
 										}
 									>
 										<CheckCheck className="w-4 h-4 mr-2" />
-										Terminer
+										Complete
 									</Button>
 								)}
 
@@ -1571,7 +1568,7 @@ export default function WorkerDashboardV2() {
 										}
 									>
 										<XCircle className="w-4 h-4 mr-2" />
-										Annuler
+										Cancel
 									</Button>
 								)}
 							</div>

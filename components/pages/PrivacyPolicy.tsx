@@ -36,11 +36,11 @@ export default function PrivacyPolicy() {
 						Nous collectons les informations suivantes :
 					</p>
 					<ul className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 space-y-1 sm:space-y-2">
-						<li>Nom, prénom et coordonnées (email, téléphone, adresse)</li>
-						<li>Informations de rendez-vous et historique de services</li>
-						<li>Préférences et notes concernant vos prestations</li>
-						<li>Informations de paiement (traitées de manière sécurisée)</li>
-						<li>Photos de réalisations (avec votre consentement explicite)</li>
+						<li>Full name and contact details (email, phone, address)</li>
+						<li>Appointment information and service history</li>
+						<li>Preferences and notes regarding your services</li>
+						<li>Payment information (processed securely)</li>
+						<li>Photos of completed work (with your explicit consent)</li>
 					</ul>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
@@ -50,12 +50,12 @@ export default function PrivacyPolicy() {
 						Vos données sont utilisées pour :
 					</p>
 					<ul className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 space-y-1 sm:space-y-2">
-						<li>Gérer vos rendez-vous et prestations</li>
-						<li>Vous contacter concernant vos réservations</li>
-						<li>Personnaliser votre expérience client</li>
-						<li>Vous envoyer des offres et promotions (avec votre accord)</li>
-						<li>Améliorer nos services</li>
-						<li>Respecter nos obligations légales</li>
+						<li>Manage your appointments and services</li>
+						<li>Contact you regarding your reservations</li>
+						<li>Personalize your customer experience</li>
+						<li>Send you offers and promotions (with your consent)</li>
+						<li>Improve our services</li>
+						<li>Comply with our legal obligations</li>
 					</ul>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
@@ -75,9 +75,9 @@ export default function PrivacyPolicy() {
 						données peuvent être partagées uniquement :
 					</p>
 					<ul className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 space-y-1 sm:space-y-2">
-						<li>Avec nos prestataires de services (paiement, communication)</li>
-						<li>Si requis par la loi ou par une autorité compétente</li>
-						<li>Avec votre consentement explicite</li>
+						<li>With our service providers (payment, communication)</li>
+						<li>If required by law or a competent authority</li>
+						<li>With your explicit consent</li>
 					</ul>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
@@ -87,11 +87,11 @@ export default function PrivacyPolicy() {
 						Vous avez le droit de :
 					</p>
 					<ul className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 space-y-1 sm:space-y-2">
-						<li>Accéder à vos données personnelles</li>
-						<li>Rectifier vos informations</li>
-						<li>Supprimer votre compte et vos données</li>
-						<li>Vous opposer au traitement de vos données</li>
-						<li>Retirer votre consentement à tout moment</li>
+						<li>Access your personal data</li>
+						<li>Correct your information</li>
+						<li>Delete your account and data</li>
+						<li>Object to the processing of your data</li>
+						<li>Withdraw your consent at any time</li>
 					</ul>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
@@ -125,7 +125,7 @@ export default function PrivacyPolicy() {
 					</h2>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
 						Pour toute question concernant cette politique de confidentialité ou
-						pour exercer vos droits, contactez-nous à :
+						to exercise your rights, contact us at:
 					</p>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300">
 						Email : contact@beautynails.cd

@@ -31,13 +31,13 @@ export async function POST(req: Request) {
 		}
 
 		// Hash the new password
-		// const hashedPassword = await hash(newPassword, 10);
+		const hashedPassword = await hash(newPassword, 10);
 
 		// Update user password and clear reset token
 		await prisma.user.update({
 			where: { id: user.id },
 			data: {
-				password: newPassword,
+				password: hashedPassword,
 				resetToken: null,
 				resetTokenExpires: null,
 			},

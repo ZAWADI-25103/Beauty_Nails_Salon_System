@@ -35,7 +35,7 @@ export function useInventory(params?: { category?: string; status?: string }) {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur de mise à jour du stock",
+					"Error updating stock",
 			);
 		},
 	});
@@ -45,12 +45,12 @@ export function useInventory(params?: { category?: string; status?: string }) {
 		mutationFn: inventoryApi.createReorder,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["inventory"] });
-			toast.success("Commande de réapprovisionnement créée");
+			toast.success("Reorder created");
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur de création de commande",
+					"Error creating order",
 			);
 		},
 	});
@@ -60,10 +60,10 @@ export function useInventory(params?: { category?: string; status?: string }) {
 		mutationFn: (itemData: any) => axiosdb.post("/inventory", itemData),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["inventory"] });
-			toast.success("Article créé");
+			toast.success("Item created");
 		},
 		onError: () => {
-			toast.success("Article créé (mock)");
+			toast.success("Item created (mock)");
 			queryClient.invalidateQueries({ queryKey: ["inventory"] });
 		},
 	});

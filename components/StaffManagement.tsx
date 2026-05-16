@@ -531,7 +531,7 @@ export default function StaffManagement() {
 													)}
 													{user?.role === "worker" && (
 														<p className="text-lg text-gray-500 dark:text-gray-500 mt-1">
-															Contactez un administrateur pour initialiser cette
+															Contact an administrator to initialize this
 															période.
 														</p>
 													)}
@@ -550,7 +550,7 @@ export default function StaffManagement() {
 																</h6>
 																<div className="space-y-1 text-base sm:text-lg text-gray-600 dark:text-gray-400 mt-1">
 																	<div className="flex justify-between">
-																		<span>Revenu Généré:</span>
+																		<span>Revenue Generated:</span>
 																		<span>
 																			{selectedPeriodCommission.totalRevenue.toLocaleString()}{" "}
 																			CDF
@@ -645,7 +645,7 @@ export default function StaffManagement() {
 																	CDF
 																</div>
 
-																<div className="pl-2">- Coûts Op. (5%):</div>
+																<div className="pl-2">- Op. Costs (5%):</div>
 																<div className="text-right pl-2">
 																	-
 																	{(selectedPeriodCommission.totalRevenue -
@@ -685,7 +685,7 @@ export default function StaffManagement() {
 																</h6>
 																<div className="space-y-1 text-base sm:text-lg text-gray-600 dark:text-gray-400 mt-1">
 																	<div className="flex justify-between">
-																		<span>Payé le:</span>
+																		<span>Paid on:</span>
 																		<span>
 																			{selectedPeriodCommission.paidAt
 																				? new Date(
@@ -695,14 +695,14 @@ export default function StaffManagement() {
 																		</span>
 																	</div>
 																	<div className="flex justify-between">
-																		<span>Revenu Généré:</span>
+																		<span>Revenue Generated:</span>
 																		<span>
 																			{selectedPeriodCommission.totalRevenue.toLocaleString()}{" "}
 																			CDF
 																		</span>
 																	</div>
 																	<div className="flex justify-between">
-																		<span>Commission Payée:</span>
+																		<span>Commission Paid:</span>
 																		<span className="text-green-600 dark:text-green-400">
 																			{selectedPeriodCommission.commissionAmount.toLocaleString()}{" "}
 																			CDF
@@ -762,7 +762,7 @@ export default function StaffManagement() {
 																	CDF
 																</div>
 
-																<div className="pl-2">- Coûts Op. (5%):</div>
+																<div className="pl-2">- Op. Costs (5%):</div>
 																<div className="text-right pl-2">
 																	-
 																	{(selectedPeriodCommission.totalRevenue -
@@ -854,7 +854,7 @@ export default function StaffManagement() {
 																	</h6>
 																	<div className="space-y-1 text-base sm:text-lg text-gray-600 dark:text-gray-400 mt-1">
 																		<div className="flex justify-between">
-																			<span>Revenu Généré:</span>
+																			<span>Revenue Generated:</span>
 																			<span>
 																				{commission.totalRevenue.toLocaleString()}{" "}
 																				CDF
@@ -930,7 +930,7 @@ export default function StaffManagement() {
 																	</h6>
 																	<div className="space-y-1 text-base sm:text-lg text-gray-600 dark:text-gray-400 mt-1">
 																		<div className="flex justify-between">
-																			<span>Payé le:</span>
+																			<span>Paid on:</span>
 																			<span>
 																				{commission.paidAt
 																					? new Date(
@@ -940,14 +940,14 @@ export default function StaffManagement() {
 																			</span>
 																		</div>
 																		<div className="flex justify-between">
-																			<span>Revenu Généré:</span>
+																			<span>Revenue Generated:</span>
 																			<span>
 																				{commission.totalRevenue.toLocaleString()}{" "}
 																				CDF
 																			</span>
 																		</div>
 																		<div className="flex justify-between">
-																			<span>Commission Payée:</span>
+																			<span>Commission Paid:</span>
 																			<span className="text-green-600 dark:text-green-400">
 																				{commission.commissionAmount.toLocaleString()}{" "}
 																				CDF

@@ -27,7 +27,7 @@ export async function PUT(
 			});
 
 			if (!appointment) {
-				throw new Error("Rendez-vous introuvable");
+				throw new Error("Appointment not found");
 			}
 
 			// 🚫 BLOCK if trying to start a new session
@@ -43,7 +43,7 @@ export async function PUT(
 
 				if (workerBusy) {
 					throw new Error(
-						"Impossible de démarrer : vous avez déjà une prestation en cours. Terminez-la d'abord.",
+						"Cannot start: you already have a service in progress. Please finish it first.",
 					);
 				}
 
@@ -58,7 +58,7 @@ export async function PUT(
 
 				if (clientBusy) {
 					throw new Error(
-						"Ce client est déjà en cours de prestation avec un autre rendez-vous.",
+						"This client is already receiving service with another appointment.",
 					);
 				}
 			}
@@ -94,7 +94,7 @@ export async function PUT(
 						clientId: updatedAppointment.clientId,
 						points: 5,
 						type: "earned_appointment",
-						description: `Points gagnés pour avoir terminer le service ${updatedAppointment.service.name}`,
+						description: `Points earned for completing the service ${updatedAppointment.service?.name}`,
 						relatedId: updatedAppointment.id,
 					},
 				});
@@ -103,8 +103,8 @@ export async function PUT(
 					data: {
 						userId: updatedAppointment.client.userId,
 						type: "loyalty_reward",
-						title: "Points de fidélité",
-						message: "Vous avez gagné 5 points de fidélité !",
+						title: "Loyalty Points",
+						message: "You earned 5 loyalty points!",
 					},
 				});
 
@@ -214,7 +214,7 @@ export async function PUT(
 		});
 
 		return successResponse({
-			message: "Statut mis à jour",
+			message: "Status updated",
 			appointment: result,
 		});
 	} catch (error: any) {

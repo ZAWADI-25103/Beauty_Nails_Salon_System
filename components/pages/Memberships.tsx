@@ -32,10 +32,10 @@ export default function MembershipsPage() {
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 					<div className="inline-flex items-center gap-2 bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 px-4 py-2 rounded-full mb-4">
 						<Award className="w-4 h-4" />
-						<span className="text-lg ">Abonnements Premium</span>
+						<span className="text-lg ">Premium Memberships</span>
 					</div>
 					<h1 className="text-4xl sm:text-5xl md:text-6xl text-gray-900 dark:text-gray-100 mb-6">
-						Rejoignez notre cercle de clientes privilégiées
+						Join our circle of privileged clients
 					</h1>
 					<p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
 						Économisez jusqu'à 30% sur vos soins préférés et profitez
@@ -183,7 +183,7 @@ export default function MembershipsPage() {
 									</tr>
 									<tr>
 										<td className="py-4 px-6 font-medium text-gray-900 dark:text-gray-100">
-											Points fidélité bonus
+											Bonus Loyalty Points
 										</td>
 										{sortedMemberships.map((m, idx) => (
 											<td key={idx} className="py-4 px-6 text-center">
@@ -222,31 +222,31 @@ export default function MembershipsPage() {
 			<section className="py-16 bg-background dark:bg-gray-950">
 				<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 					<h2 className="text-3xl sm:text-4xl font-medium text-gray-900 dark:text-gray-100 mb-12 text-center">
-						Questions Fréquentes
+						Frequently Asked Questions
 					</h2>
 					<Accordion type="single" collapsible className="w-full space-y-4">
 						<AccordionItem value="item-1">
 							<AccordionTrigger>
-								Comment fonctionne l'abonnement ?
+								How does the membership work?
 							</AccordionTrigger>
 							<AccordionContent>
-								L'abonnement est valable pendant la durée spécifiée (par
+								The membership is valid for the specified duration (by
 								exemple, 30 jours). Vous bénéficiez des avantages associés
 								pendant cette période.
 							</AccordionContent>
 						</AccordionItem>
 						<AccordionItem value="item-2">
 							<AccordionTrigger>
-								Puis-je annuler mon abonnement ?
+								Can I cancel my membership?
 							</AccordionTrigger>
 							<AccordionContent>
-								Oui, vous pouvez annuler votre abonnement à tout moment. Le
+								Yes, you can cancel your membership at any time. The
 								service expirera à la fin de la période de facturation en cours.
 							</AccordionContent>
 						</AccordionItem>
 						<AccordionItem value="item-3">
 							<AccordionTrigger>
-								Comment puis-je acheter un abonnement ?
+								How can I buy a membership?
 							</AccordionTrigger>
 							<AccordionContent>
 								Connectez-vous à votre compte, sélectionnez le plan souhaité et
@@ -256,10 +256,10 @@ export default function MembershipsPage() {
 						</AccordionItem>
 						<AccordionItem value="item-4">
 							<AccordionTrigger>
-								Qu'est-ce que les points fidélité ?
+								What are loyalty points?
 							</AccordionTrigger>
 							<AccordionContent>
-								Les points fidélité sont accumulés à chaque visite et peuvent
+								Loyalty points are accumulated with each visit and can
 								être échangés contre des réductions ou des services gratuits
 								selon notre programme.
 							</AccordionContent>

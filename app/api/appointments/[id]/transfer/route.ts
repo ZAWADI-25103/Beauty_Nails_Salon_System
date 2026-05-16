@@ -57,12 +57,12 @@ export async function POST(
 		});
 
 		if (!appointment) {
-			return errorResponse("Rendez-vous non trouvé", 404);
+			return errorResponse("Appointment not found", 404);
 		}
 
 		if (appointment.workerId !== user.workerProfile?.id) {
 			return errorResponse(
-				"Vous ne pouvez transférer que vos propres rendez-vous",
+				"You can only transfer your own appointments",
 				403,
 			);
 		}
@@ -73,7 +73,7 @@ export async function POST(
 		});
 
 		if (!newWorker) {
-			return errorResponse("Employé non disponible", 400);
+			return errorResponse("Worker not available", 400);
 		}
 
 		// Check for conflicts with new worker's schedule
@@ -88,7 +88,7 @@ export async function POST(
 
 		if (conflict) {
 			return errorResponse(
-				"Cet employé a déjà un rendez-vous à ce créneau",
+				"This worker already has an appointment at this time slot",
 				409,
 			);
 		}
@@ -135,15 +135,15 @@ export async function POST(
 			data: {
 				userId: newWorker.userId,
 				type: "appointment_transfer_request",
-				title: "Demande de transfert de rendez-vous",
-				message: `${user.name} souhaite vous transférer un rendez-vous pour ${appointment.client?.user?.name} le ${appointment.date.toLocaleDateString()} à ${appointment.time}`,
+				title: "Appointment transfer request",
+				message: `${user.name} wants to transfer an appointment for ${appointment.client?.user?.name} on ${appointment.date.toLocaleDateString()} at ${appointment.time}`,
 				link: `/dashboard/worker/appointments?transferId=${transfer.id}`,
 			},
 		});
 
 		return successResponse({
 			transfer,
-			message: "Demande de transfert envoyée",
+			message: "Transfer request sent",
 		});
 	} catch (error) {
 		return handleApiError(error);
@@ -180,19 +180,19 @@ export async function PATCH(
 		});
 
 		if (!transfer) {
-			return errorResponse("Transfert non trouvé", 404);
+			return errorResponse("Transfer not found", 404);
 		}
 
 		// Only the new worker can accept/reject
 		if (transfer.newWorkerId !== user.workerProfile?.id) {
 			return errorResponse(
-				"Vous ne pouvez répondre qu'aux transferts qui vous sont destinés",
+				"You can only respond to transfers addressed to you",
 				403,
 			);
 		}
 
 		if (transfer.status !== "pending") {
-			return errorResponse("Ce transfert a déjà été traité", 400);
+			return errorResponse("This transfer has already been processed", 400);
 		}
 
 		let updatedTransfer;
@@ -224,8 +224,8 @@ export async function PATCH(
 				data: {
 					userId: transfer.originalWorker.userId,
 					type: "appointment_transfer_accepted",
-					title: "Transfert accepté",
-					message: `${transfer.newWorker.user.name} a accepté votre demande de transfert pour le rendez-vous de ${transfer.appointment.client?.user?.name}`,
+					title: "Transfer accepted",
+					message: `${transfer.newWorker.user.name} accepted your transfer request for the appointment of ${transfer.appointment.client?.user?.name}`,
 					link: `/dashboard/worker/appointments?id=${transfer.appointmentId}`,
 				},
 			});
@@ -253,18 +253,18 @@ export async function PATCH(
 				data: {
 					userId: transfer.originalWorker.userId,
 					type: "appointment_transfer_rejected",
-					title: "Transfert refusé",
-					message: `${transfer.newWorker.user.name} a refusé votre demande de transfert`,
+					title: "Transfer rejected",
+					message: `${transfer.newWorker.user.name} rejected your transfer request`,
 					link: `/dashboard/worker/appointments?id=${transfer.appointmentId}`,
 				},
 			});
 		} else {
-			return errorResponse("Action invalide", 400);
+			return errorResponse("Invalid action", 400);
 		}
 
 		return successResponse({
 			transfer: updatedTransfer,
-			message: `Transfert ${action === "accept" ? "accepté" : "refusé"}`,
+			message: `Transfer ${action === "accept" ? "accepted" : "rejected"}`,
 		});
 	} catch (error) {
 		return handleApiError(error);

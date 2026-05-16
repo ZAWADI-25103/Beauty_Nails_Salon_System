@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 		// 🔐 Authenticate user
 		const user = await getAuthenticatedUser();
 		if (!user) {
-			return errorResponse("Non authentifié", 401);
+			return errorResponse("Not authenticated", 401);
 		}
 
 		const { searchParams } = new URL(request.url);
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
 		const toParam = searchParams.get("to");
 
 		if (!fromParam || !toParam) {
-			return errorResponse("Dates requises", 400);
+			return errorResponse("Dates required", 400);
 		}
 
 		// 1. Convert params to Date objects, then force start/end of day
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
 		const reqto = endOfDay(new Date(toParam));
 
 		if (isNaN(reqfrom.getTime()) || isNaN(reqto.getTime())) {
-			return errorResponse("Dates invalides", 400);
+			return errorResponse("Invalid dates", 400);
 		}
 
 		// 👤 Get worker profile
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
 		});
 
 		if (!workerProfile) {
-			return errorResponse("Profil travailleur introuvable", 404);
+			return errorResponse("Worker profile not found", 404);
 		}
 
 		// 📅 Calculate payment period based on commissionFrequency
@@ -226,7 +226,7 @@ function calculatePaymentPeriod(
 			periodEnd = endOfDay(candidate);
 			nextPaymentDate = periodEnd;
 
-			periodLabel = `Hebdomadaire • Semaine ${format(periodStart, "w", { locale: fr })}`;
+			periodLabel = `Weekly • Week ${format(periodStart, "w", { locale: fr })}`;
 			break;
 		}
 
@@ -245,7 +245,7 @@ function calculatePaymentPeriod(
 			periodEnd = endOfDay(candidate);
 			nextPaymentDate = periodEnd;
 
-			periodLabel = `Mensuel • ${format(periodStart, "MMMM yyyy", { locale: fr })}`;
+			periodLabel = `Monthly • ${format(periodStart, "MMMM yyyy", { locale: fr })}`;
 			break;
 		}
 
@@ -255,7 +255,7 @@ function calculatePaymentPeriod(
 			periodStart = startOfDay(addDays(now, -1));
 			periodEnd = endOfDay(now);
 			nextPaymentDate = endOfDay(now);
-			periodLabel = "Quotidien • Dernière 24h";
+			periodLabel = "Daily • Last 24h";
 			break;
 		}
 	}

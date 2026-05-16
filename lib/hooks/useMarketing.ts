@@ -22,11 +22,11 @@ export function useCampaigns() {
 		mutationFn: marketingApi.createCampaign,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
-			toast.success("Campagne créée avec succès");
+			toast.success("Campaign created successfully");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la création",
+				err.response?.data?.error?.message || "Error creating",
 			),
 	});
 
@@ -40,11 +40,11 @@ export function useCampaigns() {
 		}) => marketingApi.updateCampaign(id, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
-			toast.success("Campagne mise à jour");
+			toast.success("Campaign updated");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la mise à jour",
+				err.response?.data?.error?.message || "Error updating",
 			),
 	});
 
@@ -52,11 +52,11 @@ export function useCampaigns() {
 		mutationFn: marketingApi.deleteCampaign,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["campaigns"] });
-			toast.success("Campagne supprimée");
+			toast.success("Campaign deleted");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la suppression",
+				err.response?.data?.error?.message || "Error deleting",
 			),
 	});
 
@@ -68,7 +68,7 @@ export function useCampaigns() {
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de l'envoi",
+				err.response?.data?.error?.message || "Error sending",
 			),
 	});
 
@@ -103,11 +103,11 @@ export function useDiscounts() {
 		mutationFn: marketingApi.createDiscount,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["discounts"] });
-			toast.success("Code promo créé avec succès");
+			toast.success("Promo code created successfully");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la création",
+				err.response?.data?.error?.message || "Error creating",
 			),
 	});
 
@@ -116,11 +116,11 @@ export function useDiscounts() {
 			marketingApi.updateDiscount(id, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["discounts"] });
-			toast.success("Code promo mis à jour");
+			toast.success("Promo code updated");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la mise à jour",
+				err.response?.data?.error?.message || "Error updating",
 			),
 	});
 
@@ -128,11 +128,11 @@ export function useDiscounts() {
 		mutationFn: marketingApi.deleteDiscount,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["discounts"] });
-			toast.success("Code promo supprimé");
+			toast.success("Promo code deleted");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la suppression",
+				err.response?.data?.error?.message || "Error deleting",
 			),
 	});
 

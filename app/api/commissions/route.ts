@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 		});
 
 		if (existing) {
-			throw new Error("Commission déjà générée pour cette période");
+			throw new Error("Commission already generated for this period");
 		}
 
 		const commissionAmount = totalRevenue * (commissionRate / 100);
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 			where: { id: workerId },
 			include: { user: true },
 		});
-		const workerName = worker?.user.name || "Employé";
+		const workerName = worker?.user.name || "Employee";
 
 		await prisma.notification.create({
 			data: {
@@ -64,8 +64,8 @@ export async function POST(request: NextRequest) {
 					connect: { id: adminId! },
 				},
 				type: "system",
-				title: "Demande de paiement",
-				message: `Le travailleur ${workerName} demande le paiement pour ${period}`,
+				title: "Payment Request",
+				message: `Worker ${workerName} requests payment for ${period}`,
 				link: `/dashboard/admin?workerId=${workerId}&commissionId=${commission.id}`,
 			},
 		});
@@ -76,8 +76,8 @@ export async function POST(request: NextRequest) {
 					connect: { id: worker?.userId! },
 				},
 				type: "system",
-				title: "Demande de paiement",
-				message: `Votre demande de paiement pour ${period} a été créée. Veuillez attendre la validation par l'administrateur.`,
+				title: "Payment Request",
+				message: `Your payment request for ${period} has been created. Please wait for admin approval.`,
 				link: `/dashboard/worker?workerId=${workerId}&commissionId=${commission.id}`,
 			},
 		});

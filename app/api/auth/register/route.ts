@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
 		});
 
 		if (existingUser) {
-			return errorResponse("Email ou téléphone déjà utilisé", 409);
+			return errorResponse("Email or phone already in use", 409);
 		}
 
 		// Hash password
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 			});
 
 			if (!referrer) {
-				return errorResponse("Code de parrainage invalide", 400);
+				return errorResponse("Invalid referral code", 400);
 			}
 
 			referrerProfileId = referrer.id;
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
 					loyaltyTransactions: {
 						create: {
 							points: 5,
-							description: `Bonus de parrainage pour avoir référé ${user.name}`,
+							description: `Referral bonus for referring ${user.name}`,
 							type: "earned_referral",
 						},
 					},
@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
 		return successResponse(
 			{
 				user: toUserDTO(user),
-				message: "Compte créé avec succès",
+				message: "Account created successfully",
 			},
 			201,
 		);

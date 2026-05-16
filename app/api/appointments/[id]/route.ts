@@ -24,7 +24,7 @@ export async function DELETE(
 		});
 
 		if (!appointment) {
-			return errorResponse("Rendez-vous non trouvé", 404);
+			return errorResponse("Appointment not found", 404);
 		}
 
 		// Clients can only cancel their own appointments
@@ -32,7 +32,7 @@ export async function DELETE(
 			user.role === "client" &&
 			appointment.clientId !== user.clientProfile?.id
 		) {
-			return errorResponse("Accès interdit", 403);
+			return errorResponse("Access denied", 403);
 		}
 
 		const updated = await prisma.appointment.update({
@@ -67,7 +67,7 @@ export async function DELETE(
 				loyaltyTransactions: {
 					create: {
 						type: "earned_appointment",
-						points: -updated.service.price / 1000,
+						points: updated.service ? Math.round(updated.service.price / 1000) : 0,
 						description: "loyalty points for canceled appointment",
 					},
 				},
@@ -76,7 +76,7 @@ export async function DELETE(
 		});
 
 		if (!userWorker || !userClient) {
-			return errorResponse("Employé non trouvé pour la notification", 404);
+			return errorResponse("Worker not found for notification", 404);
 		}
 
 		// Send notification to worker
@@ -84,8 +84,8 @@ export async function DELETE(
 			data: {
 				userId: userWorker?.user.id,
 				type: "appointment_cancelled",
-				title: "Rendez-vous annulé",
-				message: `Un rendez-vous a été annulé. Raison: ${reason}`,
+				title: "Appointment cancelled",
+				message: `An appointment has been cancelled. Reason: ${reason}`,
 				link: `/dashboard/worker?canceledAppointment=${updated.id}`,
 			},
 		});
@@ -95,14 +95,14 @@ export async function DELETE(
 			data: {
 				userId: userClient?.user.id,
 				type: "appointment_cancelled",
-				title: "Rendez-vous annulé",
-				message: `Vous avez annulé un rendez-vous. Raison: ${reason}, Si vous avez initie un payement veillez contacter le service client pour obtenir votre remboursement`,
+				title: "Appointment cancelled",
+				message: `You canceled an appointment. Reason: ${reason}, If you initiated a payment, please contact customer service for a refund`,
 				link: `/dashboard/client?canceledAppointment=${updated.id}`,
 			},
 		});
 
 		return successResponse({
-			message: "Rendez-vous annulé",
+			message: "Appointment cancelled",
 			appointment: updated,
 		});
 	} catch (error) {

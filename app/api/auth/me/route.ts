@@ -32,7 +32,7 @@ export async function GET(_request: NextRequest) {
 		});
 
 		if (!user) {
-			return errorResponse("Utilisateur non trouvé", 404);
+			return errorResponse("User not found", 404);
 		}
 
 		return successResponse(user);

@@ -61,7 +61,7 @@ export async function GET(
 		});
 
 		if (!workerProfile) {
-			return errorResponse("Profil employé non trouvé", 404);
+			return errorResponse("Worker profile not found", 404);
 		}
 
 		const totalRevenue = completedAppointments.reduce(

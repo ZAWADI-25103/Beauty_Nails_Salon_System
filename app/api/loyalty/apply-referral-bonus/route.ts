@@ -15,14 +15,14 @@ export async function PUT(req: NextRequest) {
 		const user = await getAuthenticatedUser();
 
 		if (!user?.clientProfile?.id) {
-			return errorResponse("Profil client introuvable", 404);
+			return errorResponse("Client profile not found", 404);
 		}
 
 		// 2. Validation
 		const { refIds } = await req.json();
 
 		if (!Array.isArray(refIds) || refIds.length === 0 || refIds.length > 5) {
-			return errorResponse("Nombre de parrainages invalide (max 5)");
+			return errorResponse("Invalid number of referrals (max 5)");
 		}
 
 		// 3. Atomic Transaction
@@ -51,7 +51,7 @@ export async function PUT(req: NextRequest) {
 
 		return successResponse({
 			message:
-				"Félicitations ! Votre bonus de parrainage de 10% a été appliqué.",
+				"Congratulations! Your 10% referral bonus has been applied.",
 		});
 	} catch (error) {
 		return handleApiError(error);

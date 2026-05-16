@@ -20,7 +20,7 @@ export function useClients(params?: ClientsParams) {
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de mise à jour",
+				error.response?.data?.error?.message || "Update error",
 			);
 		},
 	});
@@ -44,11 +44,11 @@ export function useClients(params?: ClientsParams) {
 		}) => clientsApi.createClient(payload),
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({ queryKey: ["clients"] });
-			toast.success(data.message || "Client créé");
+			toast.success(data.message || "Client created");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur création du client",
+				error.response?.data?.error?.message || "Error creating client",
 			);
 		},
 	});
@@ -72,11 +72,11 @@ export function useClients(params?: ClientsParams) {
 		}) => clientsApi.updateClient(payload),
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({ queryKey: ["clients"] });
-			toast.success(data.message || "Client modifié");
+			toast.success(data.message || "Client updated");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur mise en jour du client",
+				error.response?.data?.error?.message || "Error updating client",
 			);
 		},
 	});

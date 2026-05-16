@@ -87,10 +87,10 @@ export default function Login() {
 						<Logo width={250} height={70} />
 					</Link>
 					<h1 className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">
-						Connexion
+						Sign In
 					</h1>
 					<p className="text-lg sm:text-base text-gray-600 dark:text-gray-300">
-						Accédez à votre espace personnel
+						Access your personal space
 					</p>
 				</div>
 
@@ -108,7 +108,7 @@ export default function Login() {
 								value="worker"
 								className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 							>
-								Employée
+								Employee
 							</TabsTrigger>
 							<TabsTrigger
 								value="admin"
@@ -138,7 +138,7 @@ export default function Login() {
 								</div>
 								<div>
 									<Label htmlFor="password" className="dark:text-gray-200">
-										Mot de passe
+										Password
 									</Label>
 									<Input
 										id="password"
@@ -153,7 +153,7 @@ export default function Login() {
 									type="submit"
 									className="w-full bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full py-5 sm:py-6 mt-4 sm:mt-6 text-lg sm:text-base"
 								>
-									{isPending ? "Connexion..." : "Se connecter"}
+									{isPending ? "Signing in..." : "Sign In"}
 								</Button>
 							</form>
 						</TabsContent>
@@ -178,7 +178,7 @@ export default function Login() {
 								</div>
 								<div>
 									<Label htmlFor="password" className="dark:text-gray-200">
-										Mot de passe
+										Password
 									</Label>
 									<Input
 										id="password"
@@ -193,7 +193,7 @@ export default function Login() {
 									type="submit"
 									className="w-full bg-linear-to-r from-purple-500 to-pink-400 hover:from-purple-600 hover:to-pink-500 text-white rounded-full py-5 sm:py-6 mt-4 sm:mt-6 text-lg sm:text-base"
 								>
-									{isPending ? "Connexion..." : "Se connecter"}
+									{isPending ? "Signing in..." : "Sign In"}
 								</Button>
 							</form>
 						</TabsContent>
@@ -218,7 +218,7 @@ export default function Login() {
 								</div>
 								<div>
 									<Label htmlFor="password" className="dark:text-gray-200">
-										Mot de passe
+										Password
 									</Label>
 									<Input
 										id="password"
@@ -233,7 +233,7 @@ export default function Login() {
 									type="submit"
 									className="w-full bg-linear-to-r from-amber-500 to-orange-400 hover:from-amber-600 hover:to-orange-500 text-white rounded-full py-5 sm:py-6 mt-4 sm:mt-6 text-lg sm:text-base"
 								>
-									{isPending ? "Connexion..." : "Se connecter"}
+									{isPending ? "Signing in..." : "Sign In"}
 								</Button>
 							</form>
 						</TabsContent>
@@ -244,17 +244,17 @@ export default function Login() {
 							href="/auth/forgot-password"
 							className="text-base sm:text-lg text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300"
 						>
-							Mot de passe oublié ?
+							Forgot Password?
 						</a>
 					</div>
 				</Card>
 				<p className="text-center mt-4 sm:mt-6 text-lg sm:text-base text-gray-600 dark:text-gray-300">
-					Vous n'avez pas de compte ?{" "}
+					Don't have an account?{" "}
 					<Link
 						href={`/auth/signup${redirect ? "?redirect=appointments" : ""}`}
 						className="text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 font-medium"
 					>
-						Créer un compte
+						Create Account
 					</Link>
 				</p>
 			</div>
@@ -264,11 +264,11 @@ export default function Login() {
 					<DialogHeader>
 						<DialogTitle>Beauty Nails One-Time-Password (OTP)</DialogTitle>
 						<DialogDescription>
-							Un code OTP a été envoyé à votre email. Veuillez entrer le code
-							pour vérifier votre identité et accéder à votre tableau de bord.
+							An OTP code has been sent to your email. Please enter the code
+							to verify your identity and access your dashboard.
 							<p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-								Si vous ne recevez pas le code, veuillez vérifier avec ce code
-								par defaut : {expectedOtp}.
+								If you don't receive the code, please check with this default
+								code: {expectedOtp}.
 							</p>
 						</DialogDescription>
 					</DialogHeader>
@@ -277,7 +277,7 @@ export default function Login() {
 						type="text"
 						value={otp}
 						onChange={(e) => setOtp(e.target.value)}
-						placeholder="Entrez votre OTP"
+						placeholder="Enter your OTP"
 						className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
 					/>
 					<DialogFooter>
@@ -285,7 +285,7 @@ export default function Login() {
 							{isVerifyingOtp ? (
 								<Loader2 className="animate-spin" />
 							) : (
-								"Vérifier OTP"
+								"Verify OTP"
 							)}
 						</Button>
 					</DialogFooter>

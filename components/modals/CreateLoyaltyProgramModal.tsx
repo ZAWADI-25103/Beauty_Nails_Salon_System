@@ -82,7 +82,7 @@ export function CreateLoyaltyProgramModal({
 				<DialogHeader>
 					<DialogTitle>
 						{rules.rewards.length > 0
-							? "Modifier Programme"
+							? "Edit Program"
 							: "Créer Programme"}
 					</DialogTitle>
 				</DialogHeader>
@@ -104,7 +104,7 @@ export function CreateLoyaltyProgramModal({
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="appointmentsForReward">
-								Visites pour récompense
+								Visits for reward
 							</Label>
 							<Input
 								id="appointmentsForReward"
@@ -120,7 +120,7 @@ export function CreateLoyaltyProgramModal({
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="referralsForReward">
-								Parrainages pour récompense
+								Referrals for reward
 							</Label>
 							<Input
 								id="referralsForReward"
@@ -137,7 +137,7 @@ export function CreateLoyaltyProgramModal({
 					</div>
 
 					<div className="space-y-2">
-						<Label>Récompenses</Label>
+						<Label>Rewards</Label>
 						<div className="space-y-2 max-h-60 overflow-y-auto p-2 border rounded-lg bg-gray-50">
 							{rules.rewards.map((reward, index) => (
 								<div key={index} className="flex items-end gap-2">
@@ -156,7 +156,7 @@ export function CreateLoyaltyProgramModal({
 											className="text-lg"
 										/>
 										<Input
-											placeholder="Description récompense"
+											placeholder="Reward description"
 											value={reward.reward}
 											onChange={(e) =>
 												handleRewardChange(index, "reward", e.target.value)

@@ -25,12 +25,12 @@ export function usePackages(params?: { active?: boolean }) {
 		mutationFn: packagesApi.createPackage,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["packages"] });
-			toast.success("Forfait créé avec succès");
+			toast.success("Package created successfully");
 		},
 		onError: (err: any) => {
 			toast.error(
 				err.response?.data?.error?.message ||
-					"Erreur lors de la création du forfait",
+					"Error creating package",
 			);
 		},
 	});
@@ -46,11 +46,11 @@ export function usePackages(params?: { active?: boolean }) {
 		}) => packagesApi.updatePackage(id, updates),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["packages"] });
-			toast.success("Forfait mis à jour");
+			toast.success("Package updated");
 		},
 		onError: (err: any) => {
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la mise à jour",
+				err.response?.data?.error?.message || "Error updating",
 			);
 		},
 	});
@@ -60,11 +60,11 @@ export function usePackages(params?: { active?: boolean }) {
 		mutationFn: packagesApi.deletePackage,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["packages"] });
-			toast.success("Forfait supprimé");
+			toast.success("Package deleted");
 		},
 		onError: (err: any) => {
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la suppression",
+				err.response?.data?.error?.message || "Error deleting",
 			);
 		},
 	});
@@ -114,12 +114,12 @@ export function useBookPackage() {
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({ queryKey: ["appointments"] });
 			queryClient.invalidateQueries({ queryKey: ["packages"] });
-			toast.success(data.message || "Forfait réservé avec succès");
+			toast.success(data.message || "Package booked successfully");
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors de la réservation du forfait",
+					"Error booking package",
 			);
 		},
 	});

@@ -22,7 +22,7 @@ export function useNotifications(params?: {
 			queryClient.invalidateQueries({ queryKey: ["notifications"] });
 		},
 		onError: (error: any) => {
-			toast.error("Erreur lors de la mise à jour");
+			toast.error("Error updating");
 		},
 	});
 
@@ -31,7 +31,7 @@ export function useNotifications(params?: {
 		mutationFn: notificationsApi.markAllAsRead,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["notifications"] });
-			toast.success("Toutes les notifications marquées comme lues");
+			toast.success("All notifications marked as read");
 		},
 	});
 
@@ -40,12 +40,12 @@ export function useNotifications(params?: {
 		mutationFn: notificationsApi.createNotification,
 		onSuccess: () => {
 			// Optionally invalidate queries if needed, or just show a toast
-			toast.success("Notification envoyée");
+			toast.success("Notification sent");
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors de l'envoi de la notification",
+					"Error sending notification",
 			);
 		},
 	});

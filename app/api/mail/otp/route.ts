@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
 			const result = await sendEmail(
 				email,
-				"Votre code de vérification - Beauty Nails",
+				"Your verification code - Beauty Nails",
 				emailHtml,
 			);
 
@@ -56,8 +56,8 @@ export async function POST(req: Request) {
 				if (adminUser) {
 					await sendEmail(
 						adminUser.email,
-						"Demande de code OTP",
-						`Un utilisateur (${user.email}) vient de se connecter.`,
+					"OTP Code Request",
+					`A user (${user.email}) has just logged in.`,
 					);
 				}
 			} catch (adminNotifyError) {
@@ -68,14 +68,14 @@ export async function POST(req: Request) {
 			return NextResponse.json({
 				success: true,
 				expectedOtp: otp,
-				message: "OTP a été envoyé à votre adresse email si un compte existe.",
+				message: "OTP has been sent to your email address if an account exists.",
 			});
 		}
 
 		return NextResponse.json({
 			success: false,
 			expectedOtp: otp,
-			message: "OTP n'a pas été envoyé. Veillez reessayer encore",
+			message: "OTP was not sent. Please try again.",
 		});
 	} catch (error) {
 		console.error("Error sending OTP email:", error);

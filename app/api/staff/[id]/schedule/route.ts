@@ -73,7 +73,7 @@ export async function PATCH(
 		});
 
 		return successResponse({
-			message: "Horaire mis à jour",
+			message: "Schedule updated",
 			schedule,
 		});
 	} catch (error) {

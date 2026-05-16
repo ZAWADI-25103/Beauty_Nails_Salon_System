@@ -42,13 +42,13 @@ export async function PATCH(
 
 		if (conflictingAppointment) {
 			return errorResponse(
-				"A cette date et heure, ce rendez-vous n'est pas disponible",
+				"This appointment is not available on this date and time",
 				409,
 			);
 		}
 
 		if (user && Number(user.clientProfile?.prepaymentBalance) <= 5000)
-			return errorResponse("Votre Balance Prepaye est insufisant.");
+			return errorResponse("Your prepaid balance is insufficient.");
 
 		const app = await prisma.appointment.update({
 			where: { id },

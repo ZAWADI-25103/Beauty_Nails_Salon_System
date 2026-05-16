@@ -78,7 +78,7 @@ export function ServiceModal({
 			<DialogContent className="sm:max-w-2xl w-[95vw] max-h-[90vh] overflow-y-auto p-4 sm:p-6">
 				<DialogHeader>
 					<DialogTitle className="text-lg sm:text-xl font-bold">
-						{service ? "Modifier Service" : "Nouveau Service"}
+						{service ? "Edit Service" : "New Service"}
 					</DialogTitle>
 				</DialogHeader>
 
@@ -290,7 +290,7 @@ export function PackageModal({ pkg, trigger, onSubmit }: PackageModalProps) {
 			<DialogContent className="sm:max-w-2xl w-[95vw] max-h-[90vh] overflow-y-auto p-4 sm:p-6">
 				<DialogHeader>
 					<DialogTitle className="text-lg sm:text-xl font-bold">
-						{pkg ? "Modifier Forfait" : "Nouveau Forfait"}
+						{pkg ? "Edit Package" : "New Package"}
 					</DialogTitle>
 				</DialogHeader>
 
@@ -308,7 +308,7 @@ export function PackageModal({ pkg, trigger, onSubmit }: PackageModalProps) {
 
 					<div className="grid grid-cols-1 gap-4">
 						<div className="space-y-3">
-							<Label className="text-lg sm:text-base">Services Inclus</Label>
+							<Label className="text-lg sm:text-base">Included Services</Label>
 							<div className="border rounded-lg p-3 space-y-2 h-48 overflow-y-auto bg-gray-50">
 								{allServices.map((svc: any) => (
 									<div
@@ -450,7 +450,7 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 			<DialogContent className="sm:max-w-md w-[95vw] max-h-[90vh] overflow-y-auto p-4 sm:p-6">
 				<DialogHeader>
 					<DialogTitle className="text-lg sm:text-xl font-bold">
-						{promo ? "Modifier Promotion" : "Nouvelle Promotion"}
+						{promo ? "Edit Promotion" : "New Promotion"}
 					</DialogTitle>
 				</DialogHeader>
 

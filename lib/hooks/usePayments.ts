@@ -44,7 +44,7 @@ export function usePayments(params?: {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur de traitement du paiement",
+					"Payment processing error",
 			);
 		},
 	});
@@ -54,11 +54,11 @@ export function usePayments(params?: {
 		mutationFn: paymentsApi.closeRegister,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["sales"] });
-			toast.success("Caisse clôturée avec succès");
+			toast.success("Register closed successfully");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de clôture de caisse",
+				error.response?.data?.error?.message || "Error closing register",
 			);
 		},
 	});
@@ -78,7 +78,7 @@ export function usePayments(params?: {
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur lors du remboursement",
+				error.response?.data?.error?.message || "Error processing refund",
 			);
 		},
 	});
@@ -94,11 +94,11 @@ export function usePayments(params?: {
 		}) => paymentsApi.updateSale(saleId, saleData),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["sales"] });
-			toast.success("Vente mise à jour");
+			toast.success("Sale updated");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur lors de la mise à jour",
+				error.response?.data?.error?.message || "Error updating",
 			);
 		},
 	});

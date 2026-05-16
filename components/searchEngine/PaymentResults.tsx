@@ -11,7 +11,7 @@ export function PaymentResults({ data }: any) {
 						<tr className="border-b">
 							<th className="text-left p-2">Transaction</th>
 							<th className="text-left p-2">Montant</th>
-							<th className="text-left p-2">Téléphone</th>
+							<th className="text-left p-2">Phone</th>
 							<th className="text-left p-2">Statut</th>
 						</tr>
 					</thead>

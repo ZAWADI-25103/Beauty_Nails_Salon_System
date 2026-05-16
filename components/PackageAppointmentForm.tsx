@@ -359,7 +359,7 @@ export default function PackageBookingForm({
 	if (!pkg) {
 		return (
 			<div className="text-center py-12">
-				<p className="text-gray-500">Forfait non trouvé</p>
+				<p className="text-gray-500">Package not found</p>
 				<Button variant="outline" onClick={onBack} className="mt-4">
 					Retour
 				</Button>
@@ -452,7 +452,7 @@ export default function PackageBookingForm({
 							<span className="flex items-center gap-1">
 								<Clock className="w-4 h-4" />
 								{packageDuration} min au total <span>•</span>
-								<span>{pkg.services.length} services inclus</span>
+								<span>{pkg.services.length} included services</span>
 							</span>
 						</div>
 					</div>
@@ -461,7 +461,7 @@ export default function PackageBookingForm({
 				{/* Services with Add-Ons */}
 				<div className="space-y-6">
 					<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-						Services inclus
+						Included Services
 					</h3>
 
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -716,7 +716,7 @@ export default function PackageBookingForm({
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
 							<div>
 								<label className="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-									Code de Réduction
+									Code de Discount
 								</label>
 								<input
 									type="text"
@@ -942,7 +942,7 @@ export default function PackageBookingForm({
 
 				{/* Summary & Submit */}
 				<Card className="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-2xl">
-					<h3 className="font-semibold mb-4">Récapitulatif</h3>
+					<h3 className="font-semibold mb-4">Summary</h3>
 					<div className="space-y-2 text-sm">
 						<div className="flex justify-between">
 							<span>Forfait {pkg.name}</span>
@@ -950,13 +950,13 @@ export default function PackageBookingForm({
 						</div>
 						{addOnsTotalPrice > 0 && (
 							<div className="flex justify-between text-gray-600">
-								<span>Add-ons sélectionnés</span>
+								<span>Selected Add-ons</span>
 								<span>+{addOnsTotalPrice.toLocaleString()} CDF</span>
 							</div>
 						)}
 						{discountAmount > 0 && (
 							<div className="flex justify-between text-green-600">
-								<span>Réduction</span>
+								<span>Discount</span>
 								<span>-{discountAmount.toLocaleString()} CDF</span>
 							</div>
 						)}

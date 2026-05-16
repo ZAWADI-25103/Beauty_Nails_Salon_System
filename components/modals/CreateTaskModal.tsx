@@ -27,7 +27,7 @@ import {
 import { Textarea } from "../ui/textarea";
 
 export default function CreateTaskModal({
-	triggerLabel = "Créer une tâche",
+	triggerLabel = "Create a Task",
 }: {
 	triggerLabel?: string;
 }) {
@@ -99,7 +99,7 @@ export default function CreateTaskModal({
 
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Créer une tâche</DialogTitle>
+					<DialogTitle>Create a Task</DialogTitle>
 				</DialogHeader>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">

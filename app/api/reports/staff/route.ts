@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 
 		const { searchParams } = new URL(request.url);
 		const range = parseRange(searchParams);
-		if (!range) return errorResponse("Dates requises", 400);
+		if (!range) return errorResponse("Dates required", 400);
 
 		const pdfTrigger = searchParams.get("pdfTrigger") === "true";
 

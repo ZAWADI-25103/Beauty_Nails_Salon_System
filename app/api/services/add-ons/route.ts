@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 			},
 		});
 
-		return successResponse({ addOn, message: "Add-on créé avec succès" });
+		return successResponse({ addOn, message: "Add-on created successfully" });
 	} catch (error) {
 		return handleApiError(error);
 	}

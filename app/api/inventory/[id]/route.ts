@@ -25,7 +25,7 @@ export async function PATCH(
 		});
 
 		if (!item) {
-			return errorResponse("Article non trouvé", 404);
+			return errorResponse("Item not found", 404);
 		}
 
 		switch (operation) {
@@ -39,7 +39,7 @@ export async function PATCH(
 				newQuantity = quantity;
 				break;
 			default:
-				return errorResponse("Opération invalide", 400);
+				return errorResponse("Invalid operation", 400);
 		}
 
 		// Determine status based on stock levels
@@ -74,7 +74,7 @@ export async function PATCH(
 		]);
 
 		return successResponse({
-			message: "Stock mis à jour",
+			message: "Stock updated",
 			item: updatedItem,
 		});
 	} catch (error) {

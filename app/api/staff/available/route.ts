@@ -197,7 +197,7 @@ export async function GET(request: NextRequest) {
 				email: s.user.email,
 				workingDays: daysToWorks,
 				workingHoursString:
-					typeof s.workingHours === "string" ? s.workingHours : "Non défini",
+					typeof s.workingHours === "string" ? s.workingHours : "Not defined",
 				appointmentsCount: completedApps.length,
 				revenue: totalRevenue.toString(),
 				clientRetention: `${retention}%`,

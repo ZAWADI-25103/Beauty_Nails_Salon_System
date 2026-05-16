@@ -217,18 +217,18 @@ export default function ClientDashboardV2() {
 			{
 				id: appointment.id,
 				reason:
-					"Rendez-vous manqué. Le client ne s'est pas présenté dans les 10 minutes suivant l'heure prévue.",
+					"Missed appointment. The client did not show up within 10 minutes of the scheduled time.",
 			},
 			{
 				onSuccess: () => {
-					toast.info("Rendez-vous annulé automatiquement");
+					toast.info("Appointment automatically cancelled");
 
 					// 🔔 Notification
 					createNotification({
 						userId: user?.id ?? "",
 						type: "appointment_reminder",
-						title: "Rendez-vous manqué 😔",
-						message: `Votre rendez-vous a été annulé automatiquement après 10 minutes d'absence. Le montant (${amount} CDF) peut être converti en solde prépayé.`,
+						title: "Missed Appointment 😔",
+						message: `Your appointment was automatically cancelled after 10 minutes of absence. The amount (${amount} CDF) can be converted to prepaid balance.`,
 					});
 				},
 			},
@@ -343,7 +343,7 @@ export default function ClientDashboardV2() {
 					userId: user?.id ?? "",
 					type: "marketing",
 					title: `Félicitations ! ${user?.name}!`,
-					message: `Profitez de 10% de réduction sur tous nos services.`,
+					message: `Enjoy 10% off on all our services.`,
 				});
 			},
 		});
@@ -361,8 +361,8 @@ export default function ClientDashboardV2() {
 				});
 
 				// 2. Immediate Toast (UI Feedback)
-				toast.success("Récompense débloquée ! 🏆", {
-					description: "Votre bonus de fidélité a été appliqué avec succès.",
+				toast.success("Reward Unlocked! 🏆", {
+					description: "Your loyalty bonus has been applied successfully.",
 					duration: 5000,
 					style: {
 						border: "1px solid #8B5CF6",
@@ -381,7 +381,7 @@ export default function ClientDashboardV2() {
 					userId: user?.id ?? "", // Using client ID here
 					type: "loyalty_reward",
 					title: `Félicitations ${user?.name}! ✨`,
-					message: `Vous avez utilisé vos points pour obtenir un bonus de fidélité. Profitez-en bien !`,
+					message: `You used your points to get a loyalty bonus. Profitez-en bien !`,
 				});
 			},
 		});
@@ -451,7 +451,7 @@ export default function ClientDashboardV2() {
 					userId: user?.id ?? "",
 					type: "loyalty_reward",
 					title: `Service Gratuit Débloqué ! 🎖️`,
-					message: `Félicitations ! Votre fidélité a payé. Votre prochain passage en salon est totalement gratuit. À très vite !`,
+					message: `Congratulations! Your loyalty paid off. Your next salon visit is completely free. À très vite !`,
 				});
 			},
 		});
@@ -479,7 +479,7 @@ export default function ClientDashboardV2() {
 			"https://beauty-nails-salon.vercel.app/auth/signup?ref=" +
 				referralCode.toLocaleLowerCase(),
 		);
-		toast.success("Lien de parrainage copié !");
+		toast.success("Referral link copied!");
 	};
 
 	// Get notification icon
@@ -583,7 +583,7 @@ export default function ClientDashboardV2() {
 			},
 			{
 				onSuccess: () => {
-					toast.success("Rendez-vous reprogrammé");
+					toast.success("Appointment rescheduled");
 				},
 			},
 		);
@@ -598,12 +598,12 @@ export default function ClientDashboardV2() {
 			{
 				id: selectedAppointment.id,
 				reason:
-					"<rendez-vous Re-programmer> refusé par le client, le montant payé pour ce service sera versé dans son solte prépayé.",
+					"<Reschedule Appointment> refused by the client, the amount paid for this service will be credited to their prepaid balance.",
 			},
 			{
 				onSuccess: () => {
 					toast.success(
-						`Le montant (${amount} CDF) sera ajouté au solde prépayé`,
+						`Le montant (${amount} CDF) sera ajouté au prepaid balance`,
 					);
 					setSelectedAppointment(null);
 				},
@@ -629,11 +629,11 @@ export default function ClientDashboardV2() {
 					<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
 						<div>
 							<h1 className="text-3xl sm:text-4xl font-medium bg-linear-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-2">
-								Bonjour, {user?.name} 👋
+								Hello, {user?.name} 👋
 							</h1>
 
 							<p className="text-gray-900 dark:text-gray-300 text-base sm:text-lg">
-								Bienvenue dans votre espace beauté
+								Welcome to your beauty space
 							</p>
 						</div>
 
@@ -664,7 +664,7 @@ export default function ClientDashboardV2() {
 
 										<div className="flex items-center justify-between">
 											<p className="text-lg text-gray-900 dark:text-gray-300">
-												{unreadCount} non lues
+												{unreadCount} unread
 											</p>
 
 											{unreadCount > 0 && (
@@ -674,7 +674,7 @@ export default function ClientDashboardV2() {
 													onClick={() => markAllAsRead()}
 													className="dark:text-gray-200 dark:hover:bg-gray-800"
 												>
-													Tout marquer comme lu
+													Mark all as read
 												</Button>
 											)}
 										</div>
@@ -685,7 +685,7 @@ export default function ClientDashboardV2() {
 											{notificationList.length === 0 ? (
 												<div className="text-center py-12 text-gray-500">
 													<Bell className="w-12 h-12 mx-auto mb-4 opacity-20" />
-													<p>Aucune notification</p>
+													<p>No notifications</p>
 												</div>
 											) : (
 												notificationList.map((notification) => (
@@ -726,7 +726,7 @@ export default function ClientDashboardV2() {
 
 							<Link href="/appointments">
 								<Button className="bg-linear-to-r from-pink-500 to-purple-500">
-									Réserver un rendez-vous
+									Book an Appointment
 								</Button>
 							</Link>
 						</div>
@@ -752,7 +752,7 @@ export default function ClientDashboardV2() {
 											)}
 										</div>
 										<div>
-											<p className="text-lg opacity-90">Points de fidélité</p>
+											<p className="text-lg opacity-90">Loyalty Points</p>
 											<p className="text-3xl sm:text-4xl font-bold mt-1">
 												{loyaltyPoints}
 											</p>
@@ -773,8 +773,8 @@ export default function ClientDashboardV2() {
 							</PopoverTrigger>
 							<PopoverContent className="w-64 bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
 								<p className="text-base mb-3">
-									Accumulez des points à chaque service pour débloquer des
-									cartes cadeaux.
+									Accumulez des points à chaque service pour unlock
+									gift cards.
 								</p>
 								{canClaimGiftCard ? (
 									<Button
@@ -786,7 +786,7 @@ export default function ClientDashboardV2() {
 								) : (
 									<p className="text-xs text-muted-foreground italic">
 										Besoin de {selectedClient.loyaltyPoints} points pour
-										réclamer.
+										claim.
 									</p>
 								)}
 							</PopoverContent>
@@ -801,21 +801,21 @@ export default function ClientDashboardV2() {
 									</div>
 									<div>
 										<p className="text-lg text-gray-900 dark:text-gray-300">
-											Rendez-vous
+											Appointments
 										</p>
 										<p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
 											{completedAppointments}
 										</p>
 										<p className="text-base text-gray-500 dark:text-gray-400">
-											{upcomingAppointments.length} à venir
+											{upcomingAppointments.length} upcoming
 										</p>
 									</div>
 								</Card>
 							</PopoverTrigger>
 							<PopoverContent className="w-64 bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
 								<p className="text-sm">
-									Historique de vos visites. Plus vous venez, plus vous gagnez
-									de privilèges !
+									Visit history. The more you visit, the more you earn
+									in perks!
 								</p>
 							</PopoverContent>
 						</Popover>
@@ -829,15 +829,15 @@ export default function ClientDashboardV2() {
 									</div>
 									<div>
 										<p className="text-lg text-gray-900 dark:text-gray-300">
-											Parrainages
+											Referrals
 										</p>
 										<p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
 											{referrals?.length}
 										</p>
 										<p className="text-base text-gray-500 dark:text-gray-400">
 											{nextFreeReferral > 0
-												? `${nextFreeReferral} pour service gratuit`
-												: `reclamez votre 10% de réduction`}
+												? `${nextFreeReferral} for free service`
+												: `claim your 10% discount`}
 										</p>
 									</div>
 								</Card>
@@ -890,7 +890,7 @@ export default function ClientDashboardV2() {
 									</Button>
 								) : (
 									<p className="text-xs text-muted-foreground italic">
-										Continuez ainsi !
+										Keep it up!
 									</p>
 								)}
 							</PopoverContent>
@@ -906,7 +906,7 @@ export default function ClientDashboardV2() {
 								{appointments ? appointments.length : 0}
 							</p>
 							<p className="text-base text-gray-500 uppercase tracking-tight">
-								Tous les rendez-vous
+								All Appointments
 							</p>
 						</div>
 
@@ -919,7 +919,7 @@ export default function ClientDashboardV2() {
 								CDF
 							</p>
 							<p className="text-base text-gray-500 uppercase tracking-tight">
-								Dépensé
+								Spent
 							</p>
 						</div>
 
@@ -929,7 +929,7 @@ export default function ClientDashboardV2() {
 								{selectedClient?.giftCardBalance}
 							</p>
 							<p className="text-base text-gray-500 uppercase tracking-tight">
-								Carte cadeau
+								Gift Card
 							</p>
 						</div>
 
@@ -939,7 +939,7 @@ export default function ClientDashboardV2() {
 								{selectedClient?.prepaymentBalance}
 							</p>
 							<p className="text-base text-gray-500 uppercase tracking-tight">
-								Prépayé
+								Prepaid
 							</p>
 						</div>
 					</div>
@@ -953,23 +953,23 @@ export default function ClientDashboardV2() {
 					<TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
 						<TabsTrigger value="appointments">
 							<CalendarIcon className="w-4 h-4 mr-2" />
-							Rendez-vous
+							Appointments
 						</TabsTrigger>
 						<TabsTrigger value="package-appointments">
 							<CalendarIcon className="w-4 h-4 mr-2" />
-							Rendez-vous en Forfait
+							Package Appointments
 						</TabsTrigger>
 						<TabsTrigger value="referrals">
 							<Users className="w-4 h-4 mr-2" />
-							Parrainage
+							Referral
 						</TabsTrigger>
 						<TabsTrigger value="loyalty">
 							<Gift className="w-4 h-4 mr-2" />
-							Fidélité
+							Loyalty
 						</TabsTrigger>
 						<TabsTrigger value="profile">
 							<User className="w-4 h-4 mr-2" />
-							Profil
+							Profile
 						</TabsTrigger>
 					</TabsList>
 
@@ -979,18 +979,18 @@ export default function ClientDashboardV2() {
 						<Card className="p-6">
 							<h2 className="text-2xl   mb-6 flex items-center">
 								<Clock className="w-6 h-6 mr-2 text-pink-500" />
-								Rendez-vous à venir
+								Upcoming Appointments
 							</h2>
 
 							{upcomingAppointments.length === 0 ? (
 								<div className="text-center py-12">
 									<CalendarIcon className="w-16 h-16 mx-auto mb-4 text-gray-300" />
 									<p className="text-gray-900 dark:text-gray-100 mb-4">
-										Aucun rendez-vous prévu
+										No appointments scheduled
 									</p>
 									<Link href="/appointments">
 										<Button className="bg-linear-to-r from-pink-500 to-purple-500">
-											Réserver un rendez-vous
+											Book an Appointment
 										</Button>
 									</Link>
 								</div>
@@ -1014,7 +1014,7 @@ export default function ClientDashboardV2() {
 											>
 												{/* ✨ Animated border */}
 												{appointment.status === "in_progress" && (
-													<div className="absolute inset-0 rounded-2xl pointer-events-none border-2 border-transparent bg-[conic-gradient(at_top,#ec4899,#a855f7,#ec4899)] animate-spin-slow opacity-40" />
+													<div className="absolute inset-0 rounded-2xl pointer-events-none border-2 border-transparent bg-[conic-linear(at_top,#ec4899,#a855f7,#ec4899)] animate-spin-slow opacity-40" />
 												)}
 
 												<div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
@@ -1078,7 +1078,7 @@ export default function ClientDashboardV2() {
 														</div>
 														{/* 🔥 CONDITIONAL DISPLAY */}
 														{appointment.status === "in_progress" ? (
-															<div className="p-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white text-center font-medium shadow-lg animate-pulse">
+															<div className="p-4 rounded-xl bg-linear-to-r from-pink-500 to-purple-600 text-white text-center font-medium shadow-lg animate-pulse">
 																On vous promet satisfaction et
 																professionnalisme.
 																<br />
@@ -1103,7 +1103,7 @@ export default function ClientDashboardV2() {
 																					variant="outline"
 																					className="text-amber-600 border-amber-400 hover:bg-amber-50"
 																				>
-																					RDV Manqué
+																					Missed Appointment
 																				</Button>
 																			</PopoverTrigger>
 
@@ -1111,7 +1111,7 @@ export default function ClientDashboardV2() {
 																				{/* 🧠 Info */}
 																				<div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
 																					<p className="font-semibold text-amber-600">
-																						⚠️ Rendez-vous manqué
+																						⚠️ Missed Appointment
 																					</p>
 
 																					<p>
@@ -1124,7 +1124,7 @@ export default function ClientDashboardV2() {
 																				<div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900 border text-sm">
 																					{canUsePrepaid ? (
 																						<p className="text-green-600 font-medium">
-																							✅ Le solde prépayé couvrira
+																							✅ Le prepaid balance couvrira
 																							automatiquement ce service
 																						</p>
 																					) : (
@@ -1253,7 +1253,7 @@ export default function ClientDashboardV2() {
 																					</p>
 																					<p>
 																						• Refuser → montant sera ajouté au
-																						votre solde prépayé
+																						votre prepaid balance
 																					</p>
 																				</div>
 
@@ -1303,7 +1303,7 @@ export default function ClientDashboardV2() {
 
 							<h2 className="text-2xl font-medium mt-6 mb-6 flex items-center">
 								<AlertCircle className="w-6 h-6 mr-2 text-pink-500" />
-								Rendez-vous manqué
+								Missed Appointment
 							</h2>
 
 							<div className="space-y-4">
@@ -1390,7 +1390,7 @@ export default function ClientDashboardV2() {
 																	variant="outline"
 																	className="text-amber-600 border-amber-400 hover:bg-amber-50"
 																>
-																	RDV Manqué
+																	Missed Appointment
 																</Button>
 															</PopoverTrigger>
 
@@ -1398,7 +1398,7 @@ export default function ClientDashboardV2() {
 																{/* 🧠 Info */}
 																<div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
 																	<p className="font-semibold text-amber-600">
-																		⚠️ Rendez-vous manqué
+																		⚠️ Missed Appointment
 																	</p>
 
 																	<p>
@@ -1411,7 +1411,7 @@ export default function ClientDashboardV2() {
 																<div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900 border text-sm">
 																	{canUsePrepaid ? (
 																		<p className="text-green-600 font-medium">
-																			✅ Le solde prépayé couvrira
+																			✅ Le prepaid balance couvrira
 																			automatiquement ce service
 																		</p>
 																	) : (
@@ -1523,12 +1523,12 @@ export default function ClientDashboardV2() {
 																{/* 📌 Explanation */}
 																<div className="text-xs text-gray-500 space-y-1">
 																	<p>
-																		• Reprogrammer → utilise le solde prépayé si
+																		• Reprogrammer → utilise le prepaid balance si
 																		disponible
 																	</p>
 																	<p>
 																		• Refuser → montant sera ajouté au votre
-																		solde prépayé
+																		prepaid balance
 																	</p>
 																</div>
 
@@ -1590,7 +1590,7 @@ export default function ClientDashboardV2() {
 							{appointmentHistory.length === 0 ? (
 								<div className="text-center py-12 text-gray-500">
 									<Package className="w-16 h-16 mx-auto mb-4 opacity-20" />
-									<p>Aucun historique</p>
+									<p>No history</p>
 								</div>
 							) : (
 								<div className="space-y-3">
@@ -1646,7 +1646,7 @@ export default function ClientDashboardV2() {
 							<div className="space-y-6">
 								<div className="flex items-center justify-between">
 									<h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-										Mes Réservations de Forfaits
+										My Package Bookings
 									</h2>
 									<Badge
 										variant="outline"
@@ -1668,8 +1668,8 @@ export default function ClientDashboardV2() {
 											Aucun forfait réservé
 										</h3>
 										<p className="text-gray-500 dark:text-gray-400 mt-2">
-											Vous n'avez pas encore réservé de forfait. Découvrez nos
-											offres exclusives pour transformer votre beauté.
+											You haven't booked any de forfait. Découvrez nos
+											offres exclusives to transform your beauty.
 										</p>
 									</Card>
 								) : (
@@ -1680,7 +1680,7 @@ export default function ClientDashboardV2() {
 												className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-pink-300 dark:hover:border-pink-900 transition-all hover:shadow-lg"
 											>
 												{/* Accent Line */}
-												<div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-pink-500 to-purple-500" />
+												<div className="absolute top-0 left-0 w-1 h-full bg-linear-to-b from-pink-500 to-purple-500" />
 
 												<div className="p-5 sm:p-6">
 													{/* Header: Package Name & Status */}
@@ -1691,7 +1691,7 @@ export default function ClientDashboardV2() {
 															</div>
 															<div>
 																<h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-																	{apt.package?.name || "Forfait Beauté"}
+																	{apt.package?.name || "Beauty Package"}
 																</h3>
 																<p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
 																	<CalendarIcon className="w-3 h-3" />
@@ -1724,7 +1724,7 @@ export default function ClientDashboardV2() {
 													<div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 space-y-3">
 														<div>
 															<h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-																Services Inclus (
+																Included Services (
 																{apt.package?.services?.length || 0})
 															</h4>
 															<div className="flex flex-wrap gap-2">
@@ -1798,7 +1798,7 @@ export default function ClientDashboardV2() {
 							{/* Section 1: Browse Available Packages */}
 							<div>
 								<h2 className="text-2xl font-bold mb-4">
-									Nos Forfaits Disponibles
+									Our Available Packages
 								</h2>
 								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 									{availablePackages?.map((pkg) => (
@@ -1814,7 +1814,7 @@ export default function ClientDashboardV2() {
 						<Card className="p-6">
 							<h2 className="text-2xl font-medium   mb-6 flex items-center">
 								<Share2 className="w-6 h-6 mr-2 text-pink-500" />
-								Programme de Parrainage
+								Programme de Referral
 							</h2>
 
 							{/* Referral Code */}
@@ -1828,7 +1828,7 @@ export default function ClientDashboardV2() {
 											{referralCode
 												? "https://beauty-nails-salon.vercel.app/auth/signup?ref=" +
 													referralCode.toLocaleLowerCase()
-												: "Chargement..."}
+												: "Loading..."}
 										</p>
 									</div>
 									<Button
@@ -1847,7 +1847,7 @@ export default function ClientDashboardV2() {
 											{referrals?.length || 0}
 										</p>
 										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Parrainages réussis
+											Successful Referrals
 										</p>
 									</div>
 									<div className="p-4 bg-white dark:bg-gray-800 rounded-lg">
@@ -1855,7 +1855,7 @@ export default function ClientDashboardV2() {
 											{nextFreeReferral}
 										</p>
 										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Restants pour service gratuit
+											Restants for free service
 										</p>
 									</div>
 								</div>
@@ -1864,7 +1864,7 @@ export default function ClientDashboardV2() {
 							<Card className="mb-8 p-6 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 								<div className="flex justify-between items-center mb-4">
 									<h3 className="text-lg font-semibold">
-										Historique des Parrainages
+										Referral History
 									</h3>
 
 									<p className="text-lg">referred by </p>
@@ -1959,7 +1959,7 @@ export default function ClientDashboardV2() {
 							<Card className="mb-8 p-6 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 								<div className="flex justify-between items-center mb-4">
 									<h3 className="text-lg font-semibold">
-										Parrainages - Bonus ✔ Accordée
+										Referrals - Bonus ✔ Granted
 									</h3>
 								</div>
 
@@ -1973,7 +1973,7 @@ export default function ClientDashboardV2() {
 											Continue de faire du parrainage.
 										</p>
 										<p className="text-lg text-muted-foreground">
-											Profitez de 10% de réduction sur tous nos services.
+											Enjoy 10% off on all our services.
 										</p>
 									</>
 								) : (
@@ -2051,7 +2051,7 @@ export default function ClientDashboardV2() {
 
 							{/* How it works */}
 							<div className="space-y-4">
-								<h3 className="text-lg font-semibold">Comment ça marche ?</h3>
+								<h3 className="text-lg font-semibold">How does it work?</h3>
 								<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 									<div className="p-4 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 										<div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mb-3">
@@ -2059,9 +2059,9 @@ export default function ClientDashboardV2() {
 												1
 											</span>
 										</div>
-										<h4 className="font-semibold mb-2">Partagez</h4>
+										<h4 className="font-semibold mb-2">Share</h4>
 										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Partagez votre code avec vos amis
+											Share your code with friends
 										</p>
 									</div>
 									<div className="p-4 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
@@ -2070,9 +2070,9 @@ export default function ClientDashboardV2() {
 												2
 											</span>
 										</div>
-										<h4 className="font-semibold mb-2">Ils s'inscrivent</h4>
+										<h4 className="font-semibold mb-2">They sign up</h4>
 										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Vos amis utilisent votre code à l'inscription
+											Your friends use your code when signing up
 										</p>
 									</div>
 									<div className="p-4 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
@@ -2081,9 +2081,9 @@ export default function ClientDashboardV2() {
 												3
 											</span>
 										</div>
-										<h4 className="font-semibold mb-2">Gagnez des points</h4>
+										<h4 className="font-semibold mb-2">Earn points</h4>
 										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Recevez des points à chaque parrainage réussi
+											Receive points for each successful referral
 										</p>
 									</div>
 								</div>
@@ -2098,7 +2098,7 @@ export default function ClientDashboardV2() {
 								<div className="flex items-center gap-4 mb-8">
 									<Award className="w-8 h-8 text-amber-500" />
 									<h2 className="  text-2xl font-medium  text-gray-900 dark:text-gray-100">
-										Programme Fidélité
+										Programme Loyalty
 									</h2>
 								</div>
 								<div className="space-y-6">
@@ -2109,7 +2109,7 @@ export default function ClientDashboardV2() {
 											</div>
 											<div>
 												<h3 className="text-xl  text-gray-900 dark:text-gray-100">
-													Votre Statut
+													Your Status
 												</h3>
 												<Badge className="bg-amber-500 text-white">
 													{loyaltyTier || "Standard"}
@@ -2119,7 +2119,7 @@ export default function ClientDashboardV2() {
 										<Card className="p-6 bg-linear-to-br from-amber-50 to-orange-50 dark:from-amber-900/10 dark:to-orange-900/10 border-amber-100 dark:border-amber-900/30 rounded-3xl">
 											{/* <h4 className="text-lg font-black text-gray-900 dark:text-gray-100 mb-4 uppercase tracking-widest flex items-center gap-2">
                       <Award className="w-4 h-4 text-amber-500" />
-                      Programme de Fidélité
+                      Programme de Loyalty
                     </h4> */}
 											<div className="space-y-4">
 												{canClaimGiftCard ? (
@@ -2127,7 +2127,7 @@ export default function ClientDashboardV2() {
 														<p className="text-base text-gray-400 mb-3">
 															Vous avez accumulé plus des{" "}
 															{selectedClient?.loyaltyPoints || 0} points, vous
-															pouvez réclamer des cartes cadeaux.
+															pouvez claim.des gift cards.
 														</p>
 														<Button
 															className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold"
@@ -2140,7 +2140,7 @@ export default function ClientDashboardV2() {
 													<>
 														<div className="flex justify-between items-center">
 															<span className="text-base text-gray-700 dark:text-gray-400 font-medium">
-																Points actuels
+																Current Points
 															</span>
 															<span className="text-2xl text-gray-900 dark:text-gray-100 font-black">
 																{selectedClient?.loyaltyPoints || 0} pts
@@ -2155,14 +2155,14 @@ export default function ClientDashboardV2() {
 															/>
 														</div>
 														<p className="text-base text-gray-600 dark:text-gray-400 italic">
-															Encore{" "}
+															Only{" "}
 															{selectedClient?.loyaltyPoints -
 																(loyaltyPoints || 0)}{" "}
 															points pour votre prochaine récompense !
 														</p>
 														<p className="text-base mb-3">
 															Accumulez des points à chaque service pour
-															débloquer des cartes cadeaux.
+															unlock gift cards.
 														</p>
 													</>
 												)}
@@ -2176,17 +2176,17 @@ export default function ClientDashboardV2() {
 								<Accordion type="single" collapsible className="w-full">
 									<AccordionItem value="item-1">
 										<AccordionTrigger>
-											Comment accumuler des points ?
+											How to earn points?
 										</AccordionTrigger>
 										<AccordionContent>
-											Gagnez 1 point pour chaque 1000 CDF dépensés. Obtenez des
+											Earn 1 point for every 1000 CDF spent. Get bonus
 											points bonus pour les anniversaires, parrainages et
 											participation à des événements.
 										</AccordionContent>
 									</AccordionItem>
 									<AccordionItem value="item-2">
 										<AccordionTrigger>
-											Quels sont les paliers de récompenses ?
+											What are the reward tiers?
 										</AccordionTrigger>
 										<AccordionContent>
 											<ul className="list-disc pl-5 space-y-1">
@@ -2202,13 +2202,13 @@ export default function ClientDashboardV2() {
 
 							{/* Loyalty Transactions */}
 							<h3 className="text-lg font-semibold mb-4">
-								Historique des points
+								Point History
 							</h3>
 							<div className="space-y-3">
 								{transactions.length === 0 ? (
 									<div className="text-center py-8 text-gray-500">
 										<TrendingUp className="w-12 h-12 mx-auto mb-3 opacity-20" />
-										<p>Aucune transaction</p>
+										<p>No transactions</p>
 									</div>
 								) : (
 									transactions.slice(0, 10).map((transaction) => (
@@ -2259,7 +2259,7 @@ export default function ClientDashboardV2() {
 					</TabsContent>
 
 					<TabsContent value="profile" className="space-y-6">
-						{/* Client Profile */}
+						{/* Client Profilee */}
 						<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 lg:col-span-2">
 							<p className=" dark:text-pink-400 text-xs sm:text-xs">
 								{"glisser  <--- | --->"}
@@ -2270,7 +2270,7 @@ export default function ClientDashboardV2() {
 										value="profile"
 										className="rounded-lg px-4 sm:px-8 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-pink-400 shadow-sm"
 									>
-										Profil
+										Profile
 									</TabsTrigger>
 									<TabsTrigger
 										value="history"
@@ -2292,7 +2292,7 @@ export default function ClientDashboardV2() {
 									</TabsTrigger>
 								</TabsList>
 
-								{/* Profile Tab */}
+								{/* Profilee Tab */}
 								<TabsContent value="profile" className="space-y-8">
 									{selectedClient && (
 										<>
@@ -2323,7 +2323,7 @@ export default function ClientDashboardV2() {
 														variant="outline"
 														className="rounded-full py-5 px-6 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300  transition-all text-lg"
 													>
-														Editer Profil
+														Editer Profile
 													</Button>
 												</ClientModalTrigger>
 											</div>
@@ -2336,7 +2336,7 @@ export default function ClientDashboardV2() {
 											<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 												<div className="space-y-4">
 													<h4 className="text-base sm:text-lg font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">
-														Informations de Contact
+														Contact Information
 													</h4>
 													<div className="space-y-3 p-5 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-gray-700">
 														<p className="flex items-center gap-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
@@ -2392,7 +2392,7 @@ export default function ClientDashboardV2() {
                       <Card className="p-6 bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 border border-purple-100 dark:border-purple-900/30 rounded-3xl">
                         <h4 className="text-lg font-black text-gray-900 dark:text-gray-100 mb-4 uppercase tracking-widest flex items-center gap-2">
                           <DollarSign className="w-4 h-4 text-purple-500" />
-                          Abonnement
+                          Membership
                         </h4>
                         <ManageClientMembership clientId={selectedClient.id} />
                       </Card>
@@ -2400,7 +2400,7 @@ export default function ClientDashboardV2() {
 
 											<div className="p-6 bg-pink-50 dark:bg-pink-900/10 rounded-3xl border border-pink-100 dark:border-pink-900/30">
 												<h4 className="text-base font-black text-pink-600 dark:text-pink-400 uppercase tracking-[0.2em] mb-4">
-													Services Favoris
+													Favorite Services
 												</h4>
 												<div className="flex flex-wrap gap-2">
 													{selectedClient?.favoriteServices?.map(
@@ -2424,7 +2424,7 @@ export default function ClientDashboardV2() {
 									<div className="flex items-center justify-between">
 										<h4 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  flex items-center gap-2">
 											<CalendarIcon className="w-5 h-5 text-pink-500" />
-											Historique des Visites
+											Visit History
 										</h4>
 										<Button
 											variant="outline"
@@ -2473,7 +2473,7 @@ export default function ClientDashboardV2() {
 									<div className="flex items-center justify-between">
 										<h4 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  flex items-center gap-2">
 											<Bell className="w-5 h-5 text-pink-500" />
-											Communications Envoyées
+											Sent Communications
 										</h4>
 									</div>
 									<div className="space-y-3">
@@ -2505,7 +2505,7 @@ export default function ClientDashboardV2() {
 													variant="outline"
 													className="border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-3 py-1 text-[10px] "
 												>
-													{notif.isRead ? "Lu" : "Non Lu"}
+													{notif.isRead ? "Lu" : "Unread"}
 												</Badge>
 											</div>
 										))}
@@ -2522,7 +2522,7 @@ export default function ClientDashboardV2() {
 												</div>
 												<div>
 													<p className="text-base font-black text-green-600 dark:text-green-400 uppercase tracking-widest">
-														Solde Prépayé
+														Solde Prepaid
 													</p>
 													<p className="text-2xl font-black text-gray-900 dark:text-gray-100">
 														{selectedClient?.prepaymentBalance}
@@ -2548,20 +2548,20 @@ export default function ClientDashboardV2() {
 														</p>
 														<p>
 															Ce solde permet de gérer les rendez-vous manqués
-															et reportés sans perdre de valeur.
+															and rescheduled ones without losing value.
 														</p>
 
 														<p className="font-semibold text-green-600">
-															⚙️ Comment ça marche ?
+															⚙️ How does it work?
 														</p>
 														<ul className="list-disc pl-4 space-y-1">
-															<li>➕ Augmente si un rendez-vous est manqué</li>
+															<li>➕ Increases if an appointment is missed</li>
 															<li>➖ Diminue lors d’une reprogrammation</li>
 															<li>Utilisable lors du paiement d’un service</li>
 														</ul>
 
 														<p className="font-semibold text-green-600">
-															⚠️ Règles importantes
+															⚠️ Important Rules
 														</p>
 														<ul className="list-disc pl-4 space-y-1">
 															<li>Le solde ne peut jamais être négatif</li>
@@ -2584,7 +2584,7 @@ export default function ClientDashboardV2() {
 												</div>
 												<div>
 													<p className="text-base font-black text-purple-600 dark:text-purple-400 uppercase tracking-widest">
-														Carte Cadeau
+														Gift Card
 													</p>
 													<p className="text-2xl font-medium text-gray-900 dark:text-gray-100">
 														{selectedClient?.giftCardBalance}
@@ -2599,7 +2599,7 @@ export default function ClientDashboardV2() {
 														className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-md shadow-purple-500/20 flex items-center justify-center gap-2"
 													>
 														<Info className="w-4 h-4" />
-														Comment ça fonctionne
+														How it works
 													</Button>
 												</PopoverTrigger>
 
@@ -2628,7 +2628,7 @@ export default function ClientDashboardV2() {
 															⚠️ À savoir
 														</p>
 														<ul className="list-disc pl-4 space-y-1">
-															<li>Non échangeable contre de l’argent</li>
+															<li>Non-exchangeable for cash</li>
 															<li>Valable uniquement dans le salon</li>
 														</ul>
 													</div>
@@ -2720,10 +2720,10 @@ export default function ClientDashboardV2() {
 						{/* Review Text */}
 						<div>
 							<label className="text-lg font-medium mb-2 block">
-								Commentaire (optionnel)
+								Comment (optional)
 							</label>
 							<Textarea
-								placeholder="Partagez votre expérience..."
+								placeholder="Share your experience..."
 								value={reviewText}
 								onChange={(e) => setReviewText(e.target.value)}
 								rows={4}
@@ -2751,3 +2751,4 @@ export default function ClientDashboardV2() {
 		</div>
 	);
 }
+

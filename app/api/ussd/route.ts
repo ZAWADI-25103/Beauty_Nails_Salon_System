@@ -14,8 +14,8 @@ export async function POST(req: Request) {
 	// STEP 0
 	if (text === "") {
 		response = `CON 💅 Beauty Nails
-1. Payer un rendez-vous
-2. Quitter`;
+1. Pay for appointment
+2. Exit`;
 	}
 
 	// STEP 1
@@ -30,12 +30,12 @@ export async function POST(req: Request) {
 		});
 
 		if (!payment) {
-			response = `END ❌ Aucun paiement en attente`;
+			response = `END ❌ No pending payment`;
 		} else {
 			response = `CON Montant: ${payment.amount} CDF
 Confirmer paiement?
-1. Oui
-2. Annuler`;
+1. Yes
+2. Cancel`;
 		}
 		console.log("Current Response:", response);
 	}
@@ -48,7 +48,7 @@ Confirmer paiement?
 		});
 
 		if (!payment) {
-			response = `END ❌ Paiement introuvable`;
+			response = `END ❌ Payment not found`;
 		} else {
 			// Simulate payment success
 			transaction = `TX-${Date.now()}`;
@@ -70,9 +70,9 @@ Confirmer paiement?
 
 			const res = await sms.send({
 				to: ["+250790003480"],
-				message: `Votre paiement de ${transaction} a été confirmé. Alors veillez confirmer votre rendez-vous
-        Merci de votre confiance!
-        Veuillez présenter ce message lors de votre rendez-vous pour une expérience beauté exceptionnelle!`,
+				message: `Your payment of ${transaction} has been confirmed. Please confirm your appointment
+        Thank you for your trust!
+        Please show this message at your appointment for an exceptional beauty experience!`,
 				from: "BEAUTY_NAILS_FINANCE",
 			});
 
@@ -81,10 +81,10 @@ Confirmer paiement?
 				return errorResponse("Failed to send SMS notification");
 			}
 		}
-		response = `END ✅ Paiement réussi!
+		response = `END ✅ Payment successful!
 Ref: ${transaction}`;
 	} else {
-		response = `END Choix invalide`;
+		response = `END Invalid choice`;
 	}
 
 	return new Response(response, {

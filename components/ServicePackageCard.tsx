@@ -89,7 +89,7 @@ export default function ServicePackageCard({
 				{/* Services Included */}
 				<div className="mb-5">
 					<h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
-						Services Inclus ({services.length})
+						Included Services ({services.length})
 					</h4>
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 						{services.map((service) => (

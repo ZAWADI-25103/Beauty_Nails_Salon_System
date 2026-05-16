@@ -42,7 +42,7 @@ export function useServices(params?: {
 			toast.success(data.message);
 		},
 		onError: (error: any) => {
-			toast.error(error.response?.data?.error?.message || "Erreur de création");
+			toast.error(error.response?.data?.error?.message || "Error creating");
 		},
 	});
 
@@ -52,11 +52,11 @@ export function useServices(params?: {
 			servicesApi.updateService(id, updates),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["services"] });
-			toast.success("Service mis à jour");
+			toast.success("Service updated");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de mise à jour",
+				error.response?.data?.error?.message || "Error updating",
 			);
 		},
 	});
@@ -66,11 +66,11 @@ export function useServices(params?: {
 		mutationFn: servicesApi.deleteService,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["services"] });
-			toast.success("Service supprimé");
+			toast.success("Service deleted");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de suppression",
+				error.response?.data?.error?.message || "Error deleting",
 			);
 		},
 	});
@@ -131,7 +131,7 @@ export function useAddOnMutations() {
 			toast.success(data.message);
 		},
 		onError: (error: any) => {
-			toast.error(error.response?.data?.error?.message || "Erreur de création");
+			toast.error(error.response?.data?.error?.message || "Error creating");
 		},
 	});
 
@@ -146,11 +146,11 @@ export function useAddOnMutations() {
 		onSuccess: () => {
 			// Invalidate the service query to update the service with updated add-ons
 			queryClient.invalidateQueries({ queryKey: ["services"] });
-			toast.success("Add-on mis à jour");
+			toast.success("Add-on updated");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de mise à jour",
+				error.response?.data?.error?.message || "Error updating",
 			);
 		},
 	});
@@ -159,11 +159,11 @@ export function useAddOnMutations() {
 		mutationFn: servicesApi.deleteAddOn,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["services"] });
-			toast.success("Add-on supprimé");
+			toast.success("Add-on deleted");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de suppression",
+				error.response?.data?.error?.message || "Error deleting",
 			);
 		},
 	});

@@ -270,7 +270,7 @@ export default function CreateServiceModal({
 						<DialogHeader>
 							<DialogTitle>
 								{!service
-									? "Créer un nouveau service"
+									? "Create a New Service"
 									: `Modification - ${service.name}`}
 							</DialogTitle>
 						</DialogHeader>
@@ -467,7 +467,7 @@ export default function CreateServiceModal({
 					// Add-on creation flow
 					<>
 						<DialogHeader>
-							<DialogTitle>Ajouter des add-ons pour "{name}"</DialogTitle>
+							<DialogTitle>Add Add-ons for "{name}"</DialogTitle>
 							<p className="text-lg text-gray-500 dark:text-gray-400">
 								Ajoutez des éléments complémentaires à ce service pour augmenter
 								sa valeur
@@ -558,7 +558,7 @@ export default function CreateServiceModal({
 								className="w-full"
 							>
 								<PlusCircle className="h-4 w-4 mr-2" />
-								Ajouter un autre add-on
+								Add Another Add-on
 							</Button>
 						</div>
 
@@ -573,7 +573,7 @@ export default function CreateServiceModal({
 								disabled={isCreatingAddOn}
 								className="w-full sm:w-auto bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
 							>
-								{isCreatingAddOn ? "Ajout..." : "Ajouter les add-ons"}
+								{isCreatingAddOn ? "Adding..." : "Add Add-ons"}
 							</Button>
 						</DialogFooter>
 					</>

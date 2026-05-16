@@ -214,7 +214,7 @@ export default function WorkerProfileSettings({
 
 	return (
 		<div className="max-w-4xl mx-auto p-2">
-			{/* <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Mon Profil Employé</h1> */}
+			{/* <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">My Employee Profile</h1> */}
 
 			<form onSubmit={handleSubmit} className="space-y-8">
 				{/* Personal Information */}
@@ -288,7 +288,7 @@ export default function WorkerProfileSettings({
 									/>
 								</div>
 								<div>
-									<Label htmlFor="experience">Années d'expérience</Label>
+									<Label htmlFor="experience">Years of Experience</Label>
 									<Input
 										id="experience"
 										type="number"
@@ -345,7 +345,7 @@ export default function WorkerProfileSettings({
 					</div>
 
 					<div className="mt-4">
-						<Label>Disponibilité</Label>
+						<Label>Availability</Label>
 						<div className="flex items-center gap-2">
 							<Switch
 								checked={formData.isAvailable}

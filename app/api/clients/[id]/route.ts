@@ -66,7 +66,7 @@ export async function GET(
 		});
 
 		if (!client) {
-			return errorResponse("Client non trouvé", 404);
+			return errorResponse("Client not found", 404);
 		}
 
 		return successResponse(client);
@@ -136,12 +136,12 @@ export async function PATCH(
 		});
 
 		return successResponse(
-			{ message: "Client(e) modifié avec success", client: user.clientProfile },
+			{ message: "Client updated successfully", client: user.clientProfile },
 			201,
 		);
 	} catch (error: any) {
 		if (error?.code === "P2002") {
-			return errorResponse("Email ou téléphone déjà utilisé", 400);
+			return errorResponse("Email or phone already in use", 400);
 		}
 		return handleApiError(error);
 	}

@@ -1,6 +1,6 @@
 export function ClientResults({ data }: any) {
 	if (!data?.length) {
-		return <p className="text-sm text-gray-500 mt-4">Aucun client trouvé</p>;
+		return <p className="text-sm text-gray-500 mt-4">No clients found</p>;
 	}
 
 	return (
@@ -60,7 +60,7 @@ function ClientCard({ client }: any) {
 			{/* BALANCES */}
 			<div className="grid grid-cols-2 gap-3 mt-4 text-sm">
 				<div className="p-3 rounded-lg bg-gray-50 dark:bg-gray-900">
-					💰 Prépayé: {client.prepaymentBalance || 0} CDF
+					💰 Prepaid: {client.prepaymentBalance || 0} CDF
 				</div>
 				<div className="p-3 rounded-lg bg-gray-50 dark:bg-gray-900">
 					🎁 GiftCard: {client.giftCardBalance || 0} CDF
@@ -110,7 +110,7 @@ function ClientCard({ client }: any) {
 
 			{/* FOOTER */}
 			<div className="mt-4 flex justify-between items-center text-xs text-gray-400">
-				<span>Créé: {new Date(client.createdAt).toLocaleDateString()}</span>
+				<span>Created: {new Date(client.createdAt).toLocaleDateString()}</span>
 				<span>{client.user?.isActive ? "🟢 Actif" : "🔴 Inactif"}</span>
 			</div>
 		</div>

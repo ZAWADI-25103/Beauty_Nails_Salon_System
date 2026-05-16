@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
 							clientId: effectiveClientId,
 							points: -loyaltyPointsUsed,
 							type: "redeemed_service",
-							description: `Utilisation de points pour la vente ${receiptNumber}`,
+							description: `Points redeemed on sale ${receiptNumber}`,
 							relatedId: sale.id,
 						},
 					});
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
 						clientId: effectiveClientId,
 						points: pointsEarned,
 						type: "earned_appointment",
-						description: `Points gagnés sur la vente ${receiptNumber}`,
+						description: `Points earned on sale ${receiptNumber}`,
 						relatedId: sale.id,
 					},
 				});
@@ -214,7 +214,7 @@ export async function POST(request: NextRequest) {
 							clientId: effectiveClientId,
 							points: -loyaltyPointsUsed,
 							type: "redeemed_service",
-							description: `Utilisation de points pour la vente ${receiptNumber}`,
+							description: `Points redeemed on sale ${receiptNumber}`,
 							relatedId: sale.id,
 						},
 					});
@@ -225,7 +225,7 @@ export async function POST(request: NextRequest) {
 						clientId: effectiveClientId,
 						points: pointsEarned,
 						type: "earned_appointment",
-						description: `Points gagnés sur la vente ${receiptNumber}`,
+						description: `Points earned on sale ${receiptNumber}`,
 						relatedId: sale.id,
 					},
 				});
@@ -237,7 +237,7 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json({
 			sale: result,
 			receiptNumber,
-			message: "Paiement traité avec succès",
+			message: "Payment processed successfully",
 		});
 	} catch (error: any) {
 		return NextResponse.json(

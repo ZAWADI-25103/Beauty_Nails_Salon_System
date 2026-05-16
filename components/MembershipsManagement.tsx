@@ -147,12 +147,12 @@ export default function MembershipsManagement() {
 	};
 
 	const handleDeleteMembership = (id: string) => {
-		if (window.confirm("Êtes-vous sûr de vouloir supprimer cet abonnement ?")) {
+		if (window.confirm("Are you sure you want to delete this membership?")) {
 			deleteMembership(id);
 		}
 	};
 
-	if (membershipsLoading) return <div>Chargement des abonnements...</div>;
+	if (membershipsLoading) return <div>Loading memberships...</div>;
 	if (membershipsError)
 		return <div>Erreur lors du chargement: {membershipsError.message}</div>;
 
@@ -160,21 +160,21 @@ export default function MembershipsManagement() {
 		<div className="space-y-6">
 			<div className="flex justify-between items-center">
 				<h2 className="text-2xl   text-gray-900 dark:text-gray-100">
-					Gestion des Abonnements
+					Membership Management
 				</h2>
 				<Dialog>
 					<DialogTrigger asChild>
 						<Button className="bg-linear-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-md hover:shadow-lg transition-all">
 							<Plus className="w-4 h-4 mr-2" />
-							Nouvel Abonnement
+							New Membership
 						</Button>
 					</DialogTrigger>
 					<DialogContent className="sm:max-w-2xl">
 						<DialogHeader>
 							<DialogTitle>
 								{editingMembership
-									? "Modifier Abonnement"
-									: "Nouvel Abonnement"}
+									? "Edit Membership"
+									: "New Membership"}
 							</DialogTitle>
 						</DialogHeader>
 						<div className="space-y-4">
@@ -355,7 +355,7 @@ export default function MembershipsManagement() {
 										</DialogTrigger>
 										<DialogContent className="sm:max-w-md">
 											<DialogHeader>
-												<DialogTitle>Modifier Abonnement</DialogTitle>
+												<DialogTitle>Edit Membership</DialogTitle>
 											</DialogHeader>
 											<div className="space-y-4">
 												<div className="space-y-2">

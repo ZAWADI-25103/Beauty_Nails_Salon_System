@@ -1,10 +1,11 @@
 "use client";
 import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { fr, se } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import {
 	Calendar as CalendarIcon,
 	CheckCircle,
+	CheckCircleIcon,
 	Copy,
 	Eye,
 	HardHatIcon,
@@ -221,13 +222,13 @@ export default function AppointmentsV3() {
 	}, [services, paramService, selectedServiceId]);
 
 	const weekDay = [
-		"Dimanche",
-		"Lundi",
-		"Mardi",
-		"Mercredi",
-		"Jeudi",
-		"Vendredi",
-		"Samedi",
+		"Sunday",
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
 	];
 
 	const categoryIcons: Record<string, React.ReactElement> = {
@@ -416,16 +417,16 @@ export default function AppointmentsV3() {
 				);
 			} else {
 				setIsPaid(false);
-				toast("Paiement non encore reçu");
+				toast("Payment not yet received");
 			}
 		} catch (err) {
-			toast.error("Erreur lors de la vérification");
+			toast.error("Verification error");
 		}
 	};
 
 	const handleSubmit = async () => {
 		if (!user) {
-			toast.error("Veuillez vous connecter pour réserver");
+			toast.error("Please log in to book an appointment");
 			router.push("/auth/login");
 			return;
 		}
@@ -438,7 +439,7 @@ export default function AppointmentsV3() {
 				!selectedDate ||
 				!selectedTime
 			) {
-				toast.error("Veuillez remplir tous les champs obligatoires");
+				toast.error("Please fill in all required fields");
 				return;
 			}
 
@@ -446,13 +447,13 @@ export default function AppointmentsV3() {
 
 			if (selectedMethod === "mobile") {
 				if (!isPaid) {
-					toast.error("Veuillez confirmer le paiement avant de continuer");
+					toast.error("Please confirm payment before continuing");
 					return;
 				}
 
 				if (!paymentMeta.transactionId) {
 					toast.error(
-						"Aucun identifiant de transaction trouvé. Veuillez vérifier votre paiement.",
+						"No transaction ID found. Please verify your payment.",
 					);
 					return;
 				}
@@ -480,7 +481,7 @@ export default function AppointmentsV3() {
 			clearBookingProgress();
 		} else {
 			if (!selectedWorker || !selectedDate || !selectedTime) {
-				toast.error("Veuillez remplir tous les champs obligatoires");
+				toast.error("Please fill in all required fields");
 				return;
 			}
 
@@ -497,13 +498,13 @@ export default function AppointmentsV3() {
 
 			createAppointment(appointmentData, {
 				onSuccess: () => {
-					toast.success("Rendez-vous créé avec succès!");
+					toast.success("Appointment created successfully!");
 					router.push("/appointments/success");
 				},
 				onError: (error: any) => {
 					toast.error(
 						error.response?.data?.error?.message ||
-							"Erreur lors de la création du rendez-vous",
+							"Error creating the appointment",
 					);
 				},
 			});
@@ -565,13 +566,13 @@ export default function AppointmentsV3() {
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 					<Badge className="my-8 bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-200">
 						<CalendarIcon className="w-4 h-4 mr-2" />
-						Réservation
+						Booking
 					</Badge>
 					<h1 className="text-3xl sm:text-4xl font-medium lg:text-5xl text-gray-900 dark:text-gray-100 mb-6">
-						Prenez rendez-vous en quelques clics
+						Book an appointment in just a few clicks
 					</h1>
 					<p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-						Choisissez votre service, votre spécialiste et votre créneau horaire
+						Choose your service, your specialist, and your time slot
 					</p>
 				</div>
 			</section>
@@ -579,7 +580,7 @@ export default function AppointmentsV3() {
 				{/* Category Selection */}
 				<div>
 					<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-						Catégorie
+						Category
 					</h3>
 					<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
 						{["onglerie", "cils", "tresses", "maquillage"].map((category) => (
@@ -668,21 +669,21 @@ export default function AppointmentsV3() {
 				{selectedServiceId && (
 					<div>
 						<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
-							Services Add-ons
+							Add-on Services
 						</h3>
 						<p className="text-md text-gray-500 dark:text-gray-400 font-light  mb-4">
-							Veillez cochez les services additionnels qui vous intéressent{" "}
+							Please check the additional services that interest you{" "}
 						</p>
 						{addOnsLoading ? (
 							<div className="">
 								<Loader2 className="animate-spin h-6 w-6 text-gray-500 dark:text-gray-400 mx-auto mb-2" />
 								<p className="text-gray-500 dark:text-gray-400">
-									Chargement des add-ons...
+									Loading add-ons...
 								</p>
 							</div>
 						) : addOns.length === 0 ? (
 							<p className="text-gray-500 dark:text-gray-400">
-								Malheureusement aucun add-on est disponible pour ce service
+								Unfortunately, no add-ons are available for this service
 							</p>
 						) : (
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -720,7 +721,7 @@ export default function AppointmentsV3() {
 												<Badge
 													className={`${isActive ? "bg-pink-500 dark:bg-pink-600" : "bg-gray-200 dark:bg-gray-700"} text-white`}
 												>
-													{isActive ? "Actif" : "Inactif"}
+													{isActive ? "Active" : "Inactive"}
 												</Badge>
 											</div>
 
@@ -748,7 +749,7 @@ export default function AppointmentsV3() {
 				{selectedServiceId && (
 					<div>
 						<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-							Esthéticienne
+							Specialist
 						</h3>
 						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 							{staff.map((worker: any) => {
@@ -821,9 +822,9 @@ export default function AppointmentsV3() {
 									>
 										<CalendarIcon className="mr-2 h-4 w-4" />
 										{selectedDate ? (
-											format(selectedDate, "PPP", { locale: fr })
+											format(selectedDate, "PPP", { locale: enUS })
 										) : (
-											<span>Choisir date</span>
+											<span>Choose date</span>
 										)}
 									</Button>
 								</PopoverTrigger>
@@ -843,26 +844,26 @@ export default function AppointmentsV3() {
 						<div>
 							{slots?.slots.length != 0 ? (
 								<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-									Les Heures{" "}
+									Hours{" "}
 									<span className="text-md font-bold text-pink-600">
 										{selectedWorkerName}
 									</span>{" "}
-									sera disponible le{" "}
+									will be available on{" "}
 									<span className="text-md font-bold text-pink-600">
 										{selectedDate
-											? format(selectedDate, "PPP", { locale: fr })
+											? format(selectedDate, "PPP", { locale: enUS })
 											: ""}
 									</span>
 								</h3>
 							) : (
 								<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-									Malheureusement{" "}
+									Unfortunately{" "}
 									<span className="text-md font-bold text-pink-600">
 										{selectedWorkerName}
 									</span>{" "}
-									ne travaille pas{" "}
+									is not working{" "}
 									<span className="text-md font-bold text-pink-600">
-										le {selectedDate ? weekDay[selectedDate.getDay()] : ""}
+										on {selectedDate ? weekDay[selectedDate.getDay()] : ""}
 									</span>
 								</h3>
 							)}
@@ -870,10 +871,8 @@ export default function AppointmentsV3() {
 								className={`grid ${slots?.slots.length != 0 ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-6" : ""} gap-2`}
 							>
 								{slots?.slots.length === 0 ? (
-									<p className="p-12 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">
-										Malheureusement aucune heure n'est disponible pour cette
-										date {". "}
-										Choisi un autre specialiste ou une autre date.
+									<p className="p-12 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">Unfortunately, no slots are available for this
+date. Choose another specialist or another date.
 									</p>
 								) : (
 									slots?.slots.map((time) => (
@@ -923,10 +922,10 @@ export default function AppointmentsV3() {
 										<Sparkles className="w-5 h-5 mr-3 text-pink-500 shrink-0 mt-0.5 sm:mt-0" />
 										<div>
 											<p className="text-gray-900 dark:text-gray-100 font-medium">
-												Au salon
+												At the salon
 											</p>
 											<p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
-												Quartier HIMBI, Commune de Goma, Ville de Goma
+												Quartier HIMBI, Commune de Goma, Vilon de Goma
 											</p>
 										</div>
 									</Label>
@@ -945,10 +944,10 @@ export default function AppointmentsV3() {
 										<Home className="w-5 h-5 mr-3 text-amber-500 shrink-0 mt-0.5 sm:mt-0" />
 										<div>
 											<p className="text-gray-900 dark:text-gray-100 font-medium">
-												À domicile
+												At home
 											</p>
 											<p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
-												+20 000 CDF - Dans la zone de Goma
+												+20,000 CDF - Within the Goma area
 											</p>
 										</div>
 									</Label>
@@ -961,14 +960,14 @@ export default function AppointmentsV3() {
 				{!user && (
 					<div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
 						<p className="text-base sm:text-lg text-amber-800 dark:text-amber-200">
-							Vous devez être connecté(e) pour réserver un rendez-vous
+							You need to be logged in to book an appointment
 						</p>
 						<Button
 							variant="link"
 							onClick={handleRequireAuth}
 							className="text-base sm:text-lg text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 underline mt-2 inline-block"
 						>
-							Se connecter
+							Log in
 						</Button>
 					</div>
 				)}
@@ -977,13 +976,13 @@ export default function AppointmentsV3() {
 				{user && location && (
 					<div className="border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-6">
 						<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-							Informations de Paiement
+							Payment Information
 						</h3>
 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
 							<div>
 								<label className="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-									Code de Réduction
+									Discount Code
 								</label>
 								<input
 									type="text"
@@ -996,7 +995,7 @@ export default function AppointmentsV3() {
 							{/* Conditionally hide tip if free service or gift card is used */}
 							{/* {!(isFreeService || isGiftCard) && (
                 <div>
-                  <label className="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Pourboire</label>
+                  <label className="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Tip</label>
                   <input
                     type="number"
                     value={tip}
@@ -1010,14 +1009,14 @@ export default function AppointmentsV3() {
 
 						<div className="mb-4 space-y-4">
 							<label className="block text-lg font-medium text-gray-700 dark:text-gray-300">
-								Méthode de Paiement
+								Payment Method
 							</label>
 
 							{/* 💰 BALANCES OVERVIEW */}
 							<div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
 								<div className="p-3 rounded-xl bg-green-50 dark:bg-green-900/10 border border-green-100 dark:border-green-900/30">
 									<span className="text-green-600 font-semibold block mb-1">
-										Prépayé
+										Prepaid
 									</span>
 									<p className="text-lg font-bold text-gray-900 dark:text-gray-100">
 										{prepaid} CDF
@@ -1026,25 +1025,25 @@ export default function AppointmentsV3() {
 
 								<div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-900/10 border border-purple-100 dark:border-purple-900/30">
 									<span className="text-purple-600 font-semibold block mb-1">
-										Carte Cadeau
+										Gift Card
 									</span>
 									<p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-										{giftCardBalance} CDF - {giftCardCount} dispo
+										{giftCardBalance} CDF - {giftCardCount} avail
 									</p>
 								</div>
 
 								<div className="p-3 rounded-xl bg-pink-50 dark:bg-pink-900/10 border border-pink-100 dark:border-pink-900/30">
 									<span className="text-pink-600 font-semibold block mb-1">
-										Services Gratuits
+										Free Services
 									</span>
 									<p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-										{freeServiceCount} dispo
+										{freeServiceCount} avail
 									</p>
 								</div>
 
 								<div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30">
 									<span className="text-blue-600 font-semibold block mb-1">
-										Points Fidélité
+										Loyalty Points
 									</span>
 									<p className="text-lg font-bold text-gray-900 dark:text-gray-100">
 										{loyaltyPoints} / {selectedClient?.loyaltyPoints} pts
@@ -1055,11 +1054,11 @@ export default function AppointmentsV3() {
 							{/* 💳 METHODS BUTTONS */}
 							<div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
 								{[
-									{ key: "mobile", label: "Mobile Money" },
-									{ key: "cash", label: "Espèces" },
-									{ key: "prepaid", label: "Prépayé" },
-									{ key: "giftcard", label: "Carte Cadeau" },
-									{ key: "free-service", label: "Service Gratuit" },
+									{ key: "mobile", label: "Mobion Money" },
+									{ key: "cash", label: "Cash" },
+									{ key: "prepaid", label: "Prepaid" },
+									{ key: "giftcard", label: "Gift Card" },
+									{ key: "free-service", label: "Free Service" },
 								].map((method) => {
 									const _isPrepaid = method.key === "prepaid";
 									const _isGift = method.key === "giftcard";
@@ -1097,7 +1096,7 @@ export default function AppointmentsV3() {
 							{/* ⚠️ FEEDBACK MESSAGES */}
 							{!canUsePrepaid && isPrepaid && (
 								<p className="text-sm text-red-500 animate-pulse">
-									Votre solde prépayé est insuffisant pour ce service.
+									Your prepaid balance is insufficient for this service.
 								</p>
 							)}
 						</div>
@@ -1115,7 +1114,7 @@ export default function AppointmentsV3() {
 								</div>
 
 								<h3 className="text-xl font-bold bg-linear-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-4 flex items-center gap-2">
-									✨ Beauty Nails Salon - Cadeau de Fidélité
+									✨ Beauty Nails Salon - Loyalty Gift
 								</h3>
 
 								<div className="space-y-3 relative z-10">
@@ -1126,22 +1125,22 @@ export default function AppointmentsV3() {
 
 									<ul className="space-y-2">
 										<li className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
-											<CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
+											<CheckCircleIcon className="w-5 h-5 text-green-500 shrink-0" />
 											<span>
-												Récompense débloquée après{" "}
-												<strong>5 rendez-vous payés</strong>.
+												Reward unlocked after{" "}
+												<strong>5 paid appointments</strong>.
 											</span>
 										</li>
 										<li className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
-											<CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
+											<CheckCircleIcon className="w-5 h-5 text-green-500 shrink-0" />
 											<span>
-												Aucun frais supplémentaire requis pour la prestation.
+												No additional fees required for the service.
 											</span>
 										</li>
 										<li className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
-											<CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
+											<CheckCircleIcon className="w-5 h-5 text-green-500 shrink-0" />
 											<span>
-												Les pourboires ont été désactivés pour ce mode.
+												Tips have been disabled for this method.
 											</span>
 										</li>
 									</ul>
@@ -1153,27 +1152,27 @@ export default function AppointmentsV3() {
 						{isGiftCard && (
 							<div className="relative overflow-hidden rounded-2xl border border-purple-200 dark:border-purple-900 bg-white dark:bg-gray-900 shadow-xl p-6">
 								<h3 className="text-xl font-bold text-purple-600 dark:text-purple-400 mb-4 flex items-center gap-2">
-									🎁 Paiement par Carte Cadeau
+									🎁 Payment by Gift Card
 								</h3>
 
 								<div className="space-y-3">
 									<p className="text-gray-700 dark:text-gray-300">
-										Vous utilisez votre solde de points ou votre carte cadeau
+										You are using your points balance or gift card
 										Beauty Nails Salon.
 									</p>
 
 									<ul className="space-y-2">
 										<li className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
-											<CheckCircle className="w-5 h-5 text-purple-500 shrink-0" />
+											<CheckCircleIcon className="w-5 h-5 text-purple-500 shrink-0" />
 											<span>
 												Débloqué grâce à vos paliers de fidélité (500, 1000, ou
 												2000 points).
 											</span>
 										</li>
 										<li className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
-											<CheckCircle className="w-5 h-5 text-purple-500 shrink-0" />
+											<CheckCircleIcon className="w-5 h-5 text-purple-500 shrink-0" />
 											<span>
-												Solde disponible :{" "}
+												Balance available:{" "}
 												<strong>{giftCardBalance} CDF</strong>
 											</span>
 										</li>
@@ -1190,7 +1189,7 @@ export default function AppointmentsV3() {
 										<span className="p-2 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-300">
 											<Wallet className="h-6 w-6" />
 										</span>
-										Mobile Money
+										Mobion Money
 									</h3>
 
 									<button
@@ -1198,7 +1197,7 @@ export default function AppointmentsV3() {
 										onClick={handleUSSDPayment}
 										className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full border border-pink-200 dark:border-pink-900 text-pink-700 dark:text-pink-300 hover:bg-pink-50 dark:hover:bg-pink-900/30 transition-all"
 									>
-										<RefreshCcw className="h-4 w-4" /> Rafraîchir
+										<RefreshCcw className="h-4 w-4" /> Refresh
 									</button>
 								</div>
 
@@ -1206,7 +1205,7 @@ export default function AppointmentsV3() {
 									{/* USSD Code Section */}
 									<div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-700">
 										<p className="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 font-medium">
-											Code USSD
+											USSD Code
 										</p>
 										<div className="flex items-center justify-between gap-4 mt-2">
 											<p className="text-2xl font-bold text-pink-600 dark:text-pink-400 tracking-wider">
@@ -1217,12 +1216,12 @@ export default function AppointmentsV3() {
 													onClick={() => {
 														navigator.clipboard.writeText("*384*333000#");
 														toast.success(
-															"Code copié. Composez-le sur votre téléphone.",
+															"Code copié. Composez-on sur votre téléphone.",
 														);
 													}}
 													className="flex items-center cursor-pointer gap-2 text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700"
 												>
-													<Copy className="h-4 w-4" /> Copier
+													<Copy className="h-4 w-4" /> Copy
 												</button>
 												<a
 													href="tel:*384*333000#"
@@ -1237,7 +1236,7 @@ export default function AppointmentsV3() {
 									{/* Merchant Info */}
 									<div className="grid grid-cols-2 gap-4 text-lg bg-pink-50 dark:bg-pink-950/30 p-4 rounded-2xl">
 										<div>
-											<p className="text-gray-500 dark:text-gray-400">Nom</p>
+											<p className="text-gray-500 dark:text-gray-400">Name</p>
 											<p className="font-semibold text-gray-900 dark:text-white">
 												Therese Zawadi
 											</p>
@@ -1255,7 +1254,7 @@ export default function AppointmentsV3() {
 									{/* Payer Phone Field with Country Code */}
 									<div className="space-y-2">
 										<label className="block text-lg font-medium text-gray-700 dark:text-gray-300">
-											Numéro de téléphone
+											Phone Number
 										</label>
 										<div className="flex gap-2">
 											<Select
@@ -1300,12 +1299,12 @@ export default function AppointmentsV3() {
 										{paymentIntentId && (
 											<div className="flex flex-col gap-2 pt-2">
 												<p className="text-lg text-pink-600 dark:text-pink-400 font-medium flex items-center gap-1.5">
-													<CheckCircle className="h-4 w-4" /> Paiement prêt.
-													Composez le code.
+													<CheckCircleIcon className="h-4 w-4" /> Paiement prêt.
+													Composez on code.
 												</p>
 												{remainingTime !== null && remainingTime > 0 && (
 													<Badge variant="secondary" className="w-fit text-sm">
-														Complétez le paiement dans{" "}
+														Complétez on paiement dans{" "}
 														{Math.floor(remainingTime / 60)}:
 														{(remainingTime % 60).toString().padStart(2, "0")}
 													</Badge>
@@ -1315,7 +1314,7 @@ export default function AppointmentsV3() {
 														variant="destructive"
 														className="w-fit text-sm"
 													>
-														Temps écoulé - Veuillez réessayer
+														Time expired - Please try again
 													</Badge>
 												)}
 											</div>
@@ -1327,7 +1326,7 @@ export default function AppointmentsV3() {
 										{isPaid ? (
 											<div className="flex justify-between items-center rounded-2xl bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 px-4 py-3">
 												<span className="text-green-700 dark:text-green-400 font-medium flex items-center gap-2">
-													<CheckCircle className="h-5 w-5" /> Paiement confirmé
+													<CheckCircleIcon className="h-5 w-5" /> Payment confirmed
 												</span>
 												<span className="font-bold text-green-700 dark:text-green-300">
 													{total.toLocaleString()} CDF
@@ -1335,7 +1334,7 @@ export default function AppointmentsV3() {
 											</div>
 										) : (
 											<div className="text-center text-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 rounded-xl py-2">
-												En attente de paiement...
+												Waiting for payment...
 											</div>
 										)}
 										{isPaid && paymentMeta.transactionId && (
@@ -1347,7 +1346,7 @@ export default function AppointmentsV3() {
 												}}
 												className="mt-4 px-4 py-2 rounded-lg bg-pink-500 text-white"
 											>
-												Télécharger le reçu
+												Télécharger on reçu
 											</button>
 										)}
 									</div>
@@ -1364,10 +1363,10 @@ export default function AppointmentsV3() {
 						<div className="relative z-10 space-y-5">
 							<div>
 								<h3 className="text-lg font-semibold tracking-wide">
-									Récapitulatif du Paiement
+									Payment Summary
 								</h3>
 								<p className="text-sm text-gray-400">
-									Vérifiez les détails avant confirmation
+									Check the details before confirmation
 								</p>
 							</div>
 
@@ -1375,7 +1374,7 @@ export default function AppointmentsV3() {
 
 							<div className="space-y-3 text-base">
 								<div className="flex justify-between text-gray-300">
-									<span>Sous-total</span>
+									<span>Subtotal</span>
 									<span
 										className={
 											isFreeService ? "line-through opacity-50" : "font-medium"
@@ -1387,7 +1386,7 @@ export default function AppointmentsV3() {
 
 								{discountAmount > 0 && !isFreeService && (
 									<div className="flex justify-between text-pink-400">
-										<span>Réduction</span>
+										<span>Discount</span>
 										<span className="font-medium">
 											-{discountAmount.toLocaleString()} CDF
 										</span>
@@ -1396,7 +1395,7 @@ export default function AppointmentsV3() {
 
 								{refBonus > 0 && !isFreeService && (
 									<div className="flex justify-between text-green-400">
-										<span>Bonus Parrainage (Mensuel)</span>
+										<span>Referral Bonus (Monthly)</span>
 										<span className="font-medium">
 											- {((totalCost * refBonus) / 100).toLocaleString()} (
 											{refBonus.toLocaleString()} %)
@@ -1405,7 +1404,7 @@ export default function AppointmentsV3() {
 								)}
 
 								<div className="flex justify-between text-gray-300">
-									<span>Taxe</span>
+									<span>Tax</span>
 									<span
 										className={
 											isFreeService ? "line-through opacity-50" : "font-medium"
@@ -1417,7 +1416,7 @@ export default function AppointmentsV3() {
 
 								{activeTip > 0 && !isFreeService && !isGiftCard && (
 									<div className="flex justify-between text-gray-300">
-										<span>Pourboire</span>
+										<span>Tip</span>
 										<span className="font-medium">
 											{activeTip.toLocaleString()} CDF
 										</span>
@@ -1451,7 +1450,7 @@ export default function AppointmentsV3() {
 						disabled={isCreating}
 						className="w-full bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white py-4 rounded-xl font-medium disabled:opacity-50"
 					>
-						{isCreating ? "Traitement..." : "Confirmer le Rendez-vous"}
+						{isCreating ? "Processing..." : "Confirmer on Rendez-vous"}
 					</button>
 				)}
 			</div>

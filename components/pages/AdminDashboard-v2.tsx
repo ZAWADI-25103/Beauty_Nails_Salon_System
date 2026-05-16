@@ -225,10 +225,10 @@ export default function AdminDashboardV2() {
 					<div className="flex items-center justify-between">
 						<div>
 							<h1 className="text-3xl sm:text-4xl font-medium bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-								Tableau de Bord Admin
+								Admin Dashboard
 							</h1>
 							<p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg">
-								Bienvenue, {user?.name} 👋
+								Welcome, {user?.name} 👋
 							</p>
 						</div>
 						{/* Notifications */}
@@ -269,20 +269,20 @@ export default function AdminDashboardV2() {
 							<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 opacity-80 " />
 						</div>
 						<p className="text-base sm:text-lg opacity-90 mb-1 ">
-							Revenus (Période Courante)
+							Revenue (Current Period)
 						</p>{" "}
 						{/* Updated label */}
 						<p className="text-3xl sm:text-4xl font-medium  mb-2 ">
 							{revenueData?.totalRevenue && revenueData?.totalRevenue > 5000000
 								? (revenueData.totalRevenue / 1000000).toFixed(1)
-								: revenueData?.totalRevenue}{" "}
+								: revenueData?.totalRevenue.toFixed(2)}{" "}
 							CDF
 						</p>
 						<p className="text-base opacity-80 ">
 							{/* Removed the "today" part as it now reflects the period defined by the hook params */}
 							{/* Optionally, you could display the period range here if revenueData.period is available */}
 							{revenueData?.period
-								? `${revenueData.period.from} à ${revenueData.period.to}`
+								? `${revenueData.period.from} - ${revenueData.period.to}`
 								: ""}
 						</p>
 					</Card>
@@ -300,7 +300,7 @@ export default function AdminDashboardV2() {
 							{stats.totalClients}
 						</p>
 						<p className="text-base text-gray-500 dark:text-gray-400 mt-2 ">
-							+{stats.newClients} ce mois
+							+{stats.newClients} this month
 						</p>
 					</Card>
 					{/* Appointments Card - Updated styling and content slightly */}
@@ -311,14 +311,14 @@ export default function AdminDashboardV2() {
 							</div>
 						</div>
 						<p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-1 ">
-							Rendez-vous
+							Appointments
 						</p>
 						<p className="text-3xl sm:text-4xl font-medium  text-gray-900 dark:text-gray-100 ">
 							{stats.todayAppointments}
 						</p>
 						<p className="text-base text-gray-500 dark:text-gray-400 mt-2 ">
-							{stats.completedAppointments} terminés |{" "}
-							{todayAppointments.length} RDV aujourd’hui
+							{stats.completedAppointments} completed |{" "}
+							{todayAppointments.length} today
 						</p>
 					</Card>
 					{/* Staff Card - Updated styling and content slightly */}
@@ -330,13 +330,13 @@ export default function AdminDashboardV2() {
 							<Star className="w-4 h-4 sm:w-5 sm:h-5 opacity-80 " />
 						</div>
 						<p className="text-base sm:text-lg opacity-90 mb-1 ">
-							Personnel Actif
+							Active Staff
 						</p>
 						<p className="text-3xl sm:text-4xl font-medium  mb-2 ">
 							{stats.activeWorkers}
 						</p>
 						<p className="text-base opacity-80 ">
-							Note moyenne: {stats.avgRating.toFixed(1)}⭐
+							Avg Rating: {stats.avgRating.toFixed(1)}⭐
 						</p>
 					</Card>
 				</div>
@@ -352,7 +352,7 @@ export default function AdminDashboardV2() {
 							</div>
 							<div>
 								<p className="text-base text-gray-600 dark:text-gray-300 ">
-									Complétés
+									Completed
 								</p>
 								<p className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 ">
 									{stats.completedAppointments}
@@ -367,7 +367,7 @@ export default function AdminDashboardV2() {
 							</div>
 							<div>
 								<p className="text-base text-gray-600 dark:text-gray-300 ">
-									En Attente
+									Pending
 								</p>
 								<p className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 ">
 									{stats.pendingAppointments}
@@ -386,7 +386,7 @@ export default function AdminDashboardV2() {
 							</div>
 							<div>
 								<p className="text-base text-gray-600 dark:text-gray-300 ">
-									Stock Bas
+									Low Stock
 								</p>
 								<p className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 ">
 									{stats.lowStockItems}
@@ -401,7 +401,7 @@ export default function AdminDashboardV2() {
 							</div>
 							<div>
 								<p className="text-base text-gray-600 dark:text-gray-300 ">
-									Taux Occ.
+									Occ. Rate
 								</p>
 								<p className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 ">
 									{stats.todayAppointments > 0
@@ -424,7 +424,7 @@ export default function AdminDashboardV2() {
 					<Card className="p-4 sm:p-6 dark:bg-gray-950 dark:border-gray-800 rounded-2xl">
 						<h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center text-gray-900 dark:text-gray-100 ">
 							<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-green-500 " />
-							Évolution des Revenus
+							Revenue Trends
 						</h3>
 						<div className="h-64 sm:h-80 ">
 							<ResponsiveContainer width="100%" height="100%">
@@ -453,7 +453,7 @@ export default function AdminDashboardV2() {
 										dataKey="revenue"
 										stroke="#10b981"
 										strokeWidth={2}
-										name="Revenus"
+										name="Revenue"
 									/>
 								</LineChart>
 							</ResponsiveContainer>
@@ -464,7 +464,7 @@ export default function AdminDashboardV2() {
 					<Card className="p-4 sm:p-6 dark:bg-gray-950 dark:border-gray-800 rounded-2xl">
 						<h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center text-gray-900 dark:text-gray-100 ">
 							<Scissors className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-pink-500 " />
-							Distribution des Services
+							Service Distribution
 						</h3>
 						<div className="h-64 sm:h-80 flex items-center justify-center ">
 							<ResponsiveContainer width="100%" height="100%">
@@ -502,16 +502,14 @@ export default function AdminDashboardV2() {
 							value="overview"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<Activity className="w-4 h-4 mr-2" />
-							Aperçu
-						</TabsTrigger>
+							<Activity className="w-4 h-4 mr-2" />															Overview
+														</TabsTrigger>
 						<TabsTrigger
 							value="calendar"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<Calendar className="w-4 h-4 mr-2" />
-							Calendrier
-						</TabsTrigger>
+							<Calendar className="w-4 h-4 mr-2" />															Calendar
+														</TabsTrigger>
 						<TabsTrigger
 							value="clients"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
@@ -523,23 +521,20 @@ export default function AdminDashboardV2() {
 							value="staff"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<Award className="w-4 h-4 mr-2" />
-							Personnel
-						</TabsTrigger>
+							<Award className="w-4 h-4 mr-2" />															Staff
+														</TabsTrigger>
 						<TabsTrigger
 							value="membership"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<CreditCard className="w-4 h-4 mr-2" />
-							Abonnement
-						</TabsTrigger>
+							<CreditCard className="w-4 h-4 mr-2" />															Membership
+														</TabsTrigger>
 						<TabsTrigger
 							value="more"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<MoreHorizontal className="w-4 h-4 mr-2" />
-							Plus
-						</TabsTrigger>
+							<MoreHorizontal className="w-4 h-4 mr-2" />															More
+														</TabsTrigger>
 					</TabsList>
 
 					{/* Overview Tab */}
@@ -585,34 +580,29 @@ export default function AdminDashboardV2() {
 									value="inventory"
 									className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 								>
-									<Package className="w-4 h-4 mr-2" />
-									Inventaire
-								</TabsTrigger>
+									<Package className="w-4 h-4 mr-2" />															Inventory
+														</TabsTrigger>
 								{/* <TabsTrigger value="pos" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  Caisse
-                </TabsTrigger> */}
+                  <ShoppingCart className="w-4 h-4 mr-2" />															POS
+														</TabsTrigger> */}
 								<TabsTrigger
 									value="reports"
 									className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 								>
-									<BarChart3 className="w-4 h-4 mr-2" />
-									Rapports
-								</TabsTrigger>
+									<BarChart3 className="w-4 h-4 mr-2" />															Reports
+														</TabsTrigger>
 								<TabsTrigger
 									value="marketing"
 									className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 								>
-									<MessageSquare className="w-4 h-4 mr-2" />
-									Marketing
-								</TabsTrigger>
+									<MessageSquare className="w-4 h-4 mr-2" />															Marketing
+														</TabsTrigger>
 								<TabsTrigger
 									value="settings"
 									className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 								>
-									<SettingsIcon className="w-4 h-4 mr-2" />
-									Paramètres
-								</TabsTrigger>
+									<SettingsIcon className="w-4 h-4 mr-2" />															Settings
+														</TabsTrigger>
 							</TabsList>
 
 							<TabsContent value="services" className="mt-14 lg:mt-6">
@@ -646,8 +636,7 @@ export default function AdminDashboardV2() {
 				{/* {(stats.lowStockItems > 0 || stats.pendingAppointments > 5) && (
           <Card className="p-6 mt-8 border-yellow-200 bg-yellow-50">
             <h3 className="text-lg font-semibold mb-4 flex items-center text-yellow-800">
-              <AlertCircle className="w-5 h-5 mr-2" />
-              Alertes & Actions requises
+              <AlertCircle className="w-5 h-5 mr-2" />					Alerts & Required Actions
             </h3>
             <div className="space-y-3">
               {stats.lowStockItems > 0 && (
@@ -655,9 +644,9 @@ export default function AdminDashboardV2() {
                   <div className="flex items-center gap-3">
                     <Package className="w-5 h-5 text-red-500" />
                     <div>
-                      <p className="font-semibold">Stock bas</p>
+                      <p className="font-semibold">Low Stock</p>
                       <p className="text-lg text-gray-600">
-                        {stats.lowStockItems} articles nécessitent un réapprovisionnement
+                        {stats.lowStockItems} items need restocking
                       </p>
                     </div>
                   </div>
@@ -671,10 +660,9 @@ export default function AdminDashboardV2() {
                 <div className="flex items-center justify-between p-3 bg-white rounded-lg">
                   <div className="flex items-center gap-3">
                     <Clock className="w-5 h-5 text-yellow-500" />
-                    <div>
-                      <p className="font-semibold">Rendez-vous en attente</p>
+                    <div>						<p className="font-semibold">Pending Appointments</p>
                       <p className="text-lg text-gray-600">
-                        {stats.pendingAppointments} rendez-vous nécessitent une confirmation
+                        {stats.pendingAppointments} appointments require confirmation
                       </p>
                     </div>
                   </div>

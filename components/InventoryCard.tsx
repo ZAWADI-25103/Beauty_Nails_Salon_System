@@ -77,7 +77,7 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
 						{item.name}
 					</h3>
 					<p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1 italic">
-						{item.description || "Aucune description fournie"}
+						{item.description || "No description provided"}
 					</p>
 				</div>
 
@@ -85,7 +85,7 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
 				<div className="grid grid-cols-2 gap-3 mb-6 p-4 bg-white/40 dark:bg-black/20 backdrop-blur-md rounded-2xl border border-white/50 dark:border-white/5">
 					<div className="space-y-1">
 						<p className="text-[10px] uppercase font-bold text-gray-400">
-							Stock Actuel
+							Current Stock
 						</p>
 						<p className="text-lg font-bold text-gray-800 dark:text-gray-200">
 							{item.currentStock}{" "}
@@ -96,7 +96,7 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
 					</div>
 					<div className="space-y-1 text-right">
 						<p className="text-[10px] uppercase font-bold text-gray-400">
-							Utilisation
+							Usage Rate
 						</p>
 						<p
 							className={`text-lg font-bold ${stockPercentage < 50 ? "text-red-500" : "text-emerald-500"}`}
@@ -118,7 +118,7 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
 				<div className="space-y-2 mb-8 px-1">
 					<div className="flex items-center text-xs font-medium text-gray-500 dark:text-gray-400">
 						<Info className="w-3.5 h-3.5 mr-2 opacity-70" />
-						Fournisseur:{" "}
+						Supplier:{" "}
 						<span className="text-gray-800 dark:text-gray-200 ml-auto">
 							{item.supplier || "N/A"}
 						</span>
@@ -134,7 +134,7 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
 							trigger={
 								<Button className="flex-1 bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-100 dark:text-black text-white rounded-xl shadow-xl transition-all active:scale-95">
 									{/* <ShoppingCart className="w-4 h-4 mr-2" /> */}
-									Réappro
+									Reorder
 								</Button>
 							}
 						/>
@@ -148,7 +148,7 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
 								variant="outline"
 								className="flex-1 rounded-xl border-2 hover:bg-gray-50 dark:hover:bg-gray-800 font-bold transition-all"
 							>
-								Ajuster
+								Adjust
 							</Button>
 						}
 					/>
@@ -159,7 +159,7 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
 						onClick={() => setShowUsageHistory(true)}
 					>
 						{/* <Eye className="w-4 h-4 mr-2" /> */}
-						Usages
+						Usage Log
 					</Button>
 				</div>
 			</div>

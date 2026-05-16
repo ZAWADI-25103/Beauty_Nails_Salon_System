@@ -22,11 +22,11 @@ export function useMemberships() {
 		mutationFn: membershipsApi.createMembership,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["memberships"] });
-			toast.success("Abonnement créé avec succès");
+			toast.success("Membership created successfully");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la création",
+				err.response?.data?.error?.message || "Error creating",
 			),
 	});
 
@@ -35,11 +35,11 @@ export function useMemberships() {
 			membershipsApi.updateMembership(id, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["memberships"] });
-			toast.success("Abonnement mis à jour");
+			toast.success("Membership updated");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la mise à jour",
+				err.response?.data?.error?.message || "Error updating",
 			),
 	});
 
@@ -47,11 +47,11 @@ export function useMemberships() {
 		mutationFn: membershipsApi.deleteMembership,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["memberships"] });
-			toast.success("Abonnement supprimé");
+			toast.success("Membership deleted");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la suppression",
+				err.response?.data?.error?.message || "Error deleting",
 			),
 	});
 
@@ -88,11 +88,11 @@ export function useMembershipPurchases(params?: {
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["membership-purchases"] });
 			queryClient.invalidateQueries({ queryKey: ["clients"] });
-			toast.success("Abonnement acheté avec succès");
+			toast.success("Membership purchased successfully");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de l'achat",
+				err.response?.data?.error?.message || "Error purchasing",
 			),
 	});
 
@@ -106,11 +106,11 @@ export function useMembershipPurchases(params?: {
 		}) => membershipsApi.updatePurchase(id, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["membership-purchases"] });
-			toast.success("Achat d'abonnement mis à jour");
+			toast.success("Membership purchase updated");
 		},
 		onError: (err: any) =>
 			toast.error(
-				err.response?.data?.error?.message || "Erreur lors de la mise à jour",
+				err.response?.data?.error?.message || "Error updating",
 			),
 	});
 

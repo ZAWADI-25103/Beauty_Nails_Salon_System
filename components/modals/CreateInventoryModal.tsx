@@ -30,7 +30,7 @@ import {
 import { Textarea } from "../ui/textarea";
 
 export default function CreateInventoryModal({
-	triggerLabel = "Créer un article",
+	triggerLabel = "Create an Item",
 }: {
 	triggerLabel?: string;
 }) {

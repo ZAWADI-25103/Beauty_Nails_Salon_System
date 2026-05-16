@@ -193,7 +193,7 @@ export default function ReportsAnalytics() {
 		<div className="space-y-6">
 			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 				<h2 className="text-2xl  sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
-					Rapports & Analyses
+					Reports & Analytics
 				</h2>
 				<div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
 					<Select value={period} onValueChange={setPeriod}>
@@ -201,10 +201,10 @@ export default function ReportsAnalytics() {
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent className="dark:bg-gray-800 dark:border-gray-700">
-							<SelectItem value="week">Cette Semaine</SelectItem>
-							<SelectItem value="month">Ce Mois</SelectItem>
-							<SelectItem value="quarter">Ce Trimestre</SelectItem>
-							<SelectItem value="year">Cette Année</SelectItem>
+							<SelectItem value="week">This Week</SelectItem>
+							<SelectItem value="month">This Month</SelectItem>
+							<SelectItem value="quarter">This Quarter</SelectItem>
+							<SelectItem value="year">This Year</SelectItem>
 						</SelectContent>
 					</Select>
 					<Button
@@ -215,12 +215,12 @@ export default function ReportsAnalytics() {
 						{isDownloading ? (
 							<>
 								<Download className="w-4 h-4 mr-2 animate-spin" />
-								Téléchargement...
+								Downloading...
 							</>
 						) : (
 							<>
 								<Download className="w-4 h-4 mr-2" />
-								Exporter PDF
+								Export PDF
 							</>
 						)}
 					</Button>
@@ -232,7 +232,7 @@ export default function ReportsAnalytics() {
 				<Card className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-linear-to-br from-green-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800">
 					<DollarSign className="w-8 h-8 text-green-600 dark:text-green-400 mb-2" />
 					<p className="text-lg text-gray-600 dark:text-gray-400 mb-1">
-						Revenus Mensuels
+						Monthly Revenue
 					</p>
 					<p className="text-2xl sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
 						{revenueReport ? (
@@ -256,9 +256,7 @@ export default function ReportsAnalytics() {
 
 				<Card className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800">
 					<Calendar className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-					<p className="text-lg text-gray-600 dark:text-gray-400 mb-1">
-						Rendez-vous
-					</p>
+					<p className="text-lg text-gray-600 dark:text-gray-400 mb-1">Appointments</p>
 					<p className="text-2xl sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
 						{revenueReport ? (
 							revenueReport.salesCount
@@ -277,7 +275,7 @@ export default function ReportsAnalytics() {
 				<Card className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800">
 					<Users className="w-8 h-8 text-purple-600 dark:text-purple-400 mb-2" />
 					<p className="text-lg text-gray-600 dark:text-gray-400 mb-1">
-						Nouvelles Clientes
+						New Clientses
 					</p>
 					<p className="text-2xl sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
 						{clientsResp ? (
@@ -297,7 +295,7 @@ export default function ReportsAnalytics() {
 				<Card className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-linear-to-br from-amber-50 to-orange-50 dark:from-gray-900 dark:to-gray-800">
 					<Award className="w-8 h-8 text-amber-600 dark:text-amber-400 mb-2" />
 					<p className="text-lg text-gray-600 dark:text-gray-400 mb-1">
-						Rétention
+						Retention
 					</p>
 					<p className="text-2xl sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
 						{clientsResp ? (
@@ -316,34 +314,19 @@ export default function ReportsAnalytics() {
 			</div>
 
 			<p className=" dark:text-pink-400 text-xs sm:text-xs">
-				{"glisser  <--- | --->"}
+				{"swipe  <--- | --->"}
 			</p>
 			<Tabs defaultValue="revenue" className="space-y-6">
 				<TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
-					<TabsTrigger
-						value="revenue"
-						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
-					>
-						Revenus
-					</TabsTrigger>
+					<TabsTrigger value="revenue" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Revenue</TabsTrigger>
 					<TabsTrigger
 						value="services"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 					>
 						Services
 					</TabsTrigger>
-					<TabsTrigger
-						value="clients"
-						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
-					>
-						Clientes
-					</TabsTrigger>
-					<TabsTrigger
-						value="staff"
-						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
-					>
-						Personnel
-					</TabsTrigger>
+					<TabsTrigger value="clients" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Clients</TabsTrigger>
+					<TabsTrigger value="staff" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Staff</TabsTrigger>
 					<TabsTrigger
 						value="marketing"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
@@ -357,7 +340,7 @@ export default function ReportsAnalytics() {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 						<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 							<h3 className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 mb-6">
-								Évolution des Revenus
+								Revenue Trends
 							</h3>
 							<div className="h-[300px] w-full">
 								{revenueLoading ? (
@@ -403,7 +386,7 @@ export default function ReportsAnalytics() {
 												strokeWidth={3}
 												dot={{ r: 4, fill: "#10b981" }}
 												activeDot={{ r: 6 }}
-												name="Revenus Réels"
+												name="Actual Revenue"
 											/>
 											<Line
 												type="monotone"
@@ -412,7 +395,7 @@ export default function ReportsAnalytics() {
 												strokeWidth={2}
 												strokeDasharray="5 5"
 												dot={false}
-												name="Objectif"
+												name="Target"
 											/>
 										</LineChart>
 									</ResponsiveContainer>
@@ -422,7 +405,7 @@ export default function ReportsAnalytics() {
 
 						<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 							<h3 className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 mb-6">
-								Rendez-vous par Mois
+								Appointments by Month
 							</h3>
 							<div className="h-[300px] w-full">
 								{revenueLoading ? (
@@ -462,7 +445,7 @@ export default function ReportsAnalytics() {
 												dataKey="appointments"
 												fill="#ec4899"
 												radius={[6, 6, 0, 0]}
-												name="Rendez-vous"
+												name="Appointments"
 											/>
 										</BarChart>
 									</ResponsiveContainer>
@@ -472,7 +455,7 @@ export default function ReportsAnalytics() {
 
 						<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 lg:col-span-2">
 							<h3 className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 mb-6">
-								Heures de Pointe
+								Peak Hours
 							</h3>
 							<div className="h-[250px] w-full">
 								<ResponsiveContainer width="100%" height="100%">
@@ -507,21 +490,21 @@ export default function ReportsAnalytics() {
 											dataKey="bookings"
 											fill="#8b5cf6"
 											radius={[6, 6, 0, 0]}
-											name="Réservations"
+											name="Bookings"
 										/>
 									</BarChart>
 								</ResponsiveContainer>
 							</div>
 							<p className="text-lg text-gray-600 dark:text-gray-400 mt-6 text-center italic">
-								💡 Heures de pointe:{" "}
+								💡 Peak hours:{" "}
 								{peakHours.length > 0 ? (
-									`${peakHours[0].hour} (${peakHours[0].bookings} réservations)`
+									`${peakHours[0].hour} (${peakHours[0].bookings} bookings)`
 								) : (
 									<Loader2 className="w-5 h-5 animate-spin text-purple-500 dark:text-purple-400 mx-auto mb-4" />
 								)}{" "}
-								• Heures creuses:{" "}
+								• Off-peak hours:{" "}
 								{peakHours.length > 1 ? (
-									`${peakHours[peakHours.length - 1].hour} (${peakHours[peakHours.length - 1].bookings} réservations)`
+									`${peakHours[peakHours.length - 1].hour} (${peakHours[peakHours.length - 1].bookings} bookings)`
 								) : (
 									<Loader2 className="w-5 h-5 animate-spin text-purple-500 dark:text-purple-400 mx-auto mb-4" />
 								)}
@@ -534,7 +517,7 @@ export default function ReportsAnalytics() {
 				<TabsContent value="services">
 					<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 						<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100 mb-6">
-							Performance des Services
+							Service Performance
 						</h3>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							{servicesLoading ? (
@@ -557,9 +540,7 @@ export default function ReportsAnalytics() {
 										</div>
 										<div className="grid grid-cols-3 gap-2 sm:gap-4">
 											<div>
-												<p className="text-base text-gray-600 dark:text-gray-400 mb-1">
-													Revenus
-												</p>
+												<p className="text-base text-gray-600 dark:text-gray-400 mb-1">Revenue</p>
 												<p className="text-lg sm:text-lg  text-gray-900 dark:text-gray-100">
 													{service?.revenue && service?.revenue > 5000000
 														? (service.revenue / 1000000).toFixed(1)
@@ -568,16 +549,14 @@ export default function ReportsAnalytics() {
 												</p>
 											</div>
 											<div>
-												<p className="text-base text-gray-600 dark:text-gray-400 mb-1">
-													Réservations
-												</p>
+												<p className="text-base text-gray-600 dark:text-gray-400 mb-1">Bookings</p>
 												<p className="text-lg sm:text-lg  text-gray-900 dark:text-gray-100">
 													{service.count || 0}
 												</p>
 											</div>
 											<div>
 												<p className="text-base text-gray-600 dark:text-gray-400 mb-1">
-													Prix Moyen
+													Avg. Price
 												</p>
 												<p className="text-lg sm:text-lg  text-gray-900 dark:text-gray-100">
 													{service.avgPrice
@@ -606,7 +585,7 @@ export default function ReportsAnalytics() {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 						<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 							<h3 className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 mb-6">
-								Fréquence des Visites
+								Visit Frequency
 							</h3>
 							<div className="h-[300px] w-full">
 								<ResponsiveContainer width="100%" height="100%">
@@ -640,13 +619,13 @@ export default function ReportsAnalytics() {
 
 						<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 							<h3 className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 mb-6">
-								Analyse Membres vs Non-Membres
+								Members vs Non-Members Analysis
 							</h3>
 							<div className="space-y-4">
 								<div className="grid grid-cols-2 gap-4">
 									<div className="bg-linear-to-br from-amber-50 to-orange-50 dark:from-gray-800 dark:to-gray-800/50 p-4 rounded-xl border border-amber-100 dark:border-amber-900/30">
 										<p className="text-base text-gray-600 dark:text-gray-400 mb-1">
-											Membres VIP
+											VIP Members
 										</p>
 										<p className="text-2xl  text-gray-900 dark:text-gray-100">
 											{membershipAnalytics.vip}
@@ -654,7 +633,7 @@ export default function ReportsAnalytics() {
 									</div>
 									<div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-800/50 p-4 rounded-xl border border-purple-100 dark:border-purple-900/30">
 										<p className="text-base text-gray-600 dark:text-gray-400 mb-1">
-											Membres Premium
+											Premium Members
 										</p>
 										<p className="text-2xl  text-gray-900 dark:text-gray-100">
 											{membershipAnalytics.premium}
@@ -664,7 +643,7 @@ export default function ReportsAnalytics() {
 
 								<div className="bg-linear-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-800/50 p-5 rounded-xl border border-green-100 dark:border-green-900/30">
 									<p className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wider">
-										Revenus Membres
+										Member Revenue
 									</p>
 									<p className="text-2xl sm:text-3xl font-medium  text-gray-900 dark:text-gray-100 mb-2">
 										{membershipAnalytics.memberRevenue &&
@@ -674,7 +653,7 @@ export default function ReportsAnalytics() {
 										CDF
 									</p>
 									<p className="text-base text-gray-600 dark:text-gray-400">
-										Dépense moyenne:{" "}
+										Average spend:{" "}
 										<span className="">
 											{(membershipAnalytics.averageMemberSpend / 1000).toFixed(
 												0,
@@ -686,7 +665,7 @@ export default function ReportsAnalytics() {
 
 								<div className="bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 p-5 rounded-xl border border-blue-100 dark:border-blue-900/30">
 									<p className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wider">
-										Revenus Non-Membres
+										Non-Member Revenue
 									</p>
 									<p className="text-2xl sm:text-3xl font-medium  text-gray-900 dark:text-gray-100 mb-2">
 										{membershipAnalytics.nonMemberRevenue &&
@@ -698,7 +677,7 @@ export default function ReportsAnalytics() {
 										CDF
 									</p>
 									<p className="text-base text-gray-600 dark:text-gray-400">
-										Dépense moyenne:{" "}
+										Average spend:{" "}
 										<span className="">
 											{(
 												membershipAnalytics.averageNonMemberSpend / 1000
@@ -711,7 +690,7 @@ export default function ReportsAnalytics() {
 								<div className="bg-linear-to-br from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 p-4 rounded-xl border border-pink-100 dark:border-pink-900/30 flex items-center gap-3">
 									<span className="text-xl">💡</span>
 									<p className="text-lg font-medium text-pink-700 dark:text-pink-300">
-										Les membres dépensent{" "}
+										Members spend{" "}
 										<span className="text-lg ">
 											{membershipAnalytics.averageMemberSpend > 0
 												? Math.round(
@@ -725,7 +704,7 @@ export default function ReportsAnalytics() {
 												: 0}
 											%
 										</span>{" "}
-										de plus que les non-membres!
+										more than non-members!
 									</p>
 								</div>
 							</div>
@@ -737,7 +716,7 @@ export default function ReportsAnalytics() {
 				<TabsContent value="staff">
 					<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 						<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100 mb-6">
-							Taux d'Utilisation du Personnel
+							Staff Utilization Rate
 						</h3>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							{staffLoading ? (
@@ -756,7 +735,7 @@ export default function ReportsAnalytics() {
 													{staff.name}
 												</p>
 												<p className="text-lg text-gray-600 dark:text-gray-400">
-													{staff.completedAppointments || 0} rendez-vous
+													{staff.completedAppointments || 0} appointments
 												</p>
 											</div>
 											<div className="text-right">
@@ -764,7 +743,7 @@ export default function ReportsAnalytics() {
 													{staff.utilization || 0}%
 												</p>
 												<p className="text-base text-gray-500 uppercase tracking-widest">
-													Utilisation
+													Utilization
 												</p>
 											</div>
 										</div>
@@ -782,7 +761,7 @@ export default function ReportsAnalytics() {
 										</div>
 										<div className="flex justify-between items-center text-lg p-2 bg-white dark:bg-gray-950 rounded-lg border border-gray-100 dark:border-gray-800">
 											<span className="text-gray-600 dark:text-gray-400">
-												Revenus générés:
+												Revenue generated:
 											</span>
 											<span className=" text-gray-900 dark:text-gray-100">
 												{(staff.totalRevenue / 1000).toFixed(0)}K CDF
@@ -795,7 +774,7 @@ export default function ReportsAnalytics() {
 						<div className="mt-8 p-6 sm:p-8 bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 rounded-2xl border border-blue-100 dark:border-blue-900/30">
 							<h4 className="text-lg  text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-2">
 								<Target className="w-5 h-5 text-blue-500" />
-								Statistiques Moyennes du Mois
+								Average Monthly Statistics
 							</h4>
 							<div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
 								<div className="p-4 bg-white dark:bg-gray-950 rounded-xl shadow-sm border border-blue-50 dark:border-blue-900/20">
@@ -892,7 +871,7 @@ export default function ReportsAnalytics() {
 										<div className="flex items-center justify-between">
 											<div className="flex items-center gap-2">
 												<Target className="w-5 h-5 text-green-600" />
-												<span className="text-gray-700">Revenus générés:</span>
+												<span className="text-gray-700">Revenue generated:</span>
 											</div>
 											<span className="text-xl text-gray-900">
 												{(campaign.revenue / 1000).toFixed(0)}K CDF

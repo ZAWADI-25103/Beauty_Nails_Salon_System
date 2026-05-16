@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 
 export function ServiceResults({ data }: any) {
 	if (!data?.length) {
-		return <p className="text-sm text-gray-500 mt-4">Aucun service trouvé</p>;
+		return <p className="text-sm text-gray-500 mt-4">No services found</p>;
 	}
 
 	return (

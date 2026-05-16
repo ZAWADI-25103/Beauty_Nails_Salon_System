@@ -48,7 +48,7 @@ export async function POST(
 		});
 
 		return NextResponse.json({
-			message: `Campagne envoyée à ${recipientCount} clients`,
+			message: `Campaign sent to ${recipientCount} clients`,
 			campaign: updatedCampaign,
 		});
 	} catch (error: any) {

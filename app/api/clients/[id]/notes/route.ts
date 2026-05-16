@@ -25,7 +25,7 @@ export async function PATCH(
 		});
 
 		return successResponse({
-			message: "Notes mises à jour",
+			message: "Notes updated",
 			client,
 		});
 	} catch (error) {

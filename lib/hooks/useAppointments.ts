@@ -36,8 +36,8 @@ export function useAppointments(params?: {
 		mutationFn: appointmentsApi.createAppointment,
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({ queryKey: ["appointments"] });
-			toast.success("Rendez-vous créé avec succès!", {
-				description: `Votre rendez-vous est prévu le ${data.appointment.date} à ${data.appointment.time}`,
+			toast.success("Appointment created successfully!", {
+				description: `Your appointment is scheduled for ${data.appointment.date} at ${data.appointment.time}`,
 			});
 			if (data.canGenerateReceipt) {
 				const storage =
@@ -50,7 +50,7 @@ export function useAppointments(params?: {
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur lors de la création",
+				error.response?.data?.error?.message || "Error when creating appointment",
 			);
 		},
 	});
@@ -59,13 +59,13 @@ export function useAppointments(params?: {
 		mutationFn: appointmentsApi.createAppointment,
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({ queryKey: ["appointments"] });
-			toast.success("Rendez-vous confirmé !", {
-				description: `Votre rendez-vous est prévu le ${data.appointment.date} à ${data.appointment.time}`,
+			toast.success("Appointment confirmed!", {
+				description: `Your appointment is scheduled for ${data.appointment.date} at ${data.appointment.time}`,
 			});
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur lors de la création",
+				error.response?.data?.error?.message || "Error when creating appointment",
 			);
 		},
 	});
@@ -86,7 +86,7 @@ export function useAppointments(params?: {
 		onError: (error: any) => {
 			console.log("Error updating appointment status:", error);
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de mise à jour",
+				error.response?.data?.error?.message || "Error updating appointment status",
 			);
 		},
 	});
@@ -101,7 +101,7 @@ export function useAppointments(params?: {
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur d'annulation",
+				error.response?.data?.error?.message || "Error canceling appointment",
 			);
 		},
 	});
@@ -117,11 +117,11 @@ export function useAppointments(params?: {
 		}) => appointmentsApi.rescheduleAppointment(id, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["appointments"] });
-			toast.success("Rendez-vous reprogrammé");
+			toast.success("Appointment rescheduled");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de reprogrammation",
+				error.response?.data?.error?.message || "Error rescheduling appointment",
 			);
 		},
 	});
@@ -194,7 +194,7 @@ export function useRequestTransfer() {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors de la demande de transfert",
+					"Error when requesting transfer",
 			);
 		},
 	});
@@ -223,7 +223,7 @@ export function useRespondToTransfer() {
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors de la réponse au transfert",
+					"Error when responding to transfer request",
 			);
 		},
 	});

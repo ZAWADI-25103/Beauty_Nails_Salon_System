@@ -82,7 +82,7 @@ export default function Services() {
 				<div className="text-center mb-16">
 					<Badge className="mb-4 bg-pink-100 text-pink-600">
 						<Sparkles className="w-4 h-4 mr-2" />
-						Nos Services
+						Our Services
 					</Badge>
 					<h1 className="text-5xl text-gray-900 dark:text-gray-100 mb-6">
 						Des services d'excellence pour votre beauté
@@ -99,7 +99,7 @@ export default function Services() {
 						<div className="text-center">
 							<Loader2 className="w-12 h-12 animate-spin text-purple-500 dark:text-purple-400 mx-auto mb-4" />
 							<p className="text-gray-600 dark:text-gray-400">
-								Chargement de nos services...
+								Loading our services...
 							</p>
 						</div>
 					</div>
@@ -136,8 +136,8 @@ export default function Services() {
 													className="bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full px-8 disabled:opacity-50 disabled:cursor-not-allowed"
 												>
 													{hasServices
-														? "Voir les détails"
-														: "Aucun service disponible"}
+														? "View Details"
+														: "No services available"}
 												</Button>
 											</Link>
 										</div>
@@ -176,7 +176,7 @@ export default function Services() {
 															variant="outline"
 															className="w-full border-pink-200 dark:border-pink-800 text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-900/20 rounded-full"
 														>
-															Réserver ce service
+															Book this Service
 														</Button>
 													</Link>
 												</Card>
@@ -185,8 +185,8 @@ export default function Services() {
 									) : (
 										<div className="text-center py-12">
 											<p className="text-gray-500 dark:text-gray-400 text-lg">
-												Aucun service disponible pour le moment dans cette
-												catégorie.
+												No services available at the moment in this
+												category.
 											</p>
 										</div>
 									)}
@@ -200,10 +200,10 @@ export default function Services() {
 				<div className="mt-24 bg-linear-to-br from-pink-50 to-purple-50 dark:from-pink-950/30 dark:to-purple-950/30 rounded-3xl p-12">
 					<div className="text-center mb-12">
 						<h2 className="text-3xl text-gray-900 dark:text-gray-100 mb-4">
-							Options supplémentaires
+							Additional Options
 						</h2>
 						<p className="text-gray-600 dark:text-gray-400">
-							Personnalisez votre expérience avec nos services additionnels
+							Customize your experience with our additional services
 						</p>
 					</div>
 
@@ -211,39 +211,39 @@ export default function Services() {
 						<Card className="bg-white dark:bg-gray-950 border-0 border-b border-pink-100 dark:border-pink-900 shadow-md p-6 rounded-2xl text-center">
 							<div className="text-4xl mb-4">🏠</div>
 							<h3 className="text-xl text-gray-900 dark:text-gray-100 mb-2 font-medium">
-								Prestation à domicile
+								Home Service
 							</h3>
 							<p className="text-gray-600 dark:text-gray-400 mb-3 font-semibold">
 								+ 20 000 CDF
 							</p>
 							<p className="text-lg text-gray-500 dark:text-gray-400">
-								Profitez de nos services dans le confort de votre domicile
+								Enjoy our services in the comfort of your home
 							</p>
 						</Card>
 
 						<Card className="bg-white dark:bg-gray-950 border-0 border-b border-pink-100 dark:border-pink-900 shadow-md p-6 rounded-2xl text-center">
 							<div className="text-4xl mb-4">⏰</div>
 							<h3 className="text-xl text-gray-900 dark:text-gray-100 mb-2 font-medium">
-								Rendez-vous express
+								Express Appointment
 							</h3>
 							<p className="text-gray-600 dark:text-gray-400 mb-3 font-semibold">
 								+ 10 000 CDF
 							</p>
 							<p className="text-lg text-gray-500 dark:text-gray-400">
-								Service prioritaire pour les emplois du temps chargés
+								Priority service for busy schedules
 							</p>
 						</Card>
 
 						<Card className="bg-white dark:bg-gray-950 border-0 border-b border-pink-100 dark:border-pink-900 shadow-md p-6 rounded-2xl text-center">
 							<div className="text-4xl mb-4">✨</div>
 							<h3 className="text-xl text-gray-900 dark:text-gray-100 mb-2 font-medium">
-								Produits premium
+								Premium Products
 							</h3>
 							<p className="text-gray-600 dark:text-gray-400 mb-3 font-semibold">
 								+ 15 000 CDF
 							</p>
 							<p className="text-lg text-gray-500 dark:text-gray-400">
-								Utilisation de produits haut de gamme exclusifs
+								Use of exclusive high-end products
 							</p>
 						</Card>
 					</div>
@@ -252,7 +252,7 @@ export default function Services() {
 				{/* CTA */}
 				<div className="mt-24 text-center">
 					<h2 className="text-3xl text-gray-900 dark:text-gray-100 mb-6">
-						Prête à réserver votre moment beauté ?
+						Ready to book your beauty moment?
 					</h2>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
 						<Link href="/appointments">
@@ -260,7 +260,7 @@ export default function Services() {
 								size="lg"
 								className="bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full px-8"
 							>
-								Prendre rendez-vous
+								Book an Appointment
 							</Button>
 						</Link>
 						<Link href="/memberships">
@@ -269,7 +269,7 @@ export default function Services() {
 								variant="outline"
 								className="border-pink-200 dark:border-pink-800 text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-900/20 rounded-full px-8"
 							>
-								Voir les abonnements
+								View Memberships
 							</Button>
 						</Link>
 					</div>

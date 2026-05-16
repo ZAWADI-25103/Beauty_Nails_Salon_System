@@ -4,6 +4,11 @@ import { NextResponse } from "next/server";
 import { ForgotPasswordEmail } from "@/emails/ForgotPasswordEmail";
 import prisma from "@/lib/prisma";
 import { sendEmail } from "@/lib/sendEmail";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 export async function POST(req: Request) {
 	try {
@@ -33,7 +38,7 @@ export async function POST(req: Request) {
 			// Return success even if user doesn't exist to prevent email enumeration
 			return NextResponse.json({
 				message:
-					"If an account with this email exists, a password reset link has been sent.",
+					"Account with this email does not exist.",
 			});
 		}
 
@@ -50,7 +55,7 @@ export async function POST(req: Request) {
 			},
 		});
 
-		const resetPasswordLink = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${resetToken}`;
+		const resetPasswordLink = `${appUrl}/auth/reset-password?token=${resetToken}`;
 
 		const emailHtml = await render(
 			ForgotPasswordEmail({
@@ -61,7 +66,7 @@ export async function POST(req: Request) {
 
 		await sendEmail(
 			email,
-			"Réinitialisation de votre mot de passe - Beauty Nails",
+			"Reset Your Password - Beauty Nails",
 			emailHtml,
 		);
 
@@ -74,8 +79,8 @@ export async function POST(req: Request) {
 			if (adminUser) {
 				await sendEmail(
 					adminUser.email,
-					"Demande de réinitialisation de mot de passe",
-					`Un utilisateur (${user.email}) a demandé la réinitialisation de son mot de passe.`,
+					"Password Reset Request",
+					`A user (${user.email}) has requested a password reset.`,
 				);
 			}
 		} catch (adminNotifyError) {
@@ -85,7 +90,7 @@ export async function POST(req: Request) {
 
 		return NextResponse.json({
 			message:
-				"If an account with this email exists, a password reset link has been sent.",
+				"A password reset link has been sent.",
 		});
 	} catch (error) {
 		console.error("Error sending forgot password email:", error);

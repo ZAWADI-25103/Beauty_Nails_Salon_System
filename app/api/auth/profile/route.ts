@@ -44,7 +44,7 @@ export async function PATCH(request: NextRequest) {
 
 		return successResponse({
 			user: updatedUser,
-			message: "Profil mis à jour avec succès",
+			message: "Profile updated successfully",
 		});
 	} catch (error) {
 		return handleApiError(error);

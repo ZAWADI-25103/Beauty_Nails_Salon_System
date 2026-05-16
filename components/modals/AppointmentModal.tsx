@@ -288,7 +288,7 @@ export function AppointmentModal({
 			!clientName ||
 			!clientPhone
 		) {
-			toast.error("Veuillez remplir tous les champs obligatoires");
+			toast.error("Please fill in all required fields");
 			return;
 		}
 
@@ -332,7 +332,7 @@ export function AppointmentModal({
 			!clientId ||
 			!selectedTime
 		) {
-			toast.error("Remplissez tous les champs obligatoires");
+			toast.error("Fill in all required fields");
 			return;
 		}
 
@@ -375,12 +375,12 @@ export function AppointmentModal({
 				<div className="bg-linear-to-r from-pink-500 to-purple-600 p-6 text-white">
 					<DialogHeader>
 						<DialogTitle className="text-2xl  flex items-center gap-2 text-white">
-							{appointment ? "Modifier le Rendez-vous" : "Nouveau Rendez-vous"}
+							{appointment ? "Edit Appointment" : "New Appointment"}
 						</DialogTitle>
 						<p className="text-pink-100 opacity-90">
 							{appointment
-								? "Gérez les détails du rendez-vous existant."
-								: "Planifiez une nouvelle séance beauté."}
+								? "Manage the existing appointment details."
+								: "Plan a new beauty session."}
 						</p>
 					</DialogHeader>
 				</div>
@@ -396,13 +396,13 @@ export function AppointmentModal({
 								value="details"
 								className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 							>
-								Détails
+								Details
 							</TabsTrigger>
 							<TabsTrigger
 								value="payment"
 								className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 							>
-								Paiement & Statut
+								Payment & Status
 							</TabsTrigger>
 						</TabsList>
 
@@ -435,7 +435,7 @@ export function AppointmentModal({
 							</div>
 							<div className="grid grid-cols-2 gap-4">
 								<div className="space-y-2">
-									<Label>Nom de la Cliente</Label>
+									<Label>Client Name</Label>
 									<div className="relative">
 										<User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
 										<Input
@@ -470,7 +470,7 @@ export function AppointmentModal({
 										}}
 									>
 										<SelectTrigger className="w-full rounded-xl border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
-											<SelectValue placeholder="Sélectionner une catégorie" />
+											<SelectValue placeholder="Select a category" />
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="onglerie">💅 Onglerie</SelectItem>
@@ -484,14 +484,14 @@ export function AppointmentModal({
 								{selectedCategory && (
 									<div>
 										<Label className="text-gray-700 dark:text-gray-300 mb-2 block font-medium">
-											Prestation
+											Service
 										</Label>
 										<Select
 											value={selectedServiceId}
 											onValueChange={setSelectedServiceId}
 										>
 											<SelectTrigger className="w-full rounded-xl border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
-												<SelectValue placeholder="Sélectionner une prestation" />
+												<SelectValue placeholder="Select a service" />
 											</SelectTrigger>
 											<SelectContent>
 												{services
@@ -515,17 +515,17 @@ export function AppointmentModal({
 							</div>
 							<div className="grid grid-cols-2 gap-4">
 								<div className="space-y-2">
-									<Label>Employée</Label>
+									<Label>Employee</Label>
 									<Select
 										value={selectedWorker}
 										onValueChange={setSelectedWorker}
 									>
 										<SelectTrigger className="w-full rounded-xl border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
-											<SelectValue placeholder="Sélectionner une spécialiste" />
+											<SelectValue placeholder="Select a specialist" />
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="any">
-												Peu importe (première disponible)
+												Any (first available)
 											</SelectItem>
 											{staff.map((worker) => (
 												<SelectItem key={worker.id} value={worker.id}>
@@ -550,7 +550,7 @@ export function AppointmentModal({
 													{date ? (
 														format(date, "PPP", { locale: fr })
 													) : (
-														<span>Choisir date</span>
+														<span>Pick date</span>
 													)}
 												</Button>
 											</PopoverTrigger>
@@ -650,7 +650,7 @@ export function AppointmentModal({
 											<Sparkles className="w-5 h-5 mr-3 text-pink-500 shrink-0 mt-0.5 sm:mt-0" />
 											<div>
 												<p className="text-gray-900 dark:text-gray-100 font-medium">
-													Au salon
+													At the salon
 												</p>
 												<p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
 													Q. HIMBI, C. de Goma, Ville de Goma
@@ -672,7 +672,7 @@ export function AppointmentModal({
 											<Home className="w-5 h-5 mr-3 text-amber-500 shrink-0 mt-0.5 sm:mt-0" />
 											<div>
 												<p className="text-gray-900 dark:text-gray-100 font-medium">
-													À domicile
+													At home
 												</p>
 												<p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
 													+20 000 CDF - Dans la zone de Goma
@@ -695,7 +695,7 @@ export function AppointmentModal({
 											onValueChange={setDiscountCode}
 										>
 											<SelectTrigger>
-												<SelectValue placeholder="Choisir un code" />
+												<SelectValue placeholder="Choose a code" />
 											</SelectTrigger>
 
 											<SelectContent>
@@ -712,19 +712,19 @@ export function AppointmentModal({
 										</Select>
 
 										<Input
-											placeholder="Ou entrer un code manuellement"
+											placeholder="Or enter a code manually"
 											value={discountCode}
 											onChange={(e) => setDiscountCode(e.target.value)}
 										/>
 									</div>
 									<Card className="p-4 space-y-2 text-lg">
 										<div className="flex justify-between">
-											<span>Sous-total</span>
+											<span>Subtotal</span>
 											<span>{subtotal.toLocaleString()} CDF</span>
 										</div>
 
 										<div className="flex justify-between text-green-600">
-											<span>Remise</span>
+											<span>Discount</span>
 											<span>- {discountAmount.toLocaleString()} CDF</span>
 										</div>
 
@@ -744,7 +744,7 @@ export function AppointmentModal({
 
 								<div className="grid grid-cols-2 gap-4">
 									<div className="space-y-2">
-										<Label>Statut du RDV</Label>
+										<Label>Appointment Status</Label>
 										<Select value={status} onValueChange={setStatus}>
 											<SelectTrigger
 												className={cn(
@@ -758,19 +758,19 @@ export function AppointmentModal({
 												<SelectValue />
 											</SelectTrigger>
 											<SelectContent>
-												<SelectItem value="scheduled">Planifié</SelectItem>
-												<SelectItem value="confirmed">Confirmé</SelectItem>
-												<SelectItem value="completed">Terminé</SelectItem>
-												<SelectItem value="cancelled">Annulé</SelectItem>
+												<SelectItem value="scheduled">Scheduled</SelectItem>
+												<SelectItem value="confirmed">Confirmed</SelectItem>
+												<SelectItem value="completed">Completed</SelectItem>
+												<SelectItem value="cancelled">Cancelled</SelectItem>
 												<SelectItem value="noshow">
-													Absence (No-Show)
+													No-Show
 												</SelectItem>
 											</SelectContent>
 										</Select>
 									</div>
 
 									<div className="space-y-2">
-										<Label>Statut Paiement</Label>
+										<Label>Payment Status</Label>
 										<Select value={payStatus} onValueChange={setPayStatus}>
 											<SelectTrigger
 												className={cn(
@@ -784,9 +784,9 @@ export function AppointmentModal({
 												<SelectValue />
 											</SelectTrigger>
 											<SelectContent>
-												<SelectItem value="unpaid">Non Payé</SelectItem>
-												<SelectItem value="partial">Acompte Versé</SelectItem>
-												<SelectItem value="paid">Payé</SelectItem>
+												<SelectItem value="unpaid">Unpaid</SelectItem>
+												<SelectItem value="partial">Deposit Paid</SelectItem>
+												<SelectItem value="paid">Paid</SelectItem>
 											</SelectContent>
 										</Select>
 									</div>
@@ -794,7 +794,7 @@ export function AppointmentModal({
 
 								{paymentStatus !== "unpaid" && (
 									<div className="space-y-2 animate-in fade-in slide-in-from-top-2">
-										<Label>Méthode de Paiement</Label>
+										<Label>Payment Method</Label>
 										<div className="grid grid-cols-3 gap-2">
 											<Button
 												type="button"
@@ -803,7 +803,7 @@ export function AppointmentModal({
 												className={`flex flex-col gap-1 h-auto py-3 border ${paymentMethod === "cash" ? " border-green-500 dark:border-green-500 bg-green-50" : " border-green-200 bg-green-50"}`}
 											>
 												<Banknote className="w-5 h-5 text-green-600" />
-												<span className="text-base">Espèces</span>
+												<span className="text-base">Cash</span>
 											</Button>
 											<Button
 												type="button"
@@ -821,7 +821,7 @@ export function AppointmentModal({
 												className={`flex flex-col gap-1 h-auto py-3 border ${paymentMethod === "card" ? " border-blue-500 dark:border-blue-500 bg-blue-50" : " border-blue-200 bg-blue-50"}`}
 											>
 												<CreditCard className="w-5 h-5 text-blue-600" />
-												<span className="text-base">Carte</span>
+												<span className="text-base">Card</span>
 											</Button>
 										</div>
 									</div>
@@ -833,7 +833,7 @@ export function AppointmentModal({
 					<DialogFooter className="gap-2 sm:gap-0">
 						{appointment && (
 							<Button type="button" variant="destructive" className="mr-auto">
-								Annuler RDV
+								Cancel Appointment
 							</Button>
 						)}
 						<Button
@@ -841,7 +841,7 @@ export function AppointmentModal({
 							variant="outline"
 							onClick={() => onOpenChange?.(false)}
 						>
-							Fermer
+							Close
 						</Button>
 						{user?.role === "worker" ? (
 							<Button
@@ -850,7 +850,7 @@ export function AppointmentModal({
 							>
 								{appointment
 									? "Enregistrer Modifications"
-									: "Prendre Rendez-vous"}
+									: "Book Appointment"}
 							</Button>
 						) : (
 							<Button
@@ -859,7 +859,7 @@ export function AppointmentModal({
 							>
 								{appointment
 									? "Enregistrer Modifications"
-									: "Confirmer Rendez-vous"}
+									: "Confirm Appointment"}
 							</Button>
 						)}
 					</DialogFooter>

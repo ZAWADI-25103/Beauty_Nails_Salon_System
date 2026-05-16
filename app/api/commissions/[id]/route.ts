@@ -29,11 +29,11 @@ export async function PATCH(
 		});
 
 		if (!commission) {
-			throw new Error("Commission introuvable");
+			throw new Error("Commission not found");
 		}
 
 		if (commission.status === "paid")
-			return errorResponse("Cette commission est deja regler");
+			return errorResponse("This commission has already been paid");
 
 		const updated = await prisma.$transaction(async (tx) => {
 			// 1️⃣ Update worker commission
@@ -54,8 +54,8 @@ export async function PATCH(
 				data: {
 					userId: commission.worker.userId,
 					type: "payment_received",
-					title: "Paiement approuvé",
-					message: `Votre commission pour ${commission.period} a été payée (${commission.commissionAmount} CDF).`,
+					title: "Payment Approved",
+					message: `Your commission for ${commission.period} has been paid (${commission.commissionAmount} CDF).`,
 					link: `/dashboard/worker?commissionId=${commission.id}`,
 				},
 			});
@@ -65,8 +65,8 @@ export async function PATCH(
 				data: {
 					userId: currentUser.id,
 					type: "system",
-					title: "Commission payée",
-					message: `Paiement effectué pour ${commission.worker.user.name}. Revenu admin: ${employerAmount} CDF`,
+					title: "Commission Paid",
+					message: `Payment made for ${commission.worker.user.name}. Admin revenue: ${employerAmount} CDF`,
 				},
 			});
 

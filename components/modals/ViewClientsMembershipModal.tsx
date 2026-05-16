@@ -35,7 +35,7 @@ export default function ViewClientsMembershipModal({
 	return (
 		<DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
 			<DialogHeader>
-				<DialogTitle>Clients avec l'Abonnement: {membership.name}</DialogTitle>
+				<DialogTitle>Clients with Membership: {membership.name}</DialogTitle>
 			</DialogHeader>
 			{isLoading ? (
 				<div>Chargement des clients...</div>
@@ -76,7 +76,7 @@ export default function ViewClientsMembershipModal({
 												? "Actif"
 												: purchase.status === "expired"
 													? "Expiré"
-													: "Annulé"}
+													: "Cancelled"}
 										</Badge>
 									</TableCell>
 									<TableCell>
@@ -88,7 +88,7 @@ export default function ViewClientsMembershipModal({
 						{purchases.length === 0 && (
 							<TableRow>
 								<TableCell colSpan={4} className="text-center text-gray-500">
-									Aucun client trouvé pour cet abonnement.
+									No clients found for this membership.
 								</TableCell>
 							</TableRow>
 						)}

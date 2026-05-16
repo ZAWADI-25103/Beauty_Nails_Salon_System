@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
 		} = body;
 
 		if (!appointmentId || !items || items.length === 0) {
-			return errorResponse("Données manquantes", 400);
+			return errorResponse("Missing data", 400);
 		}
 
 		// Verify appointment exists and is in_progress
@@ -56,12 +56,12 @@ export async function POST(request: NextRequest) {
 		});
 
 		if (!appointment) {
-			return errorResponse("Rendez-vous non trouvé", 404);
+			return errorResponse("Appointment not found", 404);
 		}
 
 		if (appointment.status !== "in_progress") {
 			return errorResponse(
-				"Le rendez-vous doit être en cours pour enregistrer l'utilisation",
+				"Appointment must be in progress to record usage",
 				400,
 			);
 		}
@@ -75,15 +75,15 @@ export async function POST(request: NextRequest) {
 			});
 
 			if (!item) {
-				return errorResponse(`Article ${usage.itemId} non trouvé`, 404);
+				return errorResponse(`Item ${usage.itemId} not found`, 404);
 			}
 
 			// Calculate actual deduction based on unit and shared resource logic
 			let deduction = usage.quantity;
 
-			// Shared resource logic: if unit is "pièce" and item is marked as shared, only deduct once per appointment
+			// Shared resource logic: if unit is "piece" and item is marked as shared, only deduct once per appointment
 			const isSharedResource =
-				item.unit === "pièce" && item.name.toLowerCase().includes("flacon");
+				item.unit === "piece" && item.name.toLowerCase().includes("bottle");
 			if (isSharedResource) {
 				// Check if this item was already used for this appointment
 				const existingUsage = await prisma.inventoryUsage.findFirst({
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
 					itemId: usage.itemId,
 					quantity: -deduction, // Negative for usage
 					type: "usage",
-					notes: `Utilisé pour RDV #${appointmentId} - ${usage.notes || ""}`,
+					notes: `Used for appointment #${appointmentId} - ${usage.notes || ""}`,
 					performedBy: workerId || user.id,
 				},
 			});
@@ -150,7 +150,7 @@ export async function POST(request: NextRequest) {
 
 		return successResponse({
 			results,
-			message: "Utilisation des articles enregistrée avec succès",
+			message: "Item usage recorded successfully",
 		});
 	} catch (error) {
 		return handleApiError(error);

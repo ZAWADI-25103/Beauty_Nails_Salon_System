@@ -169,7 +169,7 @@ export async function GET(
 			workingHoursString:
 				typeof staff?.workingHours === "string"
 					? staff?.workingHours
-					: "Non défini",
+					: "Not defined",
 			appointmentsCount: completedApps.length,
 			revenue: totalRevenue.toString(),
 			clientRetention: `${retention}%`,

@@ -12,7 +12,7 @@ export default function About() {
 
 	const teams = staff.map((worker) => ({
 		name: worker.name,
-		role: worker.position || "Esthéticienne",
+		role: worker.position || "Beauty Specialist",
 		experience: `${worker.experience || 1.5} ans`,
 		specialties: worker.specialties,
 		image:
@@ -27,28 +27,28 @@ export default function About() {
 			icon: <Heart className="w-8 h-8 text-white" />,
 			title: "Passion",
 			description:
-				"Nous aimons ce que nous faisons et cela se reflète dans chaque prestation",
+				"We love what we do and it shows in every service",
 			color: "from-pink-400 to-rose-400",
 		},
 		{
 			icon: <Award className="w-8 h-8 text-white" />,
 			title: "Excellence",
 			description:
-				"Nous nous engageons à fournir des services de la plus haute qualité",
+				"We are committed to providing services of the highest quality",
 			color: "from-purple-400 to-pink-400",
 		},
 		{
 			icon: <Shield className="w-8 h-8 text-white" />,
 			title: "Hygiène",
 			description:
-				"Protocoles sanitaires stricts et stérilisation systématique du matériel",
+				"Strict sanitary protocols and systematic sterilization of equipment",
 			color: "from-amber-400 to-orange-400",
 		},
 		{
 			icon: <Sparkles className="w-8 h-8 text-white" />,
 			title: "Innovation",
 			description:
-				"Nous suivons les dernières tendances et techniques de beauté",
+				"We follow the latest beauty trends and techniques",
 			color: "from-green-400 to-emerald-400",
 		},
 	];
@@ -65,10 +65,10 @@ export default function About() {
 				<div className="absolute inset-0 bg-linear-to-r from-pink-900/80 to-amber-900/60 flex items-center">
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
 						<Badge className="mb-6 bg-pink-500/20 text-pink-100 border-pink-300/30 backdrop-blur-sm">
-							Notre Histoire
+							Our Story
 						</Badge>
 						<h1 className="text-5xl lg:text-6xl text-white mb-6">
-							La beauté au service du bien-être
+							Beauty at the service of well-being
 						</h1>
 						<p className="text-xl text-pink-100 max-w-3xl mx-auto">
 							Depuis 2020, Beauty Nails sublime la beauté des femmes de Kinshasa
@@ -83,18 +83,18 @@ export default function About() {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center mb-16 sm:mb-24">
 					<div>
 						<Badge className="mb-4 bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-200">
-							Notre Mission
+							Our Mission
 						</Badge>
 						<h2 className="text-3xl sm:text-4xl font-medium lg:text-5xl text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-							Un salon qui célèbre votre beauté unique
+							A salon that celebrates your unique beauty
 						</h2>
 						<p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-							Beauty Nails est né d'un rêve : créer un espace où chaque femme se
+							Beauty Nails was born from a dream: to create a space where every woman feels
 							sent belle, confiante et choyée. Nous croyons que la beauté est un
 							art, et chaque cliente est notre chef-d'œuvre.
 						</p>
 						<p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-6 sm:mb-8">
-							Notre équipe de professionnelles passionnées et certifiées utilise
+							Our team of passionate, certified professionals uses
 							les meilleures techniques et produits pour vous offrir une
 							expérience exceptionnelle. De l'onglerie au maquillage, en passant
 							par les cils et les tresses, nous maîtrisons tous les aspects de
@@ -106,7 +106,7 @@ export default function About() {
 									5+
 								</div>
 								<div className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
-									Années d'expérience
+									Years of experience
 								</div>
 							</div>
 							<div className="text-center">
@@ -114,7 +114,7 @@ export default function About() {
 									2000+
 								</div>
 								<div className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
-									Clientes heureuses
+									Happy clients
 								</div>
 							</div>
 							<div className="text-center">
@@ -122,7 +122,7 @@ export default function About() {
 									4.9
 								</div>
 								<div className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
-									Note moyenne
+									Average rating
 								</div>
 							</div>
 						</div>
@@ -142,13 +142,13 @@ export default function About() {
 				<div className="mb-16 sm:mb-24">
 					<div className="text-center mb-10 sm:mb-16">
 						<Badge className="mb-4 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-200">
-							Nos Valeurs
+							Our Values
 						</Badge>
 						<h2 className="text-3xl sm:text-4xl font-medium lg:text-5xl text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-							Ce qui nous distingue
+							What sets us apart
 						</h2>
 						<p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-							Des principes qui guident chacune de nos actions
+							Principles that guide each of our actions
 						</p>
 					</div>
 
@@ -178,13 +178,13 @@ export default function About() {
 				<div className="mb-16 sm:mb-24">
 					<div className="text-center mb-10 sm:mb-16">
 						<Badge className="mb-4 bg-amber-100 dark:bg-amber-900 text-amber-600 dark:text-amber-200">
-							Notre Équipe
+							Our Team
 						</Badge>
 						<h2 className="text-3xl sm:text-4xl font-medium lg:text-5xl text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-							Rencontrez nos expertes
+							Meet our experts
 						</h2>
 						<p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-							Des professionnelles passionnées et certifiées à votre service
+							Passionate and certified professionals at your service
 						</p>
 					</div>
 
@@ -192,7 +192,7 @@ export default function About() {
 						{staffLoading ? (
 							<div className="col-span-full text-center py-8">
 								<p className="text-lg text-gray-600 dark:text-gray-400">
-									Chargement de l'équipe...
+									Loading team...
 								</p>
 							</div>
 						) : (
@@ -219,12 +219,12 @@ export default function About() {
 										<div className="flex items-center gap-2 mb-3 sm:mb-4">
 											<Award className="w-4 h-4 text-amber-500" />
 											<span className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
-												{member.experience} d'expérience
+												{member.experience} of experience
 											</span>
 										</div>
 										<div className="space-y-2">
 											<p className="text-base text-gray-500 dark:text-gray-400 mb-2">
-												Spécialités :
+												Specialties:
 											</p>
 											{member.specialties.map((specialty, i) => (
 												<Badge
@@ -246,7 +246,7 @@ export default function About() {
 												))}
 											</div>
 											<span className="ml-2 text-base sm:text-lg text-gray-600 dark:text-gray-400">
-												{member.rating}/5 ({member.reviews} avis)
+												{member.rating}/5 ({member.reviews} reviews)
 											</span>
 										</div>
 									</div>
@@ -261,7 +261,7 @@ export default function About() {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
 						<div>
 							<h2 className="text-2xl  sm:text-3xl font-medium lg:text-4xl text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">
-								Notre engagement envers vous
+								Our commitment to you
 							</h2>
 							<div className="space-y-3 sm:space-y-4">
 								<div className="flex items-start">
@@ -269,7 +269,7 @@ export default function About() {
 										<span className="text-white text-base">✓</span>
 									</div>
 									<p className="ml-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
-										<strong>Hygiène irréprochable :</strong> Stérilisation
+										<strong>Impeccable hygiene:</strong> Stérilisation
 										complète du matériel après chaque utilisation
 									</p>
 								</div>
@@ -278,7 +278,7 @@ export default function About() {
 										<span className="text-white text-base">✓</span>
 									</div>
 									<p className="ml-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
-										<strong>Produits de qualité :</strong> Nous utilisons
+										<strong>Quality products:</strong> Nous utilisons
 										uniquement des marques reconnues et testées
 									</p>
 								</div>
@@ -287,7 +287,7 @@ export default function About() {
 										<span className="text-white text-base">✓</span>
 									</div>
 									<p className="ml-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
-										<strong>Formation continue :</strong> Notre équipe se forme
+										<strong>Continuous training:</strong> Our team trains
 										régulièrement aux nouvelles techniques
 									</p>
 								</div>
@@ -296,7 +296,7 @@ export default function About() {
 										<span className="text-white text-base">✓</span>
 									</div>
 									<p className="ml-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
-										<strong>Satisfaction garantie :</strong> Votre bonheur est
+										<strong>Guaranteed satisfaction:</strong> Votre bonheur est
 										notre priorité absolue
 									</p>
 								</div>
@@ -309,7 +309,7 @@ export default function About() {
 									100%
 								</div>
 								<p className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
-									Produits premium
+									Premium products
 								</p>
 							</Card>
 							<Card className="bg-white dark:bg-gray-700 border-b border-pink-100 dark:border-pink-900 shadow-lg p-4 sm:p-6 rounded-2xl text-center">
@@ -317,7 +317,7 @@ export default function About() {
 									247
 								</div>
 								<p className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
-									Avis 5 étoiles
+									5-star reviews
 								</p>
 							</Card>
 							<Card className="bg-white dark:bg-gray-700 border-b border-pink-100 dark:border-pink-900 shadow-lg p-4 sm:p-6 rounded-2xl text-center">
@@ -325,7 +325,7 @@ export default function About() {
 									98%
 								</div>
 								<p className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
-									Clientes fidèles
+									Loyal clients
 								</p>
 							</Card>
 							<Card className="bg-white dark:bg-gray-700 border-b border-pink-100 dark:border-pink-900 shadow-lg p-4 sm:p-6 rounded-2xl text-center">
@@ -333,7 +333,7 @@ export default function About() {
 									24/7
 								</div>
 								<p className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
-									Support client
+									Customer support
 								</p>
 							</Card>
 						</div>
@@ -343,7 +343,7 @@ export default function About() {
 				{/* CTA Section */}
 				<div className="text-center mb-16 sm:mb-24">
 					<h2 className="text-2xl  sm:text-3xl font-medium lg:text-4xl text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">
-						Prête à vivre l'expérience Beauty Nails ?
+						Ready to experience Beauty Nails?
 					</h2>
 					<div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
 						<Link href="/appointments">
@@ -351,7 +351,7 @@ export default function About() {
 								size="lg"
 								className="bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full px-6 sm:px-8 py-5 sm:py-6 text-lg sm:text-base w-full sm:w-auto"
 							>
-								Réserver un rendez-vous
+								Book an Appointment
 							</Button>
 						</Link>
 						<Link href="/contact">
@@ -360,7 +360,7 @@ export default function About() {
 								variant="outline"
 								className="border-pink-200 dark:border-pink-900 text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-gray-800 rounded-full px-6 sm:px-8 py-5 sm:py-6 text-lg sm:text-base w-full sm:w-auto"
 							>
-								Nous contacter
+								Contact Us
 							</Button>
 						</Link>
 					</div>

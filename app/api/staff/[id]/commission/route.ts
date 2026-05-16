@@ -25,7 +25,7 @@ export async function GET(
 		});
 
 		if (!worker) {
-			return errorResponse("Employé non trouvé", 404);
+			return errorResponse("Worker not found", 404);
 		}
 
 		// Calculate date range based on period

@@ -13,7 +13,7 @@ export async function GET(_request: NextRequest) {
 		const profile = await prisma.salonProfile.findFirst();
 
 		if (!profile) {
-			return errorResponse("Profil non trouvé", 404);
+			return errorResponse("Profile not found", 404);
 		}
 
 		return successResponse(profile);
@@ -32,7 +32,7 @@ export async function PATCH(request: NextRequest) {
 		});
 
 		return successResponse({
-			message: "Profil mis à jour",
+			message: "Profile updated",
 			profile,
 		});
 	} catch (error) {

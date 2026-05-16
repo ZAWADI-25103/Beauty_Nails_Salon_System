@@ -44,12 +44,12 @@ export default function JoinTeam() {
 			!formData.phone ||
 			!formData.position
 		) {
-			toast.error("Veuillez remplir tous les champs obligatoires");
+			toast.error("Please fill in all required fields");
 			return;
 		}
-		toast.success("Candidature envoyée !", {
+		toast.success("Application sent!", {
 			description:
-				"Nous examinerons votre profil et vous contacterons bientôt.",
+				"We will review your profile and contact you soon.",
 		});
 		setFormData({
 			name: "",
@@ -63,39 +63,39 @@ export default function JoinTeam() {
 
 	const positions = [
 		{
-			title: "Spécialiste Ongles",
-			description: "Expert(e) en manucure, pédicure et nail art",
+			title: "Nail Specialist",
+			description: "Expert in manicure, pedicure and nail art",
 			requirements: [
-				"Certification en onglerie",
-				"Minimum 2 ans d'expérience",
-				"Maîtrise du gel et des extensions",
+				"Nail technician certification",
+				"Minimum 2 years experience",
+				"Mastery of gel and extensions",
 			],
 		},
 		{
-			title: "Experte Cils",
-			description: "Spécialiste en extensions et traitements de cils",
+			title: "Lash Expert",
+			description: "Specialist in eyelash extensions and treatments",
 			requirements: [
-				"Formation certifiée",
-				"Expérience en volume russe",
-				"Précision et patience",
+				"Certified training",
+				"Experience in Russian volume",
+				"Precision and patience",
 			],
 		},
 		{
-			title: "Coiffeuse Professionnelle",
-			description: "Experte en tresses, tissage et coiffures créatives",
+			title: "Professional Hair Stylist",
+			description: "Expert in braiding, weaving and creative hairstyles",
 			requirements: [
-				"Formation professionnelle",
-				"3+ ans d'expérience",
-				"Créativité et polyvalence",
+				"Professional training",
+				"3+ years experience",
+				"Creativity and versatility",
 			],
 		},
 		{
-			title: "Maquilleuse",
-			description: "Artiste du maquillage pour tous événements",
+			title: "Makeup Artist",
+			description: "Makeup artist for all events",
 			requirements: [
-				"Portfolio démontrable",
-				"Connaissance des tendances",
-				"Maîtrise de différentes techniques",
+				"Demonstrable portfolio",
+				"Knowledge of trends",
+				"Mastery of different techniques",
 			],
 		},
 	];
@@ -103,16 +103,16 @@ export default function JoinTeam() {
 	const benefits = [
 		{
 			icon: <TrendingUp className="w-8 h-8 text-white" />,
-			title: "Salaire Compétitif",
+			title: "Competitive Salary",
 			description:
-				"Rémunération attractive avec commissions sur vos prestations",
+				"Attractive compensation with commissions on your services",
 			color: "from-green-400 to-emerald-400",
 		},
 		{
 			icon: <Award className="w-8 h-8 text-white" />,
-			title: "Formation Continue",
+			title: "Continuous Training",
 			description:
-				"Opportunités de formation et de développement professionnel",
+				"Training and professional development opportunities",
 			color: "from-purple-400 to-pink-400",
 		},
 		{
@@ -155,7 +155,7 @@ export default function JoinTeam() {
 						</h2>
 						<p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
 							Beauty Nails n'est pas qu'un salon de beauté, c'est une famille.
-							Nous investissons dans notre équipe et créons un environnement où
+							We invest in our team and create an environment where
 							chaque membre peut s'épanouir professionnellement et
 							personnellement.
 						</p>
@@ -178,7 +178,7 @@ export default function JoinTeam() {
 									5+
 								</div>
 								<div className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-									Années d'expérience
+									Years of experience
 								</div>
 							</div>
 						</div>
@@ -201,7 +201,7 @@ export default function JoinTeam() {
 							Avantages
 						</h2>
 						<p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300">
-							Nous prenons soin de notre équipe
+							We take care of our team
 						</p>
 					</div>
 
@@ -282,7 +282,7 @@ export default function JoinTeam() {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 									<div>
 										<Label htmlFor="name" className="dark:text-gray-200">
-											Nom complet *
+											Full name *
 										</Label>
 										<Input
 											id="name"
@@ -315,7 +315,7 @@ export default function JoinTeam() {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 									<div>
 										<Label htmlFor="phone" className="dark:text-gray-200">
-											Téléphone *
+											Phone *
 										</Label>
 										<Input
 											id="phone"
@@ -343,11 +343,11 @@ export default function JoinTeam() {
 											</SelectTrigger>
 											<SelectContent>
 												<SelectItem value="nails">
-													Spécialiste Ongles
+													Nail Specialist
 												</SelectItem>
-												<SelectItem value="lashes">Experte Cils</SelectItem>
+												<SelectItem value="lashes">Lash Expert</SelectItem>
 												<SelectItem value="hair">Coiffeuse</SelectItem>
-												<SelectItem value="makeup">Maquilleuse</SelectItem>
+												<SelectItem value="makeup">Makeup Artist</SelectItem>
 											</SelectContent>
 										</Select>
 									</div>
@@ -355,7 +355,7 @@ export default function JoinTeam() {
 
 								<div>
 									<Label htmlFor="experience" className="dark:text-gray-200">
-										Années d'expérience
+										Years of experience
 									</Label>
 									<Input
 										id="experience"
@@ -394,7 +394,7 @@ export default function JoinTeam() {
 									type="submit"
 									className="w-full bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full py-5 sm:py-6 text-lg sm:text-base"
 								>
-									Envoyer ma candidature
+									Submit application
 								</Button>
 							</form>
 						</Card>
@@ -429,7 +429,7 @@ export default function JoinTeam() {
 											Entretien
 										</p>
 										<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
-											Discussion avec notre équipe
+											Chat with our team
 										</p>
 									</div>
 								</div>
@@ -452,7 +452,7 @@ export default function JoinTeam() {
 									</div>
 									<div>
 										<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100">
-											Bienvenue !
+											Welcome!
 										</p>
 										<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
 											Intégration dans l'équipe
@@ -467,7 +467,7 @@ export default function JoinTeam() {
 								Questions ?
 							</h3>
 							<p className="text-lg sm:text-base text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
-								Contactez notre responsable RH pour plus d'informations
+								Contact our HR manager for more information
 							</p>
 							<p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-2">
 								📧 recrutement@beautynails.cd

@@ -390,7 +390,7 @@ export default function POSCheckout({ showMock }: { showMock?: boolean }) {
 													? "Carte"
 													: pm.type === "mobile"
 														? "Mobile Money"
-														: "Cadeau"}
+														: "Gift"}
 										</Badge>
 										<Input
 											type="number"
@@ -455,7 +455,7 @@ export default function POSCheckout({ showMock }: { showMock?: boolean }) {
 								>
 									<Gift className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform" />
 									<span className="text-[10px]  uppercase tracking-widest dark:text-gray-300">
-										Cadeau
+										Gift
 									</span>
 								</Button>
 							</div>

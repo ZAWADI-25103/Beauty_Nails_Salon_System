@@ -129,7 +129,7 @@ export default function Testimonials() {
 						Ce que nos clientes disent de nous
 					</h1>
 					<p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-						La satisfaction de nos clientes est notre plus belle récompense
+						The satisfaction of our clients is our greatest reward
 					</p>
 				</div>
 

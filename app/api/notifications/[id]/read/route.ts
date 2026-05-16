@@ -23,7 +23,7 @@ export async function PUT(
 			data: { isRead: true },
 		});
 
-		return successResponse({ message: "Notification marquée comme lue" });
+		return successResponse({ message: "Notification marked as read" });
 	} catch (error) {
 		return handleApiError(error);
 	}

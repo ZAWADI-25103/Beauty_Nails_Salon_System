@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
 				},
 			});
 			if (!w) {
-				return errorResponse("Employé non trouvé pour la notification", 404);
+				return errorResponse("Worker not found for notification", 404);
 			}
 			wId = w.id;
 		}
@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
 		// Only clients and admins can create appointments
 		if (!["client", "admin"].includes(user.role)) {
 			return errorResponse(
-				"Seuls les clients et administrateurs peuvent créer des rendez-vous",
+				"Only clients and administrators can create appointments",
 				403,
 			);
 		}
@@ -205,7 +205,7 @@ export async function POST(request: NextRequest) {
 				where: { id: body.clientId },
 			});
 			if (!clientExists) {
-				return errorResponse("Client non trouvé", 404);
+				return errorResponse("Client not found", 404);
 			}
 			clientId = body.clientId;
 		} else if (user.role === "client") {
@@ -214,21 +214,21 @@ export async function POST(request: NextRequest) {
 				where: { userId: user.id },
 			});
 			if (!client) {
-				return errorResponse("Client non trouvé", 404);
+				return errorResponse("Client not found", 404);
 			}
 			clientId = client.id;
 		}
 
 		// Validation
 		if (!serviceId || !workerId || !date || !time || !clientId) {
-			return errorResponse("Données manquantes", 400);
+			return errorResponse("Missing data", 400);
 		}
 		// Get service details
 		const service = await prisma.service.findUnique({
 			where: { id: serviceId },
 		});
 		if (!service) {
-			return errorResponse("Service non trouvé", 404);
+			return errorResponse("Service not found", 404);
 		}
 
 		// Check for conflicts
@@ -244,7 +244,7 @@ export async function POST(request: NextRequest) {
 		});
 		if (conflictingAppointment) {
 			return errorResponse(
-				"Ce créneau horaire est déjà réservé pour un autre rendez-vous",
+				"This time slot is already booked for another appointment",
 				409,
 			);
 		}
@@ -281,19 +281,19 @@ export async function POST(request: NextRequest) {
 			});
 
 			if (!discount || !discount.isActive || discount.endDate < new Date()) {
-				return errorResponse("Code de réduction invalide ou expiré", 400);
+				return errorResponse("Invalid or expired discount code", 400);
 			}
 
 			if (
 				discount.usedCount &&
 				discount.usedCount >= (discount.maxUses || 1000)
 			) {
-				return errorResponse("Limite d'utilisation du code atteinte", 400);
+				return errorResponse("Code usage limit reached", 400);
 			}
 
 			if (discount.value && totalPrice < discount.value) {
 				return errorResponse(
-					"Montant minimum requis pour utiliser ce code",
+					"Minimum amount required to use this code",
 					400,
 				);
 			}
@@ -499,13 +499,13 @@ export async function POST(request: NextRequest) {
 				isPrepaidUsed &&
 				clientToUpdate.prepaymentBalance < appointment.price
 			)
-				throw new Error("Balance prepaye est insufisant.");
+				throw new Error("Prepaid balance is insufficient.");
 			if (
 				clientToUpdate &&
 				isGiftCardUsed &&
 				clientToUpdate.giftCardBalance < appointment.price
 			)
-				throw new Error("Balance carte cadeau est insufisant.");
+				throw new Error("Gift card balance is insufficient.");
 
 			if (isPrepaidUsed) {
 				clientUpdateData.data = {
@@ -522,7 +522,7 @@ export async function POST(request: NextRequest) {
 						create: {
 							points: loyaltyPointsEarned,
 							type: "earned_appointment",
-							description: `Bonus pour avoir réservé ${service.name} et vous avez utilisé votre solde prépayé`,
+							description: `Bonus for booking ${service.name} and you used your prepaid balance`,
 						},
 					},
 				};
@@ -545,7 +545,7 @@ export async function POST(request: NextRequest) {
 						create: {
 							points: loyaltyPointsEarned,
 							type: "earned_appointment",
-							description: `Bonus pour avoir réservé ${service.name} et vous avez utilisé votre carte cadeau`,
+							description: `Bonus for booking ${service.name} and you used your gift card`,
 						},
 					},
 				};
@@ -565,7 +565,7 @@ export async function POST(request: NextRequest) {
 						create: {
 							points: loyaltyPointsEarned,
 							type: "earned_appointment",
-							description: `Bonus pour avoir réservé ${service.name} et vous avez utilisé votre prestation gratuite`,
+							description: `Bonus for booking ${service.name} and you used your free service`,
 						},
 					},
 				};
@@ -582,7 +582,7 @@ export async function POST(request: NextRequest) {
 						create: {
 							points: loyaltyPointsEarned,
 							type: "earned_appointment",
-							description: `Bonus pour avoir réservé ${service.name}`,
+							description: `Bonus for booking ${service.name}`,
 						},
 					},
 				};
@@ -604,19 +604,19 @@ export async function POST(request: NextRequest) {
 			});
 
 			// 1. Définir les valeurs par défaut (pour cash, mobile money, etc.)
-			let notifTitle = "📅 Rendez-vous confirmé";
-			let notifMessage = `Votre rendez-vous pour ${service.name} le ${date.split("T")[0]} à ${time} a été créé avec succès.`;
+			let notifTitle = "📅 Appointment Confirmed";
+			let notifMessage = `Your appointment for ${service.name} on ${date.split("T")[0]} at ${time} has been successfully created.`;
 
 			// 2. Vérifier les méthodes spéciales pour personnaliser le message
 			if (paymentInfo.method === "free-service") {
-				notifTitle = "✨ Rendez-vous Cadeau Confirmé !";
-				notifMessage = `Félicitations ! Votre prestation "${service.name}" du ${date.split("T")[0]} à ${time} est entièrement offerte en récompense de votre fidélité. À très vite au Beauty Nails Salon !`;
+				notifTitle = "✨ Gift Appointment Confirmed!";
+				notifMessage = `Congratulations! Your service "${service.name}" on ${date.split("T")[0]} at ${time} is fully offered as a reward for your loyalty. See you soon at Beauty Nails Salon!`;
 			} else if (paymentInfo.method === "giftcard") {
-				notifTitle = "🎁 Paiement par Carte Cadeau";
-				notifMessage = `Votre rendez-vous pour "${service.name}" le ${date.split("T")[0]} à ${time} est confirmé. Le paiement a été déduit de votre carte cadeau Beauty Nails.`;
+				notifTitle = "🎁 Gift Card Payment";
+				notifMessage = `Your appointment for "${service.name}" on ${date.split("T")[0]} at ${time} is confirmed. The payment was deducted from your Beauty Nails gift card.`;
 			} else if (paymentInfo.method === "prepaid") {
-				notifTitle = "💳 Solde Prépayé Utilisé";
-				notifMessage = `Votre rendez-vous pour "${service.name}" le ${date.split("T")[0]} à ${time} a été réglé et confirmé avec succès en utilisant votre solde prépayé.`;
+				notifTitle = "💳 Prepaid Balance Used";
+				notifMessage = `Your appointment for "${service.name}" on ${date.split("T")[0]} at ${time} has been paid and confirmed successfully using your prepaid balance.`;
 			}
 
 			// 3. Créer la notification avec les variables dynamiques
@@ -635,8 +635,8 @@ export async function POST(request: NextRequest) {
 				data: {
 					userId: appointment.worker.user.id,
 					type: "appointment_assigned",
-					title: "Nouveau rendez-vous assigné",
-					message: `Un nouveau rendez-vous pour ${service.name} a été assigné à vous le ${date.split("T")[0]} à ${time}.`,
+					title: "New appointment assigned",
+					message: `A new appointment for ${service.name} has been assigned to you on ${date.split("T")[0]} at ${time}.`,
 					link: `/dashboard/worker?appointment=${appointment.id}`,
 				},
 			});
@@ -651,8 +651,8 @@ export async function POST(request: NextRequest) {
 					data: {
 						userId: adminUser.id,
 						type: "appointment_created",
-						title: "Nouveau rendez-vous créé",
-						message: `Un nouveau rendez-vous pour ${service.name} a été créé le ${date.split("T")[0]} à ${time}.`,
+						title: "New appointment created",
+						message: `A new appointment for ${service.name} was created on ${date.split("T")[0]} at ${time}.`,
 						link: `/dashboard/admin/appointments?appointment=${appointment.id}`,
 					},
 				});

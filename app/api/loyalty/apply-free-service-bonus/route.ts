@@ -26,7 +26,7 @@ export async function PUT(req: NextRequest) {
 		});
 
 		return successResponse({
-			message: "Félicitations ! Vous avez recu une cadeau de valeur 15000.",
+			message: "Congratulations! You received a gift worth 15000.",
 		});
 	} catch (error) {
 		return handleApiError(error);

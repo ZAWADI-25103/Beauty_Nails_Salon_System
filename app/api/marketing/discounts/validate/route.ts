@@ -12,24 +12,24 @@ export async function GET(request: NextRequest) {
 		});
 
 		if (!discount) {
-			return errorResponse("Code promo invalide", 404);
+			return errorResponse("Invalid promo code", 404);
 		}
 
 		if (!discount.isActive) {
-			return errorResponse("Ce code promo n'est plus actif");
+			return errorResponse("This promo code is no longer active");
 		}
 
 		const now = new Date();
 		if (now < discount.startDate) {
-			return errorResponse("Ce code promo n'est pas encore disponible");
+			return errorResponse("This promo code is not yet available");
 		}
 
 		if (now > discount.endDate) {
-			return errorResponse("Ce code promo a expiré");
+			return errorResponse("This promo code has expired");
 		}
 
 		if (discount.maxUses && discount.usedCount >= discount.maxUses) {
-			return errorResponse("Ce code promo a atteint sa limite d'utilisation");
+			return errorResponse("This promo code has reached its usage limit");
 		}
 
 		return successResponse(discount, 200);

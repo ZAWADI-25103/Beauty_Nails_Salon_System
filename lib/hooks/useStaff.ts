@@ -26,11 +26,11 @@ export function useStaff(params?: { role?: string; isAvailable?: boolean }) {
 		mutationFn: staffApi.createWorker,
 		onSuccess: (data: CreateWorkerResponse) => {
 			queryClient.invalidateQueries({ queryKey: ["staff"] });
-			toast.success(data.message || "Employé créé avec succès");
+			toast.success(data.message || "Worker created successfully");
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur lors de la création",
+				error.response?.data?.error?.message || "Error creating",
 			);
 		},
 	});
@@ -78,7 +78,7 @@ export function useWorkerSchedule(
 		},
 		onError: (error: any) => {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur de mise à jour",
+				error.response?.data?.error?.message || "Error updating",
 			);
 		},
 	});
@@ -133,13 +133,13 @@ export function useCommission() {
 	const createMutation = useMutation({
 		mutationFn: commissionApi.create,
 		onSuccess: () => {
-			toast.success("Commission générée");
+			toast.success("Commission generated");
 			queryClient.invalidateQueries({ queryKey: ["staff"] });
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||
-					"Erreur lors de la génération de la commission",
+					"Error generating commission",
 			);
 		},
 	});
@@ -147,7 +147,7 @@ export function useCommission() {
 	const updateMutation = useMutation({
 		mutationFn: ({ id, status }: { id: string; status: string }) =>
 			commissionApi.update(id, status),
-		onSuccess: () => toast.success("Statut mis à jour"),
+		onSuccess: () => toast.success("Status updated"),
 		onError: (error) => toast.error(error.message),
 	});
 

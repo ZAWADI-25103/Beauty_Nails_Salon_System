@@ -82,7 +82,7 @@ export default function PackageCard({ pkg }: PackageCardProps) {
 			{/* Duration badge */}
 			<div className="flex items-center gap-2 mb-4 text-sm text-gray-600 dark:text-gray-400">
 				<Clock className="w-4 h-4" />
-				<span>Durée totale : {totalDuration} min</span>
+				<span>Total duration : {totalDuration} min</span>
 			</div>
 
 			{/* Action button */}

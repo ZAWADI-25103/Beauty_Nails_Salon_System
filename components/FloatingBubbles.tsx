@@ -100,7 +100,7 @@ export default function FloatingBubbles({
 								>
 									<Gift className="w-8 h-8 mb-1" />
 									<span className="text-xs font-black uppercase tracking-tighter">
-										{canClaimBonus ? "CADEAU !" : `-${user.refBonus}%`}
+										{canClaimBonus ? "GIFT!" : `-${user.refBonus}%`}
 									</span>
 
 									{/* Small pulse ring for attention */}
@@ -120,7 +120,7 @@ export default function FloatingBubbles({
 										</h3>
 										<p className="text-sm">
 											Vous avez parrainé 5 amis. Allez dans l'onglet{" "}
-											<b>Parrainage</b> pour réclamer votre bonus !
+											<b>Referral</b> pour claim your bonus !
 										</p>
 									</div>
 								) : (
@@ -130,7 +130,7 @@ export default function FloatingBubbles({
 										</h3>
 										<p className="text-sm">
 											Vous profitez de <b>{user.refBonus}%</b> de réduction sur
-											vos rendez-vous jusqu'à la fin du mois !
+											your appointments until the end of the month!
 										</p>
 									</div>
 								)}

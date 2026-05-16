@@ -80,7 +80,7 @@ export default function TodayOverview() {
 					.filter((s: any) => busyRosterIds.includes(s.id))
 					.map((s: any) => ({
 						id: s.id,
-						name: s.name || s.fullName || "Employé",
+						name: s.name || s.fullName || "Staff",
 						status: "busy",
 						currentClient:
 							s.currentlyWorking.client?.user?.name ?? "CLIENT AU SERVICE",
@@ -94,7 +94,7 @@ export default function TodayOverview() {
 					.filter((s: any) => !busyRosterIds.includes(s.id))
 					.map((s: any) => ({
 						id: s.id,
-						name: s.name || s.fullName || "Employé",
+						name: s.name || s.fullName || "Staff",
 						status: "available",
 						currentClient: null,
 						service: null,
@@ -138,28 +138,28 @@ export default function TodayOverview() {
 				return (
 					<Badge className="bg-green-100 text-green-700 hover:bg-green-100">
 						<CheckCircle className="w-3 h-3 mr-1" />
-						Confirmé
+						Confirmed
 					</Badge>
 				);
 			case "pending":
 				return (
 					<Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">
 						<Clock className="w-3 h-3 mr-1" />
-						En attente
+						Pending
 					</Badge>
 				);
 			case "completed":
 				return (
 					<Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">
 						<CheckCircle className="w-3 h-3 mr-1" />
-						Terminé
+						Completed
 					</Badge>
 				);
 			case "cancelled":
 				return (
 					<Badge className="bg-red-100 text-red-700 hover:bg-red-100">
 						<XCircle className="w-3 h-3 mr-1" />
-						Annulé
+						Cancelled
 					</Badge>
 				);
 			default:
@@ -203,13 +203,13 @@ export default function TodayOverview() {
 					<div className="flex items-center justify-between">
 						<div className="min-w-0">
 							<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-1 font-medium">
-								RDV Aujourd'hui
+								Appointments Today
 							</p>
 							<p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100 font-black">
 								{todayStats.upcomingAppointments}
 							</p>
 							<p className="text-[10px] sm:text-base text-blue-600 dark:text-blue-400 mt-1 ">
-								+ {todayStats.completedAppointments} complétés
+								+ {todayStats.completedAppointments} completed
 							</p>
 						</div>
 						<div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-blue-400 to-cyan-400 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/30">
@@ -222,7 +222,7 @@ export default function TodayOverview() {
 					<div className="flex items-center justify-between">
 						<div className="min-w-0">
 							<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-1 font-medium">
-								Revenus du Jour
+								Today's Revenue
 							</p>
 							<p className="text-xl sm:text-2xl text-gray-900 dark:text-gray-100 font-black">
 								{todayStats.dailyRevenue.toLocaleString()} CDF
@@ -241,13 +241,13 @@ export default function TodayOverview() {
 					<div className="flex items-center justify-between">
 						<div className="min-w-0">
 							<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-1 font-medium">
-								Clientes Servies
+								Clients Served
 							</p>
 							<p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100 font-black">
 								{todayStats.clientsServed}
 							</p>
 							<p className="text-[10px] sm:text-base text-purple-600 dark:text-purple-400 mt-1 ">
-								En cours: {ongoingAppointments.length}
+								Ongoing: {ongoingAppointments.length}
 							</p>
 						</div>
 						<div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-purple-400 to-pink-400 flex items-center justify-center shrink-0 shadow-lg shadow-purple-500/30">
@@ -266,13 +266,13 @@ export default function TodayOverview() {
 					<div className="flex items-center justify-between">
 						<div className="min-w-0">
 							<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-1 font-medium">
-								Sans RDV
+								Walk-Ins
 							</p>
 							<p className="text-xl sm:text-2xl text-gray-900 dark:text-gray-100 font-black">
-								{todayStats.walkInAvailable ? "Disponible" : "Complet"}
+								{todayStats.walkInAvailable ? "Available" : "Full"}
 							</p>
 							<p className="text-[10px] sm:text-base text-gray-600 dark:text-gray-400 mt-1  italic">
-								Attente: ~{todayStats.averageWaitTime} min
+								Wait: ~{todayStats.averageWaitTime} min
 							</p>
 						</div>
 						<div
@@ -296,7 +296,7 @@ export default function TodayOverview() {
 							<Activity className="w-5 h-5 text-purple-600 dark:text-purple-400" />
 						</div>
 						<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 ">
-							Occupation Actuelle
+							Current Occupancy
 						</h3>
 					</div>
 					<Badge
@@ -308,7 +308,7 @@ export default function TodayOverview() {
 									: "bg-green-500 dark:bg-green-900/40 text-white dark:text-green-200"
 						} border-0 px-4 py-2 text-base sm:text-lg `}
 					>
-						{todayStats.currentOccupancy}% Occupé
+						{todayStats.currentOccupancy}%  Occupied
 					</Badge>
 				</div>
 				<div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-3 sm:h-4 shadow-inner">
@@ -327,11 +327,11 @@ export default function TodayOverview() {
 					<span className="text-gray-900 dark:text-gray-200 ">
 						{busyStaffs.length}
 					</span>{" "}
-					employées occupées •{" "}
+					staff busy •{" "}
 					<span className="text-gray-900 dark:text-gray-200 ">
 						{availableStaffs.length}
 					</span>{" "}
-					disponibles
+					available
 				</p>
 			</Card>
 
@@ -343,7 +343,7 @@ export default function TodayOverview() {
 							<Clock className="w-5 h-5 text-pink-500" />
 						</div>
 						<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 ">
-							Prochains Rendez-vous
+							Upcoming Appointments
 						</h3>
 					</div>
 					<div className="space-y-3">
@@ -377,14 +377,14 @@ export default function TodayOverview() {
 											avec <span className="">{apt.worker.user.name}</span>
 										</p>
 										<Badge className="bg-blue-500 dark:bg-blue-900/40 text-white dark:text-blue-200 border-0 text-[10px] sm:text-base font-black">
-											Confirmé
+											Confirmed
 										</Badge>
 									</div>
 								</div>
 							))
 						) : (
 							<div className="text-center py-10 text-gray-500 dark:text-gray-400 italic">
-								Aucun rendez-vous à venir pour aujourd'hui
+								No upcoming appointments for today
 							</div>
 						)}
 					</div>
@@ -424,7 +424,7 @@ export default function TodayOverview() {
 								className="w-full rounded-full py-6 justify-start px-6  dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]"
 							>
 								<Users className="w-5 h-5 mr-3 text-purple-500" />
-								Nouvelle Cliente
+								New Client
 							</Button>
 						</ClientModalTrigger>
 						{/* <Button variant="outline" className="w-full rounded-full py-6 justify-start px-6  dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]">
@@ -442,7 +442,7 @@ export default function TodayOverview() {
 						<Users className="w-5 h-5 text-purple-600 dark:text-purple-400" />
 					</div>
 					<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 ">
-						Personnel Aujourd'hui
+						Staff Today
 					</h3>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -471,10 +471,10 @@ export default function TodayOverview() {
 									} border-0 text-[10px] sm:text-base font-black`}
 								>
 									{staff.status === "busy"
-										? "Occupée"
+										? "Busy"
 										: staff.status === "available"
-											? "Disponible"
-											: "Pause"}
+											? "Available"
+											: "Break"}
 								</Badge>
 							</div>
 							<div className="space-y-1.5 mb-4">
@@ -489,14 +489,14 @@ export default function TodayOverview() {
 									</>
 								) : (
 									<p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 italic">
-										Aucune cliente actuellement
+										No client currently
 									</p>
 								)}
 							</div>
 							<div className="flex items-center gap-2 text-[10px] sm:text-base text-gray-500 dark:text-gray-400 pt-3 border-t border-gray-100 dark:border-gray-800">
 								<Clock className="w-3 h-3" />
 								<span>
-									Disponible:{" "}
+									Available:{" "}
 									<span className=" text-gray-700 dark:text-gray-300">
 										{staff.nextAvailable}
 									</span>
@@ -529,10 +529,10 @@ export default function TodayOverview() {
 									} border-0 text-[10px] sm:text-base font-black`}
 								>
 									{staff.status === "busy"
-										? "Occupée"
+										? "Busy"
 										: staff.status === "available"
-											? "Disponible"
-											: "Pause"}
+											? "Available"
+											: "Break"}
 								</Badge>
 							</div>
 							<div className="space-y-1.5 mb-4">
@@ -547,14 +547,14 @@ export default function TodayOverview() {
 									</>
 								) : (
 									<p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 italic">
-										Aucune cliente actuellement
+										No client currently
 									</p>
 								)}
 							</div>
 							<div className="flex items-center gap-2 text-[10px] sm:text-base text-gray-500 dark:text-gray-400 pt-3 border-t border-gray-100 dark:border-gray-800">
 								<Clock className="w-3 h-3" />
 								<span>
-									Disponible:{" "}
+									Available:{" "}
 									<span className=" text-gray-700 dark:text-gray-300">
 										{staff.nextAvailable}
 									</span>
@@ -573,7 +573,7 @@ export default function TodayOverview() {
 							<AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
 						</div>
 						<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 ">
-							Alertes Urgentes
+							Urgent Alerts
 						</h3>
 						<Badge className="bg-red-600 dark:bg-red-900/40 text-white dark:text-red-200 border-0 ml-auto px-3 font-black">
 							{urgentAlerts.length}
@@ -623,7 +623,7 @@ export default function TodayOverview() {
 										variant="outline"
 										className="w-full sm:w-auto rounded-full py-5 px-6  dark:border-gray-700 dark:hover:bg-gray-800"
 									>
-										Résoudre
+										Resolve
 									</Button>
 								</div>
 							);
@@ -635,12 +635,12 @@ export default function TodayOverview() {
 			{/* Popular Services Today */}
 			<Card className="border-0 shadow-lg rounded-2xl p-5 sm:p-6 bg-white dark:bg-gray-950 dark:border dark:border-pink-900/30">
 				<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  mb-6">
-					Services récents
+					Recent Services
 				</h3>
 				{appointmentHistory.length === 0 ? (
 					<div className="text-center py-12 text-gray-500">
 						<Package className="w-16 h-16 mx-auto mb-4 opacity-20" />
-						<p>Aucun historique</p>
+						<p>No history</p>
 					</div>
 				) : (
 					<div className="space-y-3">

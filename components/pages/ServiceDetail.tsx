@@ -63,7 +63,7 @@ export default function ServiceDetail() {
 			<div className="min-h-screen py-24 bg-background dark:bg-gray-950">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 					<h1 className="text-4xl text-gray-900 dark:text-gray-100 mb-6">
-						Catégorie non trouvée
+						Category not found
 					</h1>
 					<Button
 						className="bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full px-8"
@@ -71,7 +71,7 @@ export default function ServiceDetail() {
 							route.back();
 						}}
 					>
-						Retour aux services
+						Back to Services
 					</Button>
 				</div>
 			</div>
@@ -84,7 +84,7 @@ export default function ServiceDetail() {
 				<div className="text-center">
 					<Loader2 className="w-12 h-12 animate-spin text-purple-500 dark:text-purple-400 mx-auto mb-4" />
 					<p className="text-gray-600 dark:text-gray-400">
-						Chargement des prestations...
+						Loading services...
 					</p>
 				</div>
 			</div>
@@ -100,7 +100,7 @@ export default function ServiceDetail() {
 					className="inline-flex items-center text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 mb-8"
 				>
 					<ArrowLeft className="w-4 h-4 mr-2" />
-					Retour aux services
+					Back to Services
 				</Link>
 
 				{/* Header */}
@@ -132,12 +132,12 @@ export default function ServiceDetail() {
 								))}
 							</div>
 							<span className="text-gray-600 dark:text-gray-400">
-								4.9/5 (158 avis)
+								4.9/5 (158 reviews)
 							</span>
 						</div>
 						{/* <Link href="/appointments">
               <Button size="lg" className="bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full px-8">
-                Réserver maintenant
+                Book Now maintenant
               </Button>
             </Link> */}
 					</div>
@@ -146,7 +146,7 @@ export default function ServiceDetail() {
 				{/* Services List */}
 				<div>
 					<h2 className="text-3xl text-gray-900 dark:text-gray-100 mb-8">
-						Nos prestations {categoryData.name.toLowerCase()}
+						Our {categoryData.name.toLowerCase()}
 					</h2>
 					{categoryServices.length > 0 ? (
 						<div className="space-y-6">
@@ -166,7 +166,7 @@ export default function ServiceDetail() {
 											{service.addOns && service.addOns.length > 0 && (
 												<div>
 													<p className="text-lg text-gray-500 dark:text-gray-400 mb-2 font-medium">
-														Options supplémentaires :
+														Additional Options:
 													</p>
 													<ul className="space-y-1">
 														{service.addOns.map((addon, i) => (
@@ -202,7 +202,7 @@ export default function ServiceDetail() {
 												className="w-full"
 											>
 												<Button className="w-full bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full">
-													Réserver
+													Book Now
 												</Button>
 											</Link>
 										</div>
@@ -213,7 +213,7 @@ export default function ServiceDetail() {
 					) : (
 						<div className="text-center py-12">
 							<p className="text-gray-500 dark:text-gray-400 text-lg">
-								Aucun service disponible pour le moment dans cette catégorie.
+								No services available at the moment in this category.
 							</p>
 						</div>
 					)}
@@ -222,7 +222,7 @@ export default function ServiceDetail() {
 				{/* Benefits Section */}
 				<div className="mt-16 bg-linear-to-br from-pink-50 to-purple-50 dark:from-pink-950 dark:to-purple-950 rounded-3xl p-12">
 					<h2 className="text-3xl text-gray-900 dark:text-gray-100 mb-8 text-center">
-						Pourquoi choisir Beauty Nails ?
+						Why Choose Beauty Nails?
 					</h2>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 						<div className="text-center">
@@ -230,10 +230,10 @@ export default function ServiceDetail() {
 								<Star className="w-8 h-8 text-white" />
 							</div>
 							<h3 className="text-lg text-gray-900 dark:text-gray-100 mb-2">
-								Expertes Qualifiées
+								Qualified Experts
 							</h3>
 							<p className="text-gray-600 dark:text-gray-300 text-lg">
-								Techniciennes certifiées et expérimentées
+								Certified and experienced technicians
 							</p>
 						</div>
 						<div className="text-center">
@@ -241,10 +241,10 @@ export default function ServiceDetail() {
 								<span className="text-2xl">✨</span>
 							</div>
 							<h3 className="text-lg text-gray-900 dark:text-gray-100 mb-2">
-								Produits Premium
+								Premium Products
 							</h3>
 							<p className="text-gray-600 dark:text-gray-300 text-lg">
-								Marques reconnues et de qualité
+								Recognized quality brands
 							</p>
 						</div>
 						<div className="text-center">
@@ -252,10 +252,10 @@ export default function ServiceDetail() {
 								<span className="text-2xl">🏆</span>
 							</div>
 							<h3 className="text-lg text-gray-900 dark:text-gray-100 mb-2">
-								Hygiène Stricte
+								Strict Hygiene
 							</h3>
 							<p className="text-gray-600 dark:text-gray-300 text-lg">
-								Stérilisation et protocoles sanitaires
+								Sterilization and sanitary protocols
 							</p>
 						</div>
 						<div className="text-center">
@@ -263,10 +263,10 @@ export default function ServiceDetail() {
 								<span className="text-2xl">💝</span>
 							</div>
 							<h3 className="text-lg text-gray-900 dark:text-gray-100 mb-2">
-								Ambiance Luxueuse
+								Luxurious Ambiance
 							</h3>
 							<p className="text-gray-600 dark:text-gray-300 text-lg">
-								Cadre élégant et relaxant
+								Elegant and relaxing setting
 							</p>
 						</div>
 					</div>

@@ -74,7 +74,7 @@ export default function NotificationCenter() {
 						onClick={() => markAllAsRead()}
 						className="mt-6 text-lg font-semibold text-pink-500 hover:text-pink-600 hover:bg-pink-50 dark:hover:bg-pink-900/20"
 					>
-						Tout marquer lu
+						Mark All Read
 					</Button>
 				)}
 			</div>
@@ -86,7 +86,7 @@ export default function NotificationCenter() {
 							<Bell className="w-8 h-8 text-gray-300 dark:text-gray-700" />
 						</div>
 						<p className="text-gray-500 dark:text-gray-400 font-medium">
-							Aucune notification
+							No notifications
 						</p>
 					</div>
 				) : (
@@ -95,7 +95,7 @@ export default function NotificationCenter() {
 							{notificationList.length === 0 ? (
 								<div className="text-center py-12 text-gray-500 dark:text-gray-400">
 									<Bell className="w-12 h-12 mx-auto mb-4 opacity-20" />
-									<p>Aucune notification</p>
+									<p>No notifications</p>
 								</div>
 							) : (
 								notificationList.map((notification) => (
@@ -131,7 +131,7 @@ export default function NotificationCenter() {
 			{unreadCount > 0 && (
 				<div className="pt-6 border-t border-gray-100 dark:border-pink-900/30">
 					<p className="text-base  text-gray-500 dark:text-gray-400 uppercase tracking-widest">
-						Actions Rapides
+						Quick Actions
 					</p>
 					<div className="grid grid-cols-2 gap-3">
 						<Button
@@ -159,12 +159,12 @@ export default function NotificationCenter() {
 				<div className="flex items-center gap-2 mb-2">
 					<AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
 					<p className="text-lg  text-gray-900 dark:text-gray-100">
-						Alertes Actives
+						Active Alerts
 					</p>
 				</div>
 				<div className="space-y-2 text-base font-medium text-gray-600 dark:text-gray-400">
 					<div className="flex items-center justify-between">
-						<span>Alertes Stock</span>
+						<span>Stock Alerts</span>
 						<Badge
 							variant="outline"
 							className="h-5 bg-white dark:bg-gray-950 border-red-100 dark:border-red-900/50"
@@ -176,7 +176,7 @@ export default function NotificationCenter() {
 						</Badge>
 					</div>
 					<div className="flex items-center justify-between">
-						<span>Paiements en attente</span>
+						<span>Pending Payments</span>
 						<Badge
 							variant="outline"
 							className="h-5 bg-white dark:bg-gray-950 border-red-100 dark:border-red-900/50"
@@ -189,7 +189,7 @@ export default function NotificationCenter() {
 						</Badge>
 					</div>
 					<div className="flex items-center justify-between">
-						<span>Notifications RDV</span>
+						<span>Appointment Notifications</span>
 						<Badge
 							variant="outline"
 							className="h-5 bg-white dark:bg-gray-950 border-red-100 dark:border-red-900/50"
@@ -201,7 +201,7 @@ export default function NotificationCenter() {
 						</Badge>
 					</div>
 					<div className="flex items-center justify-between">
-						<span>Notifications du Systeme</span>
+						<span>System Notifications</span>
 						<Badge
 							variant="outline"
 							className="h-5 bg-white dark:bg-gray-950 border-red-100 dark:border-red-900/50"

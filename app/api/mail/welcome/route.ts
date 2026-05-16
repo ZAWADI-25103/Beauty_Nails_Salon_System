@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 		// You can customize steps and links dynamically if needed
 		const emailHtml = await render(WelcomeEmail(PreviewProps));
 
-		await sendEmail(email, "Bienvenue chez Beauty Nails", emailHtml);
+		await sendEmail(email, "Welcome to Beauty Nails", emailHtml);
 
 		// Notify admin about new user registration
 		try {
@@ -26,8 +26,8 @@ export async function POST(req: Request) {
 			if (adminUser) {
 				await sendEmail(
 					adminUser.email,
-					"Nouvel utilisateur enregistré",
-					`Un nouvel utilisateur (${email}) s'est inscrit sur Beauty Nails.`,
+					"New User Registered",
+					`A new user (${email}) has registered on Beauty Nails.`,
 				);
 			}
 		} catch (adminNotifyError) {

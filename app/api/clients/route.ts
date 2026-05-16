@@ -152,12 +152,12 @@ export async function POST(request: NextRequest) {
 		});
 
 		return successResponse(
-			{ message: "Client(e) créé avec success", client: user.clientProfile },
+			{ message: "Client created successfully", client: user.clientProfile },
 			201,
 		);
 	} catch (error: any) {
 		if (error?.code === "P2002") {
-			return errorResponse("Email ou téléphone déjà utilisé", 400);
+			return errorResponse("Email or phone already in use", 400);
 		}
 		return handleApiError(error);
 	}

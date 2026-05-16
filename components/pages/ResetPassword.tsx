@@ -9,6 +9,8 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useResetPassword } from "@/lib/hooks/useAuth";
+import Link from "next/link";
+import { Logo } from "../Logo";
 
 export default function ResetPasswordComponent() {
 	const [password, setPassword] = useState("");
@@ -22,17 +24,17 @@ export default function ResetPasswordComponent() {
 		e.preventDefault();
 
 		if (password !== confirmPassword) {
-			toast.error("Les mots de passe ne correspondent pas");
+			toast.error("Passwords do not match");
 			return;
 		}
 
 		if (password.length < 6) {
-			toast.error("Le mot de passe doit contenir au moins 6 caractères");
+			toast.error("Password must be at least 6 characters");
 			return;
 		}
 
 		if (!token) {
-			toast.error("Token de réinitialisation manquant");
+			toast.error("Missing reset token");
 			return;
 		}
 
@@ -40,7 +42,7 @@ export default function ResetPasswordComponent() {
 			{ token, newPassword: password },
 			{
 				onSuccess: () => {
-					toast.success("Mot de passe réinitialisé avec succès");
+					toast.success("Password reset successfully");
 					setTimeout(() => {
 						router.push("/auth/login");
 					}, 2000);
@@ -50,16 +52,24 @@ export default function ResetPasswordComponent() {
 	};
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-purple-50 p-4 dark:from-gray-900 dark:to-gray-800">
-			<Card className="w-full max-w-md p-6 sm:p-8 bg-white dark:bg-gray-950 shadow-xl rounded-2xl border border-pink-100 dark:border-pink-900/30">
+		<div className="min-h-screen py-12 sm:py-24 flex items-center bg-background dark:bg-gray-950">
+			<div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 w-full">
 				<div className="text-center mb-6 sm:mb-8">
+					<Link
+						href="/"
+						className="inline-flex items-center justify-center mb-4 sm:mb-6"
+					>
+						<Logo width={250} height={70} />
+					</Link>
 					<h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-						Réinitialiser votre mot de passe
+						Reset Your Password
 					</h1>
 					<p className="text-lg sm:text-base text-gray-600 dark:text-gray-400">
-						Entrez votre nouveau mot de passe
+						Enter your new password
 					</p>
 				</div>
+			
+			<Card className="w-full max-w-md p-6 sm:p-8 bg-white dark:bg-gray-950 shadow-xl rounded-2xl border border-pink-100 dark:border-pink-900/30">
 
 				<form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
 					<div>
@@ -67,7 +77,7 @@ export default function ResetPasswordComponent() {
 							htmlFor="password"
 							className="text-base sm:text-lg text-gray-700 dark:text-gray-300"
 						>
-							Nouveau mot de passe
+							New Password
 						</Label>
 						<Input
 							id="password"
@@ -85,7 +95,7 @@ export default function ResetPasswordComponent() {
 							htmlFor="confirmPassword"
 							className="text-base sm:text-lg text-gray-700 dark:text-gray-300"
 						>
-							Confirmer le mot de passe
+							Confirm Password
 						</Label>
 						<Input
 							id="confirmPassword"
@@ -101,11 +111,11 @@ export default function ResetPasswordComponent() {
 					<Button
 						type="submit"
 						disabled={isPending}
-						className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-3 rounded-xl font-medium"
+						className="w-full bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-3 rounded-xl font-medium"
 					>
 						{isPending
-							? "Réinitialisation..."
-							: "Réinitialiser le mot de passe"}
+							? "Resetting..."
+							: "Reset Password"}
 					</Button>
 				</form>
 
@@ -115,10 +125,11 @@ export default function ResetPasswordComponent() {
 						className="text-base sm:text-lg text-purple-600 dark:text-purple-400 hover:underline flex items-center justify-center gap-1"
 					>
 						<ArrowLeft className="w-4 h-4" />
-						Retour à la connexion
+						Back to login
 					</button>
 				</div>
 			</Card>
+			</div>
 		</div>
 	);
 }

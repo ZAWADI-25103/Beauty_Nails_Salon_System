@@ -11,7 +11,7 @@ export function UserResults({ data }: any) {
 						<tr>
 							<th>Nom</th>
 							<th>Email</th>
-							<th>Rôle</th>
+							<th>Role</th>
 						</tr>
 					</thead>
 

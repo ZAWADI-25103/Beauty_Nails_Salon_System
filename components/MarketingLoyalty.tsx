@@ -170,8 +170,8 @@ export default function MarketingLoyalty() {
 			return;
 		}
 
-		const title = `Merci pour votre Parrainage!`;
-		const message = `Bonjour ${referrer.name}, merci d'avoir parrainé ${referrer.referrals} personnes. Continuez ainsi!`; // Customize message
+		const title = `Thank you for your Referral!`;
+		const message = `Hello ${referrer.name}, thank you for referring ${referrer.referrals} personnes. Keep it up!`; // Customize message
 		const type: Notification["type"] =
 			channel === "email" ? "marketing" : "loyalty_reward"; // Could differentiate types
 
@@ -219,7 +219,7 @@ export default function MarketingLoyalty() {
 		<div className="space-y-6">
 			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 				<h2 className="text-2xl  sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
-					Marketing & Fidélité
+					Marketing & Loyalty
 				</h2>
 			</div>
 
@@ -232,7 +232,7 @@ export default function MarketingLoyalty() {
 						value="loyalty"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 					>
-						Programme Fidélité
+						Loyalty Program
 					</TabsTrigger>
 					<TabsTrigger
 						value="campaigns"
@@ -250,7 +250,7 @@ export default function MarketingLoyalty() {
 						value="referral"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 					>
-						Parrainages
+						Referrals
 					</TabsTrigger>
 					<TabsTrigger
 						value="broadcast"
@@ -285,21 +285,21 @@ export default function MarketingLoyalty() {
 
 								<Card className="bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 border border-blue-100 dark:border-blue-900/30 p-4 sm:p-5 rounded-2xl">
 									<p className="text-[10px] sm:text-base  text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">
-										Récompense par visites
+										Reward by visits
 									</p>
 									<p className="text-base sm:text-2xl font-black text-gray-900 dark:text-gray-100">
 										Service gratuit après {loyaltyRules.appointmentsForReward}{" "}
-										rendez-vous
+										appointments
 									</p>
 								</Card>
 
 								<Card className="bg-linear-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-800/50 border border-green-100 dark:border-green-900/30 p-4 sm:p-5 rounded-2xl">
 									<p className="text-[10px] sm:text-base  text-green-600 dark:text-green-400 uppercase tracking-widest mb-1">
-										Récompense par parrainages
+										Referral Reward
 									</p>
 									<p className="text-base sm:text-2xl font-black text-gray-900 dark:text-gray-100">
 										Service gratuit après {loyaltyRules.referralsForReward}{" "}
-										parrainages
+										referrals
 									</p>
 								</Card>
 							</div>
@@ -307,7 +307,7 @@ export default function MarketingLoyalty() {
 							<CreateLoyaltyProgramModal
 								trigger={
 									<Button className="w-full mt-8 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full py-6 sm:py-7 text-lg sm:text-base  shadow-lg shadow-pink-500/20 transition-all">
-										Modifier Programme
+										Edit Program
 									</Button>
 								}
 							/>
@@ -319,7 +319,7 @@ export default function MarketingLoyalty() {
 									<Gift className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
 								</div>
 								<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100">
-									Paliers de Récompenses
+									Reward Tiers
 								</h3>
 							</div>
 
@@ -353,7 +353,7 @@ export default function MarketingLoyalty() {
 										variant="outline"
 										className="w-full mt-8 rounded-full py-6 sm:py-7 text-lg sm:text-base  dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 transition-all"
 									>
-										+ Ajouter Palier
+										+ Add Tier
 									</Button>
 								}
 							/>
@@ -362,7 +362,7 @@ export default function MarketingLoyalty() {
 						<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 lg:col-span-2">
 							<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100 mb-8 flex items-center gap-2">
 								<TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-pink-500" />
-								Statistiques Programme Fidélité
+								Statistiques Loyalty Program
 							</h3>
 							<div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
 								<div className="bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-blue-100 dark:border-blue-900/30 text-center">
@@ -717,10 +717,10 @@ export default function MarketingLoyalty() {
 							</div>
 							<div>
 								<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100 mb-1">
-									Programme de Parrainage
+									Referral Program
 								</h3>
 								<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
-									Récompensez vos clientes qui recommandent vos services
+									Reward your clients who recommend your services
 								</p>
 							</div>
 						</div>
@@ -744,7 +744,7 @@ export default function MarketingLoyalty() {
 											</p>
 											<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 flex items-center gap-2">
 												<Users className="w-3.5 h-3.5 text-gray-400" />
-												{referrer.referrals} parrainages
+												{referrer.referrals} referrals
 											</p>
 										</div>
 										<div className="text-left sm:text-right w-full sm:w-auto">
@@ -797,7 +797,7 @@ export default function MarketingLoyalty() {
 						<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
 							<div className="bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-blue-100 dark:border-blue-900/30 text-center">
 								<p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase  mb-2 tracking-widest">
-									Total Parrainages
+									Total Referrals
 								</p>
 								<p className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-gray-100">
 									{userReferralsCount}
@@ -816,7 +816,7 @@ export default function MarketingLoyalty() {
 							</div>
 							<div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-800/50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-purple-100 dark:border-purple-900/30 text-center">
 								<p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase  mb-2 tracking-widest">
-									Récompenses
+									Rewards
 								</p>
 								<p className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-gray-100">
 									{rewardedClientsCount}

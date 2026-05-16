@@ -103,7 +103,7 @@ function HeroSection({
 				</Badge>
 			);
 			break;
-		case "nos abonnements":
+		case "our memberships":
 			custom_badge = (
 				<Badge className="mb-6 bg-pink-500/20 text-pink-100 border-pink-300/30 backdrop-blur-sm">
 					<Award className="w-4 h-4 mr-2" />
@@ -129,7 +129,7 @@ function HeroSection({
 			);
 			break;
 
-		case "notre histoire":
+		case "our story":
 			custom_badge = (
 				<Badge className="mb-6 bg-pink-500/20 text-pink-100 border-pink-300/30 backdrop-blur-sm">
 					<Workflow className="w-4 h-4 mr-2" />

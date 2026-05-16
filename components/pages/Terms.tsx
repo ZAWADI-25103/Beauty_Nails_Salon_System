@@ -9,19 +9,19 @@ export default function Terms() {
 				<div className="text-center mb-10 sm:mb-12">
 					<Badge className="mb-4 bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-200">
 						<FileText className="w-4 h-4 mr-2" />
-						Conditions
+						Terms
 					</Badge>
 					<h1 className="text-4xl sm:text-5xl text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-						Conditions d'Utilisation
+						Terms d'Utilisation
 					</h1>
 					<p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-						Dernière mise à jour : 5 novembre 2025
+						Last updated: 5 novembre 2025
 					</p>
 				</div>
 
 				<Card className="bg-white dark:bg-gray-950 border-b border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl p-6 sm:p-8 dark:prose-invert prose prose-pink max-w-none">
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
-						1. Acceptation des Conditions
+						1. Acceptation des Terms
 					</h2>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6">
 						En utilisant les services de Beauty Nails, vous acceptez d'être lié
@@ -30,7 +30,7 @@ export default function Terms() {
 					</p>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
-						2. Services Proposés
+						2. Services Offered
 					</h2>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
 						Beauty Nails propose des services de beauté incluant mais non
@@ -44,10 +44,10 @@ export default function Terms() {
 					</ul>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
-						3. Réservations
+						3. Bookings
 					</h2>
 					<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-2 sm:mb-3">
-						3.1 Prise de Rendez-vous
+						3.1 Making Appointments
 					</h3>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6">
 						Les rendez-vous peuvent être pris en ligne, par téléphone ou via
@@ -55,7 +55,7 @@ export default function Terms() {
 					</p>
 
 					<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-2 sm:mb-3">
-						3.2 Annulation et Modification
+						3.2 Cancellation and Modification
 					</h3>
 					<ul className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 space-y-1 sm:space-y-2">
 						<li>
@@ -94,26 +94,26 @@ export default function Terms() {
 					</p>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
-						5. Abonnements
+						5. Memberships
 					</h2>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
-						Les abonnements sont soumis aux conditions suivantes :
+						Memberships are subject to the following conditions:
 					</p>
 					<ul className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 space-y-1 sm:space-y-2">
-						<li>Les abonnements sont personnels et non transférables</li>
+						<li>Memberships are personal and non-transferable</li>
 						<li>
 							Les rendez-vous inclus doivent être utilisés pendant la période
-							d'abonnement
+							of membership
 						</li>
-						<li>Les abonnements non utilisés ne sont pas remboursables</li>
+						<li>Unused memberships are non-refundable</li>
 						<li>Le renouvellement est automatique sauf demande contraire</li>
 					</ul>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
-						6. Programme de Fidélité
+						6. Loyalty Program
 					</h2>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6">
-						Le programme de fidélité est soumis à des conditions spécifiques et
+						The loyalty program is subject to specific conditions and
 						peut être modifié ou arrêté à tout moment. Les points accumulés
 						expirent après 12 mois d'inactivité.
 					</p>
@@ -151,7 +151,7 @@ export default function Terms() {
 					</ul>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
-						9. Limitation de Responsabilité
+						9. Limitation of Liability
 					</h2>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
 						Beauty Nails ne peut être tenu responsable de :
@@ -187,7 +187,7 @@ export default function Terms() {
 					</p>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
-						12. Modifications des Conditions
+						12. Modifications des Terms
 					</h2>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6">
 						Beauty Nails se réserve le droit de modifier ces conditions à tout

@@ -19,14 +19,14 @@ export async function handleLogin(
 		});
 
 		if (result?.error) {
-			return { error: "Email ou mot de passe incorrect" };
+			return { error: "Invalid email or password" };
 		}
 
 		if (!redirect) {
 			const res = await axiosdb.post("/mail/otp", { email: email });
 
 			if (!res.data.success) {
-				return { error: "Échec de l'envoi du code OTP. Veuillez réessayer." };
+				return { error: "Failed to send OTP code. Please try again." };
 			}
 			const otpCode = res.data.expectedOtp;
 
@@ -60,7 +60,7 @@ export async function handleLogin(
 		}
 	} catch (err: any) {
 		return {
-			error: err.message || "Une erreur est survenue lors de la connexion",
+			error: err.message || "An error occurred while logging in",
 		};
 	}
 }
@@ -77,7 +77,7 @@ export async function handleOTPVerification(
 		};
 	} else {
 		return {
-			error: "OTP incorrect. Veuillez réessayer.",
+			error: "OTP incorrect. Please try again.",
 		};
 	}
 }

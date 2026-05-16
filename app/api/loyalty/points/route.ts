@@ -17,7 +17,7 @@ export async function GET(_request: NextRequest) {
 		});
 
 		if (!client) {
-			return errorResponse("Client non trouvé", 404);
+			return errorResponse("Client not found", 404);
 		}
 
 		const loyaltyTransactions = await prisma.loyaltyTransaction.findMany({

@@ -15,122 +15,122 @@ import { Card } from "../ui/card";
 export default function FAQ() {
 	const faqCategories = [
 		{
-			category: "Rendez-vous & Réservations",
+			category: "Appointments & Bookings",
 			questions: [
 				{
-					question: "Comment puis-je prendre rendez-vous ?",
+					question: "How can I book an appointment?",
 					answer:
-						"Vous pouvez réserver en ligne via notre site web, par téléphone au +243 123 456 789, ou via WhatsApp. Nous vous recommandons de réserver à l'avance, surtout pour les weekends.",
+						"You can book online via our website, by phone at +243 123 456 789, or via WhatsApp. We recommend booking in advance, especially on weekends.",
 				},
 				{
-					question: "Puis-je annuler ou modifier mon rendez-vous ?",
+					question: "Can I cancel or modify my appointment?",
 					answer:
-						"Oui, vous pouvez annuler ou modifier votre rendez-vous jusqu'à 24h avant l'heure prévue sans frais. Au-delà, des frais d'annulation de 50% peuvent s'appliquer.",
+						"Yes, you can cancel or modify your appointment up to 24 hours before the scheduled time at no charge. Beyond that, a 50% cancellation fee may apply.",
 				},
 				{
-					question: "Que se passe-t-il si j'arrive en retard ?",
+					question: "What happens if I arrive late?",
 					answer:
-						"Nous comprenons les imprévus. Si vous avez plus de 15 minutes de retard, nous ferons de notre mieux pour vous servir, mais il se peut que nous devions raccourcir votre prestation ou la reporter.",
+						"We understand unexpected delays. If you are more than 15 minutes late, we will do our best to serve you, but we may need to shorten or reschedule your service.",
 				},
 				{
-					question: "Acceptez-vous les rendez-vous le jour même ?",
+					question: "Do you accept same-day appointments?",
 					answer:
-						"Oui, selon les disponibilités. Contactez-nous pour vérifier si nous avons des créneaux disponibles.",
+						"Yes, subject to availability. Contact us to check if we have open slots.",
 				},
 			],
 		},
 		{
-			category: "Services & Prestations",
+			category: "Services & Treatments",
 			questions: [
 				{
-					question: "Combien de temps durent les extensions de cils ?",
+					question: "How long do eyelash extensions last?",
 					answer:
-						"Les extensions de cils durent généralement 4 à 6 semaines selon votre cycle de croissance naturel et l'entretien. Nous recommandons un remplissage toutes les 2-3 semaines.",
+						"Eyelash extensions typically last 4 to 6 weeks depending on your natural growth cycle and maintenance. We recommend a fill every 2-3 weeks.",
 				},
 				{
-					question: "Les produits utilisés sont-ils sans danger ?",
+					question: "Are the products used safe?",
 					answer:
-						"Absolument ! Nous utilisons uniquement des produits de marques reconnues, testés dermatologiquement et conformes aux normes internationales de sécurité.",
+						"Absolutely! We only use products from recognized brands, dermatologically tested and compliant with international safety standards.",
 				},
 				{
-					question: "Puis-je avoir une prestation à domicile ?",
+					question: "Can I get an at-home service?",
 					answer:
-						"Oui, nous proposons des prestations à domicile dans la zone de Kinshasa pour un supplément de 20 000 CDF. Ce service doit être réservé à l'avance.",
+						"Yes, we offer at-home services in the Kinshasa area for an additional 20,000 CDF. This service must be booked in advance.",
 				},
 				{
-					question: "Combien de temps tient le vernis gel ?",
+					question: "How long does gel polish last?",
 					answer:
-						"Le vernis gel tient généralement 2 à 3 semaines sans écailler, selon vos activités quotidiennes et l'entretien.",
+						"Gel polish typically lasts 2 to 3 weeks without chipping, depending on your daily activities and maintenance.",
 				},
 			],
 		},
 		{
-			category: "Abonnements & Fidélité",
+			category: "Memberships & Loyalty",
 			questions: [
 				{
-					question: "Comment fonctionne le programme de fidélité ?",
+					question: "How does the loyalty program work?",
 					answer:
-						"Vous gagnez des points à chaque rendez-vous. 5 rendez-vous = 1 service gratuit. 5 parrainages réussis = 1 service gratuit également.",
+						"You earn points with every appointment. 5 appointments = 1 free service. 5 successful referrals = 1 free service as well.",
 				},
 				{
-					question: "Quels sont les avantages de l'abonnement ?",
+					question: "What are the membership benefits?",
 					answer:
-						"Les abonnements offrent des rendez-vous à prix réduit, des prestations à domicile incluses, des réductions sur les produits, et des points de fidélité multipliés.",
+						"Memberships offer discounted appointments, included at-home services, product discounts, and multiplied loyalty points.",
 				},
 				{
-					question: "Puis-je partager mon abonnement ?",
+					question: "Can I share my membership?",
 					answer:
-						"Non, les abonnements sont personnels et non transférables. Cependant, vous pouvez offrir un rendez-vous à une amie via notre système de parrainage.",
+						"No, memberships are personal and non-transferable. However, you can gift an appointment to a friend through our referral system.",
 				},
 				{
-					question: "Comment renouveler mon abonnement ?",
+					question: "How do I renew my membership?",
 					answer:
-						"Vous recevrez une notification 2 semaines avant l'expiration. Vous pouvez renouveler directement depuis votre espace client ou nous contacter.",
+						"You will receive a notification 2 weeks before expiry. You can renew directly from your client space or contact us.",
 				},
 			],
 		},
 		{
-			category: "Paiement & Tarification",
+			category: "Payment & Pricing",
 			questions: [
 				{
-					question: "Quels modes de paiement acceptez-vous ?",
+					question: "What payment methods do you accept?",
 					answer:
-						"Nous acceptons les paiements en espèces (CDF et USD), par mobile money (Airtel Money, Orange Money, M-Pesa), et par virement bancaire.",
+						"We accept payments in cash (CDF and USD), mobile money (Airtel Money, Orange Money, M-Pesa), and bank transfer.",
 				},
 				{
-					question: "Les prix incluent-ils les pourboires ?",
+					question: "Are tips included in the prices?",
 					answer:
-						"Non, les pourboires ne sont pas inclus mais sont toujours appréciés. Ils sont laissés à votre discrétion selon votre satisfaction.",
+						"No, tips are not included but are always appreciated. They are left to your discretion based on your satisfaction.",
 				},
 				{
-					question: "Proposez-vous des réductions ?",
+					question: "Do you offer discounts?",
 					answer:
-						"Oui ! Nos membres bénéficient de 10-20% de réduction sur les produits. Nous proposons également des promotions spéciales tout au long de l'année.",
+						"Yes! Our members get 10-20% off on products. We also offer special promotions throughout the year.",
 				},
 				{
-					question: "Puis-je obtenir un devis avant ma prestation ?",
+					question: "Can I get a quote before my service?",
 					answer:
-						"Bien sûr ! Contactez-nous avec les détails de ce que vous souhaitez et nous vous fournirons un devis détaillé.",
+						"Of course! Contact us with the details of what you would like and we will provide a detailed quote.",
 				},
 			],
 		},
 		{
-			category: "Hygiène & Sécurité",
+			category: "Hygiene & Safety",
 			questions: [
 				{
-					question: "Comment assurez-vous l'hygiène ?",
+					question: "How do you ensure hygiene?",
 					answer:
-						"Tout notre matériel est stérilisé après chaque utilisation. Nous suivons des protocoles sanitaires stricts et utilisons des produits jetables quand c'est possible.",
+						"All our equipment is sterilized after each use. We follow strict sanitary protocols and use disposable products when possible.",
 				},
 				{
-					question: "Que faire en cas de réaction allergique ?",
+					question: "What to do in case of an allergic reaction?",
 					answer:
-						"Si vous avez des allergies connues, informez-nous avant votre rendez-vous. En cas de réaction, contactez-nous immédiatement et consultez un médecin si nécessaire.",
+						"If you have known allergies, inform us before your appointment. In case of a reaction, contact us immediately and consult a doctor if necessary.",
 				},
 				{
-					question: "Les techniciennes sont-elles certifiées ?",
+					question: "Are the technicians certified?",
 					answer:
-						"Oui, toutes nos techniciennes sont formées, certifiées et expérimentées dans leur domaine. Elles suivent également des formations continues.",
+						"Yes, all our technicians are trained, certified and experienced in their field. They also undergo continuous training.",
 				},
 			],
 		},
@@ -146,10 +146,10 @@ export default function FAQ() {
 						FAQ
 					</Badge>
 					<h1 className="text-4xl sm:text-5xl text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-						Questions Fréquentes
+						Frequently Asked Questions
 					</h1>
 					<p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-						Trouvez rapidement les réponses à vos questions les plus courantes
+						Quickly find answers to your most common questions
 					</p>
 				</div>
 
@@ -189,10 +189,10 @@ export default function FAQ() {
 				{/* Still Have Questions */}
 				<Card className="bg-linear-to-br from-pink-500 via-purple-500 to-amber-500 border-0 shadow-2xl rounded-3xl p-6 sm:p-12 text-center text-white mt-12 sm:mt-16">
 					<h2 className="text-2xl  sm:text-3xl font-medium mb-3 sm:mb-4">
-						Vous avez d'autres questions ?
+						Still have questions?
 					</h2>
 					<p className="text-lg sm:text-xl text-pink-100 mb-6 sm:mb-8 max-w-2xl mx-auto">
-						Notre équipe est là pour vous aider. N'hésitez pas à nous contacter
+						Our team is here to help. Don't hesitate to contact us
 						!
 					</p>
 					<div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -201,7 +201,7 @@ export default function FAQ() {
 								size="lg"
 								className="w-full sm:w-auto bg-white text-pink-600 hover:bg-gray-100 rounded-full px-6 sm:px-8 py-5 sm:py-6"
 							>
-								Nous contacter
+								Contact Us
 							</Button>
 						</Link>
 						<a

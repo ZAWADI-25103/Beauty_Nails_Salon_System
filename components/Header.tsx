@@ -49,7 +49,7 @@ export default function Header() {
 									: "text-gray-700 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-500"
 							}`}
 						>
-							Accueil
+							Home
 						</Link>
 						<Link
 							href="/catalog"
@@ -59,7 +59,7 @@ export default function Header() {
 									: "text-gray-700 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-500"
 							}`}
 						>
-							Catalogue
+							Catalog
 						</Link>
 						{/* <Link
               href="/services"
@@ -76,7 +76,7 @@ export default function Header() {
 									: "text-gray-700 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-500"
 							}`}
 						>
-							Abonnements
+							Memberships
 						</Link>
 						<Link
 							href="/about"
@@ -86,7 +86,7 @@ export default function Header() {
 									: "text-gray-700 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-500"
 							}`}
 						>
-							À Propos
+							About
 						</Link>
 						<Link
 							href="/contact"
@@ -111,9 +111,9 @@ export default function Header() {
 										className="border-pink-200 text-pink-600 hover:bg-pink-50"
 									>
 										{user.role === "client"
-											? "Mon Espace"
+											? "My Dashboard"
 											: user.role === "worker"
-												? "Mes Tâches"
+												? "My Tasks"
 												: "Admin"}
 									</Button>
 								</Link>
@@ -123,7 +123,7 @@ export default function Header() {
 									className="text-gray-600 dark:text-gray-400 hover:text-pink-600"
 								>
 									<LogOut className="w-4 h-4 mr-2" />
-									Déconnexion
+									Logout
 								</Button>
 							</>
 						) : (
@@ -133,13 +133,13 @@ export default function Header() {
 										variant="ghost"
 										className="text-gray-700 dark:text-gray-300 hover:text-pink-200 "
 									>
-										Connexion
+										Login
 									</Button>
 								</Link>
 								<Link href="/appointments">
 									<Button className="bg-linear-to-br from-gray-900 via-pink-800 to-pink-600 hover:from-pink-600 hover:via-pink-800 hover:to-gray-900 text-white rounded-full px-6">
 										<Calendar className="w-4 h-4 mr-2" />
-										Réserver
+										Book Now
 									</Button>
 								</Link>
 							</>
@@ -165,7 +165,7 @@ export default function Header() {
 						<div className="flex flex-col space-y-4">
 							<div className="px-4 py-2 flex justify-between items-center">
 								<span className="text-lg text-gray-600 dark:text-gray-400">
-									Thème
+									Theme
 								</span>
 								<ModeToggle />
 							</div>
@@ -178,7 +178,7 @@ export default function Header() {
 										: "text-gray-700 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-gray-800"
 								}`}
 							>
-								Accueil
+								Home
 							</Link>
 							<Link
 								href="/catalog"
@@ -188,7 +188,7 @@ export default function Header() {
 										: "text-gray-700 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-gray-800"
 								}`}
 							>
-								Catalogue
+								Catalog
 							</Link>
 							{/* <Link
                 href="/services"
@@ -207,7 +207,7 @@ export default function Header() {
 										: "text-gray-700 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-gray-800"
 								}`}
 							>
-								Abonnements
+								Memberships
 							</Link>
 							<Link
 								href="/about"
@@ -218,7 +218,7 @@ export default function Header() {
 										: "text-gray-700 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-gray-800"
 								}`}
 							>
-								À Propos
+								About
 							</Link>
 							<Link
 								href="/contact"
@@ -242,9 +242,9 @@ export default function Header() {
 										className="w-full px-4 py-2 border-pink-200 text-pink-600"
 									>
 										{user.role === "client"
-											? "Mon Espace"
+											? "My Dashboard"
 											: user.role === "worker"
-												? "Mes Tâches"
+												? "My Tasks"
 												: "Admin"}
 									</Button>
 									<button
@@ -255,7 +255,7 @@ export default function Header() {
 										}}
 										className="px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-gray-800 rounded-lg"
 									>
-										Déconnexion
+										Logout
 									</button>
 								</>
 							) : (
@@ -269,7 +269,7 @@ export default function Header() {
 											variant="outline"
 											className="w-full text-gray-700 dark:text-gray-300 hover:text-pink-800 dark:hover:text-pink-700"
 										>
-											Connexion
+											Login
 										</Button>
 									</Link>
 									<Link
@@ -279,7 +279,7 @@ export default function Header() {
 									>
 										<Button className="w-full bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full">
 											<Calendar className="w-4 h-4 mr-2" />
-											Réserver
+											Book Now
 										</Button>
 									</Link>
 								</>

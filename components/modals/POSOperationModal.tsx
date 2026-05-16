@@ -189,7 +189,7 @@ export default function POSOperationModal({
 							className="w-full sm:w-auto"
 							onClick={addItem}
 						>
-							Ajouter article
+							Add Item
 						</Button>
 						<span className="text-lg text-gray-500 self-center">
 							{items.length} article(s) ajoutés
@@ -256,7 +256,7 @@ export default function POSOperationModal({
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
 							<div>
 								<Label htmlFor="pos-loyalty" className="text-lg">
-									Points fidélité (optionnel)
+									Loyalty points (optional)
 								</Label>
 								<Input
 									id="pos-loyalty"

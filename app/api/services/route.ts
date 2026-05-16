@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
 		return successResponse(
 			{
 				service,
-				message: "Service créé avec succès",
+				message: "Service created successfully",
 			},
 			201,
 		);

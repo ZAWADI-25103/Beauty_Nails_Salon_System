@@ -85,7 +85,7 @@ export function AddProductModal({ trigger }: AddProductModalProps) {
 			<DialogContent className="sm:max-w-2xl w-[95vw] max-h-[90vh] overflow-y-auto p-4 sm:p-6">
 				<DialogHeader>
 					<DialogTitle className="text-lg sm:text-xl font-bold text-gray-900">
-						Ajouter un Nouveau Produit
+						Add New Product
 					</DialogTitle>
 				</DialogHeader>
 

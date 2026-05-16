@@ -40,7 +40,7 @@ export async function GET(
 		});
 
 		if (!workerProfile) {
-			return errorResponse("Profil employé non trouvé", 404);
+			return errorResponse("Worker profile not found", 404);
 		}
 
 		// Note: The response shape should match the expected frontend interface
@@ -138,7 +138,7 @@ export async function PUT(
 		});
 
 		if (!workerProfile) {
-			return errorResponse("Profil employé non trouvé", 404);
+			return errorResponse("Worker profile not found", 404);
 		}
 
 		// Update the WorkerProfile
@@ -196,7 +196,7 @@ export async function PUT(
 
 		return successResponse({
 			...responseData,
-			message: "Profil mis à jour avec succès",
+			message: "Profile updated successfully",
 		});
 	} catch (error) {
 		console.error("Error updating worker profile:", error);
