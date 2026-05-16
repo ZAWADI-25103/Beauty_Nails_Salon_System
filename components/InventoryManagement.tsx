@@ -1,6 +1,7 @@
 "use client";
 import {
 	AlertCircle,
+	Loader2,
 	Mail,
 	Package,
 	Phone,
@@ -11,7 +12,9 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useInventory } from "@/lib/hooks/useInventory";
+import { useInventoryUsage } from "@/lib/hooks/useInventory";
 import type { InventoryItem } from "@/prisma/generated/client";
+import type { UsageReportItem } from "@/lib/api/inventory";
 import { InventoryCard } from "./InventoryCard";
 import CreateInventoryModal from "./modals/CreateInventoryModal";
 import {
@@ -100,18 +103,14 @@ export default function InventoryManagement() {
 		},
 	];
 
-	const usageReport = [
-		{ item: "Vernis Gel", used: 32, revenue: "480 000 CDF", trend: "up" },
-		{ item: "Extensions Cils", used: 24, revenue: "600 000 CDF", trend: "up" },
-		{
-			item: "Rajouts Cheveux",
-			used: 16,
-			revenue: "480 000 CDF",
-			trend: "stable",
-		},
-		{ item: "Fond de Teint", used: 20, revenue: "400 000 CDF", trend: "up" },
-		{ item: "Fils Tresses", used: 24, revenue: "192 000 CDF", trend: "stable" },
-	];
+	const usageParams = useMemo(() => ({ period: "month" as const }), []);
+	const { data: usageReportData, isLoading: usageLoading } =
+		useInventoryUsage(usageParams);
+
+	const usageReport: UsageReportItem[] = usageReportData?.items ?? [];
+	const totalItemsUsed = usageReportData?.totalItemsUsed ?? 0;
+	const usageChange = usageReportData?.usageChange ?? 0;
+	const totalCost = usageReportData?.totalCost ?? 0;
 
 	const categories = ["onglerie", "cils", "tresses", "maquillage"];
 
@@ -229,8 +228,9 @@ export default function InventoryManagement() {
 					>
 						Stock
 					</TabsTrigger>
-					{/* <TabsTrigger value="suppliers" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Fournisseurs</TabsTrigger> */}
-          {/* <TabsTrigger value="usage" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Rapport d'Utilisation</TabsTrigger> */}
+					<TabsTrigger value="usage" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">
+						Usage Report
+					</TabsTrigger>
 				</TabsList>
 
 				{/* Stock Tab */}
@@ -337,97 +337,128 @@ export default function InventoryManagement() {
 
 				{/* Usage Report Tab */}
 				<TabsContent value="usage">
-					<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
-						<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100 mb-8">
-							Rapport d'Utilisation - Novembre 2024
-						</h3>
-						<div className="space-y-4">
-							{usageReport.map((report, idx) => (
-								<div
-									key={idx}
-									className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all gap-4"
-								>
-									<div className="flex-1">
-										<p className="text-lg  text-gray-900 dark:text-gray-100 mb-1">
-											{report.item}
-										</p>
-										<p className="text-lg text-gray-600 dark:text-gray-400 flex items-center gap-2">
-											<Package className="w-4 h-4" />
-											<span className="font-semibold text-pink-500">
-												{report.used} unités
-											</span>{" "}
-											utilisées ce mois
-										</p>
-									</div>
-									<div className="flex items-center gap-4 sm:gap-8 w-full sm:w-auto justify-between sm:justify-end">
-										<div className="text-right">
-											<p className="text-xl  text-gray-900 dark:text-gray-100">
-												{report.revenue}
-											</p>
-											<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  tracking-tighter">
-												Revenus générés
-											</p>
-										</div>
-										<div className="flex items-center gap-3 bg-white dark:bg-gray-950 p-2 rounded-xl border border-gray-100 dark:border-gray-700">
-											<TrendingUp
-												className={`w-5 h-5 ${
-													report.trend === "up"
-														? "text-green-600"
-														: "text-gray-400"
-												}`}
-											/>
-											{report.trend === "up" ? (
-												<Badge className="bg-green-500 dark:bg-green-600 text-white border-0  px-3">
-													↑ +12%
-												</Badge>
-											) : (
-												<Badge className="bg-gray-400 dark:bg-gray-500 text-white border-0  px-3">
-													→ Stable
-												</Badge>
-											)}
-										</div>
-									</div>
-								</div>
-							))}
+					{usageLoading ? (
+						<div className="flex items-center justify-center py-20">
+							<Loader2 className="w-8 h-8 animate-spin text-pink-500" />
 						</div>
+					) : (
+						<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
+							<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100 mb-8">
+								Rapport d'Utilisation — Ce Mois
+							</h3>
+							{usageReport.length === 0 ? (
+								<div className="text-center py-12 text-gray-500 dark:text-gray-400">
+									<Package className="w-12 h-12 mx-auto mb-4 opacity-40" />										<p className="text-lg">
+											Aucune donnée d'utilisation enregistrée ce mois-ci.
+										</p>
+								</div>
+							) : (
+								<>
+									<div className="space-y-4">
+										{usageReport.map((report) => (
+											<div
+												key={report.itemId}
+												className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all gap-4"
+											>
+												<div className="flex-1">
+													<p className="text-lg  text-gray-900 dark:text-gray-100 mb-1">
+														{report.name}
+													</p>
+													<p className="text-lg text-gray-600 dark:text-gray-400 flex items-center gap-2">
+														<Package className="w-4 h-4" />
+														<span className="font-semibold text-pink-500">
+															{report.used} {report.unit}
+														</span>{" "}
+														utilisé(s) ce mois
+													</p>
+												</div>
+												<div className="flex items-center gap-4 sm:gap-8 w-full sm:w-auto justify-between sm:justify-end">
+													<div className="text-right">
+														<p className="text-xl  text-gray-900 dark:text-gray-100">
+															{report.totalCost.toLocaleString()} CDF
+														</p>
+														<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  tracking-tighter">
+															Valeur estimée
+														</p>
+													</div>
+													<div className="flex items-center gap-3 bg-white dark:bg-gray-950 p-2 rounded-xl border border-gray-100 dark:border-gray-700">
+														<TrendingUp
+															className={`w-5 h-5 ${
+																report.trend === "up"
+																	? "text-green-600"
+																	: report.trend === "down"
+																		? "text-red-500"
+																		: "text-gray-400"
+																}`}
+														/>
+														{report.trend === "up" ? (
+															<Badge className="bg-green-500 dark:bg-green-600 text-white border-0  px-3">
+																↑ +{Math.abs(report.trendPercentage)}%
+															</Badge>
+														) : report.trend === "down" ? (
+															<Badge className="bg-red-500 dark:bg-red-600 text-white border-0  px-3">
+																↓ {Math.abs(report.trendPercentage)}%
+															</Badge>
+														) : (
+															<Badge className="bg-gray-400 dark:bg-gray-500 text-white border-0  px-3">
+																→ Stable
+															</Badge>
+														)}
+													</div>
+												</div>
+											</div>
+										))}
+									</div>
 
-						<div className="mt-10 p-6 sm:p-10 bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 rounded-3xl border border-blue-100 dark:border-blue-900/30">
-							<h4 className="text-xl  text-gray-900 dark:text-gray-100 mb-8 flex items-center gap-2">
-								<TrendingUp className="w-6 h-6 text-blue-500" />
-								Statistiques Globales du Mois
-							</h4>
-							<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-								<div className="p-4 bg-white dark:bg-gray-950 rounded-2xl shadow-sm border border-blue-50 dark:border-blue-900/20">
-									<p className="text-3xl sm:text-4xl font-medium font-black text-gray-900 dark:text-gray-100">
-										116
-									</p>
-									<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-										Produits Utilisés
-									</p>
-								</div>
-								<div className="p-4 bg-white dark:bg-gray-950 rounded-2xl shadow-sm border border-blue-50 dark:border-blue-900/20">
-									<p className="text-2xl sm:text-3xl font-medium font-black text-gray-900 dark:text-gray-100">
-										2,15M CDF
-									</p>
-									<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-										Valeur Stock
-									</p>
-								</div>
-								<div className="p-4 bg-white dark:bg-gray-950 rounded-2xl shadow-sm border border-blue-50 dark:border-blue-900/20">
-									<p className="text-3xl sm:text-4xl font-medium font-black text-green-600 dark:text-green-400">
-										+8%
-									</p>
-									<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-										vs Mois Dernier
-									</p>
-								</div>
-							</div>
-						</div>
+									<div className="mt-10 p-6 sm:p-10 bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 rounded-3xl border border-blue-100 dark:border-blue-900/30">
+										<h4 className="text-xl  text-gray-900 dark:text-gray-100 mb-8 flex items-center gap-2">
+											<TrendingUp className="w-6 h-6 text-blue-500" />
+											Statistiques du Mois
+										</h4>
+										<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+											<div className="p-4 bg-white dark:bg-gray-950 rounded-2xl shadow-sm border border-blue-50 dark:border-blue-900/20">
+												<p className="text-3xl sm:text-4xl font-medium font-black text-gray-900 dark:text-gray-100">
+													{totalItemsUsed}
+												</p>
+												<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
+													Produits Utilisés
+												</p>
+											</div>
+											<div className="p-4 bg-white dark:bg-gray-950 rounded-2xl shadow-sm border border-blue-50 dark:border-blue-900/20">
+												<p className="text-2xl sm:text-3xl font-medium font-black text-gray-900 dark:text-gray-100">
+													{totalCost.toLocaleString()} CDF
+												</p>
+												<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
+													Coût Total
+												</p>
+											</div>
+											<div className="p-4 bg-white dark:bg-gray-950 rounded-2xl shadow-sm border border-blue-50 dark:border-blue-900/20">
+												<p
+													className={`text-3xl sm:text-4xl font-medium font-black ${
+														usageChange > 0
+															? "text-green-600 dark:text-green-400"
+															: usageChange < 0
+																? "text-red-500 dark:text-red-400"
+																: "text-gray-900 dark:text-gray-100"
+														}`}
+												>
+													{usageChange > 0 ? "+" : ""}
+													{usageChange}%
+												</p>
+												<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
+													vs Mois Précédent
+												</p>
+													</div>
+												</div>
+											</div>
 
-						<Button className="w-full mt-8 bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-7 text-lg  shadow-lg shadow-amber-500/20 transition-all">
-							Télécharger Rapport Complet (PDF)
-						</Button>
-					</Card>
+										{/* <Button className="w-full mt-8 bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-7 text-lg shadow-lg shadow-amber-500/20 transition-all">
+											Télécharger Rapport Complet (PDF)
+										</Button> */}
+									</>
+								)}
+							</Card>
+					)}
 				</TabsContent>
 			</Tabs>
 		</div>

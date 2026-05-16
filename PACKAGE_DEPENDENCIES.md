@@ -2,6 +2,107 @@
 
 Add these dependencies to your `package.json`:
 
+Continue in EXECUTION MODE.
+
+A new feature must now be implemented for the Inventory module.
+
+Goal:
+Create a complete PDF inventory usage report generation flow.
+
+Reference existing implementation patterns from:
+
+* reports/services/*
+* existing PDF generation utilities
+* existing report endpoints
+* current hooks architecture
+* existing API fetch patterns
+* existing download/export flows
+
+New feature requirements:
+
+1. Create new endpoint:
+   api/inventory/usage/generate-report/route.ts
+
+Purpose:
+Generate and return a downloadable PDF report for inventory usage history.
+
+The PDF should include:
+
+* report title
+* salon/business information if available
+* generated date
+* inventory usage entries
+* product names
+* quantities used
+* worker/staff names
+* usage reason/details
+* timestamps
+* totals/summary if existing patterns support it
+
+IMPORTANT:
+Reuse the SAME PDF libraries, utilities, styles, and formatting patterns already used elsewhere in the project (C:\Users\laure\Documents\Beauty Nails\Beauty_Nails_Salon_System\app\api\reports\revenue\route.ts). 
+
+DO NOT introduce a completely different PDF architecture.
+
+2. Create frontend API integration.
+
+Add:
+
+* API helper/service function like this one : lib\api\reports.ts
+* hook mutation/query integration like this one : lib\hooks\useReports.ts 
+
+Follow existing hook conventions and naming patterns used in:
+
+* useReports.ts
+* useInventory.ts
+* usePayments.ts
+* other export/download hooks
+
+3. Connect the button action in the components\InventoryManagement.tsx. 
+
+This button:
+
+<Button className="w-full mt-8 bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-7 text-lg shadow-lg shadow-amber-500/20 transition-all">
+  Download Complete report (PDF)
+</Button>
+
+must:
+
+* trigger report generation
+* call the new API endpoint
+* download/open the PDF correctly
+* show proper loading/error/success states if project patterns already support them
+
+4. Preserve architecture.
+
+DO NOT:
+
+* refactor unrelated code
+* change existing business logic
+* rewrite hooks architecture
+* introduce unnecessary abstractions
+* modify unrelated UI
+
+5. Follow existing project conventions exactly.
+
+Workflow:
+
+1. Inspect existing report/pdf generation patterns.
+2. Create the new route.ts implementation.
+3. Create/update the API function.
+4. Create/update the hook integration.
+5. Connect the button click handler.
+6. Output FULL updated files only.
+
+If helper utilities already exist:
+reuse them instead of recreating them.
+
+Do not generate plans.
+Do not generate TODOs.
+Do not explain architecture decisions.
+
+Only output production-ready code files continuously.
+
 ## Installation Commands
 
 ```bash

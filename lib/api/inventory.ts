@@ -48,10 +48,7 @@ export const inventoryApi = {
 	getUsageReport: async (params?: {
 		period?: string;
 		itemId?: string;
-	}): Promise<{
-		items: any[];
-		totalCost: number;
-	}> => {
+	}): Promise<UsageReportResponse> => {
 		const { data } = await axiosdb.get("/inventory/usage", { params });
 		return data;
 	},
@@ -120,4 +117,23 @@ export interface InventoryUsageResponse {
 		uniqueWorkers: number;
 		averagePerAppointment: number;
 	};
+}
+
+export interface UsageReportItem {
+	itemId: string;
+	name: string;
+	unit: string;
+	used: number;
+	totalCost: number;
+	trend: "up" | "down" | "stable";
+	trendPercentage: number;
+}
+
+export interface UsageReportResponse {
+	items: UsageReportItem[];
+	totalCost: number;
+	totalItemsUsed: number;
+	previousTotalUsed: number;
+	usageChange: number;
+	uniqueAppointments: number;
 }

@@ -7,14 +7,180 @@ import {
 } from "@/lib/api/helpers";
 import prisma from "@/lib/prisma";
 
-// GET: Fetch usage records for an inventory item
+function getDateRangeForPeriod(period: string): {
+	start: Date;
+	end: Date;
+	previousStart: Date;
+	previousEnd: Date;
+} {
+	const now = new Date();
+	let start: Date;
+	let end: Date = now;
+
+	switch (period) {
+		case "week": {
+			const dayOfWeek = now.getDay();
+			start = new Date(now);
+			start.setDate(now.getDate() - dayOfWeek);
+			start.setHours(0, 0, 0, 0);
+			break;
+		}
+		case "year": {
+			start = new Date(now.getFullYear(), 0, 1);
+			break;
+		}
+		case "month":
+		default: {
+			start = new Date(now.getFullYear(), now.getMonth(), 1);
+			break;
+		}
+	}
+
+	// Previous period: same duration before current period
+	const periodDuration = end.getTime() - start.getTime();
+	const previousEnd = new Date(start.getTime() - 1);
+	const previousStart = new Date(previousEnd.getTime() - periodDuration);
+
+	return { start, end, previousStart, previousEnd };
+}
+
+// GET: Fetch usage records or aggregated usage report
 export async function GET(request: NextRequest) {
 	try {
 		await requireRole(["admin", "worker"]);
 		const { searchParams } = new URL(request.url);
 		const itemId = searchParams.get("itemId");
 		const appointmentId = searchParams.get("appointmentId");
+		const period = searchParams.get("period");
 
+		// If a period is provided, return an aggregated usage report
+		if (period) {
+			const { start, end, previousStart, previousEnd } =
+				getDateRangeForPeriod(period);
+
+			// Current period usages
+			const currentUsages = await prisma.inventoryUsage.findMany({
+				where: {
+					createdAt: { gte: start, lte: end },
+					...(itemId ? { itemId } : {}),
+				},
+				include: { item: true },
+			});
+
+			// Previous period usages (for trend comparison)
+			const previousUsages = await prisma.inventoryUsage.findMany({
+				where: {
+					createdAt: { gte: previousStart, lte: previousEnd },
+					...(itemId ? { itemId } : {}),
+				},
+				include: { item: true },
+			});
+
+			// Aggregate current period by item
+			const itemUsageMap = new Map<
+				string,
+				{ name: string; unit: string; used: number; totalCost: number }
+			>();
+			for (const u of currentUsages) {
+				const existing = itemUsageMap.get(u.itemId);
+				if (existing) {
+					existing.used += u.quantity;
+					existing.totalCost += u.quantity * u.item.cost;
+				} else {
+					itemUsageMap.set(u.itemId, {
+						name: u.item.name,
+						unit: u.item.unit,
+						used: u.quantity,
+						totalCost: u.quantity * u.item.cost,
+					});
+				}
+			}
+
+			// Aggregate previous period by item for trend
+			const prevItemUsageMap = new Map<string, number>();
+			for (const u of previousUsages) {
+				const existing = prevItemUsageMap.get(u.itemId) ?? 0;
+				prevItemUsageMap.set(u.itemId, existing + u.quantity);
+			}
+
+			// Build report items with trend
+			let totalCost = 0;
+			const items: Array<{
+				itemId: string;
+				name: string;
+				unit: string;
+				used: number;
+				totalCost: number;
+				trend: "up" | "down" | "stable";
+				trendPercentage: number;
+			}> = [];
+
+			for (const [id, data] of itemUsageMap) {
+				totalCost += data.totalCost;
+				const prevUsed = prevItemUsageMap.get(id) ?? 0;
+				let trend: "up" | "down" | "stable" = "stable";
+				let trendPercentage = 0;
+				if (prevUsed > 0) {
+					trendPercentage = Math.round(
+						((data.used - prevUsed) / prevUsed) * 100,
+					);
+					trend =
+						trendPercentage > 5
+							? "up"
+							: trendPercentage < -5
+								? "down"
+								: "stable";
+				} else if (data.used > 0) {
+					trend = "up";
+					trendPercentage = 100;
+				}
+
+				items.push({
+					itemId: id,
+					name: data.name,
+					unit: data.unit,
+					used: data.used,
+					totalCost: data.totalCost,
+					trend,
+					trendPercentage,
+				});
+			}
+
+			// Sort by most used
+			items.sort((a, b) => b.used - a.used);
+
+			// Previous period totals for global stats
+			const prevTotalUsed = previousUsages.reduce(
+				(sum, u) => sum + u.quantity,
+				0,
+			);
+			const currentTotalUsed = currentUsages.reduce(
+				(sum, u) => sum + u.quantity,
+				0,
+			);
+			const usageChange =
+				prevTotalUsed > 0
+					? Math.round(
+							((currentTotalUsed - prevTotalUsed) / prevTotalUsed) *
+								100,
+						)
+					: currentTotalUsed > 0
+						? 100
+						: 0;
+
+			return successResponse({
+				items,
+				totalCost: Math.round(totalCost),
+				totalItemsUsed: currentTotalUsed,
+				previousTotalUsed: prevTotalUsed,
+				usageChange,
+				uniqueAppointments: new Set(
+					currentUsages.map((u) => u.usedFor).filter(Boolean),
+				).size,
+			});
+		}
+
+		// Legacy behavior: return raw usage records
 		const where: any = {};
 		if (itemId) where.itemId = itemId;
 		if (appointmentId) where.usedFor = appointmentId;

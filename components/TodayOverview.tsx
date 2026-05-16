@@ -183,7 +183,7 @@ export default function TodayOverview() {
 		completedAppointments: apiAppointments
 			? apiAppointments.filter((a: any) => a.status === "completed").length
 			: 0,
-		walkInAvailable: false,
+		walkInAvailable: apiAppointments.some((a: any) => a.status === "walk-in"),
 		currentOccupancy: Math.round(
 			(busyStaffs.length / Math.max(1, apiStaff.length)) * 100,
 		),
