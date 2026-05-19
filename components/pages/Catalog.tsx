@@ -33,7 +33,8 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
-// Add-on Modal Component
+// Replace your AddOnModal with this improved responsive version
+
 const AddOnModal = ({
 	service,
 	isOpen,
@@ -48,96 +49,129 @@ const AddOnModal = ({
 	if (!isOpen) return null;
 
 	return (
-		<div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm">
-			<div className="relative sm:max-w-3xl w-[95vw] bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
-				{/* Modal Header */}
-				<div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-					<div>
-						<h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+		<div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center">
+			<div className="relative w-full sm:max-w-3xl h-[95vh] sm:h-auto sm:max-h-[90vh] bg-white dark:bg-gray-950 sm:rounded-3xl overflow-hidden border border-pink-100 dark:border-pink-900 shadow-2xl animate-in slide-in-from-bottom-10 duration-300 flex flex-col">
+				{/* Sticky Header */}
+				<div className="sticky top-0 z-20 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-b border-pink-100 dark:border-pink-900 px-4 sm:px-6 py-4 flex items-center justify-between">
+					<div className="min-w-0">
+						<h3 className="text-lg sm:text-2xl font-semibold text-gray-900 dark:text-gray-100 truncate">
 							{service.name}
 						</h3>
-						<p className="text-lg text-gray-600 dark:text-gray-400">
-							{service.description}
-						</p>
-					</div>
-					<button
-						onClick={onClose}
-						className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-					>
-						<X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-					</button>
-				</div>
 
-				{/* Service Info */}
-				<div className="p-6 border-b border-gray-200 dark:border-gray-700">
-					<div className="flex justify-between items-center mb-4">
-						<div className="flex items-center gap-4 text-lg text-gray-600 dark:text-gray-400">
+						<div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-gray-500 dark:text-gray-400">
 							<span className="flex items-center gap-1">
 								<Clock className="w-4 h-4 text-blue-500" />
 								{service.duration} min
 							</span>
+
+							<Badge className="bg-green-500 dark:bg-green-600 text-white rounded-full px-3 py-1">
+								{service.price.toLocaleString()} CDF
+							</Badge>
 						</div>
-						<Badge className="bg-green-500 dark:bg-green-600 text-white">
-							{service.price.toLocaleString()} CDF
-						</Badge>
 					</div>
 
-					{service.imageUrl && (
-						<div className="mt-4 rounded-xl overflow-hidden">
-							<img
-								src={service.imageUrl}
-								alt={service.name}
-								className="w-full h-48 object-cover"
-							/>
-						</div>
-					)}
+					<button
+						onClick={onClose}
+						className="shrink-0 w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-pink-100 dark:hover:bg-pink-900/30 transition flex items-center justify-center"
+					>
+						<X className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+					</button>
 				</div>
 
-				{/* Add-ons Section */}
-				<div className="p-6">
-					<h4 className="text-lg  text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
-						<Plus className="w-5 h-5 text-pink-500" />
-						Available add-ons
-					</h4>
+				{/* Scrollable Content */}
+				<div className="flex-1 overflow-y-auto">
+					{/* Service Image */}
+					{service.imageUrl && (
+						<div className="p-4 sm:p-6">
+							<div className="overflow-hidden rounded-2xl border border-pink-100 dark:border-pink-900">
+								<img
+									src={service.imageUrl}
+									alt={service.name}
+									className="w-full h-56 sm:h-72 object-cover"
+								/>
+							</div>
+						</div>
+					)}
 
-					{isLoading ? (
-						<p className="text-gray-500 dark:text-gray-400">
-							Loading add-ons...
-						</p>
-					) : addOns.length === 0 ? (
-						<p className="text-gray-500 dark:text-gray-400">
-							No add-on available for this service
-						</p>
-					) : (
-						<div className="space-y-3">
-							{addOns.map((addOn) => (
-								<div
-									key={addOn.id}
-									className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700"
-								>
-									<div className="flex-1">
-										<div className="font-medium text-gray-900 dark:text-gray-100">
-											{addOn.name}
-										</div>
-										<div className="text-lg text-gray-600 dark:text-gray-400">
-											+{addOn.price.toLocaleString()} CDF • +{addOn.duration}{" "}
-											min
+					{/* Add-ons */}
+					<div className="px-4 sm:px-6 pb-6">
+						<div className="flex items-center gap-2 mb-5">
+							<div className="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
+								<Plus className="w-5 h-5 text-pink-500" />
+							</div>
+
+							<div>
+								<h4 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
+									Available Add-ons
+								</h4>
+
+								<p className="text-sm text-gray-500 dark:text-gray-400">
+									Enhance your beauty experience
+								</p>
+							</div>
+						</div>
+
+						{isLoading ? (
+							<div className="py-16 text-center">
+								<p className="text-gray-500 dark:text-gray-400">
+									Loading add-ons...
+								</p>
+							</div>
+						) : addOns.length === 0 ? (
+							<div className="py-16 text-center border border-dashed border-gray-200 dark:border-gray-800 rounded-2xl">
+								<p className="text-gray-500 dark:text-gray-400">
+									No add-ons available for this service
+								</p>
+							</div>
+						) : (
+							<div className="space-y-3">
+								{addOns.map((addOn) => (
+									<div
+										key={addOn.id}
+										className="group rounded-2xl border border-pink-100 dark:border-pink-900 bg-gray-50 dark:bg-gray-900/50 hover:border-pink-400 dark:hover:border-pink-500 transition-all p-4"
+									>
+										{/* Mobile Layout */}
+										<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+											<div className="min-w-0 flex-1">
+												<div className="flex items-start justify-between gap-3 sm:block">
+													<h5 className="text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100">
+														{addOn.name}
+													</h5>
+
+													<Badge className="sm:hidden bg-pink-500 text-white rounded-full">
+														+{addOn.price.toLocaleString()} CDF
+													</Badge>
+												</div>
+
+												<div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-gray-500 dark:text-gray-400">
+													<span className="flex items-center gap-1">
+														<DollarSign className="w-4 h-4 text-green-500" />
+														+{addOn.price.toLocaleString()} CDF
+													</span>
+
+													<span className="flex items-center gap-1">
+														<Clock className="w-4 h-4 text-blue-500" />
+														+{addOn.duration} min
+													</span>
+												</div>
+											</div>
+
+											<Badge className="hidden sm:flex bg-pink-500 dark:bg-pink-600 text-white rounded-full px-4 py-2 text-sm">
+												+{addOn.price.toLocaleString()} CDF
+											</Badge>
 										</div>
 									</div>
-									<Badge className="bg-pink-500 dark:bg-pink-600 text-white">
-										{addOn.price.toLocaleString()} CDF
-									</Badge>
-								</div>
-							))}
-						</div>
-					)}
+								))}
+							</div>
+						)}
+					</div>
 				</div>
 
-				{/* Action Buttons */}
-				<div className="p-6 border-t border-gray-200 dark:border-gray-700">
+				{/* Sticky Footer */}
+				<div className="sticky bottom-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-pink-100 dark:border-pink-900 p-4 sm:p-6">
 					<Link href={`/appointments?service=${service.id}`}>
-						<Button className="w-full bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full py-6  shadow-md">
-							Book
+						<Button className="w-full h-12 sm:h-14 text-base sm:text-lg bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-2xl shadow-lg shadow-pink-500/20">
+							Book Appointment
 						</Button>
 					</Link>
 				</div>
@@ -260,22 +294,23 @@ export default function CatalogPage() {
 
 						{/* Services Tab */}
 						<TabsContent value="services" className="space-y-8">
-							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+							<div className="space-y-10">
 								{Object.entries(servicesByCategory).map(
 									([category, categoryServices]) => (
-										<div key={category} className="space-y-4">
+										<div key={category} className="space-y-5">
 											<h3 className="text-2xl text-gray-900 dark:text-gray-100 flex items-center gap-2">
 												<Scissors className="w-5 h-5 text-pink-500" />
 												{category.charAt(0).toUpperCase() + category.slice(1)}
 											</h3>
+											<div className="flex flex-col gap-4">
 											{categoryServices.map((service) => (
 												<Card
 													key={service.id}
-													className="p-6 bg-white dark:bg-gray-900 border-b border-pink-100 dark:border-pink-900 shadow-xl rounded-3xl overflow-hidden relative transform hover:scale-[1.02] transition-transform cursor-pointer"
+													className="group p-4 sm:p-6 bg-white dark:bg-gray-900 border border-pink-100 dark:border-pink-900 hover:border-pink-400 dark:hover:border-pink-500 shadow-lg hover:shadow-2xl rounded-3xl overflow-hidden transition-all duration-300 cursor-pointer"
 													onClick={() => setSelectedService(service)}
 												>
 													{service.imageUrl && (
-														<div className="rounded-xl overflow-hidden mb-4 relative h-48 border-b border-pink-100 dark:border-pink-900">
+														<div className="rounded-2xl overflow-hidden mb-4 relative h-52 sm:h-64 border border-pink-100 dark:border-pink-900">
 															<img
 																src={
 																	service.imageUrl ||
@@ -319,6 +354,7 @@ export default function CatalogPage() {
 													</Button>
 												</Card>
 											))}
+											</div>
 										</div>
 									),
 								)}
