@@ -16,8 +16,9 @@ export default function Footer() {
 							height={50}
 							priority
 						/>
+
 						<p className="text-gray-400 mt-3 text-lg leading-relaxed">
-							La beauté commence au bout des doigts.
+							Beauty begins at your fingertips.
 						</p>
 					</div>
 
@@ -25,10 +26,12 @@ export default function Footer() {
 					<div className="space-y-3 text-lg text-gray-300 text-center">
 						<div className="flex items-center justify-center space-x-2">
 							<MapPin className="w-4 h-4 text-pink-400" />
-							<span>Q. Birere, Goma – RDC</span>
+							<span>Birere District, Goma – D.R. Congo</span>
 						</div>
+
 						<div className="flex items-center justify-center space-x-2">
 							<Phone className="w-4 h-4 text-pink-400" />
+
 							<a
 								href="tel:+243973887148"
 								className="hover:text-pink-300 transition"
@@ -36,8 +39,10 @@ export default function Footer() {
 								+243 973 887 148
 							</a>
 						</div>
+
 						<div className="flex items-center justify-center space-x-2">
 							<Mail className="w-4 h-4 text-pink-400" />
+
 							<a
 								href="mailto:contact@beautynails.cd"
 								className="hover:text-pink-300 transition"
@@ -55,6 +60,7 @@ export default function Footer() {
 						>
 							<Facebook className="w-4 h-4" />
 						</a>
+
 						<a
 							href="#"
 							className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-pink-500 transition"
@@ -66,7 +72,7 @@ export default function Footer() {
 
 				{/* Bottom */}
 				<div className="border-t border-white/10 mt-8 pt-5 text-center text-base text-gray-500">
-					© 2025 Beauty Nails Salon — Tous droits réservés.
+					© 2025 Beauty Nails Salon — All rights reserved.
 				</div>
 			</div>
 		</footer>
