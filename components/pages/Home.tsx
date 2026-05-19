@@ -300,7 +300,7 @@ export default function Home() {
 						<div className="w-full">
 							<Link href={reserveHref}>
 								<Button className="w-full bg-gradient-to-r from-gray-900 via-pink-700 to-pink-500 hover:scale-[1.02] transition-all duration-300 ease-out text-white rounded-2xl py-6 text-base font-medium shadow-xl">
-									Réserver
+									Book
 								</Button>
 							</Link>
 						</div>
