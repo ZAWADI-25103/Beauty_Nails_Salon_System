@@ -120,19 +120,19 @@ export default function Home() {
 		{
 			name: "Marie Kabila",
 			rating: 5,
-			text: "Un service exceptionnel ! L'équipe est professionnelle et accueillante. Mes ongles n'ont jamais été aussi beaux.",
+			text: "Exceptional service! The team is professional and welcoming. My nails have never looked so beautiful.",
 			date: "15 Oct 2025",
 		},
 		{
 			name: "Grace Lumière",
 			rating: 5,
-			text: "Les extensions de cils sont parfaites. Je recommande vivement Beauty Nails pour leur expertise.",
+			text: "The lash extensions are perfect. I highly recommend Beauty Nails for their expertise.",
 			date: "22 Oct 2025",
 		},
 		{
 			name: "Sophie Makala",
 			rating: 5,
-			text: "L'ambiance est luxueuse et relaxante. Le personnel est aux petits soins. Mon salon préféré !",
+			text: "The atmosphere is luxurious and relaxing. The staff is very attentive. My favorite salon!",
 			date: "28 Oct 2025",
 		},
 	];
@@ -153,56 +153,67 @@ export default function Home() {
 	return (
 		<div className="min-h-screen bg-background dark:bg-gray-950">
 			{/* Hero Section */}
-			<section className="relative min-h-[80vh] flex items-center overflow-hidden">
-				<div className="absolute inset-0">
-					<ImageWithFallback
-						src="https://images.unsplash.com/photo-1632643746039-de953cb0f260?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
-						alt="Beauty Nails Salon"
-						className="w-full h-full object-cover"
-					/>
-					<div className="absolute inset-0 bg-gradient-to-r from-pink-900/80 via-purple-900/70 to-amber-900/60" />
-				</div>
+<section className="relative min-h-[85vh] flex items-center overflow-hidden bg-zinc-950">
+	{/* Background Image & Optimized Overlays */}
+	<div className="absolute inset-0 select-none pointer-events-none">
+		<ImageWithFallback
+			src="https://images.unsplash.com/photo-1632643746039-de953cb0f260?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+			alt="Luxury Beauty Nails Salon interior"
+			className="w-full h-full object-cover scale-105 motion-safe:animate-[zoom_60s_ease-out_infinite]"
+			priority
+		/>
+		{/* Multilayered gradient for perfect text contrast and depth */}
+		<div className="absolute inset-0 bg-gradient-to-r from-neutral-950/90 via-purple-950/75 to-amber-950/50 mix-blend-multiply" />
+		<div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950/30" />
+	</div>
 
-				<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-					<div className="max-w-2xl">
-						<Badge className="mb-6 bg-pink-500/20 text-pink-100 border-pink-300/30 backdrop-blur-sm">
-							<Sparkles className="w-4 h-4 mr-2" />
-							Votre Destination Beauté Premium
-						</Badge>
+	{/* Content Container */}
+	<div className="relative max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 z-10 py-12 sm:py-20">
+		<div className="max-w-2xl lg:max-w-3xl presentation-layer">
+			
+			{/* Premium Badge */}
+			<Badge className="mb-6 inline-flex items-center gap-2 bg-pink-500/10 text-pink-200 border-pink-400/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium tracking-wide shadow-sm">
+				<Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+				Your Ultimate Premium Beauty Destination
+			</Badge>
 
-						<h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white mb-6 leading-tight">
-							La délicatesse <br />
-							<span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-200 to-amber-200">
-								au service de votre beauté.
-							</span>
-						</h1>
+			{/* Enhanced Typography */}
+			<h1 className="text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-white mb-6 leading-[1.1]">
+				Where elegance <br />
+				<span className="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-200 to-amber-200">
+					redefines your beauty.
+				</span>
+			</h1>
 
-						<p className="text-lg sm:text-xl text-pink-100 mb-8 leading-relaxed max-w-xl">
-							Spécialistes en ongles, cils, tresses et maquillage. Découvrez
-							l'excellence de nos services dans une ambiance luxueuse et
-							relaxante.
-						</p>
+			{/* Elevated Description Copy */}
+			<p className="text-base sm:text-lg text-zinc-200/90 mb-10 leading-relaxed max-w-xl font-light">
+				Indulge in masterfully crafted nails, lashes, braids, and makeup artistry. 
+				Experience bespoke luxury and flawless precision tailored entirely to you.
+			</p>
 
-						<div className="flex flex-col sm:flex-row gap-4">
-							<Link href="/appointments">
-								<Button className="bg-gradient-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full px-8 py-6 text-base font-medium transition-all duration-300 ease-out shadow-xl">
-									<Calendar className="w-5 h-5 mr-2" />
-									Prendre rendez-vous maintenant
-								</Button>
-							</Link>
+			{/* Refined Call-To-Actions with Hover Mechanics */}
+			<div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+				<Link href="/appointments" className="w-full sm:w-auto">
+					<Button className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full px-8 py-6 text-base font-semibold transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg shadow-pink-900/40">
+						<Calendar className="w-5 h-5 mr-2 stroke-[2.5]" />
+						Book Appointment Now
+					</Button>
+				</Link>
 
-							<Link href="/catalog">
-								<Button
-									variant="outline"
-									className="border-2 border-white text-white bg-white/10 rounded-full px-8 py-6 backdrop-blur-sm transition-all duration-300 ease-out"
-								>
-									Découvrir Nos Services, Produits & Offres
-								</Button>
-							</Link>
-						</div>
-					</div>
-				</div>
-			</section>
+				<Link href="/catalog" className="w-full sm:w-auto">
+					<Button
+						variant="outline"
+						className="w-full sm:w-auto border border-white/30 text-white bg-white/5 hover:bg-white/15 rounded-full px-8 py-6 text-base font-medium backdrop-blur-sm transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+					>
+						Explore Services & Offers
+					</Button>
+				</Link>
+			</div>
+			
+		</div>
+	</div>
+</section>
+
 
 			{/* Quick Appointment Bar */}
 			<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 sm:-mt-16 relative z-20">
