@@ -293,67 +293,94 @@ export default function CatalogPage() {
 						</TabsList>
 
 						{/* Services Tab */}
-						<TabsContent value="services" className="space-y-8">
-							<div className="space-y-10">
+						<TabsContent value="services" className="space-y-10">
+							<div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
 								{Object.entries(servicesByCategory).map(
 									([category, categoryServices]) => (
-										<div key={category} className="space-y-5">
-											<h3 className="text-2xl text-gray-900 dark:text-gray-100 flex items-center gap-2">
-												<Scissors className="w-5 h-5 text-pink-500" />
-												{category.charAt(0).toUpperCase() + category.slice(1)}
-											</h3>
-											<div className="flex flex-col gap-4">
-											{categoryServices.map((service) => (
-												<Card
-													key={service.id}
-													className="group p-4 sm:p-6 bg-white dark:bg-gray-900 border border-pink-100 dark:border-pink-900 hover:border-pink-400 dark:hover:border-pink-500 shadow-lg hover:shadow-2xl rounded-3xl overflow-hidden transition-all duration-300 cursor-pointer"
-													onClick={() => setSelectedService(service)}
-												>
-													{service.imageUrl && (
-														<div className="rounded-2xl overflow-hidden mb-4 relative h-52 sm:h-64 border border-pink-100 dark:border-pink-900">
-															<img
-																src={
-																	service.imageUrl ||
-																	"https://placehold.co/400x400"
-																}
-																alt={service.name}
-																className="w-full h-full object-cover transition-transform group-hover:scale-110"
-															/>
-														</div>
-													)}
-
-													<div className="flex justify-between items-start mb-4">
-														<div>
-															<h4 className="text-xl  text-gray-900 dark:text-gray-100">
-																{service.name}
-															</h4>
-															<p className="text-gray-600 dark:text-gray-400 text-lg line-clamp-2">
-																{service.description}
-															</p>
-														</div>
-														<Badge className="bg-green-500 dark:bg-green-600 text-white">
-															{service.price.toLocaleString()} CDF
-														</Badge>
-													</div>
-
-													<div className="flex items-center gap-4 text-lg text-gray-600 dark:text-gray-400 mb-4">
-														<span className="flex items-center gap-1">
-															<Clock className="w-4 h-4 text-blue-500" />
-															{service.duration} min
-														</span>
-													</div>
-
-													<Button
-														className="w-full bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full py-4  shadow-md"
-														onClick={(e) => {
-															e.stopPropagation();
-															setSelectedService(service);
-														}}
+										<div
+											key={category}
+											className="bg-white dark:bg-gray-950 border border-pink-100 dark:border-pink-900 rounded-3xl p-4 sm:p-6 shadow-lg"
+										>
+											{/* Category Header */}
+											<div className="flex items-center gap-3 mb-5">
+												<div className="w-10 h-10 rounded-2xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
+													<Scissors className="w-5 h-5 text-pink-500" />
+												</div>
+						
+												<div>
+													<h3 className="text-lg sm:text-2xl font-semibold text-gray-900 dark:text-gray-100">
+														{category.charAt(0).toUpperCase() + category.slice(1)}
+													</h3>
+						
+													<p className="text-sm text-gray-500 dark:text-gray-400">
+														{categoryServices.length} services available
+													</p>
+												</div>
+											</div>
+						
+											{/* Services List */}
+											<div className="space-y-3">
+												{categoryServices.map((service) => (
+													<Card
+														key={service.id}
+														onClick={() => setSelectedService(service)}
+														className="group cursor-pointer overflow-hidden border border-pink-100 dark:border-pink-900 hover:border-pink-400 dark:hover:border-pink-500 bg-white dark:bg-gray-900 rounded-2xl transition-all duration-300 hover:shadow-xl"
 													>
-														See details
-													</Button>
-												</Card>
-											))}
+														<div className="flex gap-3 sm:gap-4 p-3 sm:p-4">
+															{/* Small Responsive Image */}
+															<div className="relative shrink-0">
+																<div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-pink-100 dark:border-pink-900 bg-gray-100 dark:bg-gray-800">
+																	<img
+																		src={
+																			service.imageUrl ||
+																			"https://placehold.co/300x300"
+																		}
+																		alt={service.name}
+																		className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+																	/>
+																</div>
+						
+																<Badge className="absolute top-2 left-2 bg-green-500 dark:bg-green-600 text-white text-[10px] sm:text-xs px-2 py-0.5 rounded-full shadow-md">
+																	{service.price.toLocaleString()} CDF
+																</Badge>
+															</div>
+						
+															{/* Content */}
+															<div className="flex-1 min-w-0 flex flex-col justify-between">
+																<div>
+																	<div className="flex items-start justify-between gap-3">
+																		<h4 className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-gray-100 line-clamp-1">
+																			{service.name}
+																		</h4>
+																	</div>
+						
+																	<p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+																		{service.description}
+																	</p>
+																</div>
+						
+																{/* Bottom Row */}
+																<div className="mt-3 flex items-center justify-between gap-3">
+																	<div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+																		<Clock className="w-3.5 h-3.5 text-blue-500" />
+																		<span>{service.duration} min</span>
+																	</div>
+						
+																	<Button
+																		size="sm"
+																		className="h-8 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm rounded-full bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white shadow-md"
+																		onClick={(e) => {
+																			e.stopPropagation();
+																			setSelectedService(service);
+																		}}
+																	>
+																		Details
+																	</Button>
+																</div>
+															</div>
+														</div>
+													</Card>
+												))}
 											</div>
 										</div>
 									),
