@@ -31,26 +31,35 @@ export default function Contact() {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
+
 		if (!formData.name || !formData.email || !formData.message) {
-			toast.error("Veuillez remplir tous les champs obligatoires");
+			toast.error("Please fill in all required fields");
 			return;
 		}
-		toast.success("Message envoyé !", {
-			description: "Nous vous répondrons dans les plus brefs délais.",
+
+		toast.success("Message sent!", {
+			description: "We will get back to you as soon as possible.",
 		});
-		setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+
+		setFormData({
+			name: "",
+			email: "",
+			phone: "",
+			subject: "",
+			message: "",
+		});
 	};
 
 	const contactInfo = [
 		{
 			icon: <MapPin className="w-6 h-6 text-pink-500" />,
-			title: "Adresse",
-			content: "Avenue de la Paix, Gombe\nKinshasa, D.R. Congo",
+			title: "Address",
+			content: "Peace Avenue, Gombe\nKinshasa, D.R. Congo",
 			link: "https://maps.google.com",
 		},
 		{
 			icon: <Phone className="w-6 h-6 text-purple-500" />,
-			title: "Téléphone",
+			title: "Phone",
 			content: "+243 123 456 789\n+243 987 654 321",
 			link: "tel:+243123456789",
 		},
@@ -62,20 +71,20 @@ export default function Contact() {
 		},
 		{
 			icon: <Clock className="w-6 h-6 text-green-500" />,
-			title: "Horaires",
-			content: "Lun - Sam: 09:00 - 19:00\nDimanche: Sur rendez-vous",
+			title: "Business Hours",
+			content: "Mon - Sat: 09:00 AM - 07:00 PM\nSunday: By appointment",
 			link: null,
 		},
 	];
 
 	const hours = [
-		{ day: "Lundi", hours: "09:00 - 19:00" },
-		{ day: "Mardi", hours: "09:00 - 19:00" },
-		{ day: "Mercredi", hours: "09:00 - 19:00" },
-		{ day: "Jeudi", hours: "09:00 - 19:00" },
-		{ day: "Vendredi", hours: "09:00 - 19:00" },
-		{ day: "Samedi", hours: "09:00 - 19:00" },
-		{ day: "Dimanche", hours: "Sur rendez-vous" },
+		{ day: "Monday", hours: "09:00 AM - 07:00 PM" },
+		{ day: "Tuesday", hours: "09:00 AM - 07:00 PM" },
+		{ day: "Wednesday", hours: "09:00 AM - 07:00 PM" },
+		{ day: "Thursday", hours: "09:00 AM - 07:00 PM" },
+		{ day: "Friday", hours: "09:00 AM - 07:00 PM" },
+		{ day: "Saturday", hours: "09:00 AM - 07:00 PM" },
+		{ day: "Sunday", hours: "By appointment" },
 	];
 
 	return (
@@ -86,16 +95,18 @@ export default function Contact() {
 						<MessageCircle className="w-4 h-4 mr-2" />
 						Contact
 					</Badge>
+
 					<h1 className="text-5xl text-gray-900 dark:text-gray-100 mb-6">
 						Contact Us
 					</h1>
+
 					<p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-						Une question ? Une demande spéciale ? Nous sommes là pour vous
-						répondre
+						Have a question or a special request? We are here to help you.
 					</p>
 				</div>
 			</section>
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 ">
+
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
 				{/* Contact Info Cards */}
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16">
 					{contactInfo.map((info, index) => (
@@ -106,9 +117,11 @@ export default function Contact() {
 							<div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-linear-to-br from-pink-100 to-purple-100 dark:from-pink-900/30 dark:to-purple-900/30 flex items-center justify-center mx-auto mb-4 sm:mb-6">
 								{info.icon}
 							</div>
+
 							<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-2 sm:mb-3">
 								{info.title}
 							</h3>
+
 							{info.link ? (
 								<a
 									href={info.link}
@@ -136,15 +149,17 @@ export default function Contact() {
 					{/* Contact Form */}
 					<div className="lg:col-span-2">
 						<Card className="bg-white dark:bg-gray-950 border-b border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl p-6 sm:p-8">
-							<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">
-								Envoyez-nous un message
+							<h2 className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">
+								Send Us a Message
 							</h2>
+
 							<form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 									<div>
 										<Label htmlFor="name" className="dark:text-gray-200">
-											Nom complet *
+											Full Name *
 										</Label>
+
 										<Input
 											id="name"
 											name="name"
@@ -156,10 +171,12 @@ export default function Contact() {
 											required
 										/>
 									</div>
+
 									<div>
 										<Label htmlFor="email" className="dark:text-gray-200">
 											Email *
 										</Label>
+
 										<Input
 											id="email"
 											name="email"
@@ -176,8 +193,9 @@ export default function Contact() {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 									<div>
 										<Label htmlFor="phone" className="dark:text-gray-200">
-											Téléphone
+											Phone Number
 										</Label>
+
 										<Input
 											id="phone"
 											name="phone"
@@ -188,15 +206,17 @@ export default function Contact() {
 											className="mt-2 rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
 										/>
 									</div>
+
 									<div>
 										<Label htmlFor="subject" className="dark:text-gray-200">
-											Sujet
+											Subject
 										</Label>
+
 										<Input
 											id="subject"
 											name="subject"
 											type="text"
-											placeholder="Demande d'information"
+											placeholder="Information request"
 											value={formData.subject}
 											onChange={handleChange}
 											className="mt-2 rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
@@ -208,10 +228,11 @@ export default function Contact() {
 									<Label htmlFor="message" className="dark:text-gray-200">
 										Message *
 									</Label>
+
 									<Textarea
 										id="message"
 										name="message"
-										placeholder="Votre message..."
+										placeholder="Your message..."
 										value={formData.message}
 										onChange={handleChange}
 										className="mt-2 rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 min-h-[150px] text-lg"
@@ -223,7 +244,7 @@ export default function Contact() {
 									type="submit"
 									className="w-full bg-linear-to-r from-pink-500 to-amber-400 hover:from-pink-600 hover:to-amber-500 text-white rounded-full py-5 sm:py-6 text-lg sm:text-base"
 								>
-									Envoyer le message
+									Send Message
 								</Button>
 							</form>
 						</Card>
@@ -237,19 +258,22 @@ export default function Contact() {
 								<div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-green-500 dark:bg-green-600 flex items-center justify-center mx-auto mb-4 sm:mb-6">
 									<MessageCircle className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
 								</div>
+
 								<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-2 sm:mb-3">
 									WhatsApp
 								</h3>
+
 								<p className="text-lg sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-									Contact Us directement pour une réponse rapide
+									Contact us directly for a quick response.
 								</p>
+
 								<a
 									href="https://wa.me/243123456789"
 									target="_blank"
 									rel="noopener noreferrer"
 								>
 									<Button className="w-full bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white rounded-full py-4 sm:py-5 text-base sm:text-lg">
-										Ouvrir WhatsApp
+										Open WhatsApp
 									</Button>
 								</a>
 							</div>
@@ -259,8 +283,9 @@ export default function Contact() {
 						<Card className="bg-white dark:bg-gray-950 border-b border-pink-100 dark:border-pink-900 shadow-lg p-6 sm:p-8 rounded-2xl">
 							<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
 								<Clock className="w-5 h-5 mr-2 text-pink-500" />
-								Horaires d'ouverture
+								Opening Hours
 							</h3>
+
 							<div className="space-y-3 sm:space-y-4">
 								{hours.map((item, index) => (
 									<div
@@ -270,8 +295,13 @@ export default function Contact() {
 										<span className="text-gray-700 dark:text-gray-300">
 											{item.day}
 										</span>
+
 										<span
-											className={`${item.hours === "Sur rendez-vous" ? "text-amber-600 dark:text-amber-400" : "text-gray-900 dark:text-gray-100"}`}
+											className={`${
+												item.hours === "By appointment"
+													? "text-amber-600 dark:text-amber-400"
+													: "text-gray-900 dark:text-gray-100"
+											}`}
 										>
 											{item.hours}
 										</span>
@@ -283,8 +313,9 @@ export default function Contact() {
 						{/* Social Media Card */}
 						<Card className="bg-linear-to-br from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 border-b border-pink-100 dark:border-pink-900 shadow-lg p-6 sm:p-8 rounded-2xl">
 							<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-								Suivez-nous
+								Follow Us
 							</h3>
+
 							<div className="space-y-2 sm:space-y-3">
 								<a
 									href="https://facebook.com"
@@ -292,35 +323,40 @@ export default function Contact() {
 									rel="noopener noreferrer"
 									className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-xl hover:shadow-md dark:hover:shadow-gray-900/50 transition-shadow"
 								>
-									<div className="w-10 h-10 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center text-white text-base sm:text-lg ">
+									<div className="w-10 h-10 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center text-white text-base sm:text-lg">
 										F
 									</div>
+
 									<span className="text-lg sm:text-base text-gray-700 dark:text-gray-300">
 										Facebook
 									</span>
 								</a>
+
 								<a
 									href="https://instagram.com"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-xl hover:shadow-md dark:hover:shadow-gray-900/50 transition-shadow"
 								>
-									<div className="w-10 h-10 rounded-full bg-linear-to-br from-purple-500 to-pink-500 dark:from-purple-600 dark:to-pink-600 flex items-center justify-center text-white text-base sm:text-lg ">
+									<div className="w-10 h-10 rounded-full bg-linear-to-br from-purple-500 to-pink-500 dark:from-purple-600 dark:to-pink-600 flex items-center justify-center text-white text-base sm:text-lg">
 										I
 									</div>
+
 									<span className="text-lg sm:text-base text-gray-700 dark:text-gray-300">
 										Instagram
 									</span>
 								</a>
+
 								<a
 									href="https://twitter.com"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-xl hover:shadow-md dark:hover:shadow-gray-900/50 transition-shadow"
 								>
-									<div className="w-10 h-10 rounded-full bg-blue-400 dark:bg-blue-500 flex items-center justify-center text-white text-base sm:text-lg ">
+									<div className="w-10 h-10 rounded-full bg-blue-400 dark:bg-blue-500 flex items-center justify-center text-white text-base sm:text-lg">
 										T
 									</div>
+
 									<span className="text-lg sm:text-base text-gray-700 dark:text-gray-300">
 										Twitter
 									</span>
@@ -334,11 +370,12 @@ export default function Contact() {
 				<div className="mt-16 sm:mt-24">
 					<Card className="bg-white dark:bg-gray-950 border-b border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl overflow-hidden">
 						<div className="p-6 sm:p-8 bg-linear-to-r from-pink-50 to-purple-50 dark:from-gray-800 dark:to-gray-800">
-							<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 flex items-center">
+							<h2 className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100 flex items-center">
 								<MapPin className="w-6 h-6 mr-2 sm:mr-3 text-pink-500" />
-								Notre Emplacement
+								Our Location
 							</h2>
 						</div>
+
 						<div className="aspect-video bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
 							<div className="text-center text-gray-500 dark:text-gray-400 px-4">
 								<iframe
@@ -352,16 +389,6 @@ export default function Contact() {
 									}}
 									loading="lazy"
 								></iframe>
-								{/* <MapPin className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 text-gray-400 dark:text-gray-600" />
-                <p className="text-lg sm:text-base mb-1">Q. Birere, Comune de Goma, Goma – RDC</p>
-                <a
-                  href="https://maps.google.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 text-base sm:text-lg inline-block transition-colors"
-                >
-                  Voir sur Google Maps →
-                </a> */}
 							</div>
 						</div>
 					</Card>
