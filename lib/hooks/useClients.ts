@@ -8,6 +8,9 @@ export function useClients(params?: ClientsParams) {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ["clients", params],
 		queryFn: () => clientsApi.getClients(params),
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	// Update notes
@@ -100,6 +103,9 @@ export function useClient(id: string) {
 		queryKey: ["clients", id],
 		queryFn: () => clientsApi.getClient(id),
 		enabled: !!id,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 }
 
@@ -115,5 +121,8 @@ export function useClientAppointments(
 		queryKey: ["clients", id, "appointments", params],
 		queryFn: () => clientsApi.getClientAppointments(id, params),
 		enabled: !!id,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 }

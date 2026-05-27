@@ -16,6 +16,9 @@ export function useCampaigns() {
 	} = useQuery({
 		queryKey: ["campaigns"],
 		queryFn: marketingApi.getCampaigns,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	const createMutation = useMutation({
@@ -97,6 +100,9 @@ export function useDiscounts() {
 	} = useQuery({
 		queryKey: ["discounts"],
 		queryFn: marketingApi.getDiscounts,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	const createMutation = useMutation({

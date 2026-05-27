@@ -13,6 +13,9 @@ export function useMedias(params?: { active?: boolean }) {
 	} = useQuery({
 		queryKey: ["medias", params],
 		queryFn: () => mediasApi.getMedias(params),
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	// Create package
@@ -45,5 +48,8 @@ export function useMedia(id: string) {
 		queryKey: ["medias", id],
 		queryFn: () => mediasApi.getMedia(id),
 		enabled: !!id,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 }

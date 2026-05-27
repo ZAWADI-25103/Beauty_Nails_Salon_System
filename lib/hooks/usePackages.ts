@@ -18,6 +18,8 @@ export function usePackages(params?: { active?: boolean }) {
 		queryKey: ["packages", params],
 		queryFn: () => packagesApi.getPackages(params),
 		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	// Create package
@@ -103,6 +105,9 @@ export function usePackage(id: string) {
 		queryKey: ["packages", id],
 		queryFn: () => packagesApi.getPackage(id),
 		enabled: !!id,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 }
 

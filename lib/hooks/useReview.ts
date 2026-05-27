@@ -9,6 +9,9 @@ export function useReviews(params?: { clientId?: string; workerId?: string }) {
 	const { data, isLoading } = useQuery({
 		queryKey: ["reviews"],
 		queryFn: () => reviewsApi.getReviews(),
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	// Create service

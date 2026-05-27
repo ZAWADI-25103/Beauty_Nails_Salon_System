@@ -28,6 +28,9 @@ export function useServices(params?: {
 	} = useQuery({
 		queryKey: ["services", params],
 		queryFn: () => servicesApi.getServices(params),
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	// Create service

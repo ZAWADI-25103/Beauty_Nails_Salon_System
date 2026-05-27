@@ -6,6 +6,9 @@ export function useLoyaltyTransactions() {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ["transactions"],
 		queryFn: loyaltyApi.getAllLoyaltyPoints,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 	return {
 		isLoading,
@@ -18,10 +21,16 @@ export function useLoyalty() {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ["loyalty", "points"],
 		queryFn: loyaltyApi.getLoyaltyPoints,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 	const { data: allPoints } = useQuery({
 		queryKey: ["loyalty", "points"],
 		queryFn: loyaltyApi.getLoyaltyPoints,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	const applyLoyaltyBonusMutation = useMutation({

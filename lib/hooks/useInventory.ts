@@ -17,6 +17,9 @@ export function useInventory(params?: { category?: string; status?: string }) {
 	} = useQuery({
 		queryKey: ["inventory", params],
 		queryFn: () => inventoryApi.getInventory(params),
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	// Update stock
@@ -86,6 +89,9 @@ export function useInventoryItem(id: string) {
 		queryKey: ["inventory", id],
 		queryFn: () => inventoryApi.getInventoryItem(id),
 		enabled: !!id,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 }
 

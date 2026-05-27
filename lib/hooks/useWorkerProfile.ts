@@ -6,6 +6,9 @@ export function useWorkerProfiles() {
 	const { data: workers, isLoading } = useQuery({
 		queryKey: ["workers-profile"],
 		queryFn: () => workerApiFunctions.getWorkerProfiles(),
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	return {
@@ -25,6 +28,9 @@ export function useWorkerProfile(userId: string) {
 		queryKey: ["worker-profile", userId],
 		queryFn: () => workerApiFunctions.getWorkerProfile(userId),
 		enabled: !!userId,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	const updateProfileMutation = useMutation({

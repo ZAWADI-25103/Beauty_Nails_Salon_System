@@ -16,6 +16,9 @@ export function useMemberships() {
 	} = useQuery({
 		queryKey: ["memberships"],
 		queryFn: membershipsApi.getMemberships,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	const createMutation = useMutation({
@@ -81,6 +84,9 @@ export function useMembershipPurchases(params?: {
 	} = useQuery({
 		queryKey: ["membership-purchases", params],
 		queryFn: () => membershipsApi.getPurchases(params),
+		staleTime: 5 * 60 * 1000,
+		gcTime: 1000 * 60 * 10,
+		structuralSharing: true,
 	});
 
 	const purchaseMutation = useMutation({
