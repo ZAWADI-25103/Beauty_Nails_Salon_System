@@ -311,8 +311,15 @@ export default function CatalogPage() {
 
 												<div>
 													<h3 className="text-lg sm:text-2xl font-semibold text-gray-900 dark:text-gray-100">
-														{category.charAt(0).toUpperCase() +
-															category.slice(1)}
+														{category === "onglerie"
+															? "Nails"
+															: category === "cils"
+																? "Lashes"
+																: category === "tresses"
+																	? "Braids"
+																	: category === "maquillage"
+																		? "Makeup"
+																		: category}
 													</h3>
 
 													<p className="text-sm text-gray-500 dark:text-gray-400">
