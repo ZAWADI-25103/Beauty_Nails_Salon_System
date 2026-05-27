@@ -59,21 +59,28 @@ export default function Login() {
 	const handleOtp = async () => {
 		setIsVerifyingOtp(true);
 
-		const res = await handleOTPVerification(
-			otp.trim(),
-			expectedOtp,
-			redirectUrl,
-			email,
-			password,
-		);
-		if (res?.success) {
-			setTimeout(() => {
-				router.push(res.redirectUrl);
-				setOtpDialogOpen(false);
+		try {
+			const res = await handleOTPVerification(
+				otp.trim(),
+				expectedOtp,
+				redirectUrl,
+				email,
+				password,
+			);
+			if (res?.success) {
+				setTimeout(() => {
+					router.push(res.redirectUrl);
+					setOtpDialogOpen(false);
+					setIsVerifyingOtp(false);
+				}, 5000);
+			} else {
+				toast.error(res.error);
 				setIsVerifyingOtp(false);
-			}, 9000);
-		} else {
-			toast.error(res.error);
+			}
+		} catch (error) {
+			toast.error(
+				"An error occurred during OTP verification. Please try again.",
+			);
 			setIsVerifyingOtp(false);
 		}
 	};
