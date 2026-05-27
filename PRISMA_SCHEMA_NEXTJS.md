@@ -244,7 +244,7 @@ model Service {
 enum Category {
   onglerie // Nails
   cils     // Lashes
-  tresses  // Tresses/Braids
+  tresses  // Braids/Braids
   maquillage // Makeup
 }
 
@@ -1094,7 +1094,7 @@ async function main() {
     }),
     prisma.service.create({
       data: {
-        name: 'Pose de Cils',
+        name: 'Pose de Eyelashes',
         category: 'cils',
         price: 35000,
         duration: 90,

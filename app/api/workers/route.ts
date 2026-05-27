@@ -14,11 +14,8 @@ export async function GET(req: NextRequest) {
 		const workers = await prisma.workerProfile.findMany({
 			select: {
 				id: true,
-				user: {
-					select: {
-						name: true,
-					},
-				},
+				specialties: true,
+				user: true,
 			},
 			orderBy: {
 				createdAt: "asc",

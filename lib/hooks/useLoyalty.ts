@@ -19,6 +19,10 @@ export function useLoyalty() {
 		queryKey: ["loyalty", "points"],
 		queryFn: loyaltyApi.getLoyaltyPoints,
 	});
+	const { data: allPoints } = useQuery({
+		queryKey: ["loyalty", "points"],
+		queryFn: loyaltyApi.getLoyaltyPoints,
+	});
 
 	const applyLoyaltyBonusMutation = useMutation({
 		mutationFn: loyaltyApi.applyLoyaltyBonus,
@@ -49,6 +53,7 @@ export function useLoyalty() {
 
 	return {
 		points: data?.points || 0,
+		allPoints: allPoints?.points || 0,
 		tier: data?.tier,
 		transactions: data?.transactions || [],
 		isLoading,

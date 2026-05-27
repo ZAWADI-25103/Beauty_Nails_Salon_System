@@ -17,7 +17,7 @@ export default function Services() {
 	const categoryMetadata = [
 		{
 			id: "onglerie",
-			name: "Onglerie",
+			name: "Nail Care",
 			icon: "💅",
 			description:
 				"Sublimez vos ongles avec nos experts en manucure, pédicure et nail art. Utilisant uniquement des produits premium, nous créons des designs personnalisés adaptés à votre style et à chaque occasion. Parfait pour les cérémonies, soirées ou simplement pour vous sentir confiante au quotidien.",
@@ -27,7 +27,7 @@ export default function Services() {
 		},
 		{
 			id: "cils",
-			name: "Cils",
+			name: "Eyelashes",
 			icon: "👁️",
 			description:
 				"Transformez votre regard avec nos extensions et traitements de cils professionnels. Des cils naturels et discrets aux volumes spectaculaires en technique russe, nos techniciennes certifiées créent l'effet parfait pour votre visage. Durée de 6 à 8 semaines pour un résultat impeccable.",
@@ -37,7 +37,7 @@ export default function Services() {
 		},
 		{
 			id: "tresses",
-			name: "Tresses",
+			name: "Braids",
 			icon: "💇‍♀️",
 			description:
 				"Explorez notre gamme de coiffures protectrices et stylées : box braids, tissages, crochet braids et locks. Nos coiffeuses expertes utilisent des extensions de qualité premium et créent des designs uniques. Chaque tresse est réalisée avec soin pour votre confort et votre beauté.",
@@ -47,7 +47,7 @@ export default function Services() {
 		},
 		{
 			id: "maquillage",
-			name: "Maquillage",
+			name: "Makeup",
 			icon: "💄",
 			description:
 				"Sublimez votre beauté naturelle avec nos services de maquillage professionnel. Du maquillage quotidien subtil aux looks glamour de soirée ou de mariage, nos artistes maquillistes certifiées créent un look qui vous ressemble. Produits haut de gamme et techniques éprouvées garantis.",
@@ -185,8 +185,7 @@ export default function Services() {
 									) : (
 										<div className="text-center py-12">
 											<p className="text-gray-500 dark:text-gray-400 text-lg">
-												No services available at the moment in this
-												category.
+												No services available at the moment in this category.
 											</p>
 										</div>
 									)}

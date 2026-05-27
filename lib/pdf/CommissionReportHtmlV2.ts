@@ -51,11 +51,11 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
 
 	return `
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rapport de Commission • ${worker.name}</title>
+  <title>Commission Report • ${worker.name}</title>
   <style>
     :root {
       --pink-50: #fdf2f8;
@@ -74,22 +74,7 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
       --gray-900: #111827;
       --success-bg: #ecfdf5;
       --success-text: #065f46;
-      --warning-bg: #fffbeb;
-      --warning-text: #92400e;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: #fff;
-      color: var(--gray-900);
-      line-height: 1.6;
-      padding: 20px;
-    }
-    .container {
-      max-width: 850px;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 20px;
+        Beauty Nails Management System
       box-shadow: 0 20px 60px rgba(236, 72, 153, 0.12);
       overflow: hidden;
       border: 1px solid var(--pink-100);
@@ -453,7 +438,7 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
     <!-- Header -->
     <div class="header">
       <h1>Beauty Nails Management System</h1>
-      <div class="subtitle">Rapport de Commission • ${periodLabel}</div>
+      <div class="subtitle">Commission Report • ${periodLabel}</div>
       <div class="period-badge">
         ${periodRange.from} → ${periodRange.to}
       </div>
@@ -462,13 +447,13 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
     <div class="content">
       <!-- Worker Info -->
       <div class="section">
-        <div class="section-title">Travailleur</div>
+          <div class="section-title">Worker</div>
         <div class="worker-card">
-          <div class="worker-name">${worker.name}</div>
-          <div class="worker-position">${worker.position}</div>
+            <div class="worker-name">${worker.name}</div>
+            <div class="worker-position">${worker.position}</div>
           <div class="config-grid">
             <div class="config-item">
-              <div class="config-label">Taux</div>
+              <div class="config-label">Rate</div>
               <div class="config-value">${aggregated.commissionRate}%</div>
             </div>
             <div class="config-item">
@@ -476,7 +461,7 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
               <div class="config-value">${worker.commissionType || "percentage"}</div>
             </div>
             <div class="config-item">
-              <div class="config-label">Fréquence</div>
+              <div class="config-label">Frequency</div>
               <div class="config-value">${worker.commissionFrequency || "daily"}</div>
             </div>
             ${
@@ -494,10 +479,10 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
 
       <!-- Payment Window Info -->
       <div class="payment-window">
-        <div class="payment-window-title">📅 Fenêtre de Paiement</div>
+        <div class="payment-window-title">📅 Payment Window</div>
         <div class="payment-window-dates">
-          <div>Début: <span>${periodRange.from}</span></div>
-          <div>Fin: <span>${periodRange.to}</span></div>
+          <div>Start: <span>${periodRange.from}</span></div>
+          <div>End: <span>${periodRange.to}</span></div>
         </div>
         ${
 					nextPaymentDate
@@ -511,49 +496,49 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
 
       <!-- Financial Summary -->
       <div class="section">
-        <div class="section-title">Résumé Financier Agrégé</div>
+        <div class="section-title">Aggregated Financial Summary</div>
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-label">Revenu Total</div>
+            <div class="stat-label">Total Revenue</div>
             <div class="stat-value">${aggregated.totalRevenue.toLocaleString()} CDF</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">RDV Complétés</div>
+            <div class="stat-label">Completed Appointments</div>
             <div class="stat-value">${aggregated.appointmentsCount}</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">En Attente</div>
+            <div class="stat-label">Pending</div>
             <div class="stat-value small" style="color:var(--warning-text)">${aggregated.pendingCount}</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Payés</div>
+            <div class="stat-label">Paid</div>
             <div class="stat-value small" style="color:var(--success-text)">${aggregated.paidCount}</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Coûts Opérationnels</div>
+            <div class="stat-label">Operational Costs</div>
             <div class="stat-value small">${aggregated.operationalCost.toLocaleString()} CDF</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Matériel</div>
+            <div class="stat-label">Materials</div>
             <div class="stat-value small">${aggregated.materialsCost.toLocaleString()} CDF</div>
           </div>
         </div>
         <div class="stat-card" style="margin-top:14px;">
-          <div class="stat-label">Gains Entreprise (Net)</div>
+          <div class="stat-label">Business Earnings (Net)</div>
           <div class="stat-value">${aggregated.businessEarnings.toLocaleString()} CDF</div>
         </div>
       </div>
 
       <!-- Commission Amount -->
       <div class="commission-highlight">
-        <div class="commission-label">Montant Total de Commission</div>
-        <div class="commission-value">${aggregated.commissionAmount.toLocaleString()} CDF</div>
+        <div class="commission-label">Total Commission Amount</div>
+          <div class="commission-value">${aggregated.commissionAmount.toLocaleString()} CDF</div>
         <div class="commission-sub">
-          ${
-						aggregated.pendingCount > 0
-							? `Dont ${aggregated.pendingCount} commission(s) en attente de paiement`
-							: "✓ Toutes les commissions de cette période ont été payées"
-					}
+            ${
+              aggregated.pendingCount > 0
+                ? `${aggregated.pendingCount} commission(s) pending payment`
+                : "✓ All commissions for this period have been paid"
+            }
         </div>
       </div>
 
@@ -562,10 +547,10 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
         <span class="icon">${hasPending ? "⏳" : "✅"}</span>
         <div>
           ${
-						hasPending
-							? `<strong>Commission en attente :</strong> Ce document sert de preuve officielle que les ${aggregated.appointmentsCount} prestations listées ci-dessous ont été complétées par ${worker.name}. Le paiement de ${aggregated.commissionAmount.toLocaleString()} CDF sera effectué selon la fréquence configurée (${worker.commissionFrequency || "daily"}).`
-							: `<strong>Paiement confirmé :</strong> Toutes les commissions de cette période ont été réglées avec succès par l'administration.`
-					}
+            hasPending
+              ? `<strong>Commission pending:</strong> This document serves as official proof that the ${aggregated.appointmentsCount} services listed below were completed by ${worker.name}. The payment of ${aggregated.commissionAmount.toLocaleString()} CDF will be processed according to the configured frequency (${worker.commissionFrequency || "daily"}).`
+              : `<strong>Payment confirmed:</strong> All commissions for this period have been successfully paid by administration.`
+          }
         </div>
       </div>
 
@@ -574,10 +559,10 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
 				hasPending
 					? `
       <div class="proof-section">
-        <div class="proof-header">Preuve d'Achèvement des Prestations</div>
+        <div class="proof-header">Proof of Service Completion</div>
         <p class="proof-description">
-          Les services suivants ont été complétés par <strong>${worker.name}</strong> durant la période indiquée. 
-          Ce document peut être utilisé comme justificatif en attendant le traitement du paiement.
+          The following services were completed by <strong>${worker.name}</strong> during the specified period. 
+          This document can be used as proof while payment is being processed.
         </p>
         <table class="appointments-table">
           <thead>
@@ -593,16 +578,16 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
             ${appointments
 							.map(
 								(apt) => `
-              <tr>
-                <td><span class="service-name">${apt.serviceName}</span></td>
-                <td>${apt.clientName}</td>
-                <td>${new Date(apt.date).toLocaleDateString("fr-FR", {
-									day: "2-digit",
-									month: "short",
-									year: "numeric",
-								})}</td>
-                <td>${apt.time}</td>
-                <td class="amount">${apt.price.toLocaleString()} CDF</td>
+                <tr>
+                	<td><span class="service-name">${apt.serviceName}</span></td>
+                	<td>${apt.clientName}</td>
+                	<td>${new Date(apt.date).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}</td>
+                	<td>${apt.time}</td>
+                	<td class="amount">${apt.price.toLocaleString()} CDF</td>
               </tr>
             `,
 							)

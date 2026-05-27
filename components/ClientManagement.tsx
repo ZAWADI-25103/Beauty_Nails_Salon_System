@@ -1,4 +1,6 @@
+// components/ClientManagement.tsx
 "use client";
+
 import {
 	Award,
 	Bell,
@@ -61,6 +63,7 @@ export default function ClientManagement() {
 			.map((e) => (e.clientId === id ? e.points : 0))
 			.reduce((sum, p) => sum + p, 0);
 	};
+
 	// Use API data first, fallback to mock only when showMock is true
 	const clients =
 		user?.role === "worker" && apiClients.length > 0
@@ -153,29 +156,28 @@ export default function ClientManagement() {
 	return (
 		<div className="space-y-6">
 			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-				<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 ">
-					Gestion des Clientes
+				<h2 className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
+					Client Management
 				</h2>
 				<div className="flex items-center gap-2 w-full sm:w-auto">
-					{/* <CreateClientModal triggerLabel="+ Nouvelle Cliente" /> */}
 					<ClientModalTrigger>
 						<Button
 							variant="outline"
-							className="w-full rounded-full py-6 justify-start px-6  dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]"
+							className="w-full rounded-full py-6 justify-start px-6 dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]"
 						>
 							<Users className="w-5 h-5 mr-3 text-purple-500" />
-							Nouvelle Cliente
+							New Client
 						</Button>
 					</ClientModalTrigger>
-					{/* <Button variant="ghost" size="sm" className="dark:text-gray-400 dark:hover:text-gray-200">Importer</Button> */}
 				</div>
 			</div>
+
 			{/* Search Bar */}
 			<Card className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 				<div className="relative">
 					<Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
 					<Input
-						placeholder="Rechercher par nom ou téléphone..."
+						placeholder="Search by name or phone..."
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						className="pl-12 py-5 sm:py-6 rounded-xl border-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500 text-lg sm:text-base"
@@ -186,9 +188,9 @@ export default function ClientManagement() {
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 				{/* Clients List */}
 				<Card className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 lg:col-span-1">
-					<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-6  flex items-center gap-2">
+					<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-2">
 						<Users className="w-5 h-5 text-pink-500" />
-						Liste des Clientes
+						Client List
 					</h3>
 					<div className="space-y-3 max-h-125 sm:max-h-150 overflow-y-auto pr-2 custom-scrollbar">
 						{filteredClients.map((client) => (
@@ -202,7 +204,7 @@ export default function ClientManagement() {
 								}`}
 							>
 								<div className="flex items-center justify-between mb-2">
-									<p className="text-gray-900 dark:text-gray-100  text-lg sm:text-base">
+									<p className="text-gray-900 dark:text-gray-100 text-lg sm:text-base">
 										{client.name}
 									</p>
 									<Badge
@@ -223,9 +225,9 @@ export default function ClientManagement() {
 								</p>
 								<div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
 									<p className="text-[10px] sm:text-base text-gray-500 dark:text-gray-500 font-medium">
-										{client.totalAppointments} visites
+										{client.totalAppointments} visits
 									</p>
-									<p className="text-[10px] sm:text-base text-pink-600 dark:text-pink-400 ">
+									<p className="text-[10px] sm:text-base text-pink-600 dark:text-pink-400">
 										{client.loyaltyPoints} pts
 									</p>
 								</div>
@@ -237,8 +239,8 @@ export default function ClientManagement() {
 				{/* Client Profile */}
 				{selectedClient ? (
 					<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 lg:col-span-2">
-						<p className=" dark:text-pink-400 text-xs sm:text-xs">
-							{"glisser  <--- | --->"}
+						<p className="dark:text-pink-400 text-xs sm:text-xs">
+							{"swipe <--- | --->"}
 						</p>
 						<Tabs defaultValue="profile" className="space-y-8">
 							<TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
@@ -246,13 +248,13 @@ export default function ClientManagement() {
 									value="profile"
 									className="rounded-lg px-4 sm:px-8 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-pink-400 shadow-sm"
 								>
-									Profil
+									Profile
 								</TabsTrigger>
 								<TabsTrigger
 									value="history"
 									className="rounded-lg px-4 sm:px-8 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-pink-400 shadow-sm"
 								>
-									Historique
+									History
 								</TabsTrigger>
 								<TabsTrigger
 									value="notifications"
@@ -280,12 +282,12 @@ export default function ClientManagement() {
 												{selectedClient.name}
 											</h3>
 											<div className="flex flex-wrap gap-3">
-												<Badge className="bg-amber-500 dark:bg-amber-600 text-white border-0 px-3 py-1  shadow-md shadow-amber-500/10">
+												<Badge className="bg-amber-500 dark:bg-amber-600 text-white border-0 px-3 py-1 shadow-md shadow-amber-500/10">
 													{selectedClient.membershipStatus}
 												</Badge>
 												<Badge
 													variant="outline"
-													className="border-pink-200 dark:border-pink-900 text-pink-600 dark:text-pink-400 px-3 py-1 "
+													className="border-pink-200 dark:border-pink-900 text-pink-600 dark:text-pink-400 px-3 py-1"
 												>
 													ID: #{selectedClient.id.slice(0, 4)}
 												</Badge>
@@ -293,20 +295,12 @@ export default function ClientManagement() {
 										</div>
 									</div>
 									<div className="grid grid-cols-2 gap-3 w-full sm:w-auto">
-										{/* <AppointmentModal
-                      client={selectedClient}
-                      trigger={
-                        <Button className="bg-linear-to-r from-pink-500 to-purple-500 text-white rounded-full py-5 px-6 shadow-lg shadow-pink-500/20  transition-all text-lg">
-                          <Plus className="w-5 h-5 mr-3" />
-                          Prendre RDV
-                        </Button>
-                      } /> */}
 										<ClientModalTrigger client={selectedClient} edit={true}>
 											<Button
 												variant="outline"
-												className="rounded-full py-5 px-6 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300  transition-all text-lg"
+												className="rounded-full py-5 px-6 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all text-lg"
 											>
-												Edit
+												Edit Client
 											</Button>
 										</ClientModalTrigger>
 									</div>
@@ -315,7 +309,7 @@ export default function ClientManagement() {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 									<div className="space-y-4">
 										<h4 className="text-base sm:text-lg font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">
-											Informations de Contact
+											Contact Information
 										</h4>
 										<div className="space-y-3 p-5 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-gray-700">
 											<p className="flex items-center gap-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
@@ -334,28 +328,28 @@ export default function ClientManagement() {
 												<div className="w-8 h-8 rounded-lg bg-white dark:bg-gray-800 flex items-center justify-center shadow-sm">
 													<Cake className="w-4 h-4 text-pink-500" />
 												</div>
-												{selectedClient.birthday}
+												{selectedClient.birthday || "Not provided"}
 											</p>
 											<p className="flex items-center gap-3 text-lg sm:text-base text-gray-700 dark:text-gray-300">
 												<div className="w-8 h-8 rounded-lg bg-white dark:bg-gray-800 flex items-center justify-center shadow-sm">
 													<MapPin className="w-4 h-4 text-pink-500" />
 												</div>
-												{selectedClient.address}
+												{selectedClient.address || "No address"}
 											</p>
 										</div>
 									</div>
 
 									<div className="space-y-4">
 										<h4 className="text-base sm:text-lg font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">
-											Notes & Préférences
+											Notes & Preferences
 										</h4>
 										<div className="space-y-4">
 											<div className="p-5 bg-purple-50 dark:bg-purple-900/10 rounded-2xl border border-purple-100 dark:border-purple-900/30">
 												<p className="text-[10px] font-black text-purple-600 dark:text-purple-400 uppercase tracking-widest mb-2">
-													Préférences
+													Preferences
 												</p>
 												<p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-													{selectedClient.preferences}
+													{selectedClient.preferences || "No preferences added"}
 												</p>
 											</div>
 											<div className="p-5 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30">
@@ -363,10 +357,7 @@ export default function ClientManagement() {
 													Allergies / Notes
 												</p>
 												<p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-													{selectedClient.allergies}
-												</p>
-												<p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-normal">
-													{selectedClient.notes}
+													{selectedClient.allergies || "No allergies noted"}
 												</p>
 											</div>
 										</div>
@@ -380,8 +371,8 @@ export default function ClientManagement() {
 										<p className="text-2xl font-black text-gray-900 dark:text-gray-100">
 											{selectedClient.totalAppointments}
 										</p>
-										<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  tracking-tight">
-											Visites
+										<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-tight">
+											Visits
 										</p>
 									</div>
 									<div className="bg-linear-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-800/50 p-5 rounded-3xl border border-green-100 dark:border-green-900/30 text-center shadow-sm">
@@ -389,8 +380,8 @@ export default function ClientManagement() {
 										<p className="text-lg font-black text-gray-900 dark:text-gray-100 truncate px-1">
 											{selectedClient.totalSpent}
 										</p>
-										<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  tracking-tight">
-											Dépensé en CDF
+										<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-tight">
+											Spent (CDF)
 										</p>
 									</div>
 									<div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-800/50 p-5 rounded-3xl border border-purple-100 dark:border-purple-900/30 text-center shadow-sm">
@@ -398,7 +389,7 @@ export default function ClientManagement() {
 										<p className="text-2xl font-black text-gray-900 dark:text-gray-100">
 											{selectedClient.loyaltyPoints}
 										</p>
-										<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  tracking-tight">
+										<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-tight">
 											Points
 										</p>
 									</div>
@@ -407,8 +398,8 @@ export default function ClientManagement() {
 										<p className="text-2xl font-black text-gray-900 dark:text-gray-100">
 											{selectedClient.referrals}
 										</p>
-										<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  tracking-tight">
-											Parrains
+										<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-tight">
+											Referrals
 										</p>
 									</div>
 								</div>
@@ -425,14 +416,14 @@ export default function ClientManagement() {
 
 								<div className="p-6 bg-pink-50 dark:bg-pink-900/10 rounded-3xl border border-pink-100 dark:border-pink-900/30">
 									<h4 className="text-base font-black text-pink-600 dark:text-pink-400 uppercase tracking-[0.2em] mb-4">
-										Services Favoris
+										Favorite Services
 									</h4>
 									<div className="flex flex-wrap gap-2">
 										{selectedClient.favoriteServices.map(
 											(service: any, idx: any) => (
 												<Badge
 													key={idx}
-													className="bg-white dark:bg-gray-800 hover:bg-pink-50 dark:hover:bg-pink-900/20 text-pink-600 dark:text-pink-400 border border-pink-100 dark:border-pink-900/50 py-2 px-4 text-base  rounded-full transition-all"
+													className="bg-white dark:bg-gray-800 hover:bg-pink-50 dark:hover:bg-pink-900/20 text-pink-600 dark:text-pink-400 border border-pink-100 dark:border-pink-900/50 py-2 px-4 text-base rounded-full transition-all"
 												>
 													{service}
 												</Badge>
@@ -445,16 +436,16 @@ export default function ClientManagement() {
 							{/* History Tab */}
 							<TabsContent value="history" className="space-y-6">
 								<div className="flex items-center justify-between">
-									<h4 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  flex items-center gap-2">
+									<h4 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 flex items-center gap-2">
 										<Calendar className="w-5 h-5 text-pink-500" />
 										Visit History
 									</h4>
 									<Button
 										variant="outline"
 										size="sm"
-										className="rounded-full text-base  dark:border-gray-700"
+										className="rounded-full text-base dark:border-gray-700"
 									>
-										Exporter PDF
+										Export PDF
 									</Button>
 								</div>
 								<div className="space-y-3">
@@ -468,11 +459,11 @@ export default function ClientManagement() {
 													<Calendar className="w-5 h-5 text-pink-500" />
 												</div>
 												<div>
-													<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100 ">
-														{apt.service.name}
+													<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100">
+														{apt?.service?.name}
 													</p>
 													<p className="text-base text-gray-500 dark:text-gray-400">
-														avec {apt.worker.name} • {apt.date}
+														with {apt?.worker?.name} • {apt?.date}
 													</p>
 												</div>
 											</div>
@@ -480,7 +471,7 @@ export default function ClientManagement() {
 												<p className="text-lg sm:text-base font-black text-gray-900 dark:text-gray-100">
 													{apt.price}
 												</p>
-												<Badge className="bg-green-500/10 text-green-600 dark:text-green-400 border-green-200 dark:border-green-900/30 px-3 py-1 text-[10px] ">
+												<Badge className="bg-green-500/10 text-green-600 dark:text-green-400 border-green-200 dark:border-green-900/30 px-3 py-1 text-[10px]">
 													{apt.status}
 												</Badge>
 											</div>
@@ -492,9 +483,9 @@ export default function ClientManagement() {
 							{/* Notifications Tab */}
 							<TabsContent value="notifications" className="space-y-6">
 								<div className="flex items-center justify-between">
-									<h4 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  flex items-center gap-2">
+									<h4 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 flex items-center gap-2">
 										<Bell className="w-5 h-5 text-pink-500" />
-										Communications Envoyées
+										Sent Communications
 									</h4>
 								</div>
 								<div className="space-y-3">
@@ -514,7 +505,7 @@ export default function ClientManagement() {
 													)}
 												</div>
 												<div>
-													<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100 ">
+													<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100">
 														{notif.message}
 													</p>
 													<p className="text-base text-gray-500 dark:text-gray-400">
@@ -524,9 +515,9 @@ export default function ClientManagement() {
 											</div>
 											<Badge
 												variant="outline"
-												className="border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-3 py-1 text-[10px] "
+												className="border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 px-3 py-1 text-[10px]"
 											>
-												{notif.isRead ? "Lu" : "Non Lu"}
+												{notif.isRead ? "Read" : "Unread"}
 											</Badge>
 										</div>
 									))}
@@ -552,9 +543,9 @@ export default function ClientManagement() {
 										</div>
 										<Button
 											size="sm"
-											className="w-full bg-green-600 hover:bg-green-700 text-white rounded-full  shadow-md shadow-green-500/20"
+											className="w-full bg-green-600 hover:bg-green-700 text-white rounded-full shadow-md shadow-green-500/20"
 										>
-											Recharger Compte
+											Recharge Account
 										</Button>
 									</Card>
 									<Card className="p-6 bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 border-purple-100 dark:border-pink-900/30 rounded-3xl">
@@ -573,9 +564,9 @@ export default function ClientManagement() {
 										</div>
 										<Button
 											size="sm"
-											className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-full  shadow-md shadow-purple-500/20"
+											className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-md shadow-purple-500/20"
 										>
-											Gérer Carte
+											Manage Gift Card
 										</Button>
 									</Card>
 								</div>
@@ -588,7 +579,7 @@ export default function ClientManagement() {
 									<div className="space-y-4">
 										<div className="flex justify-between items-center">
 											<span className="text-base text-gray-700 dark:text-gray-400 font-medium">
-												Points actuels
+												Current Points
 											</span>
 											<span className="text-2xl text-gray-900 dark:text-gray-100 font-black">
 												{selectedClient.loyaltyPoints} pts
@@ -603,8 +594,8 @@ export default function ClientManagement() {
 											/>
 										</div>
 										<p className="text-base text-gray-600 dark:text-gray-400 italic">
-											Encore {500 - selectedClient.loyaltyPoints} points pour
-											your next reward!
+											{500 - selectedClient.loyaltyPoints} more points until
+											next reward!
 										</p>
 									</div>
 								</Card>
@@ -617,11 +608,11 @@ export default function ClientManagement() {
 							<div className="w-20 h-20 bg-gray-50 dark:bg-gray-800 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner">
 								<Search className="w-10 h-10 text-gray-300 dark:text-gray-700" />
 							</div>
-							<p className="text-xl  text-gray-900 dark:text-gray-100 mb-2">
-								Sélectionnez une cliente
+							<p className="text-xl text-gray-900 dark:text-gray-100 mb-2">
+								Select a client
 							</p>
 							<p className="text-lg text-gray-500 dark:text-gray-400">
-								Consultez son profil complet, son historique et ses finances
+								View their full profile, history, and finances
 							</p>
 						</div>
 					</Card>

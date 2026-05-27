@@ -205,9 +205,7 @@ export default function WorkerDashboardV2() {
 	const handleConfigureCommission = () => {
 		// Navigate to profile edit or open a specific modal
 		// Example: router.push('/profile/edit') or setOpenCommissionSetupModal(true)
-		toast.info(
-			"Please configure your commission settings in your profile.",
-		);
+		toast.info("Please configure your commission settings in your profile.");
 	};
 
 	// Get notifications
@@ -412,6 +410,8 @@ export default function WorkerDashboardV2() {
 	const printCommission = (commission: any) => {
 		const params = new URLSearchParams({
 			commissionId: commission.id,
+			from,
+			to,
 		});
 
 		window.open(`/api/commissions/receipt?${params.toString()}`, "_blank");
@@ -434,6 +434,7 @@ export default function WorkerDashboardV2() {
 			from, // optional: override calculated period
 			to, // optional: override calculated period
 			pdf: "true", // to get PDF directly
+			workerId: user?.workerProfile?.id || "", // Pass worker ID to filter data
 		});
 
 		window.open(
@@ -755,7 +756,7 @@ export default function WorkerDashboardV2() {
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
 							<CalendarIcon className="w-4 h-4 mr-2" />
-							Mon Calendrier
+							Calendar
 						</TabsTrigger>
 						<TabsTrigger
 							value="performance"
@@ -772,7 +773,7 @@ export default function WorkerDashboardV2() {
 							<div className="flex flex-col md:flex-row items-center justify-start md:justify-between mb-6 gap-4">
 								<h2 className="text-2xl   mb-6 flex items-center">
 									<Clock className="w-6 h-6 mr-2 text-purple-500" />
-									Planning d'aujourd'hui
+									Today's Planning
 								</h2>
 							</div>
 
@@ -999,7 +1000,8 @@ export default function WorkerDashboardV2() {
 						{completedAppointments.length > 0 && (
 							<Card className="p-6">
 								<h3 className="text-lg font-semibold mb-4 flex items-center text-green-800 dark:text-green-400">
-									<AlertCircle className="w-5 h-5 mr-2" />														Completed Services ({completedAppointments.length})
+									<AlertCircle className="w-5 h-5 mr-2" /> Completed Services (
+									{completedAppointments.length})
 								</h3>
 								<div className="space-y-3">
 									{completedAppointments.map((appointment) => (
@@ -1037,7 +1039,8 @@ export default function WorkerDashboardV2() {
 						{cancelledAppointments.length > 0 && (
 							<Card className="p-6">
 								<h3 className="text-lg font-semibold mb-4 flex items-center text-red-800 dark:text-red-400">
-									<AlertCircle className="w-5 h-5 mr-2" />											Cancelled Services ({cancelledAppointments.length})
+									<AlertCircle className="w-5 h-5 mr-2" /> Cancelled Services (
+									{cancelledAppointments.length})
 								</h3>
 								<div className="space-y-3">
 									{cancelledAppointments.slice(0, 5).map((appointment) => (
@@ -1106,10 +1109,10 @@ export default function WorkerDashboardV2() {
 													Configuration Required
 												</h3>
 												<p className="text-lg text-amber-700 dark:text-amber-300 mt-1">
-									Your commission settings (frequency, payment
-									day, threshold) are not yet configured. This
-									information is needed to calculate your
-									payments and generate reports.
+													Your commission settings (frequency, payment day,
+													threshold) are not yet configured. This information is
+													needed to calculate your payments and generate
+													reports.
 												</p>
 
 												<StaffModal
@@ -1160,8 +1163,8 @@ export default function WorkerDashboardV2() {
 												CDF
 											</p>
 											<p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
-											Your commission varies based on the rate per
-										service. Rate is {workerProfile?.commissionRate || 0}%
+												Your commission varies based on the rate per service.
+												Rate is {workerProfile?.commissionRate || 0}%
 											</p>
 										</Card>
 
@@ -1220,19 +1223,17 @@ export default function WorkerDashboardV2() {
 
 								{/* Current Period Summary */}
 								<Card className="p-6">
-									<h3 className="text-lg font-semibold mb-4">
-										Current Period
-									</h3>
+									<h3 className="text-lg font-semibold mb-4">Current Period</h3>
 
 									<Card className="p-4 border border-pink-100 dark:border-pink-900 shadow-sm space-y-4">
 										<div className="flex flex-wrap items-center justify-between gap-4">
 											<div>
 												<p className="font-medium text-gray-900 dark:text-gray-100">
 													{freqComm === "daily"
-										? "Today"
-										: freqComm === "weekly"
-											? "This Week"
-											: "This Month"}
+														? "Today"
+														: freqComm === "weekly"
+															? "This Week"
+															: "This Month"}
 												</p>
 
 												<p className="text-lg text-gray-600 dark:text-gray-400">
@@ -1338,9 +1339,9 @@ export default function WorkerDashboardV2() {
 												size="sm"
 												onClick={() => {
 													if (workerCommissions.length === 0) {
-													toast("No commissions available", {
-														description:
-															"There are no commissions to print at the moment.",
+														toast("No commissions available", {
+															description:
+																"There are no commissions to print at the moment.",
 														});
 													} else printCommissionReportV2();
 												}}
@@ -1362,17 +1363,16 @@ export default function WorkerDashboardV2() {
 												No commissions recorded yet.
 											</p>
 											<p className="text-lg text-gray-500 mt-1">
-										Commissions will appear here after you
-										complete appointments.
+												Commissions will appear here after you complete
+												appointments.
 											</p>
 										</Card>
 									) : (
 										<div className="space-y-3 max-h-96 overflow-y-auto pr-2">
 											<p>
-										Your commission history after each completed
-									service. Click the download button to
-									get a detailed report for each commission
-									period.
+												Your commission history after each completed service.
+												Click the download button to get a detailed report for
+												each commission period.
 											</p>
 											{[...workerCommissions]
 												.sort(
@@ -1391,9 +1391,9 @@ export default function WorkerDashboardV2() {
 																	{commission.period}
 																</p>
 																<p className="text-lg text-gray-600 dark:text-gray-400">
-															{commission.appointmentsCount} apps •{" "}
-															{commission.totalRevenue.toLocaleString()} CDF
-															generated
+																	{commission.appointmentsCount} apps •{" "}
+																	{commission.totalRevenue.toLocaleString()} CDF
+																	generated
 																</p>
 															</div>
 															<div className="flex items-center gap-4">
@@ -1420,10 +1420,10 @@ export default function WorkerDashboardV2() {
 																		}
 																	>
 																		{commission.status === "paid"
-															? "Paid"
-															: commission.status === "pending"
-																? "Pending"
-																: "Unknown"}
+																			? "Paid"
+																			: commission.status === "pending"
+																				? "Pending"
+																				: "Unknown"}
 																	</Badge>
 																	<Button
 																		variant="ghost"
@@ -1453,23 +1453,25 @@ export default function WorkerDashboardV2() {
 			<Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
 				<DialogContent className="max-w-2xl">
 					<DialogHeader>
-						<DialogTitle>						Appointment Details</DialogTitle>
+						<DialogTitle> Appointment Details</DialogTitle>
 					</DialogHeader>
 
 					{selectedAppointment && (
 						<div className="space-y-4">
 							<div className="grid grid-cols-2 gap-4">
-								<div>								<label className="text-lg text-gray-600 dark:text-gray-300">
-									Client
-								</label>
-								<p className="font-semibold">
-									{selectedAppointment.client?.user?.name}
-								</p>
-							</div>
-							<div>
-								<label className="text-lg text-gray-600 dark:text-gray-300">
-									Service
-								</label>
+								<div>
+									{" "}
+									<label className="text-lg text-gray-600 dark:text-gray-300">
+										Client
+									</label>
+									<p className="font-semibold">
+										{selectedAppointment.client?.user?.name}
+									</p>
+								</div>
+								<div>
+									<label className="text-lg text-gray-600 dark:text-gray-300">
+										Service
+									</label>
 									<p className="font-semibold">
 										{selectedAppointment.service?.name}
 									</p>

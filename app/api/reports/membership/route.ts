@@ -98,8 +98,8 @@ export async function GET(request: NextRequest) {
 						"VIP Members:": tierCounts["VIP"]?.toString() || "0",
 						"Premium Members:": tierCounts["Premium"]?.toString() || "0",
 						"Regular Members:": tierCounts["Regular"]?.toString() || "0",
-						"Member Revenue:": `CDF ${memberRevenue.toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-						"Non-Member Revenue:": `CDF ${nonMemberRevenue.toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+						"Member Revenue:": `CDF ${memberRevenue.toFixed(2)}`,
+						"Non-Member Revenue:": `CDF ${nonMemberRevenue.toFixed(2)}`,
 					},
 				},
 				{

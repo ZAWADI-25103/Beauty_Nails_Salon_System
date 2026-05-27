@@ -2,6 +2,7 @@ import axiosdb from "../axios";
 export interface RevenueReport {
 	totalRevenue: number;
 	salesCount: number;
+	transactionsCount?: number;
 	monthlyBreakdown: Record<string, number>;
 	period: {
 		from: string;

@@ -73,10 +73,30 @@ export async function GET(request: NextRequest) {
 			},
 		});
 
-		const totalRevenue = sales.reduce(
-			(sum, sale) => sum + Number(sale.total),
-			0,
-		);
+		const totalRevenue = sales.reduce((sum, sale) => sum + Number(sale.total), 0);
+
+		// Commission summary (business, employee, materials, operations)
+		const commissionAgg = await prisma.commission.aggregate({
+			_sum: {
+				commissionAmount: true,
+				businessEarnings: true,
+				materialsCost: true,
+				operationalCost: true,
+			},
+			where: {
+				createdAt: {
+					gte: from,
+					lte: to,
+				},
+			},
+		});
+
+		const commissionsSummary = {
+			totalCommissionAmount: Number(commissionAgg._sum.commissionAmount || 0),
+			businessEarnings: Number(commissionAgg._sum.businessEarnings || 0),
+			materialsCost: Number(commissionAgg._sum.materialsCost || 0),
+			operationalCost: Number(commissionAgg._sum.operationalCost || 0),
+		};
 
 		// 🔹 Monthly Breakdown for LineChart (YYYY-MM)
 		const monthlyBreakdown: Record<string, number> = {};
@@ -124,17 +144,18 @@ export async function GET(request: NextRequest) {
 					type: "keyValue",
 					data: {
 						"Period:": `${format(from, "MMM dd, yyyy")} - ${format(to, "MMM dd, yyyy")}`,
-						"Total Revenue:": `CDF ${totalRevenue.toLocaleString("fr-CD", {
-							minimumFractionDigits: 2,
-							maximumFractionDigits: 2,
-						})}`,
-						"Total Sales:": sales.length.toString(),
-						"Average Sale Value:": `CDF ${(
+						"Total Revenue:": `CDF ${totalRevenue.toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+						"Total Transactions:": sales.length.toString(),
+						"Average Transaction Value:": `CDF ${(
 							totalRevenue / Math.max(sales.length, 1)
-						).toLocaleString("fr-CD", {
-							minimumFractionDigits: 2,
-							maximumFractionDigits: 2,
-						})}`,
+						).toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+						// Commission values (keys will be rendered bold in the PDF generator)
+						"COMMISSIONS SECTION ": " - ",
+						"C - Total Amount:": `CDF ${(commissionsSummary.totalCommissionAmount + commissionsSummary.businessEarnings + commissionsSummary.materialsCost + commissionsSummary.operationalCost).toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+						"C - Worker's Share:": `CDF ${(commissionsSummary.totalCommissionAmount).toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+						"C - Business Earnings:": `CDF ${commissionsSummary.businessEarnings.toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+						"C - Materials Cost:": `CDF ${commissionsSummary.materialsCost.toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+						"C - Operational Cost:": `CDF ${commissionsSummary.operationalCost.toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
 					},
 				},
 				{
@@ -190,6 +211,35 @@ export async function GET(request: NextRequest) {
 						]),
 					},
 				},
+				{
+					title: "Commissions Breakdown",
+					type: "table",
+					data: {
+						headers: ["Type", "Amount"],
+						rows: [
+							[
+								"Total Commission Amount",
+								`CDF ${(commissionsSummary.totalCommissionAmount + commissionsSummary.businessEarnings + commissionsSummary.materialsCost + commissionsSummary.operationalCost).toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+							],
+							[
+								"Worker's Share",
+								`CDF ${(commissionsSummary.totalCommissionAmount).toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+							],
+							[
+								"Business Earnings",
+								`CDF ${commissionsSummary.businessEarnings.toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+							],
+							[
+								"Materials Cost",
+								`CDF ${commissionsSummary.materialsCost.toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+							],
+							[
+								"Operational Cost",
+								`CDF ${commissionsSummary.operationalCost.toLocaleString("fr-CD", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+							],
+						],
+					},
+				},
 			];
 
 			const pdfBuffer = await generateReportPdf(
@@ -212,23 +262,27 @@ export async function GET(request: NextRequest) {
 
 		console.log({
 			totalRevenue,
+			transactionsCount: sales.length,
 			salesCount: sales.length,
 			breakdown,
-			monthlyBreakdown, // ✅ Added for LineChart
+			monthlyBreakdown,
 			serviceCount,
 			topSellingServices,
 			paymentMethods,
+			commissionsSummary,
 			period: { from: fromParam, to: toParam },
 		});
 
 		return successResponse({
 			totalRevenue,
+			transactionsCount: sales.length,
 			salesCount: sales.length,
 			breakdown,
-			monthlyBreakdown, // ✅ Added for LineChart
+			monthlyBreakdown,
 			serviceCount,
 			topSellingServices,
 			paymentMethods,
+			commissionsSummary,
 			period: { from: fromParam, to: toParam },
 		});
 	} catch (error) {

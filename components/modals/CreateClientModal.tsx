@@ -105,7 +105,7 @@ export default function CreateClientModal({
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
 					<div className="md:col-span-2">
-						<Label>Nom</Label>
+						<Label>Full Name</Label>
 						<Input value={name} onChange={(e) => setName(e.target.value)} />
 					</div>
 
@@ -115,7 +115,7 @@ export default function CreateClientModal({
 					</div>
 
 					<div>
-						<Label>Téléphone</Label>
+						<Label>Phone Number</Label>
 						<Input value={phone} onChange={(e) => setPhone(e.target.value)} />
 					</div>
 
@@ -123,7 +123,7 @@ export default function CreateClientModal({
 						<Label>Tier</Label>
 						<Select onValueChange={(v) => setTier(v as any)}>
 							<SelectTrigger size="sm">
-								<SelectValue placeholder="Tier" />
+								<SelectValue placeholder="Select Tier" />
 							</SelectTrigger>
 							<SelectContent>
 								<SelectItem value="Regular">Regular</SelectItem>
@@ -134,7 +134,7 @@ export default function CreateClientModal({
 					</div>
 
 					<div>
-						<Label>Anniversaire</Label>
+						<Label>Birthday</Label>
 						<Input
 							type="date"
 							value={birthday}
@@ -143,7 +143,7 @@ export default function CreateClientModal({
 					</div>
 
 					<div>
-						<Label>Adresse</Label>
+						<Label>Address</Label>
 						<Input
 							value={address}
 							onChange={(e) => setAddress(e.target.value)}
@@ -151,25 +151,25 @@ export default function CreateClientModal({
 					</div>
 
 					<div>
-						<Label>Allergies</Label>
+						<Label>Allergies / Special Notes</Label>
 						<Input
 							value={allergies}
 							onChange={(e) => setAllergies(e.target.value)}
-							placeholder="Ex: Aucune, Parfums"
+							placeholder="Ex: None, Perfumes"
 						/>
 					</div>
 
 					<div>
-						<Label>Services favoris (virgule séparés)</Label>
+						<Label>Favorite Services (comma separated)</Label>
 						<Input
 							value={favoriteServices}
 							onChange={(e) => setFavoriteServices(e.target.value)}
-							placeholder="Manucure, Pedicure"
+							placeholder="Manicure, Pedicure"
 						/>
 					</div>
 
 					<div>
-						<Label>Solde prépaiement</Label>
+						<Label>Prepayment Balance</Label>
 						<Input
 							type="number"
 							value={prepaymentBalance === "" ? "" : String(prepaymentBalance)}
@@ -219,10 +219,10 @@ export default function CreateClientModal({
 
 				<DialogFooter>
 					<DialogClose asChild>
-						<Button variant="outline">Annuler</Button>
+						<Button variant="outline">Cancel</Button>
 					</DialogClose>
 					<Button onClick={onSubmit} disabled={isCreatingClient}>
-						{isCreatingClient ? "Création..." : "Créer"}
+						{isCreatingClient ? "Creating..." : "Create Client"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

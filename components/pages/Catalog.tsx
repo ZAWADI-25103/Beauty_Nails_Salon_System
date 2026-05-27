@@ -23,7 +23,7 @@ import { toast } from "sonner";
 import type { Service } from "@/lib/api/services";
 import { useClients } from "@/lib/hooks/useClients";
 import { useInventory } from "@/lib/hooks/useInventory";
-import { useLoyalty } from "@/lib/hooks/useLoyalty";
+import { useLoyalty, useLoyaltyTransactions } from "@/lib/hooks/useLoyalty";
 import { useDiscounts } from "@/lib/hooks/useMarketing";
 import { usePackages } from "@/lib/hooks/usePackages";
 import { useAddOns, useServices } from "@/lib/hooks/useServices";
@@ -145,13 +145,13 @@ const AddOnModal = ({
 
 												<div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-gray-500 dark:text-gray-400">
 													<span className="flex items-center gap-1">
-														<DollarSign className="w-4 h-4 text-green-500" />
-														+{addOn.price.toLocaleString()} CDF
+														<DollarSign className="w-4 h-4 text-green-500" />+
+														{addOn.price.toLocaleString()} CDF
 													</span>
 
 													<span className="flex items-center gap-1">
-														<Clock className="w-4 h-4 text-blue-500" />
-														+{addOn.duration} min
+														<Clock className="w-4 h-4 text-blue-500" />+
+														{addOn.duration} min
 													</span>
 												</div>
 											</div>
@@ -188,12 +188,14 @@ export default function CatalogPage() {
 	const { inventory: products, isLoading: productsLoading } = useInventory();
 	const { packages, isLoading: packagesLoading } = usePackages();
 	const { discounts, isLoading: discountsLoading } = useDiscounts();
+	// const { points: loyaltyPoints, tier: loyaltyTier, transactions: loyaltyTransactions, isLoading: loyaltyLoading } = useLoyalty();
 	const {
 		points: loyaltyPoints,
 		tier: loyaltyTier,
 		transactions: loyaltyTransactions,
 		isLoading: loyaltyLoading,
 	} = useLoyalty();
+	const { transactions: allLoyaltyTransactions } = useLoyaltyTransactions();
 	// API hook
 	const { clients: allClients = [] } = useClients();
 
@@ -202,10 +204,10 @@ export default function CatalogPage() {
 		appointmentsForReward: 5,
 		referralsForReward: 5,
 		rewards: [
-			{ points: 3000, reward: "Manucure gratuite" },
-			{ points: 5500, reward: "Extension cils gratuite" },
-			{ points: 7500, reward: "50% sur tous services" },
-			{ points: 10000, reward: "Journée beauté complète gratuite" },
+			{ points: 3000, reward: "Free Manucure" },
+			{ points: 5500, reward: "Free Eyelash Extension" },
+			{ points: 7500, reward: "50% on all services" },
+			{ points: 10000, reward: "Free full beauty day" },
 		],
 	};
 
@@ -221,8 +223,8 @@ export default function CatalogPage() {
 
 	// Prepare data for display
 	const loyaltyRewards =
-		loyaltyTransactions
-			?.filter((t) => t.type === "earned_referral")
+		allLoyaltyTransactions
+			?.filter((t: any) => t.type === "earned_referral")
 			.slice(0, 3) || []; // Example filter
 
 	const isLoading =
@@ -306,18 +308,19 @@ export default function CatalogPage() {
 												<div className="w-10 h-10 rounded-2xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
 													<Scissors className="w-5 h-5 text-pink-500" />
 												</div>
-						
+
 												<div>
 													<h3 className="text-lg sm:text-2xl font-semibold text-gray-900 dark:text-gray-100">
-														{category.charAt(0).toUpperCase() + category.slice(1)}
+														{category.charAt(0).toUpperCase() +
+															category.slice(1)}
 													</h3>
-						
+
 													<p className="text-sm text-gray-500 dark:text-gray-400">
 														{categoryServices.length} services available
 													</p>
 												</div>
 											</div>
-						
+
 											{/* Services List */}
 											<div className="space-y-3">
 												{categoryServices.map((service) => (
@@ -339,12 +342,12 @@ export default function CatalogPage() {
 																		className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
 																	/>
 																</div>
-						
+
 																<Badge className="absolute top-2 left-2 bg-green-500 dark:bg-green-600 text-white text-[10px] sm:text-xs px-2 py-0.5 rounded-full shadow-md">
 																	{service.price.toLocaleString()} CDF
 																</Badge>
 															</div>
-						
+
 															{/* Content */}
 															<div className="flex-1 min-w-0 flex flex-col justify-between">
 																<div>
@@ -353,19 +356,19 @@ export default function CatalogPage() {
 																			{service.name}
 																		</h4>
 																	</div>
-						
+
 																	<p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
 																		{service.description}
 																	</p>
 																</div>
-						
+
 																{/* Bottom Row */}
 																<div className="mt-3 flex items-center justify-between gap-3">
 																	<div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
 																		<Clock className="w-3.5 h-3.5 text-blue-500" />
 																		<span>{service.duration} min</span>
 																	</div>
-						
+
 																	<Button
 																		size="sm"
 																		className="h-8 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm rounded-full bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white shadow-md"
@@ -566,8 +569,8 @@ export default function CatalogPage() {
 													</span>
 												</div>
 												<Badge className="bg-green-500 dark:bg-green-600 text-white border-0 w-full justify-center py-1.5">
-													Save{" "}
-													{savings > 0 ? savings.toLocaleString() : "N/A"} CDF
+													Save {savings > 0 ? savings.toLocaleString() : "N/A"}{" "}
+													CDF
 												</Badge>
 											</div>
 
@@ -694,7 +697,7 @@ export default function CatalogPage() {
 									<div className="space-y-4">
 										<Card className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-800/50 border border-purple-100 dark:border-purple-900/30 p-4 sm:p-5 rounded-2xl">
 											<p className="text-[10px] sm:text-base  text-purple-600 dark:text-purple-400 uppercase tracking-widest mb-1">
-												Points par dépense
+												Reward per spend
 											</p>
 											<p className="text-base sm:text-2xl font-black text-gray-900 dark:text-gray-100">
 												{loyaltyRules.pointsPerSpend} point per 1,000 CDF spent
@@ -706,8 +709,8 @@ export default function CatalogPage() {
 												Reward per visits
 											</p>
 											<p className="text-base sm:text-2xl font-black text-gray-900 dark:text-gray-100">
-												Free service after{" "}
-												{loyaltyRules.appointmentsForReward} appointments
+												Free service after {loyaltyRules.appointmentsForReward}{" "}
+												appointments
 											</p>
 										</Card>
 
@@ -777,7 +780,13 @@ export default function CatalogPage() {
 										<div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-800/50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-purple-100 dark:border-purple-900/30 text-center">
 											<Award className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 dark:text-purple-400 mx-auto mb-3" />
 											<p className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-gray-100">
-												{loyaltyPoints}
+												{allLoyaltyTransactions.reduce(
+													(sum: number, t: any) =>
+														t.type === "earned_appointment"
+															? sum + (t.points || 0)
+															: sum - (t.points || 0),
+													0,
+												)}
 											</p>
 											<p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
 												Total Points
@@ -786,7 +795,11 @@ export default function CatalogPage() {
 										<div className="bg-linear-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-800/50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-green-100 dark:border-green-900/30 text-center">
 											<Gift className="w-6 h-6 sm:w-8 sm:h-8 text-green-600 dark:text-green-400 mx-auto mb-3" />
 											<p className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-gray-100">
-												38 {/* Replace with real count from API */}
+												{
+													allLoyaltyTransactions.filter(
+														(t: any) => t.type === "earned_appointment",
+													).length
+												}
 											</p>
 											<p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
 												Redeemed

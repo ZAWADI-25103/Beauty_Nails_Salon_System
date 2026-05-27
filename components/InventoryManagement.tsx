@@ -11,10 +11,9 @@ import {
 	Users,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useInventory } from "@/lib/hooks/useInventory";
-import { useInventoryUsage } from "@/lib/hooks/useInventory";
-import type { InventoryItem } from "@/prisma/generated/client";
 import type { UsageReportItem } from "@/lib/api/inventory";
+import { useInventory, useInventoryUsage } from "@/lib/hooks/useInventory";
+import type { InventoryItem } from "@/prisma/generated/client";
 import { InventoryCard } from "./InventoryCard";
 import CreateInventoryModal from "./modals/CreateInventoryModal";
 import {
@@ -80,7 +79,7 @@ export default function InventoryManagement() {
 			contact: "Marie Kalala",
 			email: "info@lashpro.cd",
 			phone: "+243 820 234 567",
-			products: ["Extensions Cils", "Colles", "Pinces"],
+			products: ["Extensions Eyelashes", "Colles", "Pinces"],
 			rating: 4.9,
 		},
 		{
@@ -89,7 +88,7 @@ export default function InventoryManagement() {
 			contact: "Grace Mbuyi",
 			email: "sales@africanhair.cd",
 			phone: "+243 830 345 678",
-			products: ["Rajouts", "Tresses", "Fils", "Perruques"],
+			products: ["Rajouts", "Braids", "Fils", "Perruques"],
 			rating: 4.7,
 		},
 		{
@@ -159,8 +158,7 @@ export default function InventoryManagement() {
 								Inventory Alerts
 							</h3>
 							<p className="text-gray-700 dark:text-gray-300 mb-4 text-lg sm:text-base">
-								{alertItems.length} product(s) require
-								immediate restocking
+								{alertItems.length} product(s) require immediate restocking
 							</p>
 							<div className="flex flex-wrap gap-2">
 								{alertItems.map((item) => (
@@ -228,7 +226,10 @@ export default function InventoryManagement() {
 					>
 						Stock
 					</TabsTrigger>
-					<TabsTrigger value="usage" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">
+					<TabsTrigger
+						value="usage"
+						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
+					>
 						Usage Report
 					</TabsTrigger>
 				</TabsList>
@@ -348,9 +349,10 @@ export default function InventoryManagement() {
 							</h3>
 							{usageReport.length === 0 ? (
 								<div className="text-center py-12 text-gray-500 dark:text-gray-400">
-									<Package className="w-12 h-12 mx-auto mb-4 opacity-40" />										<p className="text-lg">
-											Aucune donnée d'utilisation enregistrée ce mois-ci.
-										</p>
+									<Package className="w-12 h-12 mx-auto mb-4 opacity-40" />{" "}
+									<p className="text-lg">
+										Aucune donnée d'utilisation enregistrée ce mois-ci.
+									</p>
 								</div>
 							) : (
 								<>
@@ -389,7 +391,7 @@ export default function InventoryManagement() {
 																	: report.trend === "down"
 																		? "text-red-500"
 																		: "text-gray-400"
-																}`}
+															}`}
 														/>
 														{report.trend === "up" ? (
 															<Badge className="bg-green-500 dark:bg-green-600 text-white border-0  px-3">
@@ -440,7 +442,7 @@ export default function InventoryManagement() {
 															: usageChange < 0
 																? "text-red-500 dark:text-red-400"
 																: "text-gray-900 dark:text-gray-100"
-														}`}
+													}`}
 												>
 													{usageChange > 0 ? "+" : ""}
 													{usageChange}%
@@ -448,16 +450,16 @@ export default function InventoryManagement() {
 												<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
 													vs Mois Précédent
 												</p>
-													</div>
-												</div>
 											</div>
+										</div>
+									</div>
 
-										{/* <Button className="w-full mt-8 bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-7 text-lg shadow-lg shadow-amber-500/20 transition-all">
+									{/* <Button className="w-full mt-8 bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-7 text-lg shadow-lg shadow-amber-500/20 transition-all">
 											Télécharger Rapport Complet (PDF)
 										</Button> */}
-									</>
-								)}
-							</Card>
+								</>
+							)}
+						</Card>
 					)}
 				</TabsContent>
 			</Tabs>

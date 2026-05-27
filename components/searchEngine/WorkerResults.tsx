@@ -33,7 +33,10 @@ export function WorkerResults({ data }: any) {
 
 								<td className="py-3 px-4">{worker.user?.phone || "N/A"}</td>
 
-								<td className="py-3 px-4">{worker.speciality || "N/A"}</td>
+								<td className="py-3 px-4">
+									{worker.specialties?.map((s: string) => s).join(", ") ||
+										"N/A"}
+								</td>
 
 								<td className="py-3 px-4">
 									<span

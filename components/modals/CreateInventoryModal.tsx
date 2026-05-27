@@ -169,10 +169,10 @@ export default function CreateInventoryModal({
 										<SelectValue placeholder="Choisir..." />
 									</SelectTrigger>
 									<SelectContent className="rounded-2xl shadow-2xl border-0">
-										<SelectItem value="onglerie">💅 Onglerie</SelectItem>
-										<SelectItem value="cils">👁️ Cils</SelectItem>
-										<SelectItem value="tresses">💇‍♀️ Tresses</SelectItem>
-										<SelectItem value="maquillage">💄 Maquillage</SelectItem>
+										<SelectItem value="onglerie">💅 Nail Care</SelectItem>
+										<SelectItem value="cils">👁️ Eyelashes</SelectItem>
+										<SelectItem value="tresses">💇‍♀️ Braids</SelectItem>
+										<SelectItem value="maquillage">💄 Makeup</SelectItem>
 									</SelectContent>
 								</Select>
 							</div>

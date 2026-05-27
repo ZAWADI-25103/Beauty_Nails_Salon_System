@@ -26,7 +26,7 @@ import {
 
 const POSITIONS = ["Spécialiste", "Réceptionniste", "Manager", "Assistant"];
 
-const SERVICE_CATEGORIES = ["Onglerie", "Cils", "Tresses", "Maquillage"];
+const SERVICE_CATEGORIES = ["Nail Care", "Eyelashes", "Braids", "Makeup"];
 
 export default function CreateWorkerModal({
 	triggerLabel = "Add Staff",
@@ -104,7 +104,6 @@ export default function CreateWorkerModal({
 		setCommissionRate("");
 		setWorkingHours("");
 	};
-
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>
@@ -112,9 +111,9 @@ export default function CreateWorkerModal({
 			</DialogTrigger>
 
 			{/* ✅ Bigger + Responsive */}
-			<DialogContent className="sm:max-w-3xl w-[95vw] max-h-[90vh] overflow-y-auto  dark:bg-gray-950 p-5">
+			<DialogContent className="sm:max-w-3xl w-[95vw] max-h-[90vh] overflow-y-auto dark:bg-gray-950 p-5">
 				<DialogHeader>
-					<DialogTitle className="text-xl">Create a New Employee</DialogTitle>
+					<DialogTitle className="text-xl">Create New Employee</DialogTitle>
 				</DialogHeader>
 
 				{/* ✅ Responsive Grid */}
@@ -122,11 +121,11 @@ export default function CreateWorkerModal({
 					{/* Personal Info */}
 					<div className="space-y-4">
 						<h3 className="text-lg font-semibold text-muted-foreground">
-							Informations personnelles
+							Personal Information
 						</h3>
 
 						<div>
-							<Label className="mb-3">Nom complet *</Label>
+							<Label className="mb-3">Full Name *</Label>
 							<Input
 								value={name}
 								onChange={(e) => setName(e.target.value)}
@@ -145,7 +144,7 @@ export default function CreateWorkerModal({
 						</div>
 
 						<div>
-							<Label className="mb-3">Téléphone *</Label>
+							<Label className="mb-3">Phone Number *</Label>
 							<Input
 								value={phone}
 								onChange={(e) => setPhone(e.target.value)}
@@ -158,7 +157,7 @@ export default function CreateWorkerModal({
 							<Input
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								placeholder="Min. 6 caractères"
+								placeholder="Min. 6 characters"
 							/>
 						</div>
 					</div>
@@ -166,15 +165,15 @@ export default function CreateWorkerModal({
 					{/* Professional */}
 					<div className="space-y-4">
 						<h3 className="text-lg font-semibold text-muted-foreground">
-							Professionnel
+							Professional Information
 						</h3>
 
 						{/* ✅ Shadcn Select */}
 						<div>
-							<Label className="mb-3">Poste *</Label>
+							<Label className="mb-3">Position *</Label>
 							<Select value={position} onValueChange={setPosition}>
 								<SelectTrigger>
-									<SelectValue placeholder="Choisir un poste" />
+									<SelectValue placeholder="Select position" />
 								</SelectTrigger>
 								<SelectContent>
 									{POSITIONS.map((pos) => (
@@ -188,7 +187,7 @@ export default function CreateWorkerModal({
 
 						{/* ✅ Checkbox Specialties */}
 						<div>
-							<Label className="mb-3">Spécialités</Label>
+							<Label className="mb-3">Specialties</Label>
 							<div className="grid grid-cols-2 gap-3 mt-2">
 								{SERVICE_CATEGORIES.map((category) => (
 									<div key={category} className="flex items-center space-x-2">
@@ -206,7 +205,7 @@ export default function CreateWorkerModal({
 						</div>
 
 						<div>
-							<Label className="mb-3">Commission (%)</Label>
+							<Label className="mb-3">Commission Rate (%)</Label>
 							<Input
 								type="number"
 								step="0.1"
@@ -218,7 +217,7 @@ export default function CreateWorkerModal({
 										e.target.value === "" ? "" : Number(e.target.value),
 									)
 								}
-								placeholder="15"
+								placeholder="45"
 							/>
 						</div>
 					</div>
@@ -226,28 +225,28 @@ export default function CreateWorkerModal({
 					{/* Working Hours */}
 					<div className="space-y-4">
 						<h3 className="text-lg font-semibold text-muted-foreground">
-							Horaires
+							Schedule
 						</h3>
 
 						<div>
-							<Label className="mb-3">Horaires de travail</Label>
+							<Label className="mb-3">Working Hours</Label>
 							<Input
 								value={workingHours}
 								onChange={(e) => setWorkingHours(e.target.value)}
-								placeholder="Lun-Ven 09:00-18:00"
+								placeholder="Mon-Fri 09:00-18:00"
 							/>
 						</div>
 
 						<div className="bg-muted rounded-lg p-4 text-base">
-							<strong>Note:</strong> Un compte client et employé sera créé
-							automatiquement.
+							<strong>Note:</strong> A client and employee account will be
+							created automatically.
 						</div>
 					</div>
 				</div>
 
 				<DialogFooter className="gap-2">
 					<DialogClose asChild>
-						<Button variant="outline">Annuler</Button>
+						<Button variant="outline">Cancel</Button>
 					</DialogClose>
 
 					<Button
@@ -255,7 +254,7 @@ export default function CreateWorkerModal({
 						disabled={isCreating}
 						className="bg-pink-500 hover:bg-pink-600"
 					>
-						{isCreating ? "Création..." : "Créer l'employé"}
+						{isCreating ? "Creating..." : "Create Employee"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

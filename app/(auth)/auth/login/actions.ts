@@ -12,15 +12,6 @@ export async function handleLogin(
 	const password = formData.get("password") as string;
 
 	try {
-		const result = await signIn("credentials", {
-			email,
-			password,
-			redirect: false,
-		});
-
-		if (result?.error) {
-			return { error: "Invalid email or password" };
-		}
 
 		if (!redirect) {
 			const res = await axiosdb.post("/mail/otp", { email: email });
@@ -37,6 +28,8 @@ export async function handleLogin(
 			//   otp: otpCode,
 			// });
 
+			
+
 			return {
 				success: true,
 				expectedOtp: otpCode,
@@ -44,6 +37,8 @@ export async function handleLogin(
 				redirectUrl: `/dashboard/${expectedRole}`,
 			};
 		} else {
+			
+
 			const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
 
 			const otpResponse = await axiosdb.post("/auth/send-otp", {
@@ -69,8 +64,21 @@ export async function handleOTPVerification(
 	otp: string,
 	expectedOtp: string,
 	redirectUrl: string,
+	email: string,
+	password: string,
 ) {
 	if (otp === expectedOtp) {
+
+		const result = await signIn("credentials", {
+				email,
+				password,
+				redirect: false,
+			});
+
+			if (result?.error) {
+				return { error: "Invalid email or password" };
+			}
+
 		return {
 			success: true,
 			redirectUrl,

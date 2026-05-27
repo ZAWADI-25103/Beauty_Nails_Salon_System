@@ -104,10 +104,10 @@ export function ServiceModal({
 								<SelectValue placeholder="Choisir catégorie" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="onglerie">Onglerie</SelectItem>
-								<SelectItem value="cils">Cils</SelectItem>
-								<SelectItem value="tresses">Tresses</SelectItem>
-								<SelectItem value="maquillage">Maquillage</SelectItem>
+								<SelectItem value="onglerie">Nail Care</SelectItem>
+								<SelectItem value="cils">Eyelashes</SelectItem>
+								<SelectItem value="tresses">Braids</SelectItem>
+								<SelectItem value="maquillage">Makeup</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>

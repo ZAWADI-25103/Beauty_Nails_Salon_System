@@ -228,7 +228,7 @@ export default function TodayOverview() {
 								{todayStats.dailyRevenue.toLocaleString()} CDF
 							</p>
 							<p className="text-[10px] sm:text-base text-green-600 dark:text-green-400 mt-1 ">
-								n/a% vs hier
+								n/a% vs yesterday
 							</p>
 						</div>
 						<div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-green-400 to-emerald-400 flex items-center justify-center shrink-0 shadow-lg shadow-green-500/30">
@@ -271,7 +271,7 @@ export default function TodayOverview() {
 							<p className="text-xl sm:text-2xl text-gray-900 dark:text-gray-100 font-black">
 								{todayStats.walkInAvailable ? "Available" : "Full"}
 							</p>
-							<p className="text-[10px] sm:text-base text-gray-600 dark:text-gray-400 mt-1  italic">
+							<p className="text-[10px] sm:text-base text-gray-600 dark:text-gray-400 mt-1 italic">
 								Wait: ~{todayStats.averageWaitTime} min
 							</p>
 						</div>
@@ -308,7 +308,7 @@ export default function TodayOverview() {
 									: "bg-green-500 dark:bg-green-900/40 text-white dark:text-green-200"
 						} border-0 px-4 py-2 text-base sm:text-lg `}
 					>
-						{todayStats.currentOccupancy}%  Occupied
+						{todayStats.currentOccupancy}% Occupied
 					</Badge>
 				</div>
 				<div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-3 sm:h-4 shadow-inner">
@@ -358,12 +358,12 @@ export default function TodayOverview() {
 											<p className="text-base sm:text-lg text-gray-900 dark:text-gray-100 font-black">
 												{apt.time}
 											</p>
-											<p className="text-[10px] sm:text-base text-gray-500 dark:text-gray-400  uppercase">
+											<p className="text-[10px] sm:text-base text-gray-500 dark:text-gray-400 uppercase">
 												{apt.duration} min
 											</p>
 										</div>
 										<div className="flex-1 min-w-0">
-											<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100  truncate">
+											<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100 truncate">
 												{apt.client.user.name}
 											</p>
 											<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 font-medium truncate">
@@ -374,7 +374,7 @@ export default function TodayOverview() {
 									<div className="hidden sm:block w-px h-10 bg-pink-200 dark:bg-pink-800/30" />
 									<div className="flex items-center justify-between sm:justify-end gap-3 flex-1">
 										<p className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
-											avec <span className="">{apt.worker.user.name}</span>
+											with <span className="">{apt.worker.user.name}</span>
 										</p>
 										<Badge className="bg-blue-500 dark:bg-blue-900/40 text-white dark:text-blue-200 border-0 text-[10px] sm:text-base font-black">
 											Confirmed
@@ -392,45 +392,19 @@ export default function TodayOverview() {
 
 				{/* Quick Actions */}
 				<Card className="border-0 shadow-lg rounded-2xl p-5 sm:p-6 bg-white dark:bg-gray-950 dark:border dark:border-pink-900/30">
-					<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  mb-6">
-						Actions Rapides
+					<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-6">
+						Quick Actions
 					</h3>
 					<div className="space-y-3">
-						{/* <AppointmentModal
-              trigger={
-                <Button className="w-full bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-pink-500/25 transition-all hover:scale-[1.02]">
-                  <Plus className="w-5 h-5 mr-3" />
-                  Nouveau Rendez-vous
-                </Button>
-              } /> */}
-						{/* <Button className="w-full bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-green-500/25 transition-all hover:scale-[1.02]">
-              <CreditCard className="w-5 h-5 mr-3" />
-              Encaisser Cliente
-            </Button> */}
-						{/* <AdjustStockModal
-              trigger={
-                <Button className="w-full bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-amber-500/25 transition-all hover:scale-[1.02]">
-                  <Package className="w-5 h-5 mr-3" />
-                  Ajouter Stock
-                </Button>
-              } /> */}
-						{/* <Button className="w-full bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-6 justify-start px-6  shadow-lg shadow-amber-500/25 transition-all hover:scale-[1.02]">
-              <Package className="w-5 h-5 mr-3" />
-              Ajouter Stock
-            </Button> */}
 						<ClientModalTrigger>
 							<Button
 								variant="outline"
-								className="w-full rounded-full py-6 justify-start px-6  dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]"
+								className="w-full rounded-full py-6 justify-start px-6 dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]"
 							>
 								<Users className="w-5 h-5 mr-3 text-purple-500" />
 								New Client
 							</Button>
 						</ClientModalTrigger>
-						{/* <Button variant="outline" className="w-full rounded-full py-6 justify-start px-6  dark:border-gray-700 dark:hover:bg-gray-800 transition-all hover:scale-[1.02]">
-              <Clock className="w-5 h-5 mr-3 text-blue-500" />
-              Voir Planning
-            </Button> */}
 					</div>
 				</Card>
 			</div>
@@ -441,7 +415,7 @@ export default function TodayOverview() {
 					<div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center">
 						<Users className="w-5 h-5 text-purple-600 dark:text-purple-400" />
 					</div>
-					<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 ">
+					<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100">
 						Staff Today
 					</h3>
 				</div>
@@ -458,7 +432,7 @@ export default function TodayOverview() {
 							}`}
 						>
 							<div className="flex items-center justify-between mb-4">
-								<p className="text-base text-gray-900 dark:text-gray-100 ">
+								<p className="text-base text-gray-900 dark:text-gray-100">
 									{staff.name}
 								</p>
 								<Badge
@@ -481,7 +455,7 @@ export default function TodayOverview() {
 								{staff.currentClient ? (
 									<>
 										<p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 font-medium">
-											Cliente: <span className="">{staff.currentClient}</span>
+											Client: <span className="">{staff.currentClient}</span>
 										</p>
 										<p className="text-[10px] sm:text-base text-gray-500 dark:text-gray-400 italic">
 											{staff.service}
@@ -497,7 +471,7 @@ export default function TodayOverview() {
 								<Clock className="w-3 h-3" />
 								<span>
 									Available:{" "}
-									<span className=" text-gray-700 dark:text-gray-300">
+									<span className="text-gray-700 dark:text-gray-300">
 										{staff.nextAvailable}
 									</span>
 								</span>
@@ -516,7 +490,7 @@ export default function TodayOverview() {
 							}`}
 						>
 							<div className="flex items-center justify-between mb-4">
-								<p className="text-base text-gray-900 dark:text-gray-100 ">
+								<p className="text-base text-gray-900 dark:text-gray-100">
 									{staff.name}
 								</p>
 								<Badge
@@ -539,7 +513,7 @@ export default function TodayOverview() {
 								{staff.currentClient ? (
 									<>
 										<p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 font-medium">
-											Cliente: <span className="">{staff.currentClient}</span>
+											Client: <span className="">{staff.currentClient}</span>
 										</p>
 										<p className="text-[10px] sm:text-base text-gray-500 dark:text-gray-400 italic">
 											{staff.service}
@@ -555,7 +529,7 @@ export default function TodayOverview() {
 								<Clock className="w-3 h-3" />
 								<span>
 									Available:{" "}
-									<span className=" text-gray-700 dark:text-gray-300">
+									<span className="text-gray-700 dark:text-gray-300">
 										{staff.nextAvailable}
 									</span>
 								</span>
@@ -572,7 +546,7 @@ export default function TodayOverview() {
 						<div className="w-10 h-10 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
 							<AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
 						</div>
-						<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 ">
+						<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100">
 							Urgent Alerts
 						</h3>
 						<Badge className="bg-red-600 dark:bg-red-900/40 text-white dark:text-red-200 border-0 ml-auto px-3 font-black">
@@ -604,11 +578,11 @@ export default function TodayOverview() {
 											/>
 										</div>
 										<div>
-											<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100 ">
+											<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100">
 												{alert.message}
 											</p>
 											<Badge
-												className={`text-[10px] sm:text-base mt-1 border-0  ${
+												className={`text-[10px] sm:text-base mt-1 border-0 ${
 													alert.priority === "high"
 														? "bg-red-500/10 text-red-600 dark:text-red-400"
 														: "bg-amber-500/10 text-amber-600 dark:text-amber-400"
@@ -621,7 +595,7 @@ export default function TodayOverview() {
 									<Button
 										size="sm"
 										variant="outline"
-										className="w-full sm:w-auto rounded-full py-5 px-6  dark:border-gray-700 dark:hover:bg-gray-800"
+										className="w-full sm:w-auto rounded-full py-5 px-6 dark:border-gray-700 dark:hover:bg-gray-800"
 									>
 										Resolve
 									</Button>
@@ -632,22 +606,22 @@ export default function TodayOverview() {
 				</Card>
 			)}
 
-			{/* Popular Services Today */}
+			{/* Popular Services Today / Recent Services */}
 			<Card className="border-0 shadow-lg rounded-2xl p-5 sm:p-6 bg-white dark:bg-gray-950 dark:border dark:border-pink-900/30">
-				<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100  mb-6">
+				<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-6">
 					Recent Services
 				</h3>
 				{appointmentHistory.length === 0 ? (
 					<div className="text-center py-12 text-gray-500">
 						<Package className="w-16 h-16 mx-auto mb-4 opacity-20" />
-						<p>No history</p>
+						<p>No recent services</p>
 					</div>
 				) : (
 					<div className="space-y-3">
 						{appointmentHistory.map((appointment) => (
 							<div
 								key={appointment.id}
-								className="flex items-center justify-between p-4 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950"
+								className="flex items-center justify-between p-4 border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950"
 							>
 								<div className="flex-1">
 									<div className="flex items-center gap-3 mb-2">
@@ -664,7 +638,7 @@ export default function TodayOverview() {
 								</div>
 
 								<div className="flex items-center gap-4">
-									<p className=" text-gray-900 dark:text-gray-200">
+									<p className="text-gray-900 dark:text-gray-200">
 										{appointment.price?.toLocaleString()} CDF
 									</p>
 								</div>

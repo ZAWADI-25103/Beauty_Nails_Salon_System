@@ -93,7 +93,6 @@ export default function MembershipsManagement() {
 
 	const handleChange = (field: keyof typeof formData, value: any) => {
 		if (field === "benefits") {
-			// This handler is no longer needed for 'benefits' as we manage it separately
 			return;
 		}
 		setFormData((prev) => ({ ...prev, [field]: value }));
@@ -118,7 +117,6 @@ export default function MembershipsManagement() {
 	};
 
 	const handleSaveMembership = () => {
-		// Prepare the final benefits list from local state
 		const finalBenefits = [...benefitsList];
 
 		const membershipData = {
@@ -131,6 +129,7 @@ export default function MembershipsManagement() {
 		} else {
 			createMembership(membershipData);
 		}
+
 		setEditingMembership(null);
 		setFormData({
 			name: "",
@@ -154,12 +153,12 @@ export default function MembershipsManagement() {
 
 	if (membershipsLoading) return <div>Loading memberships...</div>;
 	if (membershipsError)
-		return <div>Erreur lors du chargement: {membershipsError.message}</div>;
+		return <div>Error loading memberships: {membershipsError.message}</div>;
 
 	return (
 		<div className="space-y-6">
 			<div className="flex justify-between items-center">
-				<h2 className="text-2xl   text-gray-900 dark:text-gray-100">
+				<h2 className="text-2xl text-gray-900 dark:text-gray-100">
 					Membership Management
 				</h2>
 				<Dialog>
@@ -172,14 +171,12 @@ export default function MembershipsManagement() {
 					<DialogContent className="sm:max-w-2xl">
 						<DialogHeader>
 							<DialogTitle>
-								{editingMembership
-									? "Edit Membership"
-									: "New Membership"}
+								{editingMembership ? "Edit Membership" : "New Membership"}
 							</DialogTitle>
 						</DialogHeader>
 						<div className="space-y-4">
 							<div className="space-y-2">
-								<Label htmlFor="name">Nom</Label>
+								<Label htmlFor="name">Name</Label>
 								<Input
 									id="name"
 									value={formData.name}
@@ -188,7 +185,7 @@ export default function MembershipsManagement() {
 							</div>
 							<div className="grid grid-cols-2 gap-4">
 								<div className="space-y-2">
-									<Label htmlFor="duration">Durée (jours)</Label>
+									<Label htmlFor="duration">Duration (days)</Label>
 									<Input
 										id="duration"
 										type="number"
@@ -199,7 +196,7 @@ export default function MembershipsManagement() {
 									/>
 								</div>
 								<div className="space-y-2">
-									<Label htmlFor="price">Prix (CDF)</Label>
+									<Label htmlFor="price">Price (CDF)</Label>
 									<Input
 										id="price"
 										type="number"
@@ -212,7 +209,7 @@ export default function MembershipsManagement() {
 							</div>
 							<div className="grid grid-cols-2 gap-4">
 								<div className="space-y-2">
-									<Label htmlFor="discount">Remise (%)</Label>
+									<Label htmlFor="discount">Discount (%)</Label>
 									<Input
 										id="discount"
 										type="number"
@@ -223,7 +220,7 @@ export default function MembershipsManagement() {
 									/>
 								</div>
 								<div className="space-y-2">
-									<Label htmlFor="displayOrder">Ordre d'affichage</Label>
+									<Label htmlFor="displayOrder">Display Order</Label>
 									<Input
 										id="displayOrder"
 										type="number"
@@ -237,14 +234,15 @@ export default function MembershipsManagement() {
 									/>
 								</div>
 							</div>
-							{/* Benefits Section - NEW */}
+
+							{/* Benefits Section */}
 							<div className="space-y-2">
-								<Label htmlFor="benefits-input">Avantages</Label>
+								<Label htmlFor="benefits-input">Benefits</Label>
 								<div className="flex gap-2">
 									<Input
 										id="benefits-input"
 										type="text"
-										placeholder="Entrez un avantage..."
+										placeholder="Enter a benefit..."
 										value={benefitInput}
 										onChange={(e) => setBenefitInput(e.target.value)}
 										className="flex-1"
@@ -254,7 +252,7 @@ export default function MembershipsManagement() {
 										onClick={handleAddBenefit}
 										className="shrink-0"
 									>
-										Ajouter
+										Add
 									</Button>
 								</div>
 								<div className="flex flex-wrap gap-2 mt-2">
@@ -276,7 +274,7 @@ export default function MembershipsManagement() {
 									))}
 								</div>
 							</div>
-							{/* End Benefits Section */}
+
 							<div className="flex items-center space-x-2">
 								<input
 									id="isActive"
@@ -285,7 +283,7 @@ export default function MembershipsManagement() {
 									onChange={(e) => handleChange("isActive", e.target.checked)}
 									className="h-4 w-4"
 								/>
-								<Label htmlFor="isActive">Actif</Label>
+								<Label htmlFor="isActive">Active</Label>
 							</div>
 						</div>
 						<DialogFooter>
@@ -307,17 +305,17 @@ export default function MembershipsManagement() {
 									saveBenefitsToStorage(BENEFITS_STORAGE_KEY, []);
 								}}
 							>
-								Annuler
+								Cancel
 							</Button>
 							<Button
 								onClick={handleSaveMembership}
 								disabled={isCreating || isUpdating}
 							>
 								{isCreating || isUpdating
-									? "Chargement..."
+									? "Loading..."
 									: editingMembership
-										? "Enregistrer"
-										: "Créer"}
+										? "Save"
+										: "Create"}
 							</Button>
 						</DialogFooter>
 					</DialogContent>
@@ -326,8 +324,7 @@ export default function MembershipsManagement() {
 
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 				{memberships.map((membership) => {
-					// Count active purchases for this membership
-					const activePurchases = 0; // Placeholder - need hook to fetch all purchases or filter client data
+					const activePurchases = 0; // Placeholder
 					const totalPurchases = 0; // Placeholder
 
 					return (
@@ -336,10 +333,11 @@ export default function MembershipsManagement() {
 							className="p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950"
 						>
 							<div className="flex justify-between items-start mb-4">
-								<h3 className="text-lg  text-gray-900 dark:text-gray-100">
+								<h3 className="text-lg text-gray-900 dark:text-gray-100">
 									{membership.name}
 								</h3>
 								<div className="flex space-x-2">
+									{/* Edit Button & Modal */}
 									<Dialog>
 										<DialogTrigger asChild>
 											<Button
@@ -358,8 +356,9 @@ export default function MembershipsManagement() {
 												<DialogTitle>Edit Membership</DialogTitle>
 											</DialogHeader>
 											<div className="space-y-4">
+												{/* Same form fields as create modal (kept structure) */}
 												<div className="space-y-2">
-													<Label htmlFor="edit-name">Nom</Label>
+													<Label htmlFor="edit-name">Name</Label>
 													<Input
 														id="edit-name"
 														value={formData.name}
@@ -370,7 +369,9 @@ export default function MembershipsManagement() {
 												</div>
 												<div className="grid grid-cols-2 gap-4">
 													<div className="space-y-2">
-														<Label htmlFor="edit-duration">Durée (jours)</Label>
+														<Label htmlFor="edit-duration">
+															Duration (days)
+														</Label>
 														<Input
 															id="edit-duration"
 															type="number"
@@ -384,7 +385,7 @@ export default function MembershipsManagement() {
 														/>
 													</div>
 													<div className="space-y-2">
-														<Label htmlFor="edit-price">Prix (CDF)</Label>
+														<Label htmlFor="edit-price">Price (CDF)</Label>
 														<Input
 															id="edit-price"
 															type="number"
@@ -400,7 +401,7 @@ export default function MembershipsManagement() {
 												</div>
 												<div className="grid grid-cols-2 gap-4">
 													<div className="space-y-2">
-														<Label htmlFor="edit-discount">Remise (%)</Label>
+														<Label htmlFor="edit-discount">Discount (%)</Label>
 														<Input
 															id="edit-discount"
 															type="number"
@@ -415,7 +416,7 @@ export default function MembershipsManagement() {
 													</div>
 													<div className="space-y-2">
 														<Label htmlFor="edit-displayOrder">
-															Ordre d'affichage
+															Display Order
 														</Label>
 														<Input
 															id="edit-displayOrder"
@@ -430,14 +431,15 @@ export default function MembershipsManagement() {
 														/>
 													</div>
 												</div>
-												{/* Benefits Section - EDIT MODAL */}
+
+												{/* Benefits Section - Edit Modal */}
 												<div className="space-y-2">
-													<Label htmlFor="edit-benefits-input">Avantages</Label>
+													<Label htmlFor="edit-benefits-input">Benefits</Label>
 													<div className="flex gap-2">
 														<Input
 															id="edit-benefits-input"
 															type="text"
-															placeholder="Entrez un avantage..."
+															placeholder="Enter a benefit..."
 															value={benefitInput}
 															onChange={(e) => setBenefitInput(e.target.value)}
 															className="flex-1"
@@ -447,7 +449,7 @@ export default function MembershipsManagement() {
 															onClick={handleAddBenefit}
 															className="shrink-0"
 														>
-															Ajouter
+															Add
 														</Button>
 													</div>
 													<div className="flex flex-wrap gap-2 mt-2">
@@ -469,7 +471,7 @@ export default function MembershipsManagement() {
 														))}
 													</div>
 												</div>
-												{/* End Benefits Section - EDIT MODAL */}
+
 												<div className="flex items-center space-x-2">
 													<input
 														id="edit-isActive"
@@ -480,7 +482,7 @@ export default function MembershipsManagement() {
 														}
 														className="h-4 w-4"
 													/>
-													<Label htmlFor="edit-isActive">Actif</Label>
+													<Label htmlFor="edit-isActive">Active</Label>
 												</div>
 											</div>
 											<DialogFooter>
@@ -502,17 +504,18 @@ export default function MembershipsManagement() {
 														saveBenefitsToStorage(BENEFITS_STORAGE_KEY, []);
 													}}
 												>
-													Annuler
+													Cancel
 												</Button>
 												<Button
 													onClick={handleSaveMembership}
 													disabled={isUpdating}
 												>
-													Enregistrer
+													Save
 												</Button>
 											</DialogFooter>
 										</DialogContent>
 									</Dialog>
+
 									<Button
 										variant="ghost"
 										size="icon"
@@ -527,7 +530,7 @@ export default function MembershipsManagement() {
 							<div className="space-y-3 mb-4">
 								<div className="flex justify-between text-lg">
 									<span className="text-gray-600 dark:text-gray-400">
-										Prix:
+										Price:
 									</span>
 									<span className="font-medium">
 										{membership.price.toLocaleString()} CDF
@@ -535,15 +538,15 @@ export default function MembershipsManagement() {
 								</div>
 								<div className="flex justify-between text-lg">
 									<span className="text-gray-600 dark:text-gray-400">
-										Durée:
+										Duration:
 									</span>
 									<span className="font-medium">
-										{membership.duration} jours
+										{membership.duration} days
 									</span>
 								</div>
 								<div className="flex justify-between text-lg">
 									<span className="text-gray-600 dark:text-gray-400">
-										Remise:
+										Discount:
 									</span>
 									<span className="font-medium">{membership.discount}%</span>
 								</div>
@@ -556,7 +559,7 @@ export default function MembershipsManagement() {
 										membership.isActive ? "bg-green-500" : "bg-gray-500"
 									}
 								>
-									{membership.isActive ? "Actif" : "Inactif"}
+									{membership.isActive ? "Active" : "Inactive"}
 								</Badge>
 								<Dialog>
 									<DialogTrigger asChild>
@@ -566,7 +569,7 @@ export default function MembershipsManagement() {
 											onClick={() => setViewingClients(membership)}
 										>
 											<Users className="h-4 w-4 mr-1" />
-											Voir Clients ({totalPurchases})
+											View Clients ({totalPurchases})
 										</Button>
 									</DialogTrigger>
 									<ViewClientsMembershipModal

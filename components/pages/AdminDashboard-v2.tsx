@@ -181,7 +181,7 @@ export default function AdminDashboardV2() {
 	// Service distribution - use performance data when available, otherwise show defaults
 	const _serviceColors = ["#ec4899", "#a855f7", "#f59e0b", "#10b981"];
 
-	const categories = ["Onglerie", "Cils", "Tresses", "Maquillage"];
+	const categories = ["Nail Care", "Eyelashes", "Braids", "Makeup"];
 
 	const serviceDistribution = categories.map((category, index) => {
 		const totalCount =
@@ -502,14 +502,14 @@ export default function AdminDashboardV2() {
 							value="overview"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<Activity className="w-4 h-4 mr-2" />															Overview
-														</TabsTrigger>
+							<Activity className="w-4 h-4 mr-2" /> Overview
+						</TabsTrigger>
 						<TabsTrigger
 							value="calendar"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<Calendar className="w-4 h-4 mr-2" />															Calendar
-														</TabsTrigger>
+							<Calendar className="w-4 h-4 mr-2" /> Calendar
+						</TabsTrigger>
 						<TabsTrigger
 							value="clients"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
@@ -521,20 +521,20 @@ export default function AdminDashboardV2() {
 							value="staff"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<Award className="w-4 h-4 mr-2" />															Staff
-														</TabsTrigger>
+							<Award className="w-4 h-4 mr-2" /> Staff
+						</TabsTrigger>
 						<TabsTrigger
 							value="membership"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<CreditCard className="w-4 h-4 mr-2" />															Membership
-														</TabsTrigger>
+							<CreditCard className="w-4 h-4 mr-2" /> Membership
+						</TabsTrigger>
 						<TabsTrigger
 							value="more"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
-							<MoreHorizontal className="w-4 h-4 mr-2" />															More
-														</TabsTrigger>
+							<MoreHorizontal className="w-4 h-4 mr-2" /> More
+						</TabsTrigger>
 					</TabsList>
 
 					{/* Overview Tab */}
@@ -580,8 +580,8 @@ export default function AdminDashboardV2() {
 									value="inventory"
 									className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 								>
-									<Package className="w-4 h-4 mr-2" />															Inventory
-														</TabsTrigger>
+									<Package className="w-4 h-4 mr-2" /> Inventory
+								</TabsTrigger>
 								{/* <TabsTrigger value="pos" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">
                   <ShoppingCart className="w-4 h-4 mr-2" />															POS
 														</TabsTrigger> */}
@@ -589,20 +589,20 @@ export default function AdminDashboardV2() {
 									value="reports"
 									className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 								>
-									<BarChart3 className="w-4 h-4 mr-2" />															Reports
-														</TabsTrigger>
+									<BarChart3 className="w-4 h-4 mr-2" /> Reports
+								</TabsTrigger>
 								<TabsTrigger
 									value="marketing"
 									className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 								>
-									<MessageSquare className="w-4 h-4 mr-2" />															Marketing
-														</TabsTrigger>
+									<MessageSquare className="w-4 h-4 mr-2" /> Marketing
+								</TabsTrigger>
 								<TabsTrigger
 									value="settings"
 									className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 								>
-									<SettingsIcon className="w-4 h-4 mr-2" />															Settings
-														</TabsTrigger>
+									<SettingsIcon className="w-4 h-4 mr-2" /> Settings
+								</TabsTrigger>
 							</TabsList>
 
 							<TabsContent value="services" className="mt-14 lg:mt-6">

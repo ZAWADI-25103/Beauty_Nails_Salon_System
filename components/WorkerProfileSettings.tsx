@@ -2,7 +2,7 @@
 
 import { put } from "@vercel/blob";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import {
 	AlertCircle,
 	Camera,
@@ -211,7 +211,6 @@ export default function WorkerProfileSettings({
 
 	// Only show commission settings for worker role
 	const showCommissionSettings = user?.role === "admin";
-
 	return (
 		<div className="max-w-4xl mx-auto p-2">
 			{/* <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">My Employee Profile</h1> */}
@@ -220,20 +219,20 @@ export default function WorkerProfileSettings({
 				{/* Personal Information */}
 				<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
 					<h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-						Informations Personnelles
+						Personal Information
 					</h2>
 
 					<div className="space-y-6">
 						<div className="flex items-center gap-4">
 							<div className="space-y-2">
 								<label className="block text-lg font-medium">
-									Worker Avatar
+									Profile Picture
 								</label>
 								<div className="relative w-24 h-24">
 									{formData.avatar ? (
 										<img
 											src={formData.avatar}
-											alt="Worker Avatar"
+											alt="Profile Picture"
 											className="w-full h-full object-cover rounded-lg"
 										/>
 									) : (
@@ -269,20 +268,20 @@ export default function WorkerProfileSettings({
 									<Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
 									<span className="text-lg">
 										{workerProfile?.rating.toFixed(1)} (
-										{workerProfile?.totalReviews} avis)
+										{workerProfile?.totalReviews} reviews)
 									</span>
 								</div>
 							</div>
 							<div className="space-y-4">
 								<div>
-									<Label htmlFor="hireDate">Date d'embauche</Label>
+									<Label htmlFor="hireDate">Hire Date</Label>
 									<Input
 										id="hireDate"
 										type="text"
 										value={
 											workerProfile?.hireDate
-												? `${format(new Date(workerProfile.hireDate), "EEEE d MMMM 'à' HH'h'mm", { locale: fr })}`
-												: workerProfile?.hireDate.split("T")[0]
+												? `${format(new Date(workerProfile.hireDate), "EEEE d MMMM 'at' HH'h'mm", { locale: enUS })}`
+												: workerProfile?.hireDate?.split("T")[0]
 										}
 										disabled
 									/>
@@ -303,17 +302,17 @@ export default function WorkerProfileSettings({
 
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
-							<Label htmlFor="position">Poste</Label>
+							<Label htmlFor="position">Position</Label>
 							<Input
 								id="position"
 								value={formData.position}
 								onChange={(e) => handleInputChange("position", e.target.value)}
-								placeholder="Ex: Onglerie"
+								placeholder="Ex: Nail Technician"
 							/>
 						</div>
 
 						<div>
-							<Label htmlFor="commissionRate">Taux de Commission (%)</Label>
+							<Label htmlFor="commissionRate">Commission Rate (%)</Label>
 							<Input
 								id="commissionRate"
 								type="number"
@@ -328,7 +327,7 @@ export default function WorkerProfileSettings({
 							/>
 							{!showCommissionSettings && isCommissionLocked && (
 								<p className="text-xs text-gray-500 mt-1">
-									Verrouillé - non modifiable
+									Locked - cannot be modified
 								</p>
 							)}
 						</div>
@@ -339,7 +338,7 @@ export default function WorkerProfileSettings({
 						<Textarea
 							value={formData.bio || ""}
 							onChange={(e) => handleInputChange("bio", e.target.value)}
-							placeholder="Présentez-vous brièvement..."
+							placeholder="Briefly introduce yourself..."
 							rows={3}
 						/>
 					</div>
@@ -354,7 +353,7 @@ export default function WorkerProfileSettings({
 								}
 							/>
 							<span className="text-sm text-gray-600 dark:text-gray-400">
-								{formData.isAvailable ? "Disponible" : "Indisponible"}
+								{formData.isAvailable ? "Available" : "Unavailable"}
 							</span>
 						</div>
 					</div>
@@ -363,14 +362,14 @@ export default function WorkerProfileSettings({
 				{/* Specialties */}
 				<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
 					<h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-						Spécialités
+						Specialties
 					</h2>
 
 					<div className="flex gap-2 mb-4">
 						<Input
 							value={newSpecialty}
 							onChange={(e) => setNewSpecialty(e.target.value)}
-							placeholder="Ajouter une spécialité"
+							placeholder="Add a specialty"
 							className="flex-1"
 						/>
 						<Button
@@ -379,7 +378,7 @@ export default function WorkerProfileSettings({
 							variant="outline"
 						>
 							<Plus className="w-4 h-4 mr-2" />
-							Ajouter
+							Add
 						</Button>
 					</div>
 
@@ -402,91 +401,61 @@ export default function WorkerProfileSettings({
 					</div>
 				</Card>
 
-				{/* Working Hours */}
-				{/* <Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Horaires de Travail</h2>
+				{/* Commission Settings */}
+				<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
+					<h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+						Commission Settings
+					</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'].map(day => (
-              <div key={day} className="flex items-center gap-2">
-                <Label className="w-24 capitalize">{day}</Label>
-                <Input
-                  type="time"
-                  value={formData.workingHours[day]?.startTime || ''}
-                  onChange={(e) => handleWorkingHoursChange(day, 'startTime', e.target.value)}
-                  className="w-24"
-                />
-                <span className="text-gray-500">à</span>
-                <Input
-                  type="time"
-                  value={formData.workingHours[day]?.endTime || ''}
-                  onChange={(e) => handleWorkingHoursChange(day, 'endTime', e.target.value)}
-                  className="w-24"
-                />
-              </div>
-            ))}
-          </div>
-        </Card> */}
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div>
+							<Label htmlFor="commissionFrequency">Payment Frequency</Label>
+							<Select
+								value={formData.commissionFrequency || undefined}
+								onValueChange={(value) =>
+									handleInputChange("commissionFrequency", value)
+								}
+								disabled={!showCommissionSettings && isCommissionLocked}
+							>
+								<SelectTrigger>
+									<SelectValue placeholder="Select frequency" />
+								</SelectTrigger>
 
-				{/* Commission Settings (for worker only) */}
-				{
-					<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
-						<h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-							Paramètres de Commission
-						</h2>
-
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-							<div>
-								<Label htmlFor="commissionFrequency">
-									Fréquence de Paiement
-								</Label>
-								<Select
-									value={formData.commissionFrequency || undefined}
-									onValueChange={(value) =>
-										handleInputChange("commissionFrequency", value)
-									}
-									disabled={!showCommissionSettings && isCommissionLocked}
-								>
-									<SelectTrigger>
-										<SelectValue placeholder="Choisir une fréquence" />
-									</SelectTrigger>
-
-									<SelectContent>
-										<SelectItem value="daily">Quotidien</SelectItem>
-										<SelectItem value="weekly">Hebdomadaire</SelectItem>
-										<SelectItem value="monthly">Mensuel</SelectItem>
-									</SelectContent>
-								</Select>
-								{!showCommissionSettings && isCommissionLocked && (
-									<p className="text-xs text-gray-500 mt-1">
-										Verrouillé - non modifiable -{" "}
-										{workerProfile?.commissionFrequency}
-									</p>
-								)}
-							</div>
-
-							<div>
-								<Label htmlFor="commissionDay">Jour de Paiement</Label>
-								<Input
-									id="commissionDay"
-									type="number"
-									min="1"
-									max="31"
-									value={formData.commissionDay}
-									onChange={(e) =>
-										handleInputChange("commissionDay", Number(e.target.value))
-									}
-									disabled={!showCommissionSettings && isCommissionLocked}
-								/>
-								{!showCommissionSettings && isCommissionLocked && (
-									<p className="text-xs text-gray-500 mt-1">
-										Verrouillé - non modifiable
-									</p>
-								)}
-							</div>
+								<SelectContent>
+									<SelectItem value="daily">Daily</SelectItem>
+									<SelectItem value="weekly">Weekly</SelectItem>
+									<SelectItem value="monthly">Monthly</SelectItem>
+								</SelectContent>
+							</Select>
+							{!showCommissionSettings && isCommissionLocked && (
+								<p className="text-xs text-gray-500 mt-1">
+									Locked - cannot be modified -{" "}
+									{workerProfile?.commissionFrequency}
+								</p>
+							)}
 						</div>
-					</Card>
-				}
+
+						<div>
+							<Label htmlFor="commissionDay">Payment Day</Label>
+							<Input
+								id="commissionDay"
+								type="number"
+								min="1"
+								max="31"
+								value={formData.commissionDay}
+								onChange={(e) =>
+									handleInputChange("commissionDay", Number(e.target.value))
+								}
+								disabled={!showCommissionSettings && isCommissionLocked}
+							/>
+							{!showCommissionSettings && isCommissionLocked && (
+								<p className="text-xs text-gray-500 mt-1">
+									Locked - cannot be modified
+								</p>
+							)}
+						</div>
+					</div>
+				</Card>
 
 				{/* Documents */}
 				<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
@@ -509,7 +478,7 @@ export default function WorkerProfileSettings({
 						disabled={isLoading}
 						className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white"
 					>
-						{isLoading ? "Enregistrement..." : "Enregistrer les modifications"}
+						{isLoading ? "Saving..." : "Save Changes"}
 					</Button>
 				</div>
 			</form>

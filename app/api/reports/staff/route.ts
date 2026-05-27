@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { endOfDay, format, startOfDay } from "date-fns";
 import { type NextRequest, NextResponse } from "next/server";
 import {
 	errorResponse,
@@ -16,7 +16,10 @@ function parseRange(searchParams: URLSearchParams) {
 	const from = searchParams.get("from");
 	const to = searchParams.get("to");
 	if (!from || !to) return null;
-	return { from: new Date(from), to: new Date(to) };
+	return {
+		from: startOfDay(new Date(from)),
+		to: endOfDay(new Date(to)),
+	};
 }
 
 export async function GET(request: NextRequest) {
@@ -66,7 +69,10 @@ export async function GET(request: NextRequest) {
 		const workerStats = workers.map((worker: any) => {
 			const completedAppointments = worker.appointments.length;
 			const totalRevenue = worker.appointments.reduce((sum: any, appt: any) => {
-				return sum + (appt.sale ? Number(appt.sale.total) : 0);
+				const appointmentRevenue = appt.sale
+					? Number(appt.sale.total)
+					: Number(appt.price || 0);
+				return sum + appointmentRevenue;
 			}, 0);
 
 			const totalCommission = worker.commissions.reduce(

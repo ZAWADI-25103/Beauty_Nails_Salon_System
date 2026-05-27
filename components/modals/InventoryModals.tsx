@@ -155,10 +155,10 @@ export function AddProductModal({ trigger }: AddProductModalProps) {
 										<SelectValue placeholder="Sélectionner" />
 									</SelectTrigger>
 									<SelectContent>
-										<SelectItem value="onglerie">Onglerie</SelectItem>
-										<SelectItem value="cils">Cils</SelectItem>
+										<SelectItem value="onglerie">Nail Care</SelectItem>
+										<SelectItem value="cils">Eyelashes</SelectItem>
 										<SelectItem value="cheveux">Cheveux</SelectItem>
-										<SelectItem value="maquillage">Maquillage</SelectItem>
+										<SelectItem value="maquillage">Makeup</SelectItem>
 										<SelectItem value="retail">Vente Client</SelectItem>
 									</SelectContent>
 								</Select>

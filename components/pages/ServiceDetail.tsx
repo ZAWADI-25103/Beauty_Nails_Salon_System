@@ -18,7 +18,7 @@ export default function ServiceDetail() {
 	// Category metadata with enhanced descriptions for Goma & Kigali
 	const categoryMetadata: Record<string, any> = {
 		onglerie: {
-			name: "Onglerie",
+			name: "Nail Care",
 			icon: "💅",
 			description:
 				"Sublimez vos ongles avec nos experts en manucure, pédicure et nail art. Utilisant uniquement des produits premium, nous créons des designs personnalisés adaptés à votre style et à chaque occasion. Parfait pour les cérémonies, soirées ou simplement pour vous sentir confiante au quotidien.",
@@ -26,7 +26,7 @@ export default function ServiceDetail() {
 				"https://images.unsplash.com/photo-1737214475335-8ed64d91f473?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYWlsJTIwYXJ0JTIwbWFuaWN1cmV8ZW58MXx8fHwxNzYyMzI1MTMyfDA&ixlib=rb-4.1.0&q=80&w=1080",
 		},
 		cils: {
-			name: "Cils",
+			name: "Eyelashes",
 			icon: "👁️",
 			description:
 				"Transformez votre regard avec nos extensions et traitements de cils professionnels. Des cils naturels et discrets aux volumes spectaculaires en technique russe, nos techniciennes certifiées créent l'effet parfait pour votre visage. Durée de 6 à 8 semaines pour un résultat impeccable.",
@@ -34,7 +34,7 @@ export default function ServiceDetail() {
 				"https://images.unsplash.com/photo-1589710751893-f9a6770ad71b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxleWVsYXNoJTIwZXh0ZW5zaW9uc3xlbnwxfHx8fDE3NjIzNjE1OTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
 		},
 		tresses: {
-			name: "Tresses",
+			name: "Braids",
 			icon: "💇‍♀️",
 			description:
 				"Explorez notre gamme de coiffures protectrices et stylées : box braids, tissages, crochet braids et locks. Nos coiffeuses expertes utilisent des extensions de qualité premium et créent des designs uniques. Chaque tresse est réalisée avec soin pour votre confort et votre beauté.",
@@ -42,7 +42,7 @@ export default function ServiceDetail() {
 				"https://images.unsplash.com/photo-1702236242829-a34c39814f31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYWlyJTIwYnJhaWRpbmclMjBzYWxvbnxlbnwxfHx8fDE3NjIzNjE1OTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
 		},
 		maquillage: {
-			name: "Maquillage",
+			name: "Makeup",
 			icon: "💄",
 			description:
 				"Sublimez votre beauté naturelle avec nos services de maquillage professionnel. Du maquillage quotidien subtil aux looks glamour de soirée ou de mariage, nos artistes maquillistes certifiées créent un look qui vous ressemble. Produits haut de gamme et techniques éprouvées garantis.",

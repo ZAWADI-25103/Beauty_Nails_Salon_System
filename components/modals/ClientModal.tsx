@@ -221,13 +221,13 @@ export default function ClientModal({
 				<form onSubmit={handleSubmit} className="space-y-6">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div>
-							<Label htmlFor="name">Nom</Label>
+							<Label htmlFor="name">Full Name</Label>
 							<Input
 								id="name"
 								value={formData.name}
 								onChange={(e) => handleInputChange("name", e.target.value)}
 								disabled={!canEditAllFields}
-								placeholder="Nom complet"
+								placeholder="Full name"
 								className="mt-1"
 							/>
 						</div>
@@ -240,13 +240,13 @@ export default function ClientModal({
 								value={formData.email}
 								onChange={(e) => handleInputChange("email", e.target.value)}
 								disabled={!canEditAllFields}
-								placeholder="email@exemple.com"
+								placeholder="email@example.com"
 								className="mt-1"
 							/>
 						</div>
 
 						<div>
-							<Label htmlFor="phone">Téléphone</Label>
+							<Label htmlFor="phone">Phone Number</Label>
 							<Input
 								id="phone"
 								value={formData.phone}
@@ -259,7 +259,7 @@ export default function ClientModal({
 
 						<div>
 							<Label htmlFor="membershipStatus">
-								Niveau actuel:{" "}
+								Current Tier:{" "}
 								<Badge className="bg-white/20 hover:bg-white/30 text-white border-0 text-base">
 									{loyaltyTier}
 								</Badge>
@@ -275,7 +275,7 @@ export default function ClientModal({
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="Regular">Régulier</SelectItem>
+									<SelectItem value="Regular">Regular</SelectItem>
 									<SelectItem value="Premium">Premium</SelectItem>
 									<SelectItem value="VIP">VIP</SelectItem>
 								</SelectContent>
@@ -283,13 +283,13 @@ export default function ClientModal({
 						</div>
 
 						<div className="md:col-span-2">
-							<Label htmlFor="address">Adresse</Label>
+							<Label htmlFor="address">Address</Label>
 							<Textarea
 								id="address"
 								value={formData.address}
 								onChange={(e) => handleInputChange("address", e.target.value)}
 								disabled={!editableFields.address}
-								placeholder="Adresse complète"
+								placeholder="Full address"
 								rows={2}
 								className="mt-1"
 							/>
@@ -302,14 +302,14 @@ export default function ClientModal({
 								value={formData.notes}
 								onChange={(e) => handleInputChange("notes", e.target.value)}
 								disabled={!editableFields.notes}
-								placeholder="Notes supplémentaires sur le client"
+								placeholder="Additional notes about the client"
 								rows={3}
 								className="mt-1"
 							/>
 						</div>
 
 						<div>
-							<Label htmlFor="birthday">Anniversaire</Label>
+							<Label htmlFor="birthday">Birthday</Label>
 							<Input
 								id="birthday"
 								type="date"
@@ -342,7 +342,7 @@ export default function ClientModal({
 							<Input
 								value={newAllergy}
 								onChange={(e) => setNewAllergy(e.target.value)}
-								placeholder="Ajouter une allergie"
+								placeholder="Add an allergy"
 								className="flex-1"
 								disabled={!editableFields.allergies}
 							/>
@@ -353,7 +353,7 @@ export default function ClientModal({
 								variant="outline"
 							>
 								<Plus className="w-4 h-4 mr-2" />
-								Ajouter
+								Add
 							</Button>
 						</div>
 						<div className="flex flex-wrap gap-2 mt-2">
@@ -379,12 +379,12 @@ export default function ClientModal({
 
 					{/* Favorite Services Section */}
 					<div>
-						<Label>Services Favoris</Label>
+						<Label>Favorite Services</Label>
 						<div className="flex gap-2 mt-1">
 							<Input
 								value={newFavoriteService}
 								onChange={(e) => setNewFavoriteService(e.target.value)}
-								placeholder="Ajouter un service favori"
+								placeholder="Add a favorite service"
 								className="flex-1"
 								disabled={!editableFields.favoriteServices}
 							/>
@@ -395,7 +395,7 @@ export default function ClientModal({
 								variant="outline"
 							>
 								<Plus className="w-4 h-4 mr-2" />
-								Ajouter
+								Add
 							</Button>
 						</div>
 						<div className="flex flex-wrap gap-2 mt-2">
@@ -424,7 +424,7 @@ export default function ClientModal({
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 							<div>
 								<Label htmlFor="prepaymentBalance">
-									Solde Prépaiement (CDF)
+									Prepayment Balance (CDF)
 								</Label>
 								<Input
 									id="prepaymentBalance"
@@ -441,9 +441,7 @@ export default function ClientModal({
 							</div>
 
 							<div>
-								<Label htmlFor="giftCardBalance">
-									Gift Card Balance (CDF)
-								</Label>
+								<Label htmlFor="giftCardBalance">Gift Card Balance (CDF)</Label>
 								<Input
 									id="giftCardBalance"
 									type="number"
@@ -466,7 +464,7 @@ export default function ClientModal({
 								resetForm();
 							}}
 						>
-							Annuler
+							Cancel
 						</Button>
 						<Button
 							type="submit"
@@ -475,10 +473,10 @@ export default function ClientModal({
 							}
 						>
 							{isSubmitting
-								? "Enregistrement..."
+								? "Saving..."
 								: edit
-									? "Mettre à jour"
-									: "Créer"}
+									? "Update Client"
+									: "Create Client"}
 						</Button>
 					</div>
 				</form>

@@ -19,7 +19,7 @@ export function CommissionReportHtml(data: {
 
 	return `
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -81,10 +81,10 @@ export function CommissionReportHtml(data: {
       font-weight: 600;
       margin-top: 16px;
       ${
-				isPaid
-					? "background: rgba(16, 185, 129, 0.15); color: var(--success);"
-					: "background: rgba(245, 158, 11, 0.15); color: var(--warning);"
-			}
+        isPaid
+          ? "background: rgba(16, 185, 129, 0.15); color: var(--success);"
+          : "background: rgba(245, 158, 11, 0.15); color: var(--warning);"
+      }
     }
     .status-badge::before {
       content: "";
@@ -287,20 +287,20 @@ export function CommissionReportHtml(data: {
       <h1>Beauty Nails Management System</h1>
       <div class="period">Commission Report • ${commission.period}</div>
       <div class="status-badge">
-        ${isPaid ? "PAYÉ" : "EN ATTENTE DE PAIEMENT"}
+        ${isPaid ? "PAID" : "PENDING PAYMENT"}
       </div>
     </div>
 
     <div class="content">
       <!-- Worker Info -->
       <div class="section">
-        <div class="section-title">Travailleur</div>
+        <div class="section-title">Worker</div>
         <div class="worker-card">
           <div class="worker-name">${commission.user.name}</div>
           <div class="worker-position">${commission.worker.position}</div>
           <div class="config-grid">
             <div class="config-item">
-              <div class="config-label">Taux</div>
+              <div class="config-label">Rate</div>
               <div class="config-value">${commission.commissionRate}%</div>
             </div>
             <div class="config-item">
@@ -308,7 +308,7 @@ export function CommissionReportHtml(data: {
               <div class="config-value">${commission.worker.commissionType || "percentage"}</div>
             </div>
             <div class="config-item">
-              <div class="config-label">Fréquence</div>
+              <div class="config-label">Frequency</div>
               <div class="config-value">${commission.worker.commissionFrequency || "N/A"}</div>
             </div>
           </div>
@@ -317,34 +317,34 @@ export function CommissionReportHtml(data: {
 
       <!-- Financial Summary -->
       <div class="section">
-        <div class="section-title">Résumé Financier</div>
+        <div class="section-title">Financial Summary</div>
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-label">Revenu Total</div>
+            <div class="stat-label">Total Revenue</div>
             <div class="stat-value">${commission.totalRevenue.toLocaleString()} CDF</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Rendez-vous Complétés</div>
+            <div class="stat-label">Completed Appointments</div>
             <div class="stat-value">${commission.appointmentsCount}</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Coûts Opérationnels</div>
+            <div class="stat-label">Operational Costs</div>
             <div class="stat-value">${commission.operationalCost.toLocaleString()} CDF</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Matériel</div>
+            <div class="stat-label">Materials</div>
             <div class="stat-value">${commission.materialsCost.toLocaleString()} CDF</div>
           </div>
         </div>
         <div class="stat-card" style="margin-top: 16px;">
-          <div class="stat-label">Gains Entreprise</div>
+          <div class="stat-label">Business Earnings</div>
           <div class="stat-value">${commission.businessEarnings.toLocaleString()} CDF</div>
         </div>
       </div>
 
       <!-- Commission Amount -->
       <div class="commission-amount">
-        <div class="commission-label">Montant de Commission</div>
+        <div class="commission-label">Commission Amount</div>
         <div class="commission-value">${commission.commissionAmount.toLocaleString()} CDF</div>
       </div>
 
@@ -353,15 +353,15 @@ export function CommissionReportHtml(data: {
 				isPaid
 					? `
         <div class="paid-info">
-          <div class="label">✅ Paiement effectué avec succès par l'administration</div>
-          <div class="date">${new Date(commission.paidAt).toLocaleString("fr-FR")}</div>
+          <div class="label">✅ Payment successfully processed by administration</div>
+          <div class="date">${new Date(commission.paidAt).toLocaleString("en-GB")}</div>
         </div>`
 					: `
         <div class="proof-section">
-          <div class="proof-title">Preuve d'Achèvement des Services</div>
+          <div class="proof-title">Proof of Service Completion</div>
           <p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;">
-            Ce document sert de preuve officielle que les services ci-dessous ont été complétés par le travailleur. 
-            Le paiement de la commission est en attente de traitement.
+            This document serves as official proof that the services below were completed by the worker. 
+            The commission payment is pending processing.
           </p>
           <table class="appointments-table">
             <thead>
@@ -380,7 +380,7 @@ export function CommissionReportHtml(data: {
                 <tr>
                   <td><strong>${apt.serviceName}</strong></td>
                   <td>${apt.clientName}</td>
-                  <td>${new Date(apt.date).toLocaleDateString("fr-FR")}</td>
+                  <td>${new Date(apt.date).toLocaleDateString("en-GB")}</td>
                   <td>${apt.time}</td>
                   <td style="text-align:right;font-weight:600;">${apt.price.toLocaleString()} CDF</td>
                 </tr>
@@ -405,9 +405,7 @@ export function CommissionReportHtml(data: {
 
     <!-- Footer -->
     <div class="footer">
-      <div><strong>Généré automatiquement</strong> • Système ERP K-Corp</div>
-      <div class="disclaimer">Document généré le ${generatedAt} • Toute reproduction non autorisée est interdite</div>
-      ${!isPaid ? `<div style="margin-top:8px;color:var(--warning);font-weight:500;">⚠️ Ce document ne constitue pas un reçu de paiement</div>` : ""}
+      Beauty Nails Management System
     </div>
   </div>
   

@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import {
 	Award,
 	Calendar,
@@ -60,7 +60,7 @@ export default function Home() {
 	const services = [
 		{
 			id: "onglerie",
-			name: "Onglerie",
+			name: "Nail Care",
 			description: "Manicure, pedicure, nail art and extensions",
 			icon: "💅",
 			image:
@@ -69,7 +69,7 @@ export default function Home() {
 		},
 		{
 			id: "cils",
-			name: "Cils",
+			name: "Eyelashes",
 			description: "Eyelash extensions, tinting and lifting",
 			icon: "👁️",
 			image:
@@ -78,7 +78,7 @@ export default function Home() {
 		},
 		{
 			id: "tresses",
-			name: "Tresses",
+			name: "Braids",
 			description: "Braiding, weaving and creative hairstyling",
 			icon: "💇‍♀️",
 			image:
@@ -87,8 +87,8 @@ export default function Home() {
 		},
 		{
 			id: "maquillage",
-			name: "Maquillage",
-			description: "Maquillage événementiel et quotidien",
+			name: "Makeup",
+			description: "Makeup événementiel et quotidien",
 			icon: "💄",
 			image:
 				"https://images.unsplash.com/photo-1600637070413-0798fafbb6c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYWtldXAlMjBhcnRpc3R8ZW58MXx8fHwxNzYyMjgzMTg4fDA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -160,23 +160,21 @@ export default function Home() {
 						src="https://images.unsplash.com/photo-1632643746039-de953cb0f260?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
 						alt="Luxury Beauty Nails Salon interior"
 						className="w-full h-full object-cover scale-105 motion-safe:animate-[zoom_60s_ease-out_infinite]"
-						priority
 					/>
 					{/* Multilayered gradient for perfect text contrast and depth */}
 					<div className="absolute inset-0 bg-gradient-to-r from-neutral-950/90 via-purple-950/75 to-amber-950/50 mix-blend-multiply" />
 					<div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950/30" />
 				</div>
-			
+
 				{/* Content Container */}
 				<div className="relative max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 z-10 py-12 sm:py-20">
 					<div className="max-w-2xl lg:max-w-3xl presentation-layer">
-						
 						{/* Premium Badge */}
 						<Badge className="mb-6 inline-flex items-center gap-2 bg-pink-500/10 text-pink-200 border-pink-400/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium tracking-wide shadow-sm">
 							<Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
 							Your Ultimate Premium Beauty Destination
 						</Badge>
-			
+
 						{/* Enhanced Typography */}
 						<h1 className="text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-white mb-6 leading-[1.1]">
 							Where elegance <br />
@@ -184,13 +182,14 @@ export default function Home() {
 								redefines your beauty.
 							</span>
 						</h1>
-			
+
 						{/* Elevated Description Copy */}
 						<p className="text-base sm:text-lg text-zinc-200/90 mb-10 leading-relaxed max-w-xl font-light">
-							Indulge in masterfully crafted nails, lashes, braids, and makeup artistry. 
-							Experience bespoke luxury and flawless precision tailored entirely to you.
+							Indulge in masterfully crafted nails, lashes, braids, and makeup
+							artistry. Experience bespoke luxury and flawless precision
+							tailored entirely to you.
 						</p>
-			
+
 						{/* Refined Call-To-Actions with Hover Mechanics */}
 						<div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
 							<Link href="/appointments" className="w-full sm:w-auto">
@@ -199,7 +198,7 @@ export default function Home() {
 									Book Appointment Now
 								</Button>
 							</Link>
-			
+
 							<Link href="/catalog" className="w-full sm:w-auto">
 								<Button
 									variant="outline"
@@ -209,11 +208,9 @@ export default function Home() {
 								</Button>
 							</Link>
 						</div>
-						
 					</div>
 				</div>
 			</section>
-
 
 			{/* Quick Appointment Bar */}
 			<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 sm:-mt-16 relative z-20">
@@ -232,7 +229,7 @@ export default function Home() {
 								}}
 							>
 								<SelectTrigger className="w-full rounded-xl">
-									<SelectValue placeholder="Sélectionner un service" />
+									<SelectValue placeholder="Select a service" />
 								</SelectTrigger>
 								<SelectContent>
 									{services.map((svc) => (
@@ -258,8 +255,8 @@ export default function Home() {
 									>
 										<CalendarIcon className="mr-2 h-4 w-4" />
 										{selectedDate
-											? format(selectedDate, "PPP", { locale: fr })
-											: "Choisir date"}
+											? format(selectedDate, "PPP", { locale: enUS })
+											: "Choose date"}
 									</Button>
 								</PopoverTrigger>
 								<PopoverContent className="w-auto p-0" align="start">
@@ -276,12 +273,10 @@ export default function Home() {
 
 						{/* Heure */}
 						<div className="w-full">
-							<label className="block text-lg font-medium text-gray-700 dark:text-gray-200 mb-2">
-								Heure
-							</label>
+							<label className="block text-lg font-medium text-gray-700 dark:text-gray-200 mb-2"></label>
 							<Select value={selectedTime} onValueChange={setSelectedTime}>
 								<SelectTrigger className="w-full rounded-xl">
-									<SelectValue placeholder="Choisir une heure" />
+									<SelectValue placeholder="Choose a time" />
 								</SelectTrigger>
 								<SelectContent>
 									{["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"].map(
@@ -312,14 +307,14 @@ export default function Home() {
 			<section className=" bg-background pt-16 dark:bg-gray-950">
 				<div className="text-center mb-16">
 					<Badge className="mb-4 bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-200">
-						Nos Services
+						Our Services
 					</Badge>
 					<h2 className="text-3xl sm:text-4xl font-medium font-semibold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
-						Des services d'excellence pour votre beauté
+						Exceptional beauty services tailored for you
 					</h2>
 					<p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-						Découvrez notre gamme complète de services professionnels dans un
-						cadre luxueux
+						Discover our complete range of professional beauty services in a
+						luxurious environment
 					</p>
 				</div>
 
@@ -366,11 +361,11 @@ export default function Home() {
 						Our Memberships
 					</Badge>
 					<h2 className="text-3xl sm:text-4xl font-medium font-semibold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
-						Rejoignez notre cercle de clientes privilégiées
+						Join Our Exclusive Beauty Circle
 					</h2>
 					<p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-						Save up to 30% on your favorite treatments et profitez
-						d'avantages exclusifs avec nos formules.
+						Save up to 30% on your favorite treatments and enjoy exclusive
+						member benefits.
 					</p>
 				</div>
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -405,7 +400,7 @@ export default function Home() {
 										<div className="absolute top-0 right-0 bg-linear-to-r from-amber-500 to-orange-500 dark:from-amber-600 dark:to-orange-600 text-white px-6 py-2 rounded-bl-3xl z-10">
 											<span className="flex items-center text-lg ">
 												<Star className="w-4 h-4 mr-1" />
-												Populaire
+												Most Popular
 											</span>
 										</div>
 									)}
@@ -447,8 +442,8 @@ export default function Home() {
 												className={`w-full ${linearBg} text-white rounded-full py-4 text-lg  shadow-md`}
 											>
 												{membership.name.includes("Premium")
-													? "Devenir membre Premium"
-													: "S'abonner maintenant"}
+													? "Become a Premium Member"
+													: "Subscribe Now"}
 											</Button>
 										</Link>
 									</div>
@@ -461,7 +456,7 @@ export default function Home() {
 							variant="link"
 							className="text-purple-600 dark:text-purple-400 underline"
 						>
-							Voir tout
+							View All
 						</Button>
 					</Link>
 				</div>
@@ -473,10 +468,10 @@ export default function Home() {
 					<div className="text-center mb-16">
 						<Badge className="mb-4 bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-200">
 							<Heart className="w-4 h-4 mr-2" />
-							Témoignages
+							Testimonials
 						</Badge>
 						<h2 className="text-3xl sm:text-4xl font-medium font-semibold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
-							Ce que nos clientes disent de nous
+							What Our Clients Say About Us
 						</h2>
 						<div className="flex items-center justify-center gap-2 mb-4">
 							<div className="flex">
@@ -492,7 +487,7 @@ export default function Home() {
 							</span>
 						</div>
 						<p className="text-gray-600 dark:text-gray-300">
-							Basé sur 247+ avis Trustpilot
+							Based on 247+ Trustpilot reviews
 						</p>
 					</div>
 
@@ -527,7 +522,7 @@ export default function Home() {
 											{testimonial.name}
 										</p>
 										<p className="text-lg text-gray-500 dark:text-gray-400">
-											Cliente vérifiée
+											Verified Client
 										</p>
 									</div>
 								</div>
@@ -541,7 +536,7 @@ export default function Home() {
 								variant="outline"
 								className="border-pink-200 dark:border-pink-800 text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-900/20 rounded-full px-8"
 							>
-								Voir tous les témoignages
+								View All Testimonials
 							</Button>
 						</Link>
 					</div>
@@ -561,34 +556,33 @@ export default function Home() {
 					</div>
 
 					<div>
-						<Badge className="mb-4 bg-pink-100 text-pink-600">
-							Our Story
-						</Badge>
+						<Badge className="mb-4 bg-pink-100 text-pink-600">Our Story</Badge>
 						<h2 className="text-3xl sm:text-4xl font-medium font-semibold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
-							La beauté au service du bien-être
+							Beauty Dedicated to Your Well-Being
 						</h2>
+
 						<p className="text-lg text-gray-600 dark:text-gray-200 mb-6">
-							Beauty Nails est née d'une passion pour la beauté et le bien-être.
-							Nous croyons que chaque femme mérite de se sentir sublime et
-							confiante.
+							Beauty Nails was born from a passion for beauty and self-care. We
+							believe every woman deserves to feel beautiful and confident.
 						</p>
+
 						<p className="text-lg text-gray-600 dark:text-gray-200 mb-8">
-							Our team of qualified professionals uses the best
-							techniques et produits pour vous offrir une expérience luxueuse et
-							des résultats exceptionnels.
+							Our team of qualified professionals uses the finest techniques and
+							products to provide you with a luxurious experience and
+							exceptional results.
 						</p>
 
 						<div className="grid grid-cols-2 gap-6 mb-8">
 							<div className="text-center p-6 bg-pink-50 dark:bg-gray-950 border-b border-pink-100 dark:border-pink-900 shadow-2xl">
 								<div className="text-4xl text-pink-600 mb-2">5+</div>
 								<div className="text-gray-600 dark:text-gray-200">
-									Années d'expérience
+									Years of Experience
 								</div>
 							</div>
 							<div className="text-center p-6 bg-amber-50 dark:bg-gray-950 border-b border-pink-100 dark:border-pink-900 shadow-2xl">
 								<div className="text-4xl text-amber-600 mb-2">200+</div>
 								<div className="text-gray-600 dark:text-gray-200">
-									Clientes satisfaites
+									Happy Clients
 								</div>
 							</div>
 						</div>

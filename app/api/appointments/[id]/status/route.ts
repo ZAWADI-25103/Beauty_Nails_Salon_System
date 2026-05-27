@@ -1,6 +1,6 @@
 "use server";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import type { NextRequest } from "next/server";
 import {
 	handleApiError,
@@ -127,8 +127,8 @@ export async function PUT(
 						totalRevenue: updatedAppointment.price,
 						period: `${format(
 							new Date(updatedAppointment.date),
-							"EEEE d MMMM 'à' HH'h'mm",
-							{ locale: fr },
+							"yyyy-MM dd",
+							{ locale: enUS },
 						)}`,
 						businessEarnings: businessEarnings,
 						materialsCost: materialsCost,

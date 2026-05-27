@@ -473,10 +473,10 @@ export function AppointmentModal({
 											<SelectValue placeholder="Select a category" />
 										</SelectTrigger>
 										<SelectContent>
-											<SelectItem value="onglerie">💅 Onglerie</SelectItem>
-											<SelectItem value="cils">👁️ Cils</SelectItem>
-											<SelectItem value="tresses">💇‍♀️ Tresses</SelectItem>
-											<SelectItem value="maquillage">💄 Maquillage</SelectItem>
+											<SelectItem value="onglerie">💅 Nail Care</SelectItem>
+											<SelectItem value="cils">👁️ Eyelashes</SelectItem>
+											<SelectItem value="tresses">💇‍♀️ Braids</SelectItem>
+											<SelectItem value="maquillage">💄 Makeup</SelectItem>
 										</SelectContent>
 									</Select>
 								</div>
@@ -524,9 +524,7 @@ export function AppointmentModal({
 											<SelectValue placeholder="Select a specialist" />
 										</SelectTrigger>
 										<SelectContent>
-											<SelectItem value="any">
-												Any (first available)
-											</SelectItem>
+											<SelectItem value="any">Any (first available)</SelectItem>
 											{staff.map((worker) => (
 												<SelectItem key={worker.id} value={worker.id}>
 													{worker?.user?.name}
@@ -762,9 +760,7 @@ export function AppointmentModal({
 												<SelectItem value="confirmed">Confirmed</SelectItem>
 												<SelectItem value="completed">Completed</SelectItem>
 												<SelectItem value="cancelled">Cancelled</SelectItem>
-												<SelectItem value="noshow">
-													No-Show
-												</SelectItem>
+												<SelectItem value="noshow">No-Show</SelectItem>
 											</SelectContent>
 										</Select>
 									</div>
@@ -848,9 +844,7 @@ export function AppointmentModal({
 								onClick={handleWorkerSubmit}
 								className="bg-linear-to-r from-pink-500 to-purple-500 text-white"
 							>
-								{appointment
-									? "Enregistrer Modifications"
-									: "Book Appointment"}
+								{appointment ? "Enregistrer Modifications" : "Book Appointment"}
 							</Button>
 						) : (
 							<Button

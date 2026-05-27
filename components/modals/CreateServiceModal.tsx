@@ -1,5 +1,6 @@
 "use client";
 import { Camera, MinusCircle, PlusCircle, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import type { MediaData } from "@/lib/api/media";
@@ -27,6 +28,36 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 
+// Helper type for add-on form state
+type AddOnFormData = {
+	name: string;
+	price: number | "";
+	duration: number | "";
+	addOnDesc?: string;
+};
+
+// Helper to initialize form state from a service
+const initializeFormState = (service?: Service) => ({
+	name: service?.name || "",
+	category: service?.category || undefined,
+	description: service?.description || "",
+	price: service?.price ?? 0,
+	// commission: service?.workerCommission ?? "",
+	duration: service?.duration ?? 0,
+	imageUrl: service?.imageUrl || "",
+	onlineBookable: service?.onlineBookable ?? true,
+	isPopular: service?.isPopular || false,
+	addOns:
+		service?.addOns && service.addOns.length > 0
+			? service.addOns.map((addOn) => ({
+					name: addOn.name,
+					price: addOn.price,
+					duration: addOn.duration as number,
+					addOnDesc: addOn.addOnDesc || "",
+				}))
+			: ([{ name: "", price: "", duration: "", addOnDesc: "" }] as any[]),
+});
+
 export default function CreateServiceModal({
 	trigger,
 	service,
@@ -38,52 +69,76 @@ export default function CreateServiceModal({
 	onSubmitRemoveService?: (serviceId: string | null) => void;
 	onSubmitReftch?: () => void;
 }) {
-	const [name, setName] = useState(service?.name || "");
+	// Main form state
+	const [name, setName] = useState("");
 	const [category, setCategory] = useState<
-		"onglerie" | "cils" | "tresses" | "maquillage" | ""
-	>(service?.category || "");
-	const [description, setDescription] = useState(service?.description || "");
-	const [price, setPrice] = useState<number | "">(service?.price || "");
-	const [commission, setCommission] = useState<number | "">(
-		service?.workerCommission || "",
-	);
-	const [duration, setDuration] = useState<number | "">(
-		service?.duration || "",
-	);
-	const [imageUrl, setImageUrl] = useState(service?.imageUrl || "");
+		"onglerie" | "cils" | "tresses" | "maquillage"
+	>();
+	const [description, setDescription] = useState("");
+	const [price, setPrice] = useState<number | "">("");
+	const [commission, setCommission] = useState<number | "">("");
+	const [duration, setDuration] = useState<number | "">("");
+	const [imageUrl, setImageUrl] = useState("");
 	const [onlineBookable, setOnlineBookable] = useState(true);
-	const [isPopular, setIsPopular] = useState(service?.isPopular || false);
+	const [isPopular, setIsPopular] = useState(false);
+	const [addOns, setAddOns] = useState<AddOnFormData[]>([
+		{ name: "", price: "", duration: "", addOnDesc: "" },
+	]);
+	const route = useRouter();
+
+	// UI state
 	const [isOpen, setIsOpen] = useState(false);
 	const [showAddOnFlow, setShowAddOnFlow] = useState(false);
-	const [createdServiceId, setCreatedServiceId] = useState<string | null>(
-		service?.id || null,
-	);
-	const inputRef = useRef<HTMLInputElement>(null);
-	const [addOns, setAddOns] = useState(() => {
-		const addOnList: {
-			name: string;
-			price: number;
-			duration: number;
-			addOnDesc?: string;
-		}[] = [];
+	const [createdServiceId, setCreatedServiceId] = useState<string | null>(null);
 
-		if (service?.addOns && service?.addOns?.length >= 0) {
-			service?.addOns?.map((addOn) => {
-				addOnList.push({
-					name: addOn.name,
-					price: addOn.price,
-					duration: addOn.duration as number,
-					addOnDesc: addOn?.addOnDesc as string,
-				});
-			});
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	// Sync form state when service prop changes (edit mode)
+	useEffect(() => {
+		if (service) {
+			const initialState = initializeFormState(service);
+			setName(initialState.name);
+			setCategory(initialState.category);
+			setDescription(initialState.description);
+			setPrice(initialState.price);
+			// setCommission(initialState.commission);
+			setDuration(initialState.duration);
+			setImageUrl(initialState.imageUrl);
+			setOnlineBookable(initialState.onlineBookable);
+			setIsPopular(initialState.isPopular);
+			setAddOns(initialState.addOns);
+			setCreatedServiceId(service.id);
 		}
-		return [
-			{ name: "", price: "", duration: "" as number | "", addOnDesc: "" },
-		];
-	});
+	}, [service]);
+
+	// Reset form to initial empty state
+	const resetForm = () => {
+		const initialState = initializeFormState(undefined);
+		setName(initialState.name);
+		setCategory(initialState.category);
+		setDescription(initialState.description);
+		setPrice(initialState.price);
+		// setCommission(initialState.commission);
+		setDuration(initialState.duration);
+		setImageUrl(initialState.imageUrl);
+		setOnlineBookable(initialState.onlineBookable);
+		setIsPopular(initialState.isPopular);
+		setAddOns(initialState.addOns);
+		setShowAddOnFlow(false);
+		setCreatedServiceId(null);
+		setIsOpen(false);
+		route.refresh();
+	};
+
+	// Handle dialog open/close
+	const handleOpenChange = (open: boolean) => {
+		setIsOpen(open);
+		if (!open) {
+			resetForm();
+		}
+	};
 
 	const { createMedia } = useMedias();
-
 	const {
 		createService,
 		updateService,
@@ -93,6 +148,21 @@ export default function CreateServiceModal({
 		updatedService,
 	} = useServices();
 	const { createAddOn, isCreatingAddOn } = useAddOnMutations();
+
+	// Handle service creation/update success
+	useEffect(() => {
+		if (createdService) {
+			setCreatedServiceId(createdService.service.id);
+			setShowAddOnFlow(true);
+			onSubmitReftch?.();
+		}
+		if (updatedService) {
+			setCreatedServiceId(updatedService.id);
+			setShowAddOnFlow(true);
+			onSubmitReftch?.();
+			toast.success("Service mis à jour avec succès");
+		}
+	}, [createdService, updatedService, onSubmitReftch]);
 
 	const onSubmit = () => {
 		if (!name || !category || !price || !duration) {
@@ -106,96 +176,89 @@ export default function CreateServiceModal({
 			name,
 			category,
 			price: Number(price),
-			commission: Number(commission),
+			commission: commission !== "" ? Number(commission) : undefined,
 			duration: Number(duration),
-			description,
+			description: description || undefined,
 			imageUrl: imageUrl || undefined,
 			onlineBookable,
 			isPopular,
 		} as import("@/lib/api/services").CreateServiceData;
 
 		createService(payload);
+
+		route.refresh();
 	};
+
 	const onUpdate = () => {
-		if (service) {
-			if (!name || !category || !price || !duration) {
-				toast.error(
-					"Veuillez renseigner le nom, la catégorie, le prix et la durée",
-				);
-				return;
-			}
-
-			const payload = {
-				name,
-				category,
-				price: Number(price),
-				commission: Number(commission),
-				duration: Number(duration),
-				description,
-				imageUrl: imageUrl || undefined,
-				onlineBookable,
-				isPopular,
-			} as import("@/lib/api/services").CreateServiceData;
-
-			updateService({ id: service?.id, updates: payload });
-		} else {
-			toast.warning("Vous ne pouvez pas modifier, re-essayer encore");
+		if (!service) {
+			toast.warning("Service non trouvé, veuillez réessayer");
+			return;
 		}
+		if (!name || !category || !price || !duration) {
+			toast.error(
+				"Veuillez renseigner le nom, la catégorie, le prix et la durée",
+			);
+			return;
+		}
+
+		const payload = {
+			name,
+			category,
+			price: Number(price),
+			commission: commission !== "" ? Number(commission) : undefined,
+			duration: Number(duration),
+			description: description || undefined,
+			imageUrl: imageUrl || undefined,
+			onlineBookable,
+			isPopular,
+		} as import("@/lib/api/services").CreateServiceData;
+
+		updateService({ id: service.id, updates: payload });
+
+		route.refresh();
 	};
-
-	// Handle service creation success
-	useEffect(() => {
-		if (createdService) {
-			setCreatedServiceId(createdService.service.id);
-			setShowAddOnFlow(true);
-		}
-		if (updatedService) {
-			setCreatedServiceId(updatedService.id);
-			setShowAddOnFlow(true);
-		}
-	}, [createdService, updatedService]);
 
 	// Handle add-on submission
 	const handleAddOnSubmit = () => {
+		if (!createdServiceId) {
+			toast.error("Service non initialisé");
+			return;
+		}
+
 		const validAddOns = addOns.filter(
 			(addOn) =>
 				addOn.name.trim() !== "" && addOn.price !== "" && addOn.duration !== "",
 		);
 
 		if (validAddOns.length === 0) {
-			toast.error("Aucun add-on valide à ajouter");
+			toast.info("Aucun add-on valide à ajouter");
+			setIsOpen(false);
+			if (onSubmitRemoveService) onSubmitRemoveService(null);
+			resetForm();
 			return;
 		}
 
-		// Submit all valid add-ons
-		validAddOns.forEach((addOn) => {
-			createAddOn({
-				serviceId: createdServiceId!,
-				name: addOn.name,
-				price: Number(addOn.price),
-				duration: Number(addOn.duration),
-				description: "",
+		// Submit all valid add-ons sequentially
+		Promise.all(
+			validAddOns.map((addOn) =>
+				createAddOn({
+					serviceId: createdServiceId,
+					name: addOn.name.trim(),
+					price: Number(addOn.price),
+					duration: Number(addOn.duration),
+					description: addOn.addOnDesc?.trim() || "",
+				}),
+			),
+		)
+			.then(() => {
+				toast.success("Add-ons ajoutés avec succès");
+				setIsOpen(false);
+				if (onSubmitRemoveService) onSubmitRemoveService(null);
+				resetForm();
+			})
+			.catch(() => {
+				toast.error("Erreur lors de l'ajout des add-ons");
 			});
-		});
-
-		// Close the modal and reset
-		setIsOpen(false);
-		if (onSubmitRemoveService) onSubmitRemoveService(null);
-		resetForm();
-	};
-
-	const resetForm = () => {
-		setName("");
-		setCategory("");
-		setDescription("");
-		setPrice("");
-		setDuration("");
-		setImageUrl("");
-		setOnlineBookable(true);
-		setIsPopular(false);
-		setAddOns([{ name: "", price: "", duration: "", addOnDesc: "" }]);
-		setShowAddOnFlow(false);
-		setCreatedServiceId(null);
 	};
 
 	const addAddOnField = () => {
@@ -215,21 +278,19 @@ export default function CreateServiceModal({
 
 	const updateAddOnField = (
 		index: number,
-		field: keyof (typeof addOns)[0],
-		value: any,
+		field: keyof AddOnFormData,
+		value: string | number,
 	) => {
 		const newAddOns = [...addOns];
-		newAddOns[index][field] = value;
+		newAddOns[index] = { ...newAddOns[index], [field]: value };
 		setAddOns(newAddOns);
 	};
 
 	const handleUpload = async (file: File) => {
-		// Create FormData for upload
 		const formData = new FormData();
 		formData.append("file", file);
 		formData.append("filename", file.name);
 
-		// Create media object
 		const media: MediaData = {
 			file,
 			clientId: null,
@@ -241,9 +302,9 @@ export default function CreateServiceModal({
 			await createMedia(media, {
 				onSuccess: (data) => {
 					setImageUrl(data.url);
+					toast.success("Image téléchargée avec succès");
 				},
 			});
-
 			if (inputRef.current) {
 				inputRef.current.value = "";
 			}
@@ -256,61 +317,61 @@ export default function CreateServiceModal({
 	};
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files && e.target.files[0]) {
+		if (e.target.files?.[0]) {
 			handleUpload(e.target.files[0]);
 		}
 	};
 
+	const isLoading = isCreating || isUpdating || isCreatingAddOn;
+
 	return (
-		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+		<Dialog open={isOpen} onOpenChange={handleOpenChange}>
 			{trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-			<DialogContent className="sm:max-w-3xl w-[95vw] max-h-[90vh] overflow-y-auto  dark:bg-gray-950 p-5">
+			<DialogContent className="sm:max-w-3xl w-[95vw] max-h-[90vh] overflow-y-auto dark:bg-gray-950 p-5">
 				{!showAddOnFlow ? (
 					<>
 						<DialogHeader>
 							<DialogTitle>
-								{!service
-									? "Create a New Service"
-									: `Modification - ${service.name}`}
+								{!service ? "Create a New Service" : `Edit - ${service.name}`}
 							</DialogTitle>
 						</DialogHeader>
 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
 							<div>
 								<Label className="mb-2" htmlFor="service-name">
-									Nom
+									Service Name
 								</Label>
 								<Input
 									id="service-name"
 									value={name}
 									onChange={(e) => setName(e.target.value)}
-									placeholder="Ex: Manucure complète"
+									placeholder="Ex: Full Manicure"
 								/>
 							</div>
 
 							<div>
 								<Label className="mb-2" htmlFor="service-category">
-									Catégorie
+									Category
 								</Label>
 								<Select
 									value={category}
 									onValueChange={(value) => setCategory(value as any)}
 								>
 									<SelectTrigger className="w-full rounded-xl border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:text-gray-100">
-										<SelectValue placeholder="Sélectionner une catégorie" />
+										<SelectValue placeholder="Select a category" />
 									</SelectTrigger>
 									<SelectContent>
-										<SelectItem value="onglerie">💅 Onglerie</SelectItem>
-										<SelectItem value="cils">👁️ Cils</SelectItem>
-										<SelectItem value="tresses">💇‍♀️ Tresses</SelectItem>
-										<SelectItem value="maquillage">💄 Maquillage</SelectItem>
+										<SelectItem value="onglerie">💅 Nail Care</SelectItem>
+										<SelectItem value="cils">👁️ Eyelashes</SelectItem>
+										<SelectItem value="tresses">💇‍♀️ Braids</SelectItem>
+										<SelectItem value="maquillage">💄 Makeup</SelectItem>
 									</SelectContent>
 								</Select>
 							</div>
 
 							<div>
 								<Label className="mb-2" htmlFor="service-price">
-									Prix (CDF)
+									Price (CDF)
 								</Label>
 								<Input
 									id="service-price"
@@ -324,9 +385,9 @@ export default function CreateServiceModal({
 									placeholder="Ex: 15000"
 								/>
 							</div>
-							<div>
+							{/* <div>
 								<Label className="mb-2" htmlFor="service-commission">
-									La Commission
+									Commission
 								</Label>
 								<Input
 									id="service-commission"
@@ -337,13 +398,13 @@ export default function CreateServiceModal({
 										)
 									}
 									type="number"
-									placeholder="Ex: 15000"
+									placeholder="Ex: 45"
 								/>
-							</div>
+							</div> */}
 
 							<div>
 								<Label className="mb-2" htmlFor="service-duration">
-									Durée (minutes)
+									Duration (minutes)
 								</Label>
 								<Input
 									id="service-duration"
@@ -366,7 +427,7 @@ export default function CreateServiceModal({
 									id="service-desc"
 									value={description}
 									onChange={(e) => setDescription(e.target.value)}
-									placeholder="Décrivez le service..."
+									placeholder="Describe the service..."
 								/>
 							</div>
 
@@ -378,7 +439,7 @@ export default function CreateServiceModal({
 									{imageUrl ? (
 										<img
 											src={imageUrl}
-											alt="Business logo"
+											alt="Service image"
 											className="w-full h-full object-cover rounded-lg"
 										/>
 									) : (
@@ -411,7 +472,7 @@ export default function CreateServiceModal({
 										className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
 									/>
 									<span className="text-lg text-gray-700 dark:text-gray-300">
-										Réservable en ligne
+										Online Bookable
 									</span>
 								</label>
 
@@ -423,7 +484,7 @@ export default function CreateServiceModal({
 										className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
 									/>
 									<span className="text-lg text-gray-700 dark:text-gray-300">
-										Mettre en avant (Populaire)
+										Mark as Popular
 									</span>
 								</label>
 							</div>
@@ -431,7 +492,9 @@ export default function CreateServiceModal({
 
 						<DialogFooter>
 							<DialogClose asChild>
-								<Button variant="outline">Annuler</Button>
+								<Button variant="outline" onClick={resetForm}>
+									Cancel
+								</Button>
 							</DialogClose>
 							{!service ? (
 								<Button
@@ -445,7 +508,7 @@ export default function CreateServiceModal({
 									}}
 									disabled={isCreating}
 								>
-									{isCreating ? "Création..." : "Créer"}
+									{isCreating ? "Creating..." : "Create"}
 								</Button>
 							) : (
 								<Button
@@ -469,8 +532,7 @@ export default function CreateServiceModal({
 						<DialogHeader>
 							<DialogTitle>Add Add-ons for "{name}"</DialogTitle>
 							<p className="text-lg text-gray-500 dark:text-gray-400">
-								Ajoutez des éléments complémentaires à ce service pour augmenter
-								sa valeur
+								Add complementary items to this service to increase its value
 							</p>
 						</DialogHeader>
 
@@ -482,17 +544,17 @@ export default function CreateServiceModal({
 								>
 									<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 										<div>
-											<Label>Nom de l'add-on</Label>
+											<Label>Add-on Name</Label>
 											<Input
 												value={addOn.name}
 												onChange={(e) =>
 													updateAddOnField(index, "name", e.target.value)
 												}
-												placeholder="Ex: Gel coloré"
+												placeholder="Ex: Colored Gel"
 											/>
 										</div>
 										<div>
-											<Label>Prix (CDF)</Label>
+											<Label>Price (CDF)</Label>
 											<Input
 												type="number"
 												value={addOn.price}
@@ -507,7 +569,7 @@ export default function CreateServiceModal({
 											/>
 										</div>
 										<div>
-											<Label>Durée (min)</Label>
+											<Label>Duration (min)</Label>
 											<Input
 												type="number"
 												value={addOn.duration}
@@ -532,7 +594,7 @@ export default function CreateServiceModal({
 											onChange={(e) =>
 												updateAddOnField(index, "addOnDesc", e.target.value)
 											}
-											placeholder="Décrivez le add-on..."
+											placeholder="Describe the add-on..."
 										/>
 									</div>
 
@@ -545,7 +607,7 @@ export default function CreateServiceModal({
 											onClick={() => removeAddOnField(index)}
 										>
 											<MinusCircle className="h-4 w-4 mr-1" />
-											Supprimer
+											Remove
 										</Button>
 									)}
 								</div>
@@ -565,7 +627,7 @@ export default function CreateServiceModal({
 						<DialogFooter className="flex flex-col sm:flex-row gap-2">
 							<DialogClose asChild>
 								<Button variant="outline" className="w-full sm:w-auto">
-									Passer
+									Skip
 								</Button>
 							</DialogClose>
 							<Button

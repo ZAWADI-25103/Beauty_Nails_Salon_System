@@ -88,16 +88,7 @@ function ClientCard({ client }: any) {
 			{client.allergies?.length > 0 && (
 				<div className="mt-3">
 					<p className="text-sm font-medium mb-1">⚠️ Allergies</p>
-					<div className="flex flex-wrap gap-2">
-						{client.allergies.map((a: string, i: number) => (
-							<span
-								key={i}
-								className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full"
-							>
-								{a}
-							</span>
-						))}
-					</div>
+					<div className="flex flex-wrap gap-2">{client.allergies}</div>
 				</div>
 			)}
 

@@ -37,10 +37,10 @@ export default function Terms() {
 						limités à :
 					</p>
 					<ul className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 space-y-1 sm:space-y-2">
-						<li>Onglerie (manucure, pédicure, nail art, extensions)</li>
+						<li>Nail Care (manucure, pédicure, nail art, extensions)</li>
 						<li>Extensions et traitements de cils</li>
 						<li>Coiffure (tresses, tissage, etc.)</li>
-						<li>Maquillage professionnel</li>
+						<li>Makeup professionnel</li>
 					</ul>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
@@ -102,8 +102,8 @@ export default function Terms() {
 					<ul className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 space-y-1 sm:space-y-2">
 						<li>Memberships are personal and non-transferable</li>
 						<li>
-							Les rendez-vous inclus doivent être utilisés pendant la période
-							of membership
+							Les rendez-vous inclus doivent être utilisés pendant la période of
+							membership
 						</li>
 						<li>Unused memberships are non-refundable</li>
 						<li>Le renouvellement est automatique sauf demande contraire</li>
@@ -113,9 +113,9 @@ export default function Terms() {
 						6. Loyalty Program
 					</h2>
 					<p className="text-lg sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6">
-						The loyalty program is subject to specific conditions and
-						peut être modifié ou arrêté à tout moment. Les points accumulés
-						expirent après 12 mois d'inactivité.
+						The loyalty program is subject to specific conditions and peut être
+						modifié ou arrêté à tout moment. Les points accumulés expirent après
+						12 mois d'inactivité.
 					</p>
 
 					<h2 className="text-2xl  sm:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">

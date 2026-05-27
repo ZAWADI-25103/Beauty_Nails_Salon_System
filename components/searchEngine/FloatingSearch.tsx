@@ -73,12 +73,16 @@ function SearchModal({ onClose }: { onClose: () => void }) {
 							}`}
 						>
 							{f === "appointments"
-								? "Rendez-vous et paiements"
+								? "Appointments"
 								: f === "payments"
-									? "Paiements"
+									? "Payments"
 									: f === "services"
 										? "Services"
-										: "Inconnu"}
+										: f === "workers"
+											? "Workers"
+											: f === "clients"
+												? "Clients"
+												: "Unknown"}
 						</button>
 					))}
 				</div>

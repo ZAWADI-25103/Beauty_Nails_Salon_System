@@ -63,6 +63,8 @@ export default function Login() {
 			otp.trim(),
 			expectedOtp,
 			redirectUrl,
+			email,
+			password,
 		);
 		if (res?.success) {
 			setTimeout(() => {
@@ -264,8 +266,8 @@ export default function Login() {
 					<DialogHeader>
 						<DialogTitle>Beauty Nails One-Time-Password (OTP)</DialogTitle>
 						<DialogDescription>
-							An OTP code has been sent to your email. Please enter the code
-							to verify your identity and access your dashboard.
+							An OTP code has been sent to your email. Please enter the code to
+							verify your identity and access your dashboard.
 							<p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
 								If you don't receive the code, please check with this default
 								code: {expectedOtp}.

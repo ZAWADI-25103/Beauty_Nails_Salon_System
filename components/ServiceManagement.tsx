@@ -62,10 +62,8 @@ export default function ServiceManagement() {
 		error: discountsError,
 	} = useDiscounts();
 
-	// Determine displayed data based on loading/error states and showMock flag
-	// In a real scenario, showMock would likely be removed once API is fully integrated.
 	const services: Service[] = useMemo(() => {
-		if (servicesLoading || servicesError) return []; // Show loading or error state instead of mock
+		if (servicesLoading || servicesError) return [];
 		return apiServices;
 	}, [apiServices, servicesLoading, servicesError]);
 
@@ -85,9 +83,8 @@ export default function ServiceManagement() {
 		const validCategories = ["onglerie", "cils", "tresses", "maquillage"];
 
 		services.forEach((service) => {
-			// Map API category to display category if needed, or use directly
-			const displayCategory = service.category; // Assumes API category matches display
-			if (!validCategories.includes(displayCategory)) return; // Skip invalid categories
+			const displayCategory = service.category;
+			if (!validCategories.includes(displayCategory)) return;
 
 			if (!grouped[displayCategory]) {
 				grouped[displayCategory] = [];
@@ -182,14 +179,15 @@ export default function ServiceManagement() {
 	return (
 		<div className="space-y-6">
 			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-				<h2 className="text-2xl  sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
-					Gestion des Services
+				<h2 className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
+					Services Management
 				</h2>
 			</div>
 
-			<p className=" dark:text-pink-400 text-xs sm:text-xs">
-				{"glisser  <--- | --->"}
+			<p className="dark:text-pink-400 text-xs sm:text-xs">
+				{"swipe <--- | --->"}
 			</p>
+
 			<Tabs defaultValue="services" className="space-y-6">
 				<TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
 					<TabsTrigger
@@ -199,13 +197,13 @@ export default function ServiceManagement() {
 						Services
 					</TabsTrigger>
 					{/* <TabsTrigger value="products" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">
-            Produits Retail
+            Retail Products
           </TabsTrigger> */}
 					<TabsTrigger
 						value="packages"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 					>
-						Forfaits
+						Packages
 					</TabsTrigger>
 					<TabsTrigger
 						value="promotions"
@@ -217,7 +215,7 @@ export default function ServiceManagement() {
 						value="online"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 					>
-						Réservation en Ligne
+						Online Booking
 					</TabsTrigger>
 				</TabsList>
 
@@ -227,16 +225,15 @@ export default function ServiceManagement() {
 						<div className="relative w-72">
 							<Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
 							<Input
-								placeholder="Rechercher un service..."
+								placeholder="Search a service..."
 								className="pl-9 rounded-full bg-white"
 							/>
 						</div>
 						<CreateServiceModal
-							// onSubmitRemoveService={setSelectedServiceId}
 							onSubmitReftch={refetchServices}
 							trigger={
 								<Button className="bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full py-3 transition-all">
-									+ Nouveau Service
+									+ New Service
 								</Button>
 							}
 						/>
@@ -250,10 +247,9 @@ export default function ServiceManagement() {
 									key={category}
 									className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950"
 								>
-									<h3 className="text-lg sm:text-xl  text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-2">
+									<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-2">
 										<Scissors className="w-5 h-5 text-pink-500" />
-										{category.charAt(0).toUpperCase() + category.slice(1)}{" "}
-										{/* Capitalize category name */}
+										{category.charAt(0).toUpperCase() + category.slice(1)}
 									</h3>
 									<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 										{(servicesByCategory[category] || []).map((service) => (
@@ -274,7 +270,7 @@ export default function ServiceManagement() {
 															</p>
 															{service.isPopular && (
 																<Badge className="bg-amber-500 dark:bg-amber-600 text-white text-[10px] sm:text-base">
-																	Populaire
+																	Popular
 																</Badge>
 															)}
 															{service.onlineBookable && (
@@ -283,15 +279,14 @@ export default function ServiceManagement() {
 																	className="text-[10px] sm:text-base dark:text-gray-300 dark:border-gray-700"
 																>
 																	<Globe className="w-3 h-3 mr-1" />
-																	En ligne
+																	Online
 																</Badge>
 															)}
 														</div>
 														<div className="flex items-center gap-4 text-lg text-gray-600 dark:text-gray-400">
 															<span className="flex items-center gap-1 font-medium">
 																<DollarSign className="w-4 h-4 text-green-500" />
-																{service.price.toLocaleString()} CDF{" "}
-																{/* Format price and add currency */}
+																{service.price.toLocaleString()} CDF
 															</span>
 															<span className="flex items-center gap-1">
 																<Clock className="w-4 h-4 text-blue-500" />
@@ -311,13 +306,13 @@ export default function ServiceManagement() {
 						{selectedService ? (
 							<div className="lg:sticky lg:top-6">
 								<Card className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
-									<h3 className="text-xl  text-gray-900 dark:text-gray-100 mb-6">
-										Détails du Service
+									<h3 className="text-xl text-gray-900 dark:text-gray-100 mb-6">
+										Service Details
 									</h3>
 									<div className="space-y-5">
 										<div>
 											<label className="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-												Nom du Service
+												Service Name
 											</label>
 											<Input
 												value={selectedService.name}
@@ -329,7 +324,7 @@ export default function ServiceManagement() {
 										<div className="grid grid-cols-2 gap-4">
 											<div>
 												<label className="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-													Catégorie
+													Category
 												</label>
 												<Input
 													value={selectedService.category}
@@ -352,7 +347,7 @@ export default function ServiceManagement() {
 										<div className="grid grid-cols-2 gap-4">
 											<div>
 												<label className="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-													Prix
+													Price
 												</label>
 												<Input
 													value={`${selectedService.price.toLocaleString()} CDF`}
@@ -362,7 +357,7 @@ export default function ServiceManagement() {
 											</div>
 											<div>
 												<label className="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-													Durée (min)
+													Duration (min)
 												</label>
 												<Input
 													value={selectedService.duration}
@@ -387,7 +382,7 @@ export default function ServiceManagement() {
 										<div className="space-y-3 pt-2">
 											<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700">
 												<span className="text-lg font-medium text-gray-700 dark:text-gray-300">
-													Réservable en ligne
+													Online Bookable
 												</span>
 												<Switch
 													checked={selectedService.onlineBookable}
@@ -397,7 +392,7 @@ export default function ServiceManagement() {
 											</div>
 											<div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700">
 												<span className="text-lg font-medium text-gray-700 dark:text-gray-300">
-													Service populaire
+													Popular Service
 												</span>
 												<Switch
 													checked={selectedService.isPopular}
@@ -417,11 +412,11 @@ export default function ServiceManagement() {
 											<div className="space-y-3">
 												{addOnsLoading ? (
 													<p className="text-lg text-gray-500 dark:text-gray-400">
-														Chargement des add-ons...
+														Loading add-ons...
 													</p>
 												) : addOns.length === 0 ? (
 													<p className="text-lg text-gray-500 dark:text-gray-400">
-														Aucun add-on pour ce service
+														No add-ons for this service
 													</p>
 												) : (
 													addOns.map((addOn) => (
@@ -451,14 +446,15 @@ export default function ServiceManagement() {
 													))
 												)}
 											</div>
+
 											{/* Add New Add-On Form */}
 											<div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700">
 												<h5 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-3">
-													Ajouter un nouvel add-on
+													Add New Add-on
 												</h5>
 												<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 													<Input
-														placeholder="Nom"
+														placeholder="Name"
 														value={newAddOn.name}
 														onChange={(e) =>
 															setNewAddOn({ ...newAddOn, name: e.target.value })
@@ -467,7 +463,7 @@ export default function ServiceManagement() {
 													/>
 													<Input
 														type="number"
-														placeholder="Prix (CDF)"
+														placeholder="Price (CDF)"
 														value={newAddOn.price}
 														onChange={(e) =>
 															setNewAddOn({
@@ -479,7 +475,7 @@ export default function ServiceManagement() {
 													/>
 													<Input
 														type="number"
-														placeholder="Durée (min)"
+														placeholder="Duration (min)"
 														value={newAddOn.duration}
 														onChange={(e) =>
 															setNewAddOn({
@@ -501,7 +497,7 @@ export default function ServiceManagement() {
 																addOnDesc: e.target.value,
 															})
 														}
-														placeholder="Décrivez le add-on..."
+														placeholder="Describe the add-on..."
 													/>
 												</div>
 												<Button
@@ -510,7 +506,7 @@ export default function ServiceManagement() {
 													className="mt-3 w-full bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full py-2"
 												>
 													<Plus className="w-4 h-4 mr-2" />
-													{isCreatingAddOn ? "Ajout..." : "Ajouter"}
+													{isCreatingAddOn ? "Adding..." : "Add"}
 												</Button>
 											</div>
 										</div>
@@ -522,7 +518,7 @@ export default function ServiceManagement() {
 												onSubmitReftch={refetchServices}
 												trigger={
 													<Button className="flex-1 bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full py-3 transition-all">
-														Modifier
+														Edit Service
 													</Button>
 												}
 											/>
@@ -530,7 +526,7 @@ export default function ServiceManagement() {
 												variant="outline"
 												className="rounded-full py-3 text-red-600 border-red-200 dark:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-900/20"
 											>
-												Supprimer
+												Delete Service
 											</Button>
 										</div>
 									</div>
@@ -543,7 +539,7 @@ export default function ServiceManagement() {
 										<Scissors className="w-10 h-10 text-gray-300 dark:text-gray-600" />
 									</div>
 									<p className="text-gray-500 dark:text-gray-400 font-medium">
-										Sélectionnez un service pour voir ses détails
+										Select a service to view its details
 									</p>
 								</div>
 							</Card>
@@ -589,14 +585,14 @@ export default function ServiceManagement() {
 						<div className="relative w-72">
 							<Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
 							<Input
-								placeholder="Rechercher un forfait..."
+								placeholder="Search a package..."
 								className="pl-9 rounded-full bg-white"
 							/>
 						</div>
 						<PackageModal
 							trigger={
 								<Button className="bg-linear-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-md">
-									+ Créer Nouveau Forfait
+									+ Create New Package
 								</Button>
 							}
 						/>
@@ -604,9 +600,6 @@ export default function ServiceManagement() {
 					<div className="space-y-6">
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 							{packages.map((pkg) => {
-								// Calculate savings based on services included (requires fetching services for each package)
-								// For simplicity here, we'll use the price difference if available in the API response
-								// Otherwise, calculate from services if they are fetched with the package
 								const regularPriceFromServices =
 									pkg.services?.reduce(
 										(sum, svc) => sum + (svc.price || 0),
@@ -630,21 +623,20 @@ export default function ServiceManagement() {
 														: "bg-gray-400"
 												} text-white border-0 px-3 py-1`}
 											>
-												{pkg.isActive ? "Actif" : "Inactif"}
+												{pkg.isActive ? "Active" : "Inactive"}
 											</Badge>
 										</div>
 
-										<h3 className="text-xl  text-gray-900 dark:text-gray-100 mb-2">
+										<h3 className="text-xl text-gray-900 dark:text-gray-100 mb-2">
 											{pkg.name}
 										</h3>
 										<p className="text-lg text-gray-600 dark:text-gray-400 mb-6 flex items-center gap-2">
 											<Clock className="w-4 h-4 text-pink-400" />
-											Durée de validité: {pkg.updatedAt}{" "}
-											{/* Using updatedAt as placeholder for validity period if no specific field exists */}
+											Validity Period: {pkg.updatedAt}
 										</p>
 
 										<div className="space-y-3 mb-8 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
-											<p className="text-base  text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+											<p className="text-base text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
 												Included Services
 											</p>
 											{(pkg.services || []).map((service, idx) => (
@@ -669,13 +661,13 @@ export default function ServiceManagement() {
 														: "N/A"}{" "}
 													CDF
 												</span>
-												<span className="text-2xl  text-green-600 dark:text-green-400">
+												<span className="text-2xl text-green-600 dark:text-green-400">
 													{pkg.price.toLocaleString()} CDF
 												</span>
 											</div>
 											<Badge className="bg-green-500 dark:bg-green-600 text-white border-0 w-full justify-center py-1.5">
-												Économisez{" "}
-												{savings > 0 ? savings.toLocaleString() : "N/A"} CDF
+												Save {savings > 0 ? savings.toLocaleString() : "N/A"}{" "}
+												CDF
 											</Badge>
 										</div>
 
@@ -687,7 +679,7 @@ export default function ServiceManagement() {
 														variant="outline"
 														className="flex-1 rounded-xl border-purple-100 hover:bg-purple-50 text-purple-700"
 													>
-														Modifier
+														Edit
 													</Button>
 												}
 											/>
@@ -708,18 +700,18 @@ export default function ServiceManagement() {
 									<Percent className="w-6 h-6 text-amber-500" />
 								</div>
 								<div>
-									<h3 className="text-2xl  text-gray-900 dark:text-gray-100">
-										Codes Promotionnels
+									<h3 className="text-2xl text-gray-900 dark:text-gray-100">
+										Promotional Codes
 									</h3>
 									<p className="text-amber-800 opacity-80 dark:text-amber-600">
-										Gérez les réductions et offres spéciales
+										Manage discounts and special offers
 									</p>
 								</div>
 							</div>
 							<PromoModal
 								trigger={
 									<Button className="w-full sm:w-auto bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-6 px-8 transition-all">
-										+ Nouvelle Promotion
+										+ New Promotion
 									</Button>
 								}
 							/>
@@ -734,7 +726,7 @@ export default function ServiceManagement() {
 									<div className="flex items-start justify-between mb-6">
 										<div>
 											<div className="flex flex-wrap items-center gap-3 mb-3">
-												<h4 className="text-lg  text-gray-900 dark:text-gray-100">
+												<h4 className="text-lg text-gray-900 dark:text-gray-100">
 													{promo.type === "percentage"
 														? `${promo.code} - ${promo.value}%`
 														: `${promo.code} - ${promo.value} CDF`}{" "}
@@ -747,7 +739,7 @@ export default function ServiceManagement() {
 															: "bg-gray-400"
 													} text-white border-0`}
 												>
-													{promo.isActive ? "Actif" : "Inactif"}
+													{promo.isActive ? "Active" : "Inactive"}
 												</Badge>
 											</div>
 											<p className="text-lg text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-950 inline-block px-3 py-1 rounded-lg border border-amber-100 dark:border-amber-900/30">
@@ -761,34 +753,34 @@ export default function ServiceManagement() {
 											<p className="text-3xl font-black text-amber-600 dark:text-amber-400">
 												{promo.value}
 											</p>
-											<p className="text-[10px] sm:text-base  text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+											<p className="text-[10px] sm:text-base text-gray-500 dark:text-gray-400 uppercase tracking-widest">
 												{promo.type === "percentage"
-													? "Réduction %"
-													: "Réduction Fixe"}
+													? "Percentage Off"
+													: "Fixed Discount"}
 											</p>
 										</div>
 									</div>
 
 									<div className="grid grid-cols-3 gap-4 text-lg mb-6">
 										<div className="p-3 bg-white dark:bg-gray-950 rounded-xl border border-amber-100 dark:border-amber-900/20 text-center">
-											<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  mb-1">
-												Début
+											<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase mb-1">
+												Start
 											</p>
 											<p className="text-gray-900 dark:text-gray-100 font-semibold">
 												{new Date(promo.startDate).toLocaleDateString()}
 											</p>
 										</div>
 										<div className="p-3 bg-white dark:bg-gray-950 rounded-xl border border-amber-100 dark:border-amber-900/20 text-center">
-											<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  mb-1">
-												Fin
+											<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase mb-1">
+												End
 											</p>
 											<p className="text-gray-900 dark:text-gray-100 font-semibold">
 												{new Date(promo.endDate).toLocaleDateString()}
 											</p>
 										</div>
 										<div className="p-3 bg-white dark:bg-gray-950 rounded-xl border border-amber-100 dark:border-amber-900/20 text-center">
-											<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  mb-1">
-												Utilisations
+											<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase mb-1">
+												Uses
 											</p>
 											<p className="text-gray-900 dark:text-gray-100 font-semibold">
 												{promo.usedCount} / {promo.maxUses}
@@ -801,7 +793,7 @@ export default function ServiceManagement() {
 											className="bg-linear-to-r from-amber-500 to-orange-500 h-3 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.3)]"
 											style={{
 												width: `${Math.min((promo.usedCount / promo.maxUses) * 100, 100)}%`,
-											}} // Cap at 100%
+											}}
 										/>
 									</div>
 
@@ -814,7 +806,7 @@ export default function ServiceManagement() {
 													variant="ghost"
 													className="text-gray-500 hover:text-amber-600"
 												>
-													Modifier
+													Edit
 												</Button>
 											}
 										/>
@@ -833,12 +825,11 @@ export default function ServiceManagement() {
 								<Globe className="w-8 h-8 text-blue-500" />
 							</div>
 							<div>
-								<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100">
-									Paramètres Réservation en Ligne
+								<h3 className="text-xl sm:text-2xl text-gray-900 dark:text-gray-100">
+									Online Booking Settings
 								</h3>
 								<p className="text-lg text-gray-600 dark:text-gray-400">
-									Configurez les services disponibles pour la réservation en
-									ligne
+									Configure which services are available for online booking
 								</p>
 							</div>
 						</div>
@@ -850,7 +841,7 @@ export default function ServiceManagement() {
 									className="flex items-center justify-between p-4 sm:p-5 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-900/50 transition-all"
 								>
 									<div>
-										<p className=" text-gray-900 dark:text-gray-100">
+										<p className="text-gray-900 dark:text-gray-100">
 											{service.name}
 										</p>
 										<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mt-1">
@@ -862,21 +853,20 @@ export default function ServiceManagement() {
 										checked={service.onlineBookable}
 										disabled
 										className="data-[state=checked]:bg-blue-500"
-									/>{" "}
-									{/* Disabled for display only */}
+									/>
 								</div>
 							))}
 						</div>
 
 						<div className="bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 p-6 sm:p-8 rounded-2xl border border-blue-100 dark:border-blue-900/30">
-							<h4 className="text-lg  text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-2">
+							<h4 className="text-lg text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-2">
 								<Globe className="w-5 h-5 text-blue-500" />
-								Options Supplémentaires
+								Additional Options
 							</h4>
 							<div className="space-y-4">
 								<div className="flex items-center justify-between p-4 bg-white/50 dark:bg-gray-900/50 rounded-xl backdrop-blur-sm">
 									<span className="text-lg font-medium text-gray-700 dark:text-gray-200">
-										Demander confirmation avant acceptation
+										Require confirmation before acceptance
 									</span>
 									<Switch
 										defaultChecked={true}
@@ -885,7 +875,7 @@ export default function ServiceManagement() {
 								</div>
 								<div className="flex items-center justify-between p-4 bg-white/50 dark:bg-gray-900/50 rounded-xl backdrop-blur-sm">
 									<span className="text-lg font-medium text-gray-700 dark:text-gray-200">
-										Envoyer rappel automatique 24h avant
+										Send automatic reminder 24h before
 									</span>
 									<Switch
 										defaultChecked={true}
@@ -894,7 +884,7 @@ export default function ServiceManagement() {
 								</div>
 								<div className="flex items-center justify-between p-4 bg-white/50 dark:bg-gray-900/50 rounded-xl backdrop-blur-sm">
 									<span className="text-lg font-medium text-gray-700 dark:text-gray-200">
-										Permettre annulation en ligne
+										Allow online cancellation
 									</span>
 									<Switch
 										defaultChecked={true}
@@ -903,7 +893,7 @@ export default function ServiceManagement() {
 								</div>
 								<div className="flex items-center justify-between p-4 bg-white/50 dark:bg-gray-900/50 rounded-xl backdrop-blur-sm">
 									<span className="text-lg font-medium text-gray-700 dark:text-gray-200">
-										Afficher disponibilité en temps réel
+										Show real-time availability
 									</span>
 									<Switch
 										defaultChecked={true}
@@ -913,8 +903,8 @@ export default function ServiceManagement() {
 							</div>
 						</div>
 
-						<Button className="w-full mt-8 bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full py-7 text-lg  shadow-lg shadow-blue-500/20 transition-all">
-							Sauvegarder les Paramètres
+						<Button className="w-full mt-8 bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full py-7 text-lg shadow-lg shadow-blue-500/20 transition-all">
+							Save Settings
 						</Button>
 					</Card>
 				</TabsContent>

@@ -303,7 +303,7 @@ model Service {
 enum Category {
   onglerie // Nails
   cils // Lashes
-  tresses // Tresses/Braids
+  tresses // Braids/Braids
   maquillage // Makeup
 }
 

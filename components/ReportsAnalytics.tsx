@@ -256,10 +256,12 @@ export default function ReportsAnalytics() {
 
 				<Card className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800">
 					<Calendar className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-					<p className="text-lg text-gray-600 dark:text-gray-400 mb-1">Appointments</p>
+					<p className="text-lg text-gray-600 dark:text-gray-400 mb-1">
+						Appointments
+					</p>
 					<p className="text-2xl sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
 						{revenueReport ? (
-							revenueReport.salesCount
+							(revenueReport.transactionsCount ?? revenueReport.salesCount)
 						) : (
 							<Loader2 className="w-5 h-5 animate-spin text-purple-500 dark:text-purple-400 mx-auto mb-4" />
 						)}
@@ -275,7 +277,7 @@ export default function ReportsAnalytics() {
 				<Card className="p-4 sm:p-6 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800">
 					<Users className="w-8 h-8 text-purple-600 dark:text-purple-400 mb-2" />
 					<p className="text-lg text-gray-600 dark:text-gray-400 mb-1">
-						New Clientses
+						New Clients
 					</p>
 					<p className="text-2xl sm:text-3xl font-medium  text-gray-900 dark:text-gray-100">
 						{clientsResp ? (
@@ -318,15 +320,30 @@ export default function ReportsAnalytics() {
 			</p>
 			<Tabs defaultValue="revenue" className="space-y-6">
 				<TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
-					<TabsTrigger value="revenue" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Revenue</TabsTrigger>
+					<TabsTrigger
+						value="revenue"
+						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
+					>
+						Revenue
+					</TabsTrigger>
 					<TabsTrigger
 						value="services"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 					>
 						Services
 					</TabsTrigger>
-					<TabsTrigger value="clients" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Clients</TabsTrigger>
-					<TabsTrigger value="staff" className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base">Staff</TabsTrigger>
+					<TabsTrigger
+						value="clients"
+						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
+					>
+						Clients
+					</TabsTrigger>
+					<TabsTrigger
+						value="staff"
+						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
+					>
+						Staff
+					</TabsTrigger>
 					<TabsTrigger
 						value="marketing"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
@@ -540,7 +557,9 @@ export default function ReportsAnalytics() {
 										</div>
 										<div className="grid grid-cols-3 gap-2 sm:gap-4">
 											<div>
-												<p className="text-base text-gray-600 dark:text-gray-400 mb-1">Revenue</p>
+												<p className="text-base text-gray-600 dark:text-gray-400 mb-1">
+													Revenue
+												</p>
 												<p className="text-lg sm:text-lg  text-gray-900 dark:text-gray-100">
 													{service?.revenue && service?.revenue > 5000000
 														? (service.revenue / 1000000).toFixed(1)
@@ -549,7 +568,9 @@ export default function ReportsAnalytics() {
 												</p>
 											</div>
 											<div>
-												<p className="text-base text-gray-600 dark:text-gray-400 mb-1">Bookings</p>
+												<p className="text-base text-gray-600 dark:text-gray-400 mb-1">
+													Bookings
+												</p>
 												<p className="text-lg sm:text-lg  text-gray-900 dark:text-gray-100">
 													{service.count || 0}
 												</p>
@@ -672,8 +693,8 @@ export default function ReportsAnalytics() {
 										membershipAnalytics.nonMemberRevenue > 5000000
 											? (
 													membershipAnalytics.nonMemberRevenue / 1000000
-												).toFixed(1)
-											: membershipAnalytics.nonMemberRevenue}{" "}
+												).toFixed(2)
+											: membershipAnalytics.nonMemberRevenue.toFixed(2)}{" "}
 										CDF
 									</p>
 									<p className="text-base text-gray-600 dark:text-gray-400">
@@ -871,7 +892,9 @@ export default function ReportsAnalytics() {
 										<div className="flex items-center justify-between">
 											<div className="flex items-center gap-2">
 												<Target className="w-5 h-5 text-green-600" />
-												<span className="text-gray-700">Revenue generated:</span>
+												<span className="text-gray-700">
+													Revenue generated:
+												</span>
 											</div>
 											<span className="text-xl text-gray-900">
 												{(campaign.revenue / 1000).toFixed(0)}K CDF
@@ -941,11 +964,11 @@ export default function ReportsAnalytics() {
 					</div>
 					<div className="flex-1">
 						<h3 className="text-2xl sm:text-3xl font-medium font-black text-gray-900 dark:text-gray-100 mb-2">
-							Générateur de Rapport Personnalisé
+							Generate Custom Reports
 						</h3>
 						<p className="text-lg sm:text-base text-gray-600 dark:text-gray-400 font-medium">
-							Créez des rapports sur mesure selon vos indicateurs clés de
-							performance
+							Select a category to download a detailed PDF report with insights
+							and
 						</p>
 					</div>
 				</div>
@@ -980,6 +1003,16 @@ export default function ReportsAnalytics() {
 						<Sparkles className="w-5 h-5 inline-block mr-2 text-pink-500" />{" "}
 						Personnel
 					</Button>
+					<Button
+						variant="outline"
+						onClick={() => {
+							handlePdfDownload("commissions");
+						}}
+						className="rounded-full py-7  border-indigo-100 dark:border-indigo-900 dark:text-gray-300 dark:hover:bg-indigo-900/20 bg-white dark:bg-gray-900/50"
+					>
+						<DollarSign className="w-5 h-5 inline-block mr-2 text-emerald-500" />{" "}
+						Commissions
+					</Button>
 				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 					<Button
@@ -992,6 +1025,7 @@ export default function ReportsAnalytics() {
 						<BarChart2 className="w-5 h-5 inline-block mr-2 text-blue-500" />{" "}
 						Financier
 					</Button>
+
 					<Button
 						variant="outline"
 						onClick={() => {

@@ -283,10 +283,10 @@ export default function InventorySelectionModal({
 							className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm"
 						>
 							<option value="all">All categories</option>
-							<option value="onglerie">Onglerie</option>
-							<option value="cils">Cils</option>
-							<option value="tresses">Tresses</option>
-							<option value="maquillage">Maquillage</option>
+							<option value="onglerie">Nail Care</option>
+							<option value="cils">Eyelashes</option>
+							<option value="tresses">Braids</option>
+							<option value="maquillage">Makeup</option>
 						</select>
 					</div>
 

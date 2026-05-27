@@ -19,19 +19,17 @@ import prisma from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
 	try {
-		// 🔐 Authenticate user
-		const user = await getAuthenticatedUser();
-		if (!user) {
-			return errorResponse("Not authenticated", 401);
-		}
 
 		const { searchParams } = new URL(request.url);
 		const fromParam = searchParams.get("from");
 		const toParam = searchParams.get("to");
+		const workerId = searchParams.get("workerId");
 
-		if (!fromParam || !toParam) {
-			return errorResponse("Dates required", 400);
+		if (!fromParam || !toParam || !workerId) {
+			return errorResponse("Missing required parameters", 400);
 		}
+
+		console.log("Received params:", { fromParam, toParam, workerId });
 
 		// 1. Convert params to Date objects, then force start/end of day
 		const reqfrom = startOfDay(new Date(fromParam));
@@ -43,7 +41,7 @@ export async function GET(request: NextRequest) {
 
 		// 👤 Get worker profile
 		const workerProfile = await prisma.workerProfile.findUnique({
-			where: { userId: user.id },
+			where: { id: workerId },
 			include: { user: { select: { name: true } } },
 		});
 

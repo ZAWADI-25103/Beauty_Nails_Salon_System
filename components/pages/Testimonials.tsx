@@ -18,7 +18,7 @@ export default function Testimonials() {
 		},
 		{
 			name: "Grace Lumière",
-			service: "Extensions de Cils",
+			service: "Extensions de Eyelashes",
 			rating: 5,
 			date: "22 Oct 2025",
 			text: "Les extensions de cils sont parfaites. Le résultat est naturel et dure longtemps. Grace est une véritable experte dans son domaine.",
@@ -26,7 +26,7 @@ export default function Testimonials() {
 		},
 		{
 			name: "Sophie Makala",
-			service: "Tresses Box Braids",
+			service: "Braids Box Braids",
 			rating: 5,
 			date: "28 Oct 2025",
 			text: "L'ambiance est luxueuse et relaxante. Le personnel est aux petits soins et très professionnel. Mon salon de beauté préféré à Kinshasa !",
@@ -34,7 +34,7 @@ export default function Testimonials() {
 		},
 		{
 			name: "Élise Nkumu",
-			service: "Maquillage Mariage",
+			service: "Makeup Mariage",
 			rating: 5,
 			date: "02 Nov 2025",
 			text: "Mon maquillage de mariage était absolument magnifique ! Élise a compris exactement ce que je voulais. J'ai reçu tellement de compliments !",
@@ -66,7 +66,7 @@ export default function Testimonials() {
 		},
 		{
 			name: "Patience Mukendi",
-			service: "Maquillage Soirée",
+			service: "Makeup Soirée",
 			rating: 5,
 			date: "12 Nov 2025",
 			text: "J'étais sublime pour ma soirée ! Le maquillage a tenu toute la nuit. Élise est une artiste du make-up.",
@@ -74,7 +74,7 @@ export default function Testimonials() {
 		},
 		{
 			name: "Deborah Tshala",
-			service: "Rehaussement de Cils",
+			service: "Rehaussement de Eyelashes",
 			rating: 5,
 			date: "15 Nov 2025",
 			text: "Le rehaussement de cils a transformé mon regard ! Plus besoin de mascara le matin. Je suis ravie du résultat.",
@@ -90,7 +90,7 @@ export default function Testimonials() {
 		},
 		{
 			name: "Rachel Mbuyi",
-			service: "Maquillage Quotidien",
+			service: "Makeup Quotidien",
 			rating: 5,
 			date: "20 Nov 2025",
 			text: "J'ai pris un cours de maquillage et c'était super instructif. Maintenant je sais me maquiller comme une pro !",

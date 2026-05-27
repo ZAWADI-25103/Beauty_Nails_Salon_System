@@ -134,6 +134,9 @@ export function useDownloadPdf() {
 				case "clients":
 					url = `/api/reports/clients`;
 					break;
+				case "commissions":
+					url = `/api/reports/commissions`;
+					break;
 				case "services":
 					url = `/api/reports/services`;
 					break;
