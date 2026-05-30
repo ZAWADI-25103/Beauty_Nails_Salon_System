@@ -1,7 +1,7 @@
 "use client";
 import confetti from "canvas-confetti";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { en } from "date-fns/locale";
 import { AnimatePresence, motion } from "framer-motion";
 import {
 	AlertCircle,
