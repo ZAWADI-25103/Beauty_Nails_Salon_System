@@ -538,12 +538,12 @@ export default function ClientDashboardV2() {
 
 	// Format date
 	const formatDate = (dateString: string) => {
-		return new Date(dateString).toLocaleDateString("fr-FR", {
-			day: "numeric",
-			month: "long",
-			year: "numeric",
-		});
-	};
+    return new Date(dateString).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+};
 
 	// Handle update status
 	const handleUpdateStatus = (appointmentId: string, newStatus: string) => {
@@ -821,79 +821,78 @@ export default function ClientDashboardV2() {
 						</Popover>
 
 						{/* 3. Referrals Card */}
-						<Popover>
-							<PopoverTrigger asChild>
-								<Card className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between">
-									<div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg w-fit">
-										<Users className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-									</div>
-									<div>
-										<p className="text-lg text-gray-900 dark:text-gray-300">
-											Referrals
-										</p>
-										<p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
-											{referrals?.length}
-										</p>
-										<p className="text-base text-gray-500 dark:text-gray-400">
-											{nextFreeReferral > 0
-												? `${nextFreeReferral} for free service`
-												: `claim your 10% discount`}
-										</p>
-									</div>
-								</Card>
-							</PopoverTrigger>
-							<PopoverContent className="w-64 bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
-								<p className="text-sm">
-									Invitez vos amis ! Pour chaque 5 parrainages terminés,
-									Profitez de 10% de réduction ce mois-ci.
-								</p>
-							</PopoverContent>
-						</Popover>
+<Popover>
+    <PopoverTrigger asChild>
+        <Card className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between">
+            <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg w-fit">
+                <Users className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            </div>
+            <div>
+                <p className="text-lg text-gray-900 dark:text-gray-300">
+                    Referrals
+                </p>
+                <p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
+                    {referrals?.length}
+                </p>
+                <p className="text-base text-gray-500 dark:text-gray-400">
+                    {nextFreeReferral > 0
+                        ? `${nextFreeReferral} for free service`
+                        : `claim your 10% discount`}
+                </p>
+            </div>
+        </Card>
+    </PopoverTrigger>
+    <PopoverContent className="w-64 bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+        <p className="text-sm">
+            Invite your friends! For every 5 completed referrals, enjoy a 10% discount this month.
+        </p>
+    </PopoverContent>
+</Popover>
 
-						{/* 4. Free Service Card */}
-						<Popover>
-						    <PopoverTrigger asChild>
-						        <motion.div
-						            {...(canClaimFreeService ? claimableAnimation : {})}
-						        >
-						            <Card
-						                className={`p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between ${canClaimFreeService ? "border-green-500 border-2 shadow-green-100" : ""}`}
-						            >
-						                <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg w-fit">
-						                    <Award className="w-5 h-5 text-green-600 dark:text-green-400" />
-						                </div>
-						                <div>
-						                    <p className="text-lg text-gray-900 dark:text-gray-300">
-						                        Free service in
-						                    </p>
-						                    <p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
-						                        {nextFreeService}
-						                    </p>
-						                    <p className="text-base text-gray-500 dark:text-gray-400">
-						                        appointments
-						                    </p>
-						                </div>
-						            </Card>
-						        </motion.div>
-						    </PopoverTrigger>
-						    <PopoverContent className="w-64 bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
-						        <p className="text-base mb-3">
-						            Your loyalty rewarded! A free service every 5 appointments.
-						        </p>
-								{canClaimFreeService ? (
-									<Button
-										className="w-full bg-green-600 hover:bg-green-700 text-white font-bold"
-										onClick={handleApplyFreeService}
-									>
-										Claim my free service 🏆
-									</Button>
-								) : (
-									<p className="text-xs text-muted-foreground italic">
-										Keep it up!
-									</p>
-								)}
-							</PopoverContent>
-						</Popover>
+{/* 4. Free Service Card */}
+<Popover>
+    <PopoverTrigger asChild>
+        <motion.div
+            {...(canClaimFreeService ? claimableAnimation : {})}
+        >
+            <Card
+                className={`p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between ${canClaimFreeService ? "border-green-500 border-2 shadow-green-100" : ""}`}
+            >
+                <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg w-fit">
+                    <Award className="w-5 h-5 text-green-600 dark:text-green-400" />
+                </div>
+                <div>
+                    <p className="text-lg text-gray-900 dark:text-gray-300">
+                        Free service in
+                    </p>
+                    <p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
+                        {nextFreeService}
+                    </p>
+                    <p className="text-base text-gray-500 dark:text-gray-400">
+                        appointments
+                    </p>
+                </div>
+            </Card>
+        </motion.div>
+    </PopoverTrigger>
+    <PopoverContent className="w-64 bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+        <p className="text-base mb-3">
+            Your loyalty rewarded! A free service every 5 appointments.
+        </p>
+        {canClaimFreeService ? (
+            <Button
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold"
+                onClick={handleApplyFreeService}
+            >
+                Claim my free service 🏆
+            </Button>
+        ) : (
+            <p className="text-xs text-muted-foreground italic">
+                Keep it up!
+            </p>
+        )}
+    </PopoverContent>
+</Popover>
 					</div>
 
 					{/* Secondary Stats */}
