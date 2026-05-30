@@ -602,7 +602,15 @@ export default function AppointmentsV3() {
 										{categoryIcons[category]}
 									</div>
 									<p className="text-2xl font-bold dark:text-gray-200 text-gray-700">
-										{category}
+										{category === "onglerie"
+															? "Nails"
+															: category === "cils"
+																? "Lashes"
+																: category === "tresses"
+																	? "Braids"
+																	: category === "maquillage"
+																		? "Makeup"
+																		: category}
 									</p>
 								</div>
 							</Card>
