@@ -852,35 +852,34 @@ export default function ClientDashboardV2() {
 
 						{/* 4. Free Service Card */}
 						<Popover>
-							<PopoverTrigger asChild>
-								<motion.div
-									{...(canClaimFreeService ? claimableAnimation : {})}
-								>
-									<Card
-										className={`p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between ${canClaimFreeService ? "border-green-500 border-2 shadow-green-100" : ""}`}
-									>
-										<div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg w-fit">
-											<Award className="w-5 h-5 text-green-600 dark:text-green-400" />
-										</div>
-										<div>
-											<p className="text-lg text-gray-900 dark:text-gray-300">
-												Service gratuit dans
-											</p>
-											<p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
-												{nextFreeService}
-											</p>
-											<p className="text-base text-gray-500 dark:text-gray-400">
-												rendez-vous
-											</p>
-										</div>
-									</Card>
-								</motion.div>
-							</PopoverTrigger>
-							<PopoverContent className="w-64 bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
-								<p className="text-base mb-3">
-									Votre fidélité récompensée ! Un service offert tous les 5
-									rendez-vous.
-								</p>
+						    <PopoverTrigger asChild>
+						        <motion.div
+						            {...(canClaimFreeService ? claimableAnimation : {})}
+						        >
+						            <Card
+						                className={`p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between ${canClaimFreeService ? "border-green-500 border-2 shadow-green-100" : ""}`}
+						            >
+						                <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg w-fit">
+						                    <Award className="w-5 h-5 text-green-600 dark:text-green-400" />
+						                </div>
+						                <div>
+						                    <p className="text-lg text-gray-900 dark:text-gray-300">
+						                        Free service in
+						                    </p>
+						                    <p className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
+						                        {nextFreeService}
+						                    </p>
+						                    <p className="text-base text-gray-500 dark:text-gray-400">
+						                        appointments
+						                    </p>
+						                </div>
+						            </Card>
+						        </motion.div>
+						    </PopoverTrigger>
+						    <PopoverContent className="w-64 bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400">
+						        <p className="text-base mb-3">
+						            Your loyalty rewarded! A free service every 5 appointments.
+						        </p>
 								{canClaimFreeService ? (
 									<Button
 										className="w-full bg-green-600 hover:bg-green-700 text-white font-bold"
@@ -1003,296 +1002,296 @@ export default function ClientDashboardV2() {
 										);
 
 										return (
-											<div
-												key={appointment.id}
-												className={cn(
-													"p-6 hover:shadow-lg border shadow-xl rounded-2xl bg-white dark:bg-gray-950 transition-all duration-300",
-													appointment.status === "in_progress"
-														? "border-transparent relative overflow-hidden animate-border-glow"
-														: "border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400",
-												)}
-											>
-												{/* ✨ Animated border */}
-												{appointment.status === "in_progress" && (
-													<div className="absolute inset-0 rounded-2xl pointer-events-none border-2 border-transparent bg-[conic-linear(at_top,#ec4899,#a855f7,#ec4899)] animate-spin-slow opacity-40" />
-												)}
-
-												<div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-													<div className="flex-1">
-														<div className="flex items-center gap-3 mb-3">
-															<h3 className="text-xl ">
-																{appointment.package
-																	? ""
-																	: appointment.service?.name || "Service"}
-															</h3>
-															{appointment.package && (
-																<Badge className="bg-purple-500 text-white">
-																	<Sparkles className="w-3 h-3 mr-1" />
-																	Forfait: {appointment.package.name}
-																</Badge>
-															)}
-															{getStatusBadge(appointment.status)}
-														</div>
-
-														<div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-lg text-gray-900 dark:text-gray-100">
-															<div className="flex items-center gap-2">
-																<CalendarIcon className="w-4 h-4 text-pink-500" />
-																<span>{formatDate(appointment.date)}</span>
-															</div>
-															<div className="flex items-center gap-2">
-																<Clock className="w-4 h-4 text-purple-500" />
-																<span>{appointment.time}</span>
-															</div>
-															<div className="flex items-center gap-2">
-																<Users className="w-4 h-4 text-amber-500" />
-																<span>
-																	{appointment.worker?.user?.name ||
-																		"Non assigné"}
-																</span>
-															</div>
-															<div className="flex items-center gap-2">
-																<MapPin className="w-4 h-4 text-green-500" />
-																<span>
-																	{appointment.location === "salon"
-																		? "Salon"
-																		: "Domicile"}
-																</span>
-															</div>
-														</div>
-
-														{appointment.notes && (
-															<div className="mt-3 p-3 bg-purple-50 rounded-lg">
-																<p className="text-lg text-gray-700">
-																	<MessageSquare className="w-4 h-4 inline mr-2" />
-																	{appointment.notes}
-																</p>
-															</div>
-														)}
-													</div>
-
-													<div className="flex flex-col gap-2">
-														<div className="text-right mb-2">
-															<p className="text-2xl  text-pink-600">
-																{appointment.price?.toLocaleString()} CDF
-															</p>
-														</div>
-														{/* 🔥 CONDITIONAL DISPLAY */}
-														{appointment.status === "in_progress" ? (
-															<div className="p-4 rounded-xl bg-linear-to-r from-pink-500 to-purple-600 text-white text-center font-medium shadow-lg animate-pulse">
-																On vous promet satisfaction et
-																professionnalisme.
-																<br />
-																<span className="font-bold">
-																	PROFITEZ BIEN DU RENDEZ-VOUS!!
-																</span>
-															</div>
-														) : (
-															<>
-																<AppointmentCountdown
-																	date={appointment.date}
-																	time={appointment.time}
-																	appointment={appointment}
-																	onMissedAutoCancel={handleMissedAutoCancel}
-																/>
-																{missed &&
-																	appointment.status === "cancelled" && (
-																		<Popover>
-																			<PopoverTrigger asChild>
-																				<Button
-																					size="sm"
-																					variant="outline"
-																					className="text-amber-600 border-amber-400 hover:bg-amber-50"
-																				>
-																					Missed Appointment
-																				</Button>
-																			</PopoverTrigger>
-
-																			<PopoverContent className="w-85 rounded-2xl p-4 space-y-4">
-																				{/* 🧠 Info */}
-																				<div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-																					<p className="font-semibold text-amber-600">
-																						⚠️ Missed Appointment
-																					</p>
-
-																					<p>
-																						Vous pouvez reprogrammer ce
-																						rendez-vous ou refuser.
-																					</p>
-																				</div>
-
-																				{/* 💰 Prepaid Status */}
-																				<div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900 border text-sm">
-																					{canUsePrepaid ? (
-																						<p className="text-green-600 font-medium">
-																							✅ Le prepaid balance couvrira
-																							automatiquement ce service
-																						</p>
-																					) : (
-																						<p className="text-red-500 font-medium">
-																							❌ Solde prépayé insuffisant
-																							(paiement requis)
-																						</p>
-																					)}
-																				</div>
-
-																				{/* 📅 Date */}
-																				<Popover>
-																					<PopoverTrigger asChild>
-																						<Button
-																							variant="outline"
-																							className={cn(
-																								"w-full justify-start text-left font-normal",
-																								!selectedDate &&
-																									"text-muted-foreground",
-																							)}
-																						>
-																							<CalendarIcon className="mr-2 h-4 w-4" />
-																							{selectedDate
-																								? format(selectedDate, "PPP", {
-																										locale: fr,
-																									})
-																								: "Choisir date"}
-																						</Button>
-																					</PopoverTrigger>
-
-																					<PopoverContent className="w-auto p-0">
-																						<Calendar
-																							mode="single"
-																							selected={selectedDate}
-																							onSelect={setSelectedDate}
-																							disabled={(date) =>
-																								date < new Date()
-																							}
-																						/>
-																					</PopoverContent>
-																				</Popover>
-
-																				{/* ⏰ Time */}
-																				<div>
-																					{slots?.slots.length != 0 ? (
-																						<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-																							Les Heures{" "}
-																							<span className="text-md font-bold text-pink-600">
-																								{selectedWorkerName}
-																							</span>{" "}
-																							sera disponible le{" "}
-																							<span className="text-md font-bold text-pink-600">
-																								{selectedDate
-																									? format(
-																											selectedDate,
-																											"PPP",
-																											{
-																												locale: fr,
-																											},
-																										)
-																									: ""}
-																							</span>
-																						</h3>
-																					) : (
-																						<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-																							Malheureusement{" "}
-																							<span className="text-md font-bold text-pink-600">
-																								{selectedWorkerName}
-																							</span>{" "}
-																							ne travaille pas{" "}
-																							<span className="text-md font-bold text-pink-600">
-																								le{" "}
-																								{selectedDate
-																									? weekDay[
-																											selectedDate.getDay()
-																										]
-																									: ""}
-																							</span>
-																						</h3>
-																					)}
-																					<div
-																						className={`grid ${slots?.slots.length != 0 ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-6" : ""} gap-2`}
-																					>
-																						{slots?.slots.length === 0 ? (
-																							<p className="p-1 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">
-																								Malheureusement aucune heure
-																								n'est disponible pour cette date{" "}
-																								{". "}
-																								Choisi un autre specialiste ou
-																								une autre date.
-																							</p>
-																						) : (
-																							slots?.slots.map((time) => (
-																								<button
-																									key={time}
-																									type="button"
-																									onClick={() =>
-																										setSelectedTime(time)
-																									}
-																									className={`p-2 rounded-lg border ${
-																										selectedTime === time
-																											? "bg-pink-500 text-white border-pink-500"
-																											: "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700"
-																									} ${selectedDate && selectedDate < new Date() && Number(time.split(":")[0]) < new Date().getHours() ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
-																									disabled={
-																										selectedDate &&
-																										selectedDate < new Date() &&
-																										Number(time.split(":")[0]) <
-																											new Date().getHours()
-																											? true
-																											: false
-																									}
-																								>
-																									{time}
-																								</button>
-																							))
-																						)}
-																					</div>
-																				</div>
-
-																				{/* 📌 Explanation */}
-																				<div className="text-xs text-gray-500 space-y-1">
-																					<p>
-																						• Reprogrammer → utilise le solde
-																						prépayé si disponible
-																					</p>
-																					<p>
-																						• Refuser → montant sera ajouté au
-																						votre prepaid balance
-																					</p>
-																				</div>
-
-																				{/* 🔘 Actions */}
-																				<div className="flex gap-2">
-																					{/* <Button
-                                      variant="outline"
-                                      className="text-red-600"
-                                      onClick={() => handleRefuseAndConvertToPrepaid(appointment)}
-                                    >
-                                      Refuser
-                                    </Button> */}
-
-																					<Button
-																						disabled={
-																							!selectedDate || !selectedTime
-																						}
-																						onClick={() =>
-																							handleReschedule(
-																								appointment.id,
-																								selectedTime,
-																								selectedDate!,
-																								canUsePrepaid, // ✅ dynamic
-																							)
-																						}
-																						className={cn(
-																							canUsePrepaid
-																								? "bg-green-600 hover:bg-green-700"
-																								: "bg-gray-400 cursor-not-allowed",
-																						)}
-																					>
-																						Reprogrammer
-																					</Button>
-																				</div>
-																			</PopoverContent>
-																		</Popover>
-																	)}
-															</>
-														)}
+										    <div
+										        key={appointment.id}
+										        className={cn(
+										            "p-6 hover:shadow-lg border shadow-xl rounded-2xl bg-white dark:bg-gray-950 transition-all duration-300",
+										            appointment.status === "in_progress"
+										                ? "border-transparent relative overflow-hidden animate-border-glow"
+										                : "border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400",
+										        )}
+										    >
+										        {/* ✨ Animated border */}
+										        {appointment.status === "in_progress" && (
+										            <div className="absolute inset-0 rounded-2xl pointer-events-none border-2 border-transparent bg-[conic-linear(at_top,#ec4899,#a855f7,#ec4899)] animate-spin-slow opacity-40" />
+										        )}
+										
+										        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+										            <div className="flex-1">
+										                <div className="flex items-center gap-3 mb-3">
+										                    <h3 className="text-xl ">
+										                        {appointment.package
+										                            ? ""
+										                            : appointment.service?.name || "Service"}
+										                    </h3>
+										                    {appointment.package && (
+										                        <Badge className="bg-purple-500 text-white">
+										                            <Sparkles className="w-3 h-3 mr-1" />
+										                            Package: {appointment.package.name}
+										                        </Badge>
+										                    )}
+										                    {getStatusBadge(appointment.status)}
+										                </div>
+										
+										                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-lg text-gray-900 dark:text-gray-100">
+										                    <div className="flex items-center gap-2">
+										                        <CalendarIcon className="w-4 h-4 text-pink-500" />
+										                        <span>{formatDate(appointment.date)}</span>
+										                    </div>
+										                    <div className="flex items-center gap-2">
+										                        <Clock className="w-4 h-4 text-purple-500" />
+										                        <span>{appointment.time}</span>
+										                    </div>
+										                    <div className="flex items-center gap-2">
+										                        <Users className="w-4 h-4 text-amber-500" />
+										                        <span>
+										                            {appointment.worker?.user?.name ||
+										                                "Unassigned"}
+										                        </span>
+										                    </div>
+										                    <div className="flex items-center gap-2">
+										                        <MapPin className="w-4 h-4 text-green-500" />
+										                        <span>
+										                            {appointment.location === "salon"
+										                                ? "Salon"
+										                                : "Home"}
+										                        </span>
+										                    </div>
+										                </div>
+										
+										                {appointment.notes && (
+										                    <div className="mt-3 p-3 bg-purple-50 rounded-lg">
+										                        <p className="text-lg text-gray-700">
+										                            <MessageSquare className="w-4 h-4 inline mr-2" />
+										                            {appointment.notes}
+										                        </p>
+										                    </div>
+										                )}
+										            </div>
+										
+										            <div className="flex flex-col gap-2">
+										                <div className="text-right mb-2">
+										                    <p className="text-2xl text-pink-600">
+										                        {appointment.price?.toLocaleString()} CDF
+										                    </p>
+										                </div>
+										                {/* 🔥 CONDITIONAL DISPLAY */}
+										                {appointment.status === "in_progress" ? (
+										                    <div className="p-4 rounded-xl bg-linear-to-r from-pink-500 to-purple-600 text-white text-center font-medium shadow-lg animate-pulse">
+										                        We promise satisfaction and
+										                        professionalism.
+										                        <br />
+										                        <span className="font-bold">
+										                            ENJOY YOUR APPOINTMENT!!
+										                        </span>
+										                    </div>
+										                ) : (
+										                    <>
+										                        <AppointmentCountdown
+										                            date={appointment.date}
+										                            time={appointment.time}
+										                            appointment={appointment}
+										                            onMissedAutoCancel={handleMissedAutoCancel}
+										                        />
+										                        {missed &&
+										                            appointment.status === "cancelled" && (
+										                                <Popover>
+										                                    <PopoverTrigger asChild>
+										                                        <Button
+										                                            size="sm"
+										                                            variant="outline"
+										                                            className="text-amber-600 border-amber-400 hover:bg-amber-50"
+										                                        >
+										                                            Missed Appointment
+										                                        </Button>
+										                                    </PopoverTrigger>
+										
+										                                    <PopoverContent className="w-85 rounded-2xl p-4 space-y-4">
+										                                        {/* 🧠 Info */}
+										                                        <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+										                                            <p className="font-semibold text-amber-600">
+										                                                ⚠️ Missed Appointment
+										                                            </p>
+										
+										                                            <p>
+										                                                You can reschedule this
+										                                                appointment or decline.
+										                                            </p>
+										                                        </div>
+										
+										                                        {/* 💰 Prepaid Status */}
+										                                        <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900 border text-sm">
+										                                            {canUsePrepaid ? (
+										                                                <p className="text-green-600 font-medium">
+										                                                    ✅ The prepaid balance will
+										                                                    automatically cover this service
+										                                                </p>
+										                                            ) : (
+										                                                <p className="text-red-500 font-medium">
+										                                                    ❌ Insufficient prepaid balance
+										                                                    (payment required)
+										                                                </p>
+										                                            )}
+										                                        </div>
+										
+										                                        {/* 📅 Date */}
+										                                        <Popover>
+										                                            <PopoverTrigger asChild>
+										                                                <Button
+										                                                    variant="outline"
+										                                                    className={cn(
+										                                                        "w-full justify-start text-left font-normal",
+										                                                        !selectedDate &&
+										                                                            "text-muted-foreground",
+										                                                    )}
+										                                                >
+										                                                    <CalendarIcon className="mr-2 h-4 w-4" />
+										                                                    {selectedDate
+										                                                        ? format(selectedDate, "PPP", {
+										                                                              locale: en,
+										                                                          })
+										                                                        : "Choose date"}
+										                                                </Button>
+										                                            </PopoverTrigger>
+										
+										                                            <PopoverContent className="w-auto p-0">
+										                                                <Calendar
+										                                                    mode="single"
+										                                                    selected={selectedDate}
+										                                                    onSelect={setSelectedDate}
+										                                                    disabled={(date) =>
+										                                                        date < new Date()
+										                                                    }
+										                                                />
+										                                            </PopoverContent>
+										                                        </Popover>
+										
+										                                        {/* ⏰ Time */}
+										                                        <div>
+										                                            {slots?.slots.length != 0 ? (
+										                                                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+										                                                    Available Times{" "}
+										                                                    <span className="text-md font-bold text-pink-600">
+										                                                        {selectedWorkerName}
+										                                                    </span>{" "}
+										                                                    will be available on{" "}
+										                                                    <span className="text-md font-bold text-pink-600">
+										                                                        {selectedDate
+										                                                            ? format(
+										                                                                  selectedDate,
+										                                                                  "PPP",
+										                                                                  {
+										                                                                      locale: en,
+										                                                                  },
+										                                                              )
+										                                                            : ""}
+										                                                    </span>
+										                                                </h3>
+										                                            ) : (
+										                                                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+										                                                    Unfortunately{" "}
+										                                                    <span className="text-md font-bold text-pink-600">
+										                                                        {selectedWorkerName}
+										                                                    </span>{" "}
+										                                                    is not working on{" "}
+										                                                    <span className="text-md font-bold text-pink-600">
+										                                                        the{" "}
+										                                                        {selectedDate
+										                                                            ? weekDay[
+										                                                                  selectedDate.getDay()
+										                                                              ]
+										                                                            : ""}
+										                                                    </span>
+										                                                </h3>
+										                                            )}
+										                                            <div
+										                                                className={`grid ${slots?.slots.length != 0 ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-6" : ""} gap-2`}
+										                                            >
+										                                                {slots?.slots.length === 0 ? (
+										                                                    <p className="p-1 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">
+										                                                        Unfortunately, no time
+										                                                        is available for this date.
+										                                                        Choose another specialist or
+										                                                        another date.
+										                                                    </p>
+										                                                ) : (
+										                                                    slots?.slots.map((time) => (
+										                                                        <button
+										                                                            key={time}
+										                                                            type="button"
+										                                                            onClick={() =>
+										                                                                setSelectedTime(time)
+										                                                            }
+										                                                            className={`p-2 rounded-lg border ${
+										                                                                selectedTime === time
+										                                                                    ? "bg-pink-500 text-white border-pink-500"
+										                                                                    : "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700"
+										                                                            } ${
+										                                                                selectedDate &&
+										                                                                selectedDate < new Date() &&
+										                                                                Number(time.split(":")[0]) < new Date().getHours()
+										                                                                    ? "cursor-not-allowed opacity-50"
+										                                                                    : "cursor-pointer"
+										                                                            }`}
+										                                                            disabled={
+										                                                                selectedDate &&
+										                                                                selectedDate < new Date() &&
+										                                                                Number(time.split(":")[0]) <
+										                                                                    new Date().getHours()
+										                                                                    ? true
+										                                                                    : false
+										                                                            }
+										                                                        >
+										                                                            {time}
+										                                                        </button>
+										                                                    ))
+										                                                )}
+										                                            </div>
+										                                        </div>
+										
+										                                        {/* 📌 Explanation */}
+										                                        <div className="text-xs text-gray-500 space-y-1">
+										                                            <p>
+										                                                • Reschedule → uses the prepaid balance if available
+										                                            </p>
+										                                            <p>
+										                                                • Decline → amount will be added to
+										                                                your prepaid balance
+										                                            </p>
+										                                        </div>
+										
+										                                        {/* 🔘 Actions */}
+										                                        <div className="flex gap-2">
+										                                            <Button
+										                                                disabled={
+										                                                    !selectedDate || !selectedTime
+										                                                }
+										                                                onClick={() =>
+										                                                    handleReschedule(
+										                                                        appointment.id,
+										                                                        selectedTime,
+										                                                        selectedDate!,
+										                                                        canUsePrepaid,
+										                                                    )
+										                                                }
+										                                                className={cn(
+										                                                    canUsePrepaid
+										                                                        ? "bg-green-600 hover:bg-green-700"
+										                                                        : "bg-gray-400 cursor-not-allowed",
+										                                                )}
+										                                            >
+										                                                Reschedule
+										                                            </Button>
+										                                        </div>
+										                                    </PopoverContent>
+										                                </Popover>
+										                            )}
+										                    </>
+										                )}
+										            </div>
+										        </div>
+										    </div>
+										)}
 													</div>
 												</div>
 											</div>
@@ -1395,181 +1394,169 @@ export default function ClientDashboardV2() {
 															</PopoverTrigger>
 
 															<PopoverContent className="w-95 rounded-2xl p-4 space-y-4">
-																{/* 🧠 Info */}
-																<div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-																	<p className="font-semibold text-amber-600">
-																		⚠️ Missed Appointment
-																	</p>
+    {/* 🧠 Info */}
+    <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+        <p className="font-semibold text-amber-600">
+            ⚠️ Missed Appointment
+        </p>
 
-																	<p>
-																		Vous pouvez reprogrammer ce rendez-vous ou
-																		refuser.
-																	</p>
-																</div>
+        <p>
+            You can reschedule this appointment or decline.
+        </p>
+    </div>
 
-																{/* 💰 Prepaid Status */}
-																<div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900 border text-sm">
-																	{canUsePrepaid ? (
-																		<p className="text-green-600 font-medium">
-																			✅ Le prepaid balance couvrira
-																			automatiquement ce service
-																		</p>
-																	) : (
-																		<p className="text-red-500 font-medium">
-																			❌ Solde prépayé insuffisant (paiement
-																			requis)
-																		</p>
-																	)}
-																</div>
+    {/* 💰 Prepaid Status */}
+    <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900 border text-sm">
+        {canUsePrepaid ? (
+            <p className="text-green-600 font-medium">
+                ✅ The prepaid balance will automatically cover this service
+            </p>
+        ) : (
+            <p className="text-red-500 font-medium">
+                ❌ Insufficient prepaid balance (payment required)
+            </p>
+        )}
+    </div>
 
-																{/* 📅 Date */}
-																<Popover>
-																	<PopoverTrigger asChild>
-																		<Button
-																			variant="outline"
-																			className={cn(
-																				"w-full justify-start text-left font-normal",
-																				!selectedDate &&
-																					"text-muted-foreground",
-																			)}
-																		>
-																			<CalendarIcon className="mr-2 h-4 w-4" />
-																			{selectedDate
-																				? format(selectedDate, "PPP", {
-																						locale: fr,
-																					})
-																				: "Choisir date"}
-																		</Button>
-																	</PopoverTrigger>
+    {/* 📅 Date */}
+    <Popover>
+        <PopoverTrigger asChild>
+            <Button
+                variant="outline"
+                className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !selectedDate && "text-muted-foreground",
+                )}
+            >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {selectedDate
+                    ? format(selectedDate, "PPP", { locale: en })
+                    : "Choose date"}
+            </Button>
+        </PopoverTrigger>
 
-																	<PopoverContent className="w-auto p-0">
-																		<Calendar
-																			mode="single"
-																			selected={selectedDate}
-																			onSelect={setSelectedDate}
-																			disabled={(date) => date < new Date()}
-																		/>
-																	</PopoverContent>
-																</Popover>
+        <PopoverContent className="w-auto p-0">
+            <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                disabled={(date) => date < new Date()}
+            />
+        </PopoverContent>
+    </Popover>
 
-																{/* ⏰ Time */}
-																<div>
-																	{slots?.slots.length != 0 ? (
-																		<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-																			Les Heures{" "}
-																			<span className="text-md font-bold text-pink-600">
-																				{selectedWorkerName}
-																			</span>{" "}
-																			sera disponible le{" "}
-																			<span className="text-md font-bold text-pink-600">
-																				{selectedDate
-																					? format(selectedDate, "PPP", {
-																							locale: fr,
-																						})
-																					: ""}
-																			</span>
-																		</h3>
-																	) : (
-																		<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-																			Malheureusement{" "}
-																			<span className="text-md font-bold text-pink-600">
-																				{selectedWorkerName}
-																			</span>{" "}
-																			ne travaille pas{" "}
-																			<span className="text-md font-bold text-pink-600">
-																				le{" "}
-																				{selectedDate
-																					? weekDay[selectedDate.getDay()]
-																					: ""}
-																			</span>
-																		</h3>
-																	)}
-																	<div
-																		className={`grid ${slots?.slots.length != 0 ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-6" : ""} gap-2`}
-																	>
-																		{slots?.slots.length === 0 ? (
-																			<p className="p-1 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">
-																				Malheureusement aucune heure n'est
-																				disponible pour cette date {". "}
-																				Choisi un autre specialiste ou une autre
-																				date.
-																			</p>
-																		) : (
-																			slots?.slots.map((time) => (
-																				<button
-																					key={time}
-																					type="button"
-																					onClick={() => setSelectedTime(time)}
-																					className={`p-2 rounded-lg border ${
-																						selectedTime === time
-																							? "bg-pink-500 text-white border-pink-500"
-																							: "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700"
-																					} ${selectedDate && selectedDate < new Date() && Number(time.split(":")[0]) < new Date().getHours() ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
-																					disabled={
-																						selectedDate &&
-																						selectedDate < new Date() &&
-																						Number(time.split(":")[0]) <
-																							new Date().getHours()
-																							? true
-																							: false
-																					}
-																				>
-																					{time}
-																				</button>
-																			))
-																		)}
-																	</div>
-																</div>
-																{/* 📌 Explanation */}
-																<div className="text-xs text-gray-500 space-y-1">
-																	<p>
-																		• Reprogrammer → utilise le prepaid balance si
-																		disponible
-																	</p>
-																	<p>
-																		• Refuser → montant sera ajouté au votre
-																		prepaid balance
-																	</p>
-																</div>
+    {/* ⏰ Time */}
+    <div>
+        {slots?.slots.length != 0 ? (
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+                Available Times{" "}
+                <span className="text-md font-bold text-pink-600">
+                    {selectedWorkerName}
+                </span>{" "}
+                will be available on{" "}
+                <span className="text-md font-bold text-pink-600">
+                    {selectedDate
+                        ? format(selectedDate, "PPP", { locale: en })
+                        : ""}
+                </span>
+            </h3>
+        ) : (
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+                Unfortunately{" "}
+                <span className="text-md font-bold text-pink-600">
+                    {selectedWorkerName}
+                </span>{" "}
+                is not working on{" "}
+                <span className="text-md font-bold text-pink-600">
+                    the{" "}
+                    {selectedDate
+                        ? weekDay[selectedDate.getDay()]
+                        : ""}
+                </span>
+            </h3>
+        )}
+        <div
+            className={`grid ${slots?.slots.length != 0 ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-6" : ""} gap-2`}
+        >
+            {slots?.slots.length === 0 ? (
+                <p className="p-1 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">
+                    Unfortunately, no time is available for this date. Choose another specialist or another date.
+                </p>
+            ) : (
+                slots?.slots.map((time) => (
+                    <button
+                        key={time}
+                        type="button"
+                        onClick={() => setSelectedTime(time)}
+                        className={`p-2 rounded-lg border ${
+                            selectedTime === time
+                                ? "bg-pink-500 text-white border-pink-500"
+                                : "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700"
+                        } ${
+                            selectedDate &&
+                            selectedDate < new Date() &&
+                            Number(time.split(":")[0]) < new Date().getHours()
+                                ? "cursor-not-allowed opacity-50"
+                                : "cursor-pointer"
+                        }`}
+                        disabled={
+                            selectedDate &&
+                            selectedDate < new Date() &&
+                            Number(time.split(":")[0]) < new Date().getHours()
+                                ? true
+                                : false
+                        }
+                    >
+                        {time}
+                    </button>
+                ))
+            )}
+        </div>
+    </div>
+    {/* 📌 Explanation */}
+    <div className="text-xs text-gray-500 space-y-1">
+        <p>
+            • Reschedule → uses the prepaid balance if available
+        </p>
+        <p>
+            • Decline → amount will be added to your prepaid balance
+        </p>
+    </div>
 
-																{/* 🔘 Actions */}
-																<div className="flex gap-2">
-																	<Button
-																		variant="outline"
-																		className="text-red-600"
-																		onClick={() =>
-																			handleRefuseAndConvertToPrepaid(
-																				appointment,
-																			)
-																		}
-																	>
-																		Refuser
-																	</Button>
+    {/* 🔘 Actions */}
+    <div className="flex gap-2">
+        <Button
+            variant="outline"
+            className="text-red-600"
+            onClick={() => handleRefuseAndConvertToPrepaid(appointment)}
+        >
+            Decline
+        </Button>
 
-																	<Button
-																		disabled={
-																			!selectedDate ||
-																			!selectedTime ||
-																			!canUsePrepaid
-																		}
-																		onClick={() =>
-																			handleReschedule(
-																				appointment.id,
-																				selectedTime,
-																				selectedDate!,
-																				canUsePrepaid, // ✅ dynamic
-																			)
-																		}
-																		className={cn(
-																			canUsePrepaid
-																				? "bg-green-600 hover:bg-green-700"
-																				: "bg-gray-400 cursor-not-allowed",
-																		)}
-																	>
-																		Reprogrammer
-																	</Button>
-																</div>
-															</PopoverContent>
+        <Button
+            disabled={
+                !selectedDate ||
+                !selectedTime ||
+                !canUsePrepaid
+            }
+            onClick={() =>
+                handleReschedule(
+                    appointment.id,
+                    selectedTime,
+                    selectedDate!,
+                    canUsePrepaid,
+                )
+            }
+            className={cn(
+                canUsePrepaid
+                    ? "bg-green-600 hover:bg-green-700"
+                    : "bg-gray-400 cursor-not-allowed",
+            )}
+        >
+            Reschedule
+        </Button>
+    </div>
+</PopoverContent>
 														</Popover>
 													)}
 												</div>
@@ -1584,7 +1571,7 @@ export default function ClientDashboardV2() {
 						<Card className="p-6">
 							<h2 className="text-2xl font-medium   mb-6 flex items-center">
 								<Package className="w-6 h-6 mr-2 text-purple-500" />
-								Historique
+								Appointment History
 							</h2>
 
 							{appointmentHistory.length === 0 ? (
@@ -1628,7 +1615,7 @@ export default function ClientDashboardV2() {
 															}}
 														>
 															<Star className="w-4 h-4 mr-2" />
-															Noter
+															Rate
 														</Button>
 													)}
 											</div>
@@ -1662,136 +1649,123 @@ export default function ClientDashboardV2() {
 										<Loader2 className="h-8 w-8 animate-spin text-pink-500" />
 									</div>
 								) : packageAppointments.length === 0 ? (
-									<Card className="p-8 text-center border-dashed border-2 border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">
-										<Package className="w-12 h-12 mx-auto text-gray-400 mb-4" />
-										<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-											Aucun forfait réservé
-										</h3>
-										<p className="text-gray-500 dark:text-gray-400 mt-2">
-											You haven't booked any de forfait. Découvrez nos
-											offres exclusives to transform your beauty.
-										</p>
-									</Card>
-								) : (
-									<div className="grid gap-4">
-										{packageAppointments.map((apt) => (
-											<Card
-												key={apt.id}
-												className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-pink-300 dark:hover:border-pink-900 transition-all hover:shadow-lg"
-											>
-												{/* Accent Line */}
-												<div className="absolute top-0 left-0 w-1 h-full bg-linear-to-b from-pink-500 to-purple-500" />
+    <Card className="p-8 text-center border-dashed border-2 border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">
+        <Package className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+            No package booked
+        </h3>
+        <p className="text-gray-500 dark:text-gray-400 mt-2">
+            You haven't booked any package. Discover our exclusive offers to transform your beauty.
+        </p>
+    </Card>
+) : (
+    <div className="grid gap-4">
+        {packageAppointments.map((apt) => (
+            <Card
+                key={apt.id}
+                className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-pink-300 dark:hover:border-pink-900 transition-all hover:shadow-lg"
+            >
+                {/* Accent Line */}
+                <div className="absolute top-0 left-0 w-1 h-full bg-linear-to-b from-pink-500 to-purple-500" />
 
-												<div className="p-5 sm:p-6">
-													{/* Header: Package Name & Status */}
-													<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-														<div className="flex items-center gap-3">
-															<div className="p-2 bg-pink-100 dark:bg-pink-900/30 rounded-lg">
-																<Package className="w-5 h-5 text-pink-600 dark:text-pink-400" />
-															</div>
-															<div>
-																<h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-																	{apt.package?.name || "Beauty Package"}
-																</h3>
-																<p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
-																	<CalendarIcon className="w-3 h-3" />
-																	{format(new Date(apt.date), "PPP", {
-																		locale: fr,
-																	})}{" "}
-																	à {apt.time}
-																</p>
-															</div>
-														</div>
-														<div className="flex items-center gap-3 sm:flex-col sm:items-end">
-															<Badge
-																className={
-																	apt.status === "confirmed"
-																		? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-																		: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-																}
-															>
-																{apt.status === "confirmed"
-																	? "Confirmé"
-																	: "En attente"}
-															</Badge>
-															<span className="text-lg font-bold text-gray-900 dark:text-gray-100">
-																{apt.price?.toLocaleString() || 0} Fc
-															</span>
-														</div>
-													</div>
+                <div className="p-5 sm:p-6">
+                    {/* Header: Package Name & Status */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2 bg-pink-100 dark:bg-pink-900/30 rounded-lg">
+                                <Package className="w-5 h-5 text-pink-600 dark:text-pink-400" />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                                    {apt.package?.name || "Beauty Package"}
+                                </h3>
+                                <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
+                                    <CalendarIcon className="w-3 h-3" />
+                                    {format(new Date(apt.date), "PPP", { locale: en })} at {apt.time}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3 sm:flex-col sm:items-end">
+                            <Badge
+                                className={
+                                    apt.status === "confirmed"
+                                        ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                                        : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                                }
+                            >
+                                {apt.status === "confirmed" ? "Confirmed" : "Pending"}
+                            </Badge>
+                            <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                                {apt.price?.toLocaleString() || 0} Fc
+                            </span>
+                        </div>
+                    </div>
 
-													{/* Body: Services & Add-ons Breakdown */}
-													<div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 space-y-3">
-														<div>
-															<h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-																Included Services (
-																{apt.package?.services?.length || 0})
-															</h4>
-															<div className="flex flex-wrap gap-2">
-																{apt.package?.services?.map((service: any) => (
-																	<span
-																		key={service.id}
-																		className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 shadow-sm"
-																	>
-																		{[
-																			{
-																				onglerie: (
-																					<Scissors className="w-5 h-5" />
-																				),
-																				cils: <Eye className="w-5 h-5" />,
-																				tresses: (
-																					<Scissors className="w-5 h-5" />
-																				),
-																				maquillage: (
-																					<Sparkles className="w-5 h-5" />
-																				),
-																			},
-																		][service.category] || (
-																			<Scissors className="w-3 h-3 mr-1" />
-																		)}
-																		{service.name}
-																	</span>
-																))}
-															</div>
-														</div>
+                    {/* Body: Services & Add-ons Breakdown */}
+                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 space-y-3">
+                        <div>
+                            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+                                Included Services ({apt.package?.services?.length || 0})
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                                {apt.package?.services?.map((service: any) => (
+                                    <span
+                                        key={service.id}
+                                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 shadow-sm"
+                                    >
+                                        {[
+                                            {
+                                                onglerie: <Scissors className="w-5 h-5" />,
+                                                cils: <Eye className="w-5 h-5" />,
+                                                tresses: <Scissors className="w-5 h-5" />,
+                                                maquillage: <Sparkles className="w-5 h-5" />,
+                                            },
+                                        ][service.category] || <Scissors className="w-3 h-3 mr-1" />}
+                                        {service.name}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
 
-														{/* {apt.addOns && apt.addOns.length > 0 && (
-											<div>
-											<h4 className="text-xs font-semibold uppercase tracking-wider text-pink-600 dark:text-pink-400 mb-2">
-												Options Supplémentaires
-											</h4>
-											<div className="flex flex-wrap gap-2">
-												{apt.addOns.map((addon, index) => (
-												<span
-													key={index}
-													className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-pink-50 dark:bg-pink-900/20 text-pink-700 dark:text-pink-300 border border-pink-200 dark:border-pink-800"
-												>
-													<Plus className="w-3 h-3 mr-1" />
-													{typeof addon === 'object' ? addon.name : addon}
-												</span>
-												))}
-											</div>
-											</div>
-										)} */}
-													</div>
+                        {/* {apt.addOns && apt.addOns.length > 0 && (
+                            <div>
+                                <h4 className="text-xs font-semibold uppercase tracking-wider text-pink-600 dark:text-pink-400 mb-2">
+                                    Additional Options
+                                </h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {apt.addOns.map((addon, index) => (
+                                        <span
+                                            key={index}
+                                            className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-pink-50 dark:bg-pink-900/20 text-pink-700 dark:text-pink-300 border border-pink-200 dark:border-pink-800"
+                                        >
+                                            <Plus className="w-3 h-3 mr-1" />
+                                            {typeof addon === 'object' ? addon.name : addon}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )} */}
+                    </div>
 
-													{/* Footer: Action */}
-													<div className="mt-4 flex justify-end">
-														<Button
-															variant="ghost"
-															size="sm"
-															className="text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-900/20"
-															onClick={() => {
-																/* Open details modal */
-															}}
-														>
-															Voir les détails
-															<ChevronRight className="w-4 h-4 ml-1" />
-														</Button>
-													</div>
-												</div>
-											</Card>
-										))}
+                    {/* Footer: Action */}
+                    <div className="mt-4 flex justify-end">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-900/20"
+                            onClick={() => {
+                                /* Open details modal */
+                            }}
+                        >
+                            View Details
+                            <ChevronRight className="w-4 h-4 ml-1" />
+                        </Button>
+                    </div>
+                </div>
+            </Card>
+        ))}
+    </div>
+)
 									</div>
 								)}
 							</div>
@@ -1810,286 +1784,286 @@ export default function ClientDashboardV2() {
 					</TabsContent>
 
 					{/* Referrals Tab */}
-					<TabsContent value="referrals" className="space-y-6">
-						<Card className="p-6">
-							<h2 className="text-2xl font-medium   mb-6 flex items-center">
-								<Share2 className="w-6 h-6 mr-2 text-pink-500" />
-								Programme de Referral
-							</h2>
+<TabsContent value="referrals" className="space-y-6">
+    <Card className="p-6">
+        <h2 className="text-2xl font-medium mb-6 flex items-center">
+            <Share2 className="w-6 h-6 mr-2 text-pink-500" />
+            Referral Program
+        </h2>
 
-							{/* Referral Code */}
-							<div className="mb-8 p-6 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
-								<h3 className="text-lg font-semibold mb-4">
-									Votre code de parrainage
-								</h3>
-								<div className="flex items-center gap-3 mb-4 flex-col">
-									<div className="flex-1 p-4 bg-background rounded-lg border-2 border-dashed border-pink-300">
-										<p className="text-lg lg:text-3xl text-center text-pink-600 tracking-wider">
-											{referralCode
-												? "https://beauty-nails-salon.vercel.app/auth/signup?ref=" +
-													referralCode.toLocaleLowerCase()
-												: "Loading..."}
-										</p>
-									</div>
-									<Button
-										size="lg"
-										onClick={handleCopyReferralCode}
-										className="bg-linear-to-r from-pink-500 to-purple-500"
-									>
-										<Share2 className="w-5 h-5 mr-2" />
-										Copier
-									</Button>
-								</div>
+        {/* Referral Code */}
+        <div className="mb-8 p-6 border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
+            <h3 className="text-lg font-semibold mb-4">
+                Your Referral Code
+            </h3>
+            <div className="flex items-center gap-3 mb-4 flex-col">
+                <div className="flex-1 p-4 bg-background rounded-lg border-2 border-dashed border-pink-300">
+                    <p className="text-lg lg:text-3xl text-center text-pink-600 tracking-wider">
+                        {referralCode
+                            ? "https://beauty-nails-salon.vercel.app/auth/signup?ref=" +
+                                referralCode.toLocaleLowerCase()
+                            : "Loading..."}
+                    </p>
+                </div>
+                <Button
+                    size="lg"
+                    onClick={handleCopyReferralCode}
+                    className="bg-linear-to-r from-pink-500 to-purple-500"
+                >
+                    <Share2 className="w-5 h-5 mr-2" />
+                    Copy
+                </Button>
+            </div>
 
-								<div className="grid grid-cols-2 gap-4 text-center">
-									<div className="p-4 bg-white dark:bg-gray-800 rounded-lg">
-										<p className="text-2xl font-medium  text-pink-600">
-											{referrals?.length || 0}
-										</p>
-										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Successful Referrals
-										</p>
-									</div>
-									<div className="p-4 bg-white dark:bg-gray-800 rounded-lg">
-										<p className="text-2xl font-medium  text-purple-600">
-											{nextFreeReferral}
-										</p>
-										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Restants for free service
-										</p>
-									</div>
-								</div>
-							</div>
+            <div className="grid grid-cols-2 gap-4 text-center">
+                <div className="p-4 bg-white dark:bg-gray-800 rounded-lg">
+                    <p className="text-2xl font-medium text-pink-600">
+                        {referrals?.length || 0}
+                    </p>
+                    <p className="text-lg text-gray-900 dark:text-gray-100">
+                        Successful Referrals
+                    </p>
+                </div>
+                <div className="p-4 bg-white dark:bg-gray-800 rounded-lg">
+                    <p className="text-2xl font-medium text-purple-600">
+                        {nextFreeReferral}
+                    </p>
+                    <p className="text-lg text-gray-900 dark:text-gray-100">
+                        Remaining for free service
+                    </p>
+                </div>
+            </div>
+        </div>
 
-							<Card className="mb-8 p-6 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
-								<div className="flex justify-between items-center mb-4">
-									<h3 className="text-lg font-semibold">
-										Referral History
-									</h3>
+        <Card className="mb-8 p-6 border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
+            <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">
+                    Referral History
+                </h3>
 
-									<p className="text-lg">referred by </p>
-									<h3 className="text-pink-500 fontbold text-lg">
-										{user?.clientProfile?.referredBy}
-									</h3>
+                <p className="text-lg">referred by </p>
+                <h3 className="text-pink-500 font-bold text-lg">
+                    {user?.clientProfile?.referredBy}
+                </h3>
 
-									{canClaimBonus && (
-										<Button
-											onClick={handleClaimRefBonus}
-											className="bg-linear-to-r from-amber-500 to-yellow-500 hover:opacity-90"
-										>
-											🎁 Réclamer Bonus
-										</Button>
-									)}
-								</div>
+                {canClaimBonus && (
+                    <Button
+                        onClick={handleClaimRefBonus}
+                        className="bg-linear-to-r from-amber-500 to-yellow-500 hover:opacity-90"
+                    >
+                        🎁 Claim Bonus
+                    </Button>
+                )}
+            </div>
 
-								{isLoading ? (
-									<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-										<Loader2 className="h-8 w-8 animate-spin" />
-									</div>
-								) : referralList.length === 0 ? (
-									<p className="text-lg text-muted-foreground">
-										Aucun parrainage pour le moment.
-									</p>
-								) : (
-									<div className="rounded-xl border overflow-hidden">
-										<div className="max-h-100 overflow-y-auto">
-											<table className="w-full text-lg">
-												<thead className="bg-muted sticky top-0 z-10">
-													<tr>
-														<th className="text-left p-3">Nom</th>
-														<th className="text-left p-3">Email</th>
-														<th className="text-left p-3">Téléphone</th>
-														<th className="text-left p-3">Dépenses</th>
-														<th className="text-left p-3">Statut</th>
-														<th className="text-left p-3">Récompense</th>
-													</tr>
-												</thead>
+            {isLoading ? (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <Loader2 className="h-8 w-8 animate-spin" />
+                </div>
+            ) : referralList.length === 0 ? (
+                <p className="text-lg text-muted-foreground">
+                    No referrals yet.
+                </p>
+            ) : (
+                <div className="rounded-xl border overflow-hidden">
+                    <div className="max-h-100 overflow-y-auto">
+                        <table className="w-full text-lg">
+                            <thead className="bg-muted sticky top-0 z-10">
+                                <tr>
+                                    <th className="text-left p-3">Name</th>
+                                    <th className="text-left p-3">Email</th>
+                                    <th className="text-left p-3">Phone</th>
+                                    <th className="text-left p-3">Spending</th>
+                                    <th className="text-left p-3">Status</th>
+                                    <th className="text-left p-3">Reward</th>
+                                </tr>
+                            </thead>
 
-												<tbody>
-													{referralList.map((ref) => (
-														<tr
-															key={ref.id}
-															className="border-t hover:bg-muted/40 transition"
-														>
-															<td className="p-3 font-medium">
-																{ref.referred.user.name}
-															</td>
+                            <tbody>
+                                {referralList.map((ref) => (
+                                    <tr
+                                        key={ref.id}
+                                        className="border-t hover:bg-muted/40 transition"
+                                    >
+                                        <td className="p-3 font-medium">
+                                            {ref.referred.user.name}
+                                        </td>
 
-															<td className="p-3">{ref.referred.user.email}</td>
+                                        <td className="p-3">{ref.referred.user.email}</td>
 
-															<td className="p-3">{ref.referred.user.phone}</td>
+                                        <td className="p-3">{ref.referred.user.phone}</td>
 
-															<td className="p-3">
-																{ref.referred.totalSpent.toLocaleString()} CDF
-															</td>
+                                        <td className="p-3">
+                                            {ref.referred.totalSpent.toLocaleString()} CDF
+                                        </td>
 
-															<td className="p-3">
-																<span
-																	className={`px-3 py-1 text-base rounded-full ${
-																		ref.status === "completed"
-																			? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
-																			: ref.status === "pending"
-																				? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400"
-																				: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400"
-																	}`}
-																>
-																	{ref.status}
-																</span>
-															</td>
+                                        <td className="p-3">
+                                            <span
+                                                className={`px-3 py-1 text-base rounded-full ${
+                                                    ref.status === "completed"
+                                                        ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
+                                                        : ref.status === "pending"
+                                                            ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400"
+                                                            : "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400"
+                                                }`}
+                                            >
+                                                {ref.status}
+                                            </span>
+                                        </td>
 
-															<td className="p-3">
-																{ref.rewardGranted ? (
-																	<span className="text-green-600 dark:text-green-400 text-base font-medium">
-																		✔ Accordée
-																	</span>
-																) : (
-																	<span className="text-muted-foreground text-base">
-																		—
-																	</span>
-																)}
-															</td>
-														</tr>
-													))}
-												</tbody>
-											</table>
-										</div>
-									</div>
-								)}
-							</Card>
-							<Card className="mb-8 p-6 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
-								<div className="flex justify-between items-center mb-4">
-									<h3 className="text-lg font-semibold">
-										Referrals - Bonus ✔ Granted
-									</h3>
-								</div>
+                                        <td className="p-3">
+                                            {ref.rewardGranted ? (
+                                                <span className="text-green-600 dark:text-green-400 text-base font-medium">
+                                                    ✔ Granted
+                                                </span>
+                                            ) : (
+                                                <span className="text-muted-foreground text-base">
+                                                    —
+                                                </span>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+        </Card>
+        <Card className="mb-8 p-6 border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
+            <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">
+                    Referrals - Bonus ✔ Granted
+                </h3>
+            </div>
 
-								{isLoading ? (
-									<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-										<Loader2 className="h-8 w-8 animate-spin" />
-									</div>
-								) : referralList.length === 0 ? (
-									<>
-										<p className="text-lg text-muted-foreground">
-											Continue de faire du parrainage.
-										</p>
-										<p className="text-lg text-muted-foreground">
-											Enjoy 10% off on all our services.
-										</p>
-									</>
-								) : (
-									<div className="rounded-xl border overflow-hidden">
-										<div className="max-h-100 overflow-y-auto">
-											<table className="w-full text-lg">
-												<thead className="bg-muted sticky top-0 z-10">
-													<tr>
-														<th className="text-left p-3">Nom</th>
-														<th className="text-left p-3">Email</th>
-														<th className="text-left p-3">Téléphone</th>
-														<th className="text-left p-3">Dépenses</th>
-														<th className="text-left p-3">Statut</th>
-														<th className="text-left p-3">Récompense</th>
-													</tr>
-												</thead>
+            {isLoading ? (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <Loader2 className="h-8 w-8 animate-spin" />
+                </div>
+            ) : referralList.length === 0 ? (
+                <>
+                    <p className="text-lg text-muted-foreground">
+                        Continue referring.
+                    </p>
+                    <p className="text-lg text-muted-foreground">
+                        Enjoy 10% off on all our services.
+                    </p>
+                </>
+            ) : (
+                <div className="rounded-xl border overflow-hidden">
+                    <div className="max-h-100 overflow-y-auto">
+                        <table className="w-full text-lg">
+                            <thead className="bg-muted sticky top-0 z-10">
+                                <tr>
+                                    <th className="text-left p-3">Name</th>
+                                    <th className="text-left p-3">Email</th>
+                                    <th className="text-left p-3">Phone</th>
+                                    <th className="text-left p-3">Spending</th>
+                                    <th className="text-left p-3">Status</th>
+                                    <th className="text-left p-3">Reward</th>
+                                </tr>
+                            </thead>
 
-												<tbody>
-													{referralList
-														.filter((r) => r.status === "rewarded")
-														.map((ref) => (
-															<tr
-																key={ref.id}
-																className="border-t hover:bg-muted/40 transition"
-															>
-																<td className="p-3 font-medium">
-																	{ref.referred.user.name}
-																</td>
+                            <tbody>
+                                {referralList
+                                    .filter((r) => r.status === "rewarded")
+                                    .map((ref) => (
+                                        <tr
+                                            key={ref.id}
+                                            className="border-t hover:bg-muted/40 transition"
+                                        >
+                                            <td className="p-3 font-medium">
+                                                {ref.referred.user.name}
+                                            </td>
 
-																<td className="p-3">
-																	{ref.referred.user.email}
-																</td>
+                                            <td className="p-3">
+                                                {ref.referred.user.email}
+                                            </td>
 
-																<td className="p-3">
-																	{ref.referred.user.phone}
-																</td>
+                                            <td className="p-3">
+                                                {ref.referred.user.phone}
+                                            </td>
 
-																<td className="p-3">
-																	{ref.referred.totalSpent.toLocaleString()} CDF
-																</td>
+                                            <td className="p-3">
+                                                {ref.referred.totalSpent.toLocaleString()} CDF
+                                            </td>
 
-																<td className="p-3">
-																	<span
-																		className={`px-3 py-1 text-base rounded-full ${
-																			ref.status === "completed"
-																				? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
-																				: ref.status === "pending"
-																					? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400"
-																					: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400"
-																		}`}
-																	>
-																		{ref.status}
-																	</span>
-																</td>
+                                            <td className="p-3">
+                                                <span
+                                                    className={`px-3 py-1 text-base rounded-full ${
+                                                        ref.status === "completed"
+                                                            ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
+                                                            : ref.status === "pending"
+                                                                ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400"
+                                                                : "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400"
+                                                    }`}
+                                                >
+                                                    {ref.status}
+                                                </span>
+                                            </td>
 
-																<td className="p-3">
-																	{ref.rewardGranted ? (
-																		<span className="text-green-600 dark:text-green-400 text-base font-medium">
-																			✔ Accordée
-																		</span>
-																	) : (
-																		<span className="text-muted-foreground text-base">
-																			—
-																		</span>
-																	)}
-																</td>
-															</tr>
-														))}
-												</tbody>
-											</table>
-										</div>
-									</div>
-								)}
-							</Card>
+                                            <td className="p-3">
+                                                {ref.rewardGranted ? (
+                                                    <span className="text-green-600 dark:text-green-400 text-base font-medium">
+                                                        ✔ Granted
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-muted-foreground text-base">
+                                                        —
+                                                    </span>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+        </Card>
 
-							{/* How it works */}
-							<div className="space-y-4">
-								<h3 className="text-lg font-semibold">How does it work?</h3>
-								<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-									<div className="p-4 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
-										<div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mb-3">
-											<span className="text-2xl font-medium  text-pink-600">
-												1
-											</span>
-										</div>
-										<h4 className="font-semibold mb-2">Share</h4>
-										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Share your code with friends
-										</p>
-									</div>
-									<div className="p-4 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
-										<div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-											<span className="text-2xl font-medium  text-purple-600">
-												2
-											</span>
-										</div>
-										<h4 className="font-semibold mb-2">They sign up</h4>
-										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Your friends use your code when signing up
-										</p>
-									</div>
-									<div className="p-4 border border-pink-100 hover:border-pink-400  dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
-										<div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-3">
-											<span className="text-2xl font-medium  text-amber-600">
-												3
-											</span>
-										</div>
-										<h4 className="font-semibold mb-2">Earn points</h4>
-										<p className="text-lg text-gray-900 dark:text-gray-100">
-											Receive points for each successful referral
-										</p>
-									</div>
-								</div>
-							</div>
-						</Card>
-					</TabsContent>
+        {/* How it works */}
+        <div className="space-y-4">
+            <h3 className="text-lg font-semibold">How does it work?</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
+                    <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mb-3">
+                        <span className="text-2xl font-medium text-pink-600">
+                            1
+                        </span>
+                    </div>
+                    <h4 className="font-semibold mb-2">Share</h4>
+                    <p className="text-lg text-gray-900 dark:text-gray-100">
+                        Share your code with friends
+                    </p>
+                </div>
+                <div className="p-4 border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
+                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
+                        <span className="text-2xl font-medium text-purple-600">
+                            2
+                        </span>
+                    </div>
+                    <h4 className="font-semibold mb-2">They sign up</h4>
+                    <p className="text-lg text-gray-900 dark:text-gray-100">
+                        Your friends use your code when signing up
+                    </p>
+                </div>
+                <div className="p-4 border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
+                    <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-3">
+                        <span className="text-2xl font-medium text-amber-600">
+                            3
+                        </span>
+                    </div>
+                    <h4 className="font-semibold mb-2">Earn points</h4>
+                    <p className="text-lg text-gray-900 dark:text-gray-100">
+                        Receive points for each successful referral
+                    </p>
+                </div>
+            </div>
+        </div>
+    </Card>
+</TabsContent>
 
 					{/* Loyalty Tab */}
 					<TabsContent value="loyalty" className="space-y-6">
@@ -2155,50 +2129,46 @@ export default function ClientDashboardV2() {
 															/>
 														</div>
 														<p className="text-base text-gray-600 dark:text-gray-400 italic">
-															Only{" "}
-															{selectedClient?.loyaltyPoints -
-																(loyaltyPoints || 0)}{" "}
-															points pour votre prochaine récompense !
-														</p>
-														<p className="text-base mb-3">
-															Accumulez des points à chaque service pour
-															unlock gift cards.
-														</p>
-													</>
-												)}
-											</div>
-										</Card>
-									</Card>
-								</div>
-							</div>
-							{/* Loyalty Stats & Info */}
-							<div>
-								<Accordion type="single" collapsible className="w-full">
-									<AccordionItem value="item-1">
-										<AccordionTrigger>
-											How to earn points?
-										</AccordionTrigger>
-										<AccordionContent>
-											Earn 1 point for every 1000 CDF spent. Get bonus
-											points bonus pour les anniversaires, parrainages et
-											participation à des événements.
-										</AccordionContent>
-									</AccordionItem>
-									<AccordionItem value="item-2">
-										<AccordionTrigger>
-											What are the reward tiers?
-										</AccordionTrigger>
-										<AccordionContent>
-											<ul className="list-disc pl-5 space-y-1">
-												<li>100 points: Manucure gratuite</li>
-												<li>250 points: Extension cils gratuite</li>
-												<li>500 points: 50% sur tous services</li>
-												<li>1000 points: Journée beauté complète gratuite</li>
-											</ul>
-										</AccordionContent>
-									</AccordionItem>
-								</Accordion>
-							</div>
+    Only{" "}
+    {selectedClient?.loyaltyPoints - (loyaltyPoints || 0)}{" "}
+    points until your next reward!
+</p>
+<p className="text-base mb-3">
+    Earn points with every service to unlock gift cards.
+</p>
+</>
+)}
+</div>
+</Card>
+</Card>
+</div>
+</div>
+{/* Loyalty Stats & Info */}
+<div>
+    <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="item-1">
+            <AccordionTrigger>
+                How to earn points?
+            </AccordionTrigger>
+            <AccordionContent>
+                Earn 1 point for every 1000 CDF spent. Get bonus points for birthdays, referrals, and event participation.
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+            <AccordionTrigger>
+                What are the reward tiers?
+            </AccordionTrigger>
+            <AccordionContent>
+                <ul className="list-disc pl-5 space-y-1">
+                    <li>100 points: Free manicure</li>
+                    <li>250 points: Free eyelash extension</li>
+                    <li>500 points: 50% off all services</li>
+                    <li>1000 points: Free full beauty day</li>
+                </ul>
+            </AccordionContent>
+        </AccordionItem>
+    </Accordion>
+</div>
 
 							{/* Loyalty Transactions */}
 							<h3 className="text-lg font-semibold mb-4">
@@ -2276,7 +2246,7 @@ export default function ClientDashboardV2() {
 										value="history"
 										className="rounded-lg px-4 sm:px-8 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-pink-400 shadow-sm"
 									>
-										Historique
+										Visit History
 									</TabsTrigger>
 									<TabsTrigger
 										value="notifications"
@@ -2288,7 +2258,7 @@ export default function ClientDashboardV2() {
 										value="finances"
 										className="rounded-lg px-4 sm:px-8 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-pink-400 shadow-sm"
 									>
-										Finances
+										Finance
 									</TabsTrigger>
 								</TabsList>
 
@@ -2323,7 +2293,7 @@ export default function ClientDashboardV2() {
 														variant="outline"
 														className="rounded-full py-5 px-6 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300  transition-all text-lg"
 													>
-														Editer Profile
+														Edit Profile
 													</Button>
 												</ClientModalTrigger>
 											</div>
@@ -2368,7 +2338,7 @@ export default function ClientDashboardV2() {
 
 												<div className="space-y-4">
 													<h4 className="text-base sm:text-lg font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">
-														Notes & Autres
+														Notes & Others
 													</h4>
 													<div className="space-y-4">
 														<div className="p-5 bg-purple-50 dark:bg-purple-900/10 rounded-2xl border border-purple-100 dark:border-purple-900/30">
@@ -2514,129 +2484,125 @@ export default function ClientDashboardV2() {
 
 								{/* Finances Tab */}
 								<TabsContent value="finances" className="space-y-6">
-									<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-										<Card className="p-6 bg-linear-to-br from-green-50 to-emerald-50 dark:from-green-900/10 dark:to-emerald-900/10 border-green-100 dark:border-green-900/30 rounded-3xl">
-											<div className="flex items-center gap-4 mb-4">
-												<div className="w-12 h-12 rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center shadow-md">
-													<CreditCard className="w-6 h-6 text-green-600" />
-												</div>
-												<div>
-													<p className="text-base font-black text-green-600 dark:text-green-400 uppercase tracking-widest">
-														Solde Prepaid
-													</p>
-													<p className="text-2xl font-black text-gray-900 dark:text-gray-100">
-														{selectedClient?.prepaymentBalance}
-													</p>
-												</div>
-											</div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card className="p-6 bg-linear-to-br from-green-50 to-emerald-50 dark:from-green-900/10 dark:to-emerald-900/10 border-green-100 dark:border-green-900/30 rounded-3xl">
+            <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center shadow-md">
+                    <CreditCard className="w-6 h-6 text-green-600" />
+                </div>
+                <div>
+                    <p className="text-base font-black text-green-600 dark:text-green-400 uppercase tracking-widest">
+                        Prepaid Balance
+                    </p>
+                    <p className="text-2xl font-black text-gray-900 dark:text-gray-100">
+                        {selectedClient?.prepaymentBalance}
+                    </p>
+                </div>
+            </div>
 
-											<Popover>
-												<PopoverTrigger asChild>
-													<Button
-														size="sm"
-														className="w-full bg-green-600 hover:bg-green-700 text-white rounded-full shadow-md shadow-green-500/20 flex items-center justify-center gap-2"
-													>
-														<Info className="w-4 h-4" />
-														Comprendre ce solde
-													</Button>
-												</PopoverTrigger>
+            <Popover>
+                <PopoverTrigger asChild>
+                    <Button
+                        size="sm"
+                        className="w-full bg-green-600 hover:bg-green-700 text-white rounded-full shadow-md shadow-green-500/20 flex items-center justify-center gap-2"
+                    >
+                        <Info className="w-4 h-4" />
+                        Understand this balance
+                    </Button>
+                </PopoverTrigger>
 
-												<PopoverContent className="w-80 rounded-2xl border-green-100 dark:border-green-900/30 p-4">
-													<div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-														<p className="font-semibold text-green-600">
-															💡 Pourquoi ce solde existe ?
-														</p>
-														<p>
-															Ce solde permet de gérer les rendez-vous manqués
-															and rescheduled ones without losing value.
-														</p>
+                <PopoverContent className="w-80 rounded-2xl border-green-100 dark:border-green-900/30 p-4">
+                    <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                        <p className="font-semibold text-green-600">
+                            💡 Why does this balance exist?
+                        </p>
+                        <p>
+                            This balance allows you to manage missed appointments and rescheduled ones without losing value.
+                        </p>
 
-														<p className="font-semibold text-green-600">
-															⚙️ How does it work?
-														</p>
-														<ul className="list-disc pl-4 space-y-1">
-															<li>➕ Increases if an appointment is missed</li>
-															<li>➖ Diminue lors d’une reprogrammation</li>
-															<li>Utilisable lors du paiement d’un service</li>
-														</ul>
+                        <p className="font-semibold text-green-600">
+                            ⚙️ How does it work?
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                            <li>➕ Increases if an appointment is missed</li>
+                            <li>➖ Decreases when rescheduling</li>
+                            <li>Usable when paying for a service</li>
+                        </ul>
 
-														<p className="font-semibold text-green-600">
-															⚠️ Important Rules
-														</p>
-														<ul className="list-disc pl-4 space-y-1">
-															<li>Le solde ne peut jamais être négatif</li>
-															<li>
-																Utilisable uniquement si le montant couvre le
-																service
-															</li>
-															<li>
-																Sinon, l’option est automatiquement désactivée
-															</li>
-														</ul>
-													</div>
-												</PopoverContent>
-											</Popover>
-										</Card>
-										<Card className="p-6 bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 border-purple-100 dark:border-pink-900/30 rounded-3xl">
-											<div className="flex items-center gap-4 mb-4">
-												<div className="w-12 h-12 rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center shadow-md">
-													<Gift className="w-6 h-6 text-purple-600" />
-												</div>
-												<div>
-													<p className="text-base font-black text-purple-600 dark:text-purple-400 uppercase tracking-widest">
-														Gift Card
-													</p>
-													<p className="text-2xl font-medium text-gray-900 dark:text-gray-100">
-														{selectedClient?.giftCardBalance}
-													</p>
-												</div>
-											</div>
+                        <p className="font-semibold text-green-600">
+                            ⚠️ Important Rules
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                            <li>The balance can never be negative</li>
+                            <li>
+                                Usable only if the amount covers the service
+                            </li>
+                            <li>
+                                Otherwise, the option is automatically disabled
+                            </li>
+                        </ul>
+                    </div>
+                </PopoverContent>
+            </Popover>
+        </Card>
+        <Card className="p-6 bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 border-purple-100 dark:border-pink-900/30 rounded-3xl">
+            <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center shadow-md">
+                    <Gift className="w-6 h-6 text-purple-600" />
+                </div>
+                <div>
+                    <p className="text-base font-black text-purple-600 dark:text-purple-400 uppercase tracking-widest">
+                        Gift Card
+                    </p>
+                    <p className="text-2xl font-medium text-gray-900 dark:text-gray-100">
+                        {selectedClient?.giftCardBalance}
+                    </p>
+                </div>
+            </div>
 
-											<Popover>
-												<PopoverTrigger asChild>
-													<Button
-														size="sm"
-														className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-md shadow-purple-500/20 flex items-center justify-center gap-2"
-													>
-														<Info className="w-4 h-4" />
-														How it works
-													</Button>
-												</PopoverTrigger>
+            <Popover>
+                <PopoverTrigger asChild>
+                    <Button
+                        size="sm"
+                        className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-md shadow-purple-500/20 flex items-center justify-center gap-2"
+                    >
+                        <Info className="w-4 h-4" />
+                        How it works
+                    </Button>
+                </PopoverTrigger>
 
-												<PopoverContent className="w-80 rounded-2xl border-purple-100 dark:border-purple-900/30 p-4">
-													<div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-														<p className="font-semibold text-purple-600">
-															🎁 Qu’est-ce qu’une carte cadeau ?
-														</p>
-														<p>
-															C’est un montant offert que vous pouvez utiliser
-															pour payer vos services.
-														</p>
+                <PopoverContent className="w-80 rounded-2xl border-purple-100 dark:border-purple-900/30 p-4">
+                    <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                        <p className="font-semibold text-purple-600">
+                            🎁 What is a gift card?
+                        </p>
+                        <p>
+                            It is a gifted amount that you can use to pay for your services.
+                        </p>
 
-														<p className="font-semibold text-purple-600">
-															💳 Utilisation
-														</p>
-														<ul className="list-disc pl-4 space-y-1">
-															<li>Valable comme moyen de paiement</li>
-															<li>
-																Peut couvrir partiellement ou totalement un
-																service
-															</li>
-														</ul>
+                        <p className="font-semibold text-purple-600">
+                            💳 Usage
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                            <li>Valid as a payment method</li>
+                            <li>
+                                Can cover part or all of a service
+                            </li>
+                        </ul>
 
-														<p className="font-semibold text-purple-600">
-															⚠️ À savoir
-														</p>
-														<ul className="list-disc pl-4 space-y-1">
-															<li>Non-exchangeable for cash</li>
-															<li>Valable uniquement dans le salon</li>
-														</ul>
-													</div>
-												</PopoverContent>
-											</Popover>
-										</Card>
-									</div>
-								</TabsContent>
+                        <p className="font-semibold text-purple-600">
+                            ⚠️ Good to know
+                        </p>
+                        <ul className="list-disc pl-4 space-y-1">
+                            <li>Non-exchangeable for cash</li>
+                            <li>Valid only in the salon</li>
+                        </ul>
+                    </div>
+                </PopoverContent>
+            </Popover>
+        </Card>
+    </div>
+</TabsContent>
 							</Tabs>
 						</Card>
 					</TabsContent>
@@ -2644,110 +2610,109 @@ export default function ClientDashboardV2() {
 			</div>
 
 			{/* Cancel Appointment Dialog */}
-			<Dialog open={cancelDialogOpen} onOpenChange={setCancelDialogOpen}>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Annuler le rendez-vous</DialogTitle>
-						<DialogDescription>
-							Êtes-vous sûr de vouloir annuler ce rendez-vous ?
-						</DialogDescription>
-					</DialogHeader>
+<Dialog open={cancelDialogOpen} onOpenChange={setCancelDialogOpen}>
+    <DialogContent>
+        <DialogHeader>
+            <DialogTitle>Cancel Appointment</DialogTitle>
+            <DialogDescription>
+                Are you sure you want to cancel this appointment?
+            </DialogDescription>
+        </DialogHeader>
 
-					{selectedAppointment && (
-						<div className="py-4">
-							<div className="p-4 bg-white dark:bg-gray-800 rounded-lg space-y-2">
-								<p className="font-semibold">
-									{selectedAppointment.service?.name}
-								</p>
-								<p className="text-lg text-gray-900 dark:text-gray-100">
-									{formatDate(selectedAppointment.date)} à{" "}
-									{selectedAppointment.time}
-								</p>
-							</div>
-						</div>
-					)}
+        {selectedAppointment && (
+            <div className="py-4">
+                <div className="p-4 bg-white dark:bg-gray-800 rounded-lg space-y-2">
+                    <p className="font-semibold">
+                        {selectedAppointment.service?.name}
+                    </p>
+                    <p className="text-lg text-gray-900 dark:text-gray-100">
+                        {formatDate(selectedAppointment.date)} at {selectedAppointment.time}
+                    </p>
+                </div>
+            </div>
+        )}
 
-					<DialogFooter>
-						<Button
-							variant="outline"
-							onClick={() => setCancelDialogOpen(false)}
-						>
-							Retour
-						</Button>
-						<Button
-							variant="destructive"
-							// onClick={handleCancelAppointment}
-						>
-							Confirmer l'annulation
-						</Button>
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
+        <DialogFooter>
+            <Button
+                variant="outline"
+                onClick={() => setCancelDialogOpen(false)}
+            >
+                Back
+            </Button>
+            <Button
+                variant="destructive"
+                // onClick={handleCancelAppointment}
+            >
+                Confirm Cancellation
+            </Button>
+        </DialogFooter>
+    </DialogContent>
+</Dialog>
 
-			{/* Review Dialog */}
-			<Dialog open={reviewDialogOpen} onOpenChange={setReviewDialogOpen}>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Donner votre avis</DialogTitle>
-						<DialogDescription>
-							Comment s'est passé votre rendez-vous ?
-						</DialogDescription>
-					</DialogHeader>
+{/* Review Dialog */}
+<Dialog open={reviewDialogOpen} onOpenChange={setReviewDialogOpen}>
+    <DialogContent>
+        <DialogHeader>
+            <DialogTitle>Leave a Review</DialogTitle>
+            <DialogDescription>
+                How was your appointment?
+            </DialogDescription>
+        </DialogHeader>
 
-					<div className="space-y-4 py-4">
-						{/* Star Rating */}
-						<div>
-							<label className="text-lg font-medium mb-2 block">Note</label>
-							<div className="flex gap-2">
-								{[1, 2, 3, 4, 5].map((star) => (
-									<button
-										key={star}
-										onClick={() => setRating(star)}
-										className="focus:outline-none"
-									>
-										<Star
-											className={`w-8 h-8 ${
-												star <= rating
-													? "fill-yellow-400 text-yellow-400"
-													: "text-gray-300"
-											}`}
-										/>
-									</button>
-								))}
-							</div>
-						</div>
+        <div className="space-y-4 py-4">
+            {/* Star Rating */}
+            <div>
+                <label className="text-lg font-medium mb-2 block">Rating</label>
+                <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                            key={star}
+                            onClick={() => setRating(star)}
+                            className="focus:outline-none"
+                        >
+                            <Star
+                                className={`w-8 h-8 ${
+                                    star <= rating
+                                        ? "fill-yellow-400 text-yellow-400"
+                                        : "text-gray-300"
+                                }`}
+                            />
+                        </button>
+                    ))}
+                </div>
+            </div>
 
-						{/* Review Text */}
-						<div>
-							<label className="text-lg font-medium mb-2 block">
-								Comment (optional)
-							</label>
-							<Textarea
-								placeholder="Share your experience..."
-								value={reviewText}
-								onChange={(e) => setReviewText(e.target.value)}
-								rows={4}
-							/>
-						</div>
-					</div>
+            {/* Review Text */}
+            <div>
+                <label className="text-lg font-medium mb-2 block">
+                    Comment (optional)
+                </label>
+                <Textarea
+                    placeholder="Share your experience..."
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    rows={4}
+                />
+            </div>
+        </div>
 
-					<DialogFooter>
-						<Button
-							variant="outline"
-							onClick={() => setReviewDialogOpen(false)}
-						>
-							Annuler
-						</Button>
-						<Button
-							onClick={handleSubmitReview}
-							disabled={rating === 0}
-							className="bg-linear-to-r from-pink-500 to-purple-500"
-						>
-							Envoyer l'avis
-						</Button>
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
+        <DialogFooter>
+            <Button
+                variant="outline"
+                onClick={() => setReviewDialogOpen(false)}
+            >
+                Cancel
+            </Button>
+            <Button
+                onClick={handleSubmitReview}
+                disabled={rating === 0}
+                className="bg-linear-to-r from-pink-500 to-purple-500"
+            >
+                Submit Review
+            </Button>
+        </DialogFooter>
+    </DialogContent>
+</Dialog>
 		</div>
 	);
 }
