@@ -1762,8 +1762,7 @@ export default function ClientDashboardV2() {
         ))}
     </div>
 )
-									</div>
-								)}
+									}
 							</div>
 							{/* Section 1: Browse Available Packages */}
 							<div>
