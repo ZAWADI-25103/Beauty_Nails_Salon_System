@@ -1292,10 +1292,7 @@ export default function ClientDashboardV2() {
 										    </div>
 										)}
 													
-												</div>
-											</div>
-										);
-									})}
+												)}
 								</div>
 							)}
 
