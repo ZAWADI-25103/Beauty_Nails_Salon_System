@@ -60,6 +60,15 @@ export const InventoryCard = ({ item }: { item: InventoryItem }) => {
 						</div>
 						<Badge className="absolute -bottom-2 -right-2 px-3 py-1 bg-white dark:bg-gray-800 text-gray-500 shadow-lg text-[10px] font-bold uppercase tracking-widest border-gray-100 dark:border-gray-700">
 							{item.category}
+							{item.category === "onglerie"
+															? "Nails"
+															: item.category === "cils"
+																? "Lashes"
+																: item.category === "tresses"
+																	? "Braids"
+																	: item.category === "maquillage"
+																		? "Makeup"
+																		: item.category}
 						</Badge>
 					</div>
 
