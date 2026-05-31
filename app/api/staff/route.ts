@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
 			orderBy: { createdAt: "desc" },
 		});
 
-		const daysMap = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
+		const daysMap = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 		const staffIds = staff.map((s: any) => s.id);
 
