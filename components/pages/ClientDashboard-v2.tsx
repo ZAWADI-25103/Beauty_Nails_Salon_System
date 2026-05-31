@@ -30,7 +30,7 @@ import {
 	Share2,
 	Sparkles,
 	Star,
-	TrdingUp,
+	TrendingUp,
 	User,
 	Users,
 	Wallet,
@@ -40,19 +40,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import type { Appointmt } from "@/lib/api/appointmts";
+import type { Appointment } from "@/lib/api/appointments";
 import {
 	useAppointments,
 	useAvailableSlots,
-} from "@/lib/hooks/useAppointmts";
+} from "@/lib/hooks/useAppointments";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useClient, useClients } from "@/lib/hooks/useClients";
 import { useLoyalty, useReferral } from "@/lib/hooks/useLoyalty";
-import { usotifications } from "@/lib/hooks/usotifications";
+import { useNotifications } from "@/lib/hooks/useNotifications";
 import { usePackages } from "@/lib/hooks/usePackages";
 import { useReviews } from "@/lib/hooks/useReview";
 import { useClientReferrals } from "@/lib/hooks/useServices";
-import AppointmtCountdown from "../AppointmentCountdown";
+import AppointmentCountdown from "../AppointmentCountdown";
 import ClientModalTrigger from "../ClientModalTrigger";
 import LoaderBN from "../Loader-BN";
 import PackageCard from "../PackageCard";
