@@ -44,14 +44,14 @@ export default function CreateInventoryModal({
 	const [minStock, setMinStock] = useState<number | "">("");
 	const [maxStock, setMaxStock] = useState<number | "">("");
 	const [description, setDescription] = useState("");
-	const [imageUrl, setImageUrl] = useState(""); // New state
+	const [imageUrl, setImageUrl] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 
 	const { createItem, isCreatingItem } = useInventory();
 
 	const onSubmit = async () => {
 		if (!name || !category || !unit || cost === "") {
-			toast.error("Champs obligatoires manquants");
+			toast.error("Required fields are missing");
 			return;
 		}
 
@@ -66,7 +66,7 @@ export default function CreateInventoryModal({
 			minStock: minStock === "" ? undefined : Number(minStock),
 			maxStock: maxStock === "" ? undefined : Number(maxStock),
 			description: description || undefined,
-			imageUrl: imageUrl || undefined, // Added to payload
+			imageUrl: imageUrl || undefined,
 		};
 
 		createItem(payload as any);
@@ -104,22 +104,22 @@ export default function CreateInventoryModal({
 								<Sparkles className="w-6 h-6" />
 							</div>
 							<DialogTitle className="text-2xl font-bold tracking-tight">
-								Nouvel Article Premium
+								New Premium Item
 							</DialogTitle>
 						</div>
 						<p className="opacity-70 text-sm mt-1">
-							Configurez les détails de votre produit avec précision.
+							Configure your product details with precision.
 						</p>
 					</DialogHeader>
 				</div>
 
 				<div className="p-8 space-y-8">
-					{/* Section: Visuel & Identité */}
+					{/* Section: Visual & Identity */}
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 						{/* Image Preview Box */}
 						<div className="space-y-4">
 							<Label className="text-xs uppercase font-black tracking-widest text-gray-400">
-								Aperçu Visuel
+								Visual Preview
 							</Label>
 							<div className="aspect-square rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800 flex items-center justify-center overflow-hidden bg-gray-50 dark:bg-black/40 group relative">
 								{imageUrl ? (
@@ -131,12 +131,12 @@ export default function CreateInventoryModal({
 								) : (
 									<div className="text-center p-4">
 										<ImageIcon className="w-10 h-10 mx-auto mb-2 opacity-20" />
-										<p className="text-[10px] text-gray-400">Aucune image</p>
+										<p className="text-[10px] text-gray-400">No image</p>
 									</div>
 								)}
 							</div>
 							<Input
-								placeholder="URL de l'image (https://...)"
+								placeholder="Image URL (https://...)"
 								value={imageUrl}
 								onChange={(e) => setImageUrl(e.target.value)}
 								className="bg-gray-50 dark:bg-white/5 border-0 rounded-xl"
@@ -147,10 +147,10 @@ export default function CreateInventoryModal({
 						<div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
 							<div className="sm:col-span-2">
 								<Label className="text-xs uppercase font-black tracking-widest text-gray-400 mb-2 block">
-									Nom du produit
+									Product Name
 								</Label>
 								<Input
-									placeholder="ex: Vernis Semi-Permanent"
+									placeholder="e.g., Semi-Permanent Polish"
 									className="h-12 text-lg font-medium rounded-xl focus:ring-2 ring-gray-900"
 									value={name}
 									onChange={(e) => setName(e.target.value)}
@@ -159,14 +159,14 @@ export default function CreateInventoryModal({
 
 							<div>
 								<Label className="text-xs uppercase font-black tracking-widest text-gray-400 mb-2 block">
-									Catégorie
+									Category
 								</Label>
 								<Select
 									value={category}
 									onValueChange={(value) => setCategory(value)}
 								>
 									<SelectTrigger className="h-12 rounded-xl border-gray-100 dark:border-gray-800">
-										<SelectValue placeholder="Choisir..." />
+										<SelectValue placeholder="Select..." />
 									</SelectTrigger>
 									<SelectContent className="rounded-2xl shadow-2xl border-0">
 										<SelectItem value="onglerie">💅 Nail Care</SelectItem>
@@ -193,11 +193,11 @@ export default function CreateInventoryModal({
 
 					<hr className="border-gray-100 dark:border-gray-900" />
 
-					{/* Section: Finance & Logistique */}
+					{/* Section: Finance & Logistics */}
 					<div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 						<div className="col-span-2 md:col-span-1">
 							<Label className="text-xs uppercase font-black tracking-widest text-gray-400 mb-2 block">
-								Coût (CDF)
+								Cost (CDF)
 							</Label>
 							<Input
 								type="number"
@@ -211,11 +211,11 @@ export default function CreateInventoryModal({
 
 						<div className="col-span-2 md:col-span-1">
 							<Label className="text-xs uppercase font-black tracking-widest text-gray-400 mb-2 block">
-								Unité
+								Unit
 							</Label>
 							<Input
 								className="h-12 rounded-xl"
-								placeholder="ex: Flacon"
+								placeholder="e.g., Bottle"
 								value={unit}
 								onChange={(e) => setUnit(e.target.value)}
 							/>
@@ -223,18 +223,18 @@ export default function CreateInventoryModal({
 
 						<div className="col-span-2">
 							<Label className="text-xs uppercase font-black tracking-widest text-gray-400 mb-2 block">
-								Fournisseur
+								Supplier
 							</Label>
 							<Input
 								className="h-12 rounded-xl"
-								placeholder="Nom du fournisseur"
+								placeholder="Supplier name"
 								value={supplier}
 								onChange={(e) => setSupplier(e.target.value)}
 							/>
 						</div>
 					</div>
 
-					{/* Section: Stockage */}
+					{/* Section: Stock */}
 					<div className="p-6 bg-gray-50 dark:bg-white/5 rounded-[2rem] grid grid-cols-3 gap-6">
 						<div>
 							<Label className="text-xs uppercase font-black tracking-widest text-gray-400 mb-2 block">
@@ -289,7 +289,7 @@ export default function CreateInventoryModal({
 						</Label>
 						<Textarea
 							className="rounded-2xl border-gray-100 dark:border-gray-800 focus:ring-gray-900 min-h-25"
-							placeholder="Détails additionnels du produit..."
+							placeholder="Additional product details..."
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 						/>
@@ -299,7 +299,7 @@ export default function CreateInventoryModal({
 				<DialogFooter className="p-8 bg-gray-50 dark:bg-black/20 flex gap-4">
 					<DialogClose asChild>
 						<Button variant="ghost" className="rounded-xl px-8">
-							Annuler
+							Cancel
 						</Button>
 					</DialogClose>
 					<Button
@@ -310,7 +310,7 @@ export default function CreateInventoryModal({
 						{isCreatingItem ? (
 							<Loader2 className="animate-spin" />
 						) : (
-							"Finaliser l'article"
+							"Finalize Item"
 						)}
 					</Button>
 				</DialogFooter>
