@@ -2,11 +2,12 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { errorResponse } from "@/lib/api/helpers";
 import { signOut } from "@/lib/auth/auth";
+import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
 	try {
 		// Sign out the user
-		cookies().delete("session");
+		(await cookies()).delete("session");
 		await signOut({ redirect: false });
 
 		// Redirect to login page after logout
