@@ -24,7 +24,7 @@ import {
 	SelectValue,
 } from "../ui/select";
 
-const POSITIONS = ["Spécialiste", "Réceptionniste", "Manager", "Assistant"];
+const POSITIONS = ["Specialist", "Receptionist", "Manager", "Assistant"];
 
 const SERVICE_CATEGORIES = ["Nail Care", "Eyelashes", "Braids", "Makeup"];
 
@@ -57,18 +57,18 @@ export default function CreateWorkerModal({
 
 	const onSubmit = () => {
 		if (!name || !email || !phone || !password || !position) {
-			toast.error("Veuillez remplir tous les champs obligatoires");
+			toast.error("Please fill in all required fields");
 			return;
 		}
 
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(email)) {
-			toast.error("Email invalide");
+			toast.error("Invalid email");
 			return;
 		}
 
 		if (phone.length < 9) {
-			toast.error("Numéro de téléphone invalide");
+			toast.error("Invalid phone number");
 			return;
 		}
 
@@ -104,6 +104,7 @@ export default function CreateWorkerModal({
 		setCommissionRate("");
 		setWorkingHours("");
 	};
+
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>
