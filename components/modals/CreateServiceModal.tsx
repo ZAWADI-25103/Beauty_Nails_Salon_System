@@ -42,7 +42,6 @@ const initializeFormState = (service?: Service) => ({
 	category: service?.category || undefined,
 	description: service?.description || "",
 	price: service?.price ?? 0,
-	// commission: service?.workerCommission ?? "",
 	duration: service?.duration ?? 0,
 	imageUrl: service?.imageUrl || "",
 	onlineBookable: service?.onlineBookable ?? true,
@@ -101,7 +100,6 @@ export default function CreateServiceModal({
 			setCategory(initialState.category);
 			setDescription(initialState.description);
 			setPrice(initialState.price);
-			// setCommission(initialState.commission);
 			setDuration(initialState.duration);
 			setImageUrl(initialState.imageUrl);
 			setOnlineBookable(initialState.onlineBookable);
@@ -118,7 +116,6 @@ export default function CreateServiceModal({
 		setCategory(initialState.category);
 		setDescription(initialState.description);
 		setPrice(initialState.price);
-		// setCommission(initialState.commission);
 		setDuration(initialState.duration);
 		setImageUrl(initialState.imageUrl);
 		setOnlineBookable(initialState.onlineBookable);
@@ -160,14 +157,14 @@ export default function CreateServiceModal({
 			setCreatedServiceId(updatedService.id);
 			setShowAddOnFlow(true);
 			onSubmitReftch?.();
-			toast.success("Service mis à jour avec succès");
+			toast.success("Service updated successfully");
 		}
 	}, [createdService, updatedService, onSubmitReftch]);
 
 	const onSubmit = () => {
 		if (!name || !category || !price || !duration) {
 			toast.error(
-				"Veuillez renseigner le nom, la catégorie, le prix et la durée",
+				"Please fill in the name, category, price, and duration",
 			);
 			return;
 		}
@@ -191,12 +188,12 @@ export default function CreateServiceModal({
 
 	const onUpdate = () => {
 		if (!service) {
-			toast.warning("Service non trouvé, veuillez réessayer");
+			toast.warning("Service not found, please try again");
 			return;
 		}
 		if (!name || !category || !price || !duration) {
 			toast.error(
-				"Veuillez renseigner le nom, la catégorie, le prix et la durée",
+				"Please fill in the name, category, price, and duration",
 			);
 			return;
 		}
@@ -221,7 +218,7 @@ export default function CreateServiceModal({
 	// Handle add-on submission
 	const handleAddOnSubmit = () => {
 		if (!createdServiceId) {
-			toast.error("Service non initialisé");
+			toast.error("Service not initialized");
 			return;
 		}
 
@@ -231,7 +228,7 @@ export default function CreateServiceModal({
 		);
 
 		if (validAddOns.length === 0) {
-			toast.info("Aucun add-on valide à ajouter");
+			toast.info("No valid add-ons to add");
 			setIsOpen(false);
 			if (onSubmitRemoveService) onSubmitRemoveService(null);
 			resetForm();
@@ -251,13 +248,13 @@ export default function CreateServiceModal({
 			),
 		)
 			.then(() => {
-				toast.success("Add-ons ajoutés avec succès");
+				toast.success("Add-ons added successfully");
 				setIsOpen(false);
 				if (onSubmitRemoveService) onSubmitRemoveService(null);
 				resetForm();
 			})
 			.catch(() => {
-				toast.error("Erreur lors de l'ajout des add-ons");
+				toast.error("Error adding add-ons");
 			});
 	};
 
@@ -302,7 +299,7 @@ export default function CreateServiceModal({
 			await createMedia(media, {
 				onSuccess: (data) => {
 					setImageUrl(data.url);
-					toast.success("Image téléchargée avec succès");
+					toast.success("Image uploaded successfully");
 				},
 			});
 			if (inputRef.current) {
@@ -311,7 +308,7 @@ export default function CreateServiceModal({
 		} catch (err: any) {
 			toast.error(
 				err.response?.data?.error?.message ||
-					"Erreur lors de l'upload du document",
+					"Error uploading document",
 			);
 		}
 	};
@@ -345,7 +342,7 @@ export default function CreateServiceModal({
 									id="service-name"
 									value={name}
 									onChange={(e) => setName(e.target.value)}
-									placeholder="Ex: Full Manicure"
+									placeholder="e.g., Full Manicure"
 								/>
 							</div>
 
@@ -382,25 +379,9 @@ export default function CreateServiceModal({
 										)
 									}
 									type="number"
-									placeholder="Ex: 15000"
+									placeholder="e.g., 15000"
 								/>
 							</div>
-							{/* <div>
-								<Label className="mb-2" htmlFor="service-commission">
-									Commission
-								</Label>
-								<Input
-									id="service-commission"
-									value={commission}
-									onChange={(e) =>
-										setCommission(
-											e.target.value === "" ? "" : Number(e.target.value),
-										)
-									}
-									type="number"
-									placeholder="Ex: 45"
-								/>
-							</div> */}
 
 							<div>
 								<Label className="mb-2" htmlFor="service-duration">
@@ -415,7 +396,7 @@ export default function CreateServiceModal({
 										)
 									}
 									type="number"
-									placeholder="Ex: 60"
+									placeholder="e.g., 60"
 								/>
 							</div>
 
@@ -550,7 +531,7 @@ export default function CreateServiceModal({
 												onChange={(e) =>
 													updateAddOnField(index, "name", e.target.value)
 												}
-												placeholder="Ex: Colored Gel"
+												placeholder="e.g., Colored Gel"
 											/>
 										</div>
 										<div>
@@ -565,7 +546,7 @@ export default function CreateServiceModal({
 														e.target.value === "" ? "" : Number(e.target.value),
 													)
 												}
-												placeholder="Ex: 5000"
+												placeholder="e.g., 5000"
 											/>
 										</div>
 										<div>
@@ -580,7 +561,7 @@ export default function CreateServiceModal({
 														e.target.value === "" ? "" : Number(e.target.value),
 													)
 												}
-												placeholder="Ex: 15"
+												placeholder="e.g., 15"
 											/>
 										</div>
 									</div>
