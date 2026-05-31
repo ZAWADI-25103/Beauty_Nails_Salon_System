@@ -42,16 +42,16 @@ import { useState } from "react";
 import { toast } from "sonner";
 import type { Appointmt } from "@/lib/api/appointmts";
 import {
-	useAppointmts,
+	useAppointments,
 	useAvailableSlots,
 } from "@/lib/hooks/useAppointmts";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { useClit, useClits } from "@/lib/hooks/useClits";
+import { useClient, useClients } from "@/lib/hooks/useClients";
 import { useLoyalty, useReferral } from "@/lib/hooks/useLoyalty";
 import { usotifications } from "@/lib/hooks/usotifications";
 import { usePackages } from "@/lib/hooks/usePackages";
 import { useReviews } from "@/lib/hooks/useReview";
-import { useClitReferrals } from "@/lib/hooks/useServices";
+import { useClientReferrals } from "@/lib/hooks/useServices";
 import AppointmtCountdown from "../AppointmentCountdown";
 import ClientModalTrigger from "../ClientModalTrigger";
 import LoaderBN from "../Loader-BN";
