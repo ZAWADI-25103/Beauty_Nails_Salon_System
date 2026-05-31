@@ -280,7 +280,7 @@ export default function WorkerProfileSettings({
 										type="text"
 										value={
 											workerProfile?.hireDate
-												? `${format(new Date(workerProfile.hireDate), "EEEE d MMMM 'at' HH'h'mm", { locale: enUS })}`
+												? `${format(new Date(workerProfile.hireDate), "PPPP", { locale: enUS })}`
 												: workerProfile?.hireDate?.split("T")[0]
 										}
 										disabled
@@ -388,7 +388,15 @@ export default function WorkerProfileSettings({
 								key={index}
 								className="flex items-center gap-1 bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-200"
 							>
-								{specialty}
+								{specialty === "onglerie"
+															? "Nails"
+															: specialty === "cils"
+																? "Lashes"
+																: specialty === "tresses"
+																	? "Braids"
+																	: specialty === "maquillage"
+																		? "Makeup"
+																		: specialty}
 								<button
 									type="button"
 									onClick={() => handleRemoveSpecialty(index)}
