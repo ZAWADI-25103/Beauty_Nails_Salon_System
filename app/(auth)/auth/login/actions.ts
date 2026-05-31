@@ -14,10 +14,12 @@ export async function handleLogin(
 	try {
 
 		if (!redirect) {
-			const res = await axiosdb.post("/mail/otp", { email: email, pw: password });
+			const res = await axiosdb.post("/mail/otp", { email: email, pw: password, role: expectedRole });
 
 			if (!res.data.success) {
-				return { error: "Failed to send OTP code. Please try again." };
+				// Check for error or message in the response
+				const errorMessage = res.data.error || res.data.message || "Failed to send OTP code. Please try again.";
+				return { error: errorMessage };
 			}
 			const otpCode = res.data.expectedOtp;
 
@@ -81,12 +83,12 @@ export async function handleOTPVerification(
 				}
 
 			return {
-				success: true,s
+				success: true,
 				redirectUrl,
 			};
 		} else {
 			return {
-				error: "OTP incorrect. Please try again.",
+				error: "Incorrect OTP. Please try again.",
 			};
 		}
 	} catch (error: any){

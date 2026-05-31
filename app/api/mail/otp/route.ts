@@ -7,7 +7,7 @@ import { compare } from "bcryptjs";
 
 export async function POST(req: Request) {
 	try {
-		const { email, pw } = await req.json();
+		const { email, pw, role } = await req.json();
 
 		if (!email) {
 			return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -18,18 +18,22 @@ export async function POST(req: Request) {
 		});
 
 		if (!user) {
-			// Return success even if user doesn't exist to prevent email enumeration
 			return NextResponse.json({
 				message: `User (${email}) doesn't exist.`,
 			});
 		}
+		if (user.role !== role) {
+			return NextResponse.json({
+				message: `User (${email}) has no role "${role}". change to correct role and try login again`,
+			});
+		}
+
 		
 		const isPasswordValid = await compare(
 			pw,
 			user.password,
 		);
 		if (!isPasswordValid) {
-			// Return success even if user doesn't exist to prevent email enumeration
 			return NextResponse.json({
 				message: `(${user.name}) please enter valid password and try again.`,
 			});
