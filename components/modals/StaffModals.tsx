@@ -77,20 +77,15 @@ export function EditScheduleModal({
 	const [savingDays, setSavingDays] = useState<Record<number, boolean>>({});
 	const { refetch } = useStaff();
 	const daysOfWeek = [
-		{ idx: 0, day: "Dimanche" },
-		{ idx: 1, day: "Lundi" },
-		{ idx: 2, day: "Mardi" },
-		{ idx: 3, day: "Mercredi" },
-		{ idx: 4, day: "Jeudi" },
-		{ idx: 5, day: "Vendredi" },
-		{ idx: 6, day: "Samedi" },
+		{ idx: 0, day: "Sunday" },
+		{ idx: 1, day: "Monday" },
+		{ idx: 2, day: "Tuesday" },
+		{ idx: 3, day: "Wednesday" },
+		{ idx: 4, day: "Thursday" },
+		{ idx: 5, day: "Friday" },
+		{ idx: 6, day: "Saturday" },
 	];
 
-	// console.log("schedule: ", schedule)
-
-	/* ----------------------------------
-  Map API schedule → UI state
-  -----------------------------------*/
 	useEffect(() => {
 		if (!schedule || Object.keys(weekSchedule).length > 0) return;
 		const map: Record<number, DaySchedule> = {};
@@ -113,7 +108,6 @@ export function EditScheduleModal({
 			}
 		});
 
-		// 🔥 Prevent infinite loop
 		setWeekSchedule((prev) => {
 			if (JSON.stringify(prev) === JSON.stringify(map)) {
 				return prev;
@@ -122,9 +116,6 @@ export function EditScheduleModal({
 		});
 	}, [schedule]);
 
-	/* ----------------------------------
-  Local updater
-  -----------------------------------*/
 	const updateDay = (day: number, changes: Partial<DaySchedule>) => {
 		setWeekSchedule((prev) => ({
 			...prev,
@@ -135,9 +126,6 @@ export function EditScheduleModal({
 		}));
 	};
 
-	/* ----------------------------------
-  Save one day
-  -----------------------------------*/
 	const saveDay = async (day: number, override?: DaySchedule) => {
 		const d = override ?? weekSchedule[day];
 		if (!d) return;
@@ -155,9 +143,6 @@ export function EditScheduleModal({
 		}
 	};
 
-	/* ----------------------------------
-  Optional full save fallback
-  -----------------------------------*/
 	const saveAll = async () => {
 		for (const day of Object.keys(weekSchedule)) {
 			await saveDay(Number(day));
@@ -175,25 +160,16 @@ export function EditScheduleModal({
 						<span className="text-gray-900 dark:text-gray-100">
 							Edit Schedule - {staffName || "Staff"}
 						</span>
-
-						{/* <Button
-              variant="outline"
-              size="sm"
-              className="gap-2 text-base dark:border-pink-900 dark:text-pink-300 dark:hover:border-pink-400"
-            >
-              <Copy className="w-3 h-3" /> Copier semaine précédente
-            </Button> */}
 					</DialogTitle>
 				</DialogHeader>
 
-				{/* ---------------- TABLE ---------------- */}
 				<div className="py-4 space-y-4">
 					<div className="grid grid-cols-1 gap-2">
 						<div className="grid grid-cols-12 gap-2 text-lg font-medium text-muted-foreground mb-2 px-3 dark:text-gray-300">
-							<div className="col-span-3">Jour</div>
-							<div className="col-span-4">Début</div>
-							<div className="col-span-4">Fin</div>
-							<div className="col-span-1 text-center">Actif</div>
+							<div className="col-span-3">Day</div>
+							<div className="col-span-4">Start</div>
+							<div className="col-span-4">End</div>
+							<div className="col-span-1 text-center">Active</div>
 						</div>
 
 						{daysOfWeek.map((day) => {
@@ -205,12 +181,10 @@ export function EditScheduleModal({
 									key={day.idx}
 									className="grid grid-cols-12 gap-2 items-center p-3 bg-gray-50/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-400 transition-colors"
 								>
-									{/* Day */}
 									<div className="col-span-3 font-medium text-gray-900 dark:text-gray-100">
 										{day.day}
 									</div>
 
-									{/* Start Time */}
 									<div className="col-span-4">
 										<Input
 											type="time"
@@ -224,7 +198,6 @@ export function EditScheduleModal({
 										/>
 									</div>
 
-									{/* End Time */}
 									<div className="col-span-4">
 										<Input
 											type="time"
@@ -238,7 +211,6 @@ export function EditScheduleModal({
 										/>
 									</div>
 
-									{/* Availability */}
 									<div className="col-span-1 flex justify-center">
 										{saving ? (
 											<Loader2 className="w-4 h-4 animate-spin text-muted-foreground dark:text-gray-400" />
@@ -255,7 +227,6 @@ export function EditScheduleModal({
 													};
 
 													updateDay(day.idx, { isAvailable: value });
-
 													saveDay(day.idx, updated);
 												}}
 												className="scale-110 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500 dark:data-[state=checked]:bg-pink-600 dark:data-[state=checked]:border-pink-600"
@@ -268,13 +239,12 @@ export function EditScheduleModal({
 					</div>
 				</div>
 
-				{/* Optional fallback save */}
 				<DialogFooter>
 					<Button
 						variant="outline"
 						className="dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
 					>
-						Annuler
+						Cancel
 					</Button>
 
 					<Button
@@ -285,9 +255,11 @@ export function EditScheduleModal({
 						{isUpdating ? (
 							<Loader2 className="w-4 h-4 animate-spin" />
 						) : (
-							<Save className="w-4 h-4" />
+							<>
+								<Save className="w-4 h-4" />
+								Save Schedule
+							</>
 						)}
-						Enregistrer Planning
 					</Button>
 				</DialogFooter>
 			</DialogContent>
@@ -304,18 +276,18 @@ interface StaffProfileModalProps {
 export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 	const [selectedMonth, setSelectedMonth] = useState("2026-02");
 	const allMonths = [
-		{ value: "2026-01", label: "Janvier 2026" },
-		{ value: "2026-02", label: "Février 2026" },
-		{ value: "2026-03", label: "Mars 2026" },
-		{ value: "2026-04", label: "Avril 2026" },
-		{ value: "2026-05", label: "Mai 2026" },
-		{ value: "2026-06", label: "Juin 2026" },
-		{ value: "2026-07", label: "Juillet 2026" },
-		{ value: "2026-08", label: "Août 2026" },
-		{ value: "2026-09", label: "Septembre 2026" },
-		{ value: "2026-10", label: "Octobre 2026" },
-		{ value: "2026-11", label: "Novembre 2026" },
-		{ value: "2026-12", label: "Décembre 2026" },
+		{ value: "2026-01", label: "January 2026" },
+		{ value: "2026-02", label: "February 2026" },
+		{ value: "2026-03", label: "March 2026" },
+		{ value: "2026-04", label: "April 2026" },
+		{ value: "2026-05", label: "May 2026" },
+		{ value: "2026-06", label: "June 2026" },
+		{ value: "2026-07", label: "July 2026" },
+		{ value: "2026-08", label: "August 2026" },
+		{ value: "2026-09", label: "September 2026" },
+		{ value: "2026-10", label: "October 2026" },
+		{ value: "2026-11", label: "November 2026" },
+		{ value: "2026-12", label: "December 2026" },
 	];
 
 	const { commissions, isUpdating } = useCommission();
@@ -334,15 +306,15 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 	const commissionAmount =
 		getCommissionForMonth(selectedMonth || "")?.commissionAmount || 0;
 	const employerShare = totalRevenue - commissionAmount;
-	const materielShare = employerShare * 0.05; // 5% du total pour les produits de beauté.
-	const operationalCosts = employerShare * 0.05; // 5% du total pour les coûts opérationnels.
+	const materielShare = employerShare * 0.05;
+	const operationalCosts = employerShare * 0.05;
 
 	return (
 		<Dialog>
 			{trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
 			<DialogContent className="sm:max-w-4xl w-[95vw] max-h-[90vh] overflow-y-auto p-4 dark:bg-gray-900">
 				<DialogHeader>
-					<DialogTitle className="sr-only">Profil Employée</DialogTitle>
+					<DialogTitle className="sr-only">Staff Profile</DialogTitle>
 				</DialogHeader>
 
 				<div className="px-2 pb-4">
@@ -375,7 +347,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 										: "bg-gray-400 dark:bg-gray-700"
 								}
 							>
-								{staff?.isAvailable ? "Employée Active" : "Inactif"}
+								{staff?.isAvailable ? "Active Employee" : "Inactive"}
 							</Badge>
 
 							<div className="w-full space-y-3 text-left bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
@@ -389,7 +361,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 								</div>
 								<div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
 									<Calendar className="w-4 h-4 text-gray-400 dark:text-gray-500 flex-shrink-0" />
-									Embauche:{" "}
+									Hired:{" "}
 									{staff?.hireDate
 										? staff?.hireDate
 												.split("T")[0]
@@ -402,37 +374,38 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 
 							<div className="space-y-2">
 								<Label className="text-left block font-semibold text-gray-900 dark:text-gray-100">
-									Biographie
+									Biography
 								</Label>
 								<p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3 rounded-lg text-left">
-									Spécialiste en onglerie avec plus de 5 ans d'expérience.
-									Experte en Nail Art et soins des mains. Appréciée pour sa
-									douceur et sa créativité. Parle Français et Lingala
-									couramment.
+									Nail care specialist with over 5 years of experience.
+									Expert in Nail Art and hand care. Appreciated for her
+									gentleness and creativity. Fluent in French and Lingala.
 								</p>
 							</div>
 
 							<div className="space-y-2">
 								<Label className="text-left block font-semibold text-gray-900 dark:text-gray-100">
-									Compétences
+									Skills
 								</Label>
 								<div className="flex flex-wrap justify-center gap-2">
-									{[
-										"Manucure",
-										"Pédicure",
-										"Nail Art",
-										"Gel",
-										"Acrylique",
-										"Massage des mains",
-									].map((skill) => (
-										<Badge
-											key={skill}
-											variant="secondary"
-											className="px-3 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
-										>
-											{skill}
-										</Badge>
-									))}
+									{
+										[
+											"Manicure",
+											"Pedicure",
+											"Nail Art",
+											"Gel",
+											"Acrylic",
+											"Hand Massage",
+										].map((skill) => (
+											<Badge
+												key={skill}
+												variant="secondary"
+												className="px-3 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+											>
+												{skill}
+											</Badge>
+										))
+									}
 								</div>
 							</div>
 						</div>
@@ -440,7 +413,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 						{/* Main Content Tabs */}
 						<div className="w-full pt-2">
 							<p className=" dark:text-pink-400 text-xs sm:text-xs">
-								{"glisser  <--- | --->"}
+								{"swipe  <--- | --->"}
 							</p>
 							<Tabs defaultValue="performance" className="w-full">
 								<TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
@@ -483,7 +456,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 										</div>
 									</div>
 
-									{/* Performance Metrics - Stacked on mobile */}
+									{/* Performance Metrics */}
 									<div className="grid grid-cols-2 gap-3">
 										<Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-3">
 											<CalendarIcon className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-2" />
@@ -491,7 +464,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 												{staff?.appointmentsCount}
 											</p>
 											<p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-												RDV ce mois
+												Appointments this month
 											</p>
 										</Card>
 										<Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-3">
@@ -500,7 +473,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 												{staff?.revenue}
 											</p>
 											<p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-												Revenus
+												Revenue
 											</p>
 										</Card>
 										<Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-3">
@@ -509,7 +482,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 												{staff?.clientRetention}
 											</p>
 											<p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-												Rétention
+												Retention
 											</p>
 										</Card>
 										<Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-3">
@@ -518,17 +491,17 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 												{staff?.upsellRate}
 											</p>
 											<p className="text-base text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-												Taux Vente+
+												Upsell Rate
 											</p>
 										</Card>
 									</div>
 
 									<div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-xl border border-purple-100 dark:border-purple-900/30">
 										<h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">
-											Jours de Travail
+											Working Days
 										</h4>
 										<div className="flex flex-wrap gap-2 justify-center">
-											{["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map(
+											{["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
 												(day, index) => (
 													<Badge
 														key={day}
@@ -559,10 +532,10 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 									/>
 								</TabsContent>
 
-								{/* Commission Tab - Mobile Optimized */}
+								{/* Commission Tab */}
 								<TabsContent value="commission" className="space-y-4 mt-4">
 									<h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-										Calcul Commission & Paie
+										Commission & Payroll Calculation
 									</h4>
 									<div className="space-y-4">
 										<Select
@@ -590,7 +563,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 											<Card className="hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-4">
 												<h5 className="text-lg mb-3 flex items-center gap-2 text-gray-900 dark:text-gray-100">
 													<span className="w-2 h-2 rounded-full bg-green-500"></span>
-													Ce Mois (
+													This Month (
 													{
 														allMonths.find((m) => m.value === selectedMonth)
 															?.label
@@ -598,14 +571,14 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 													-{" "}
 													{getCommissionForMonth(selectedMonth)?.status ===
 													"paid"
-														? "Payé"
+														? "Paid"
 														: "Pending"}
 													)
 												</h5>
 												<div className="space-y-3">
 													<div className="flex justify-between items-center">
 														<span className="text-lg text-gray-700 dark:text-gray-300">
-															Revenus générés
+															Generated Revenue
 														</span>
 														<span className="font-medium text-gray-900 dark:text-gray-100">
 															{totalRevenue.toLocaleString()}
@@ -613,7 +586,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 													</div>
 													<div className="flex justify-between items-center">
 														<span className="text-lg text-gray-700 dark:text-gray-300">
-															Taux commission
+															Commission Rate
 														</span>
 														<span className="font-medium text-gray-900 dark:text-gray-100">
 															{commissionRate.toLocaleString()}%
@@ -621,7 +594,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 													</div>
 													<div className="flex justify-between items-center">
 														<span className="text-lg text-gray-700 dark:text-gray-300">
-															Business revenue
+															Business Revenue
 														</span>
 														<span className="font-medium text-gray-900 dark:text-gray-100">
 															{employerShare}
@@ -629,7 +602,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 													</div>
 													<div className="flex justify-between items-center">
 														<span className="text-lg text-gray-700 dark:text-gray-300">
-															Materials reserve
+															Materials Reserve
 														</span>
 														<span className="font-medium text-gray-900 dark:text-gray-100">
 															{materielShare}
@@ -637,7 +610,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 													</div>
 													<div className="flex justify-between items-center">
 														<span className="text-lg text-gray-700 dark:text-gray-300">
-															Operational costs
+															Operational Costs
 														</span>
 														<span className="font-medium text-gray-900 dark:text-gray-100">
 															{operationalCosts}
@@ -648,7 +621,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 
 													<div className="flex justify-between items-center pt-2">
 														<span className="font-medium text-gray-900 dark:text-gray-100">
-															Commission totale
+															Total Commission
 														</span>
 														<span className="text-xl text-green-600 dark:text-green-400 font-bold">
 															{commissionAmount.toLocaleString()}
@@ -668,7 +641,7 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 														size="default"
 														className="w-full bg-green-500 hover:bg-green-600 text-white dark:bg-green-600 dark:hover:bg-green-700"
 													>
-														Générer Fiche de Paie
+														Generate Payslip
 													</Button>
 												}
 											/>
@@ -676,40 +649,42 @@ export function StaffProfileModal({ staff, trigger }: StaffProfileModalProps) {
 									</div>
 								</TabsContent>
 
-								{/* Documents Tab - Mobile Optimized */}
+								{/* Documents Tab */}
 								<TabsContent value="documents" className="mt-4">
 									<div className="space-y-3">
-										{[
-											"Contrat de travail.pdf",
-											"Pièce d'identité.jpg",
-											"Certificats.pdf",
-										].map((doc, i) => (
-											<div
-												key={i}
-												className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 border rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 cursor-pointer transition-colors group"
-											>
-												<div className="flex items-center gap-3 mb-2 sm:mb-0">
-													<div className="p-2 bg-pink-50 dark:bg-pink-900/20 rounded-lg text-pink-500 dark:text-pink-400">
-														<FileText className="w-5 h-5" />
-													</div>
-													<div>
-														<p className="font-medium text-gray-900 dark:text-gray-100">
-															{doc}
-														</p>
-														<p className="text-base text-gray-500 dark:text-gray-400">
-															Ajouté le 12 Jan 2023
-														</p>
-													</div>
-												</div>
-												<Button
-													variant="ghost"
-													size="icon"
-													className="text-gray-400 dark:text-gray-400 group-hover:text-pink-600 dark:group-hover:text-pink-400"
+										{
+											[
+												"Employment Contract.pdf",
+												"ID Document.jpg",
+												"Certificates.pdf",
+											].map((doc, i) => (
+												<div
+													key={i}
+													className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 border rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 cursor-pointer transition-colors group"
 												>
-													<Download className="w-4 h-4" />
-												</Button>
-											</div>
-										))}
+													<div className="flex items-center gap-3 mb-2 sm:mb-0">
+														<div className="p-2 bg-pink-50 dark:bg-pink-900/20 rounded-lg text-pink-500 dark:text-pink-400">
+															<FileText className="w-5 h-5" />
+														</div>
+														<div>
+															<p className="font-medium text-gray-900 dark:text-gray-100">
+																{doc}
+															</p>
+															<p className="text-base text-gray-500 dark:text-gray-400">
+																Added on Jan 12, 2023
+															</p>
+														</div>
+													</div>
+													<Button
+														variant="ghost"
+														size="icon"
+														className="text-gray-400 dark:text-gray-400 group-hover:text-pink-600 dark:group-hover:text-pink-400"
+													>
+														<Download className="w-4 h-4" />
+													</Button>
+												</div>
+											))
+										}
 									</div>
 									<Button
 										variant="outline"

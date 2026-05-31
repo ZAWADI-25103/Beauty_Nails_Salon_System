@@ -2,7 +2,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { errorResponse } from "@/lib/api/helpers";
 import { signOut } from "@/lib/auth/auth";
-import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
 	try {
