@@ -32,7 +32,7 @@ export function StaffModal({ staffId, trigger }: StaffModalProps) {
 				<Card className="mx-4 max-w-md w-full">
 					<CardContent className="p-6 text-center">
 						<AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-2" />
-						<p className="text-red-500 mb-4">Erreur de chargement du profil</p>
+						<p className="text-red-500 mb-4">failed loading profile</p>
 						{/* <Button onClick={() => onOpenChange(false)}>Fermer</Button> */}
 					</CardContent>
 				</Card>
