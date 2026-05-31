@@ -66,10 +66,13 @@ export function useAuth() {
 	const logoutMutation = useMutation({
 		mutationFn: authApi.logout,
 		onSuccess: () => {
+			queryClient.removeQueries({ queryKey: ["auth", "me"] });
 			queryClient.clear();
 			toast.success("Logged out successfully");
 			window.location.href = "/auth/login";
-			window.location.reload()
+		},
+		onError: (error: any) => {
+			toast.error(error.message || "Failed to logout");
 		},
 	});
 

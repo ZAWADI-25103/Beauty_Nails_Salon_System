@@ -6,6 +6,7 @@ import { signOut } from "@/lib/auth/auth";
 export async function POST(req: NextRequest) {
 	try {
 		// Sign out the user
+		cookies().delete("session");
 		await signOut({ redirect: false });
 
 		// Redirect to login page after logout

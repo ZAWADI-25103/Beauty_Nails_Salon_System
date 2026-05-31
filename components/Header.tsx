@@ -26,8 +26,6 @@ export default function Header() {
 
 	const handleLogout = () => {
 		logout();
-		router.refresh();
-		router.push("/auth/login");
 	};
 
 	return (
