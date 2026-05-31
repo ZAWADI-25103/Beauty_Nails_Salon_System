@@ -79,21 +79,21 @@ export default function InventoryUsageHistoryModal({
 
 	const getAppointmentServiceName = (appointmentId: string) => {
 		const appointment = appointments.find((a) => a.id === appointmentId);
-		return appointment?.service?.name || "Service inconnu";
+		return appointment?.service?.name || "Unknown Service";
 	};
 
 	const getWorkerName = (workerId: string) => {
 		const appointment = appointments.find((a) => a.workerId === workerId);
-		return appointment?.worker?.user?.name || "Inconnu";
+		return appointment?.worker?.user?.name || "Unknown";
 	};
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
-					<DialogTitle>Historique d'utilisation - {itemName}</DialogTitle>
+					<DialogTitle>Usage History - {itemName}</DialogTitle>
 					<p className="text-sm text-gray-500 dark:text-gray-400">
-						Suivi des utilisations par les esthéticiennes et rendez-vous
+						Track usage by technicians and appointments
 					</p>
 				</DialogHeader>
 
@@ -111,19 +111,19 @@ export default function InventoryUsageHistoryModal({
 								<div className="text-2xl font-bold text-blue-600">
 									{data.stats.uniqueAppointments}
 								</div>
-								<div className="text-xs text-gray-500">Rendez-vous</div>
+								<div className="text-xs text-gray-500">Appointments</div>
 							</Card>
 							<Card className="p-4 text-center">
 								<div className="text-2xl font-bold text-purple-600">
 									{data.stats.uniqueWorkers}
 								</div>
-								<div className="text-xs text-gray-500">Estheticians</div>
+								<div className="text-xs text-gray-500">Technicians</div>
 							</Card>
 							<Card className="p-4 text-center">
 								<div className="text-2xl font-bold text-amber-600">
 									{data.stats.averagePerAppointment.toFixed(1)}
 								</div>
-								<div className="text-xs text-gray-500">Moyenne/RDV</div>
+								<div className="text-xs text-gray-500">Avg/Appointment</div>
 							</Card>
 						</div>
 					)}
@@ -138,13 +138,13 @@ export default function InventoryUsageHistoryModal({
 								<SelectValue placeholder="Period" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="week">Cette semaine</SelectItem>
-								<SelectItem value="month">Ce mois</SelectItem>
-								<SelectItem value="all">Tout l'historique</SelectItem>
+								<SelectItem value="week">This week</SelectItem>
+								<SelectItem value="month">This month</SelectItem>
+								<SelectItem value="all">All history</SelectItem>
 							</SelectContent>
 						</Select>
 						<Input
-							placeholder="Rechercher un rendez-vous..."
+							placeholder="Search an appointment..."
 							className="flex-1"
 						/>
 					</div>
@@ -153,7 +153,7 @@ export default function InventoryUsageHistoryModal({
 					<div className="space-y-3">
 						{isLoading ? (
 							<div className="text-center py-8 text-gray-500">
-								Chargement...
+								Loading...
 							</div>
 						) : data?.usages?.length === 0 ? (
 							<Card className="p-6 text-center">
@@ -184,7 +184,7 @@ export default function InventoryUsageHistoryModal({
 												<div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-300 mb-1">
 													<FileText className="w-4 h-4" />
 													<span>
-														RDV #{usage.usedFor.slice(-6)} -{" "}
+														App #{usage.usedFor.slice(-6)} -{" "}
 														{getAppointmentServiceName(usage.usedFor)}
 													</span>
 												</div>
@@ -194,7 +194,7 @@ export default function InventoryUsageHistoryModal({
 												<div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-300">
 													<User className="w-4 h-4" />
 													<span>
-														Utilisé par: {getWorkerName(usage.usedBy)}
+														Used by: {getWorkerName(usage.usedBy)}
 													</span>
 												</div>
 											)}
