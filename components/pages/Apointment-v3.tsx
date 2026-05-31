@@ -830,7 +830,7 @@ export default function AppointmentsV3() {
 									>
 										<CalendarIcon className="mr-2 h-4 w-4" />
 										{selectedDate ? (
-											format(selectedDate, "PPP", { locale: enUS })
+											format(selectedDate, "PPPP", { locale: enUS })
 										) : (
 											<span>Choose date</span>
 										)}
