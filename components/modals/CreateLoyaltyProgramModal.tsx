@@ -25,9 +25,6 @@ interface LoyaltyRuleData {
 	rewards: Reward[];
 }
 
-// Note: This modal currently handles UI state only.
-// Submitting would require an API endpoint to save these rules server-side.
-// For now, it demonstrates the structure.
 export function CreateLoyaltyProgramModal({
 	trigger,
 }: {
@@ -38,10 +35,10 @@ export function CreateLoyaltyProgramModal({
 		appointmentsForReward: 5,
 		referralsForReward: 5,
 		rewards: [
-			{ points: 100, reward: "Manucure gratuite" },
-			{ points: 250, reward: "Extension cils gratuite" },
-			{ points: 500, reward: "50% sur tous services" },
-			{ points: 1000, reward: "Journée beauté complète gratuite" },
+			{ points: 100, reward: "Free Manicure" },
+			{ points: 250, reward: "Free Eyelash Extension" },
+			{ points: 500, reward: "50% off all services" },
+			{ points: 1000, reward: "Free Full Beauty Day" },
 		],
 	});
 
@@ -70,9 +67,7 @@ export function CreateLoyaltyProgramModal({
 	};
 
 	const handleSubmit = () => {
-		// In a real app, this would call an API endpoint to save the rules.
 		console.log("Submitted Loyalty Rules:", rules);
-		// Example API call: loyaltyApi.updateRules(rules);
 	};
 
 	return (
@@ -81,15 +76,13 @@ export function CreateLoyaltyProgramModal({
 			<DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{rules.rewards.length > 0
-							? "Edit Program"
-							: "Créer Programme"}
+						{rules.rewards.length > 0 ? "Edit Program" : "Create Program"}
 					</DialogTitle>
 				</DialogHeader>
 				<div className="space-y-4">
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 						<div className="space-y-2">
-							<Label htmlFor="pointsPerSpend">Points par 1000 CDF</Label>
+							<Label htmlFor="pointsPerSpend">Points per 1000 CDF</Label>
 							<Input
 								id="pointsPerSpend"
 								type="number"
@@ -143,7 +136,7 @@ export function CreateLoyaltyProgramModal({
 								<div key={index} className="flex items-end gap-2">
 									<div className="flex-1 space-y-1">
 										<Input
-											placeholder="Points requis"
+											placeholder="Points required"
 											type="number"
 											value={reward.points}
 											onChange={(e) =>
@@ -184,19 +177,19 @@ export function CreateLoyaltyProgramModal({
 							className="mt-2 w-full"
 						>
 							<Plus className="w-4 h-4 mr-2" />
-							Ajouter Récompense
+							Add Reward
 						</Button>
 					</div>
 				</div>
 				<DialogFooter>
 					<Button variant="outline" type="button">
-						Annuler
+						Cancel
 					</Button>
 					<Button
 						onClick={handleSubmit}
 						className="bg-gradient-to-r from-purple-500 to-pink-500 text-white"
 					>
-						Enregistrer Programme
+						Save Program
 					</Button>
 				</DialogFooter>
 			</DialogContent>
