@@ -7,7 +7,6 @@ import { cookies } from "next/headers";
 export async function POST(req: NextRequest) {
 	try {
 		// Sign out the user
-		(await cookies()).delete("session");
 		await signOut({ redirect: false });
 
 		// Redirect to login page after logout
