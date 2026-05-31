@@ -208,7 +208,7 @@ export default function InventorySelectionModal({
 
 									{item.isShared && (
 										<Badge className="mt-1 bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-200 text-[10px]">
-											Ressource partagée
+											Shared Resource
 										</Badge>
 									)}
 								</div>
@@ -239,7 +239,7 @@ export default function InventorySelectionModal({
 							{isSelected && (
 								<div className="mt-2">
 									<Input
-										placeholder="Notes (optionnel)"
+										placeholder="Notes (optional)"
 										value={selectedItem?.notes || ""}
 										onChange={(e) => handleNotesChange(item.id, e.target.value)}
 										onClick={(e) => e.stopPropagation()}
@@ -260,8 +260,7 @@ export default function InventorySelectionModal({
 				<DialogHeader>
 					<DialogTitle>Items used for this service</DialogTitle>
 					<p className="text-sm text-gray-500 dark:text-gray-400">
-						Sélectionnez les consommables et outils utilisés pendant ce
-						rendez-vous
+						Select the consumables and tools used during this appointment
 					</p>
 				</DialogHeader>
 
@@ -271,7 +270,7 @@ export default function InventorySelectionModal({
 						<div className="relative flex-1">
 							<Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
 							<Input
-								placeholder="Rechercher un article..."
+								placeholder="Search for an item..."
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
 								className="pl-9"
@@ -301,7 +300,7 @@ export default function InventorySelectionModal({
 					{/* Consumables Section */}
 					{consumables.length > 0 &&
 						renderInventorySection(
-							"Consommables",
+							"Consumables",
 							consumables,
 							<Droplet className="w-4 h-4 text-blue-500" />,
 						)}
@@ -309,7 +308,7 @@ export default function InventorySelectionModal({
 					{/* Tools Section */}
 					{tools.length > 0 &&
 						renderInventorySection(
-							"Outils",
+							"Tools",
 							tools,
 							<Package className="w-4 h-4 text-purple-500" />,
 						)}
@@ -318,7 +317,7 @@ export default function InventorySelectionModal({
 					{selectedItems.length > 0 && (
 						<Card className="p-4 bg-gray-50 dark:bg-gray-800/50">
 							<h4 className="font-medium mb-3">
-								Articles sélectionnés ({selectedItems.length})
+								Selected Items ({selectedItems.length})
 							</h4>
 							<div className="space-y-2">
 								{selectedItems.map((item) => (
@@ -343,17 +342,16 @@ export default function InventorySelectionModal({
 					<div className="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-800 dark:text-blue-200">
 						<AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
 						<p>
-							<strong>Note:</strong> Les ressources partagées (flacons, pots) ne
-							sont déduites qu'une fois par rendez-vous, même si plusieurs
-							esthéticiennes les utilisent. Les consommables (coton, vernis en
-							ml) sont déduits selon la quantité utilisée.
+							<strong>Note:</strong> Shared resources (bottles, jars) are deducted only once per appointment,
+							even if multiple technicians use them. Consumables (cotton, varnish in ml) are deducted
+							according to the quantity used.
 						</p>
 					</div>
 				</div>
 
 				<DialogFooter className="gap-2">
 					<Button variant="outline" onClick={() => onOpenChange(false)}>
-						Annuler
+						Cancel
 					</Button>
 					<Button
 						onClick={handleSubmit}
@@ -361,8 +359,8 @@ export default function InventorySelectionModal({
 						className="bg-gradient-to-r from-pink-500 to-purple-500"
 					>
 						{recordUsage.isPending
-							? "Enregistrement..."
-							: `Enregistrer (${selectedItems.length} articles)`}
+							? "Recording..."
+							: `Save (${selectedItems.length} items)`}
 					</Button>
 				</DialogFooter>
 			</DialogContent>
