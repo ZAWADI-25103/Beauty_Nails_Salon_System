@@ -1,7 +1,7 @@
 "use client";
 import confetti from "canvas-confetti";
 import { format } from "date-fns";
-import { en } from "date-fns/locale";
+import enUS from 'date-fns/locale/en-US';
 import { AnimatePresence, motion } from "framer-motion";
 import {
 	AlertCircle,
@@ -30,7 +30,7 @@ import {
 	Share2,
 	Sparkles,
 	Star,
-	TrendingUp,
+	TrdingUp,
 	User,
 	Users,
 	Wallet,
@@ -40,19 +40,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import type { Appointment } from "@/lib/api/appointments";
+import type { Appointmt } from "@/lib/api/appointmts";
 import {
-	useAppointments,
+	useAppointmts,
 	useAvailableSlots,
-} from "@/lib/hooks/useAppointments";
+} from "@/lib/hooks/useAppointmts";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { useClient, useClients } from "@/lib/hooks/useClients";
+import { useClit, useClits } from "@/lib/hooks/useClits";
 import { useLoyalty, useReferral } from "@/lib/hooks/useLoyalty";
-import { useNotifications } from "@/lib/hooks/useNotifications";
+import { usotifications } from "@/lib/hooks/usotifications";
 import { usePackages } from "@/lib/hooks/usePackages";
 import { useReviews } from "@/lib/hooks/useReview";
-import { useClientReferrals } from "@/lib/hooks/useServices";
-import AppointmentCountdown from "../AppointmentCountdown";
+import { useClitReferrals } from "@/lib/hooks/useServices";
+import AppointmtCountdown from "../AppointmentCountdown";
 import ClientModalTrigger from "../ClientModalTrigger";
 import LoaderBN from "../Loader-BN";
 import PackageCard from "../PackageCard";
@@ -381,7 +381,7 @@ export default function ClientDashboardV2() {
 					userId: user?.id ?? "", // Using client ID here
 					type: "loyalty_reward",
 					title: `Félicitations ${user?.name}! ✨`,
-					message: `You used your points to get a loyalty bonus. Profitez-en bien !`,
+					message: `You used your points to get a loyalty bonus!`,
 				});
 			},
 		});
@@ -1147,7 +1147,7 @@ export default function ClientDashboardV2() {
 										                                                    <CalendarIcon className="mr-2 h-4 w-4" />
 										                                                    {selectedDate
 										                                                        ? format(selectedDate, "PPP", {
-										                                                              locale: en,
+										                                                              locale: enUs,
 										                                                          })
 										                                                        : "Choose date"}
 										                                                </Button>
@@ -1180,7 +1180,7 @@ export default function ClientDashboardV2() {
 										                                                                  selectedDate,
 										                                                                  "PPP",
 										                                                                  {
-										                                                                      locale: en,
+										                                                                      locale: enUS,
 										                                                                  },
 										                                                              )
 										                                                            : ""}
@@ -1426,7 +1426,7 @@ export default function ClientDashboardV2() {
             >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {selectedDate
-                    ? format(selectedDate, "PPP", { locale: en })
+                    ? format(selectedDate, "PPP", { locale: enUS })
                     : "Choose date"}
             </Button>
         </PopoverTrigger>
@@ -1452,7 +1452,7 @@ export default function ClientDashboardV2() {
                 will be available on{" "}
                 <span className="text-md font-bold text-pink-600">
                     {selectedDate
-                        ? format(selectedDate, "PPP", { locale: en })
+                        ? format(selectedDate, "PPP", { locale: enUS })
                         : ""}
                 </span>
             </h3>
@@ -1677,7 +1677,7 @@ export default function ClientDashboardV2() {
                                 </h3>
                                 <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
                                     <CalendarIcon className="w-3 h-3" />
-                                    {format(new Date(apt.date), "PPP", { locale: en })} at {apt.time}
+                                    {format(new Date(apt.date), "PPP", { locale: enUS })} at {apt.time}
                                 </p>
                             </div>
                         </div>
