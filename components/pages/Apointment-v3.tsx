@@ -843,10 +843,11 @@ export default function AppointmentsV3() {
 										selected={selectedDate}
 										onSelect={setSelectedDate}
 										initialFocus
-										disabled={(date) => {
-											const today = startOfDay(new Date()); // Midnight today
-											return isBefore(date, today);
-											}}
+										// disabled={(date) => {
+										// 	const today = startOfDay(new Date()); // Midnight today
+										// 	return isBefore(date, today);
+										// 	}
+										// }
 										minDate={new Date()}
 									/>
 								</PopoverContent>
