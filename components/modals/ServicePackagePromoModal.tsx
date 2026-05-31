@@ -84,10 +84,10 @@ export function ServiceModal({
 
 				<div className="space-y-4">
 					<div className="space-y-3">
-						<Label className="text-lg sm:text-base">Nom du Service</Label>
+						<Label className="text-lg sm:text-base">Service Name</Label>
 						<Input
 							id="serviceName"
-							placeholder="Ex: Manucure Gel"
+							placeholder="e.g., Gel Manicure"
 							value={formData.name || ""}
 							onChange={(e) => handleChange("name", e.target.value)}
 							className="h-11 text-base"
@@ -95,13 +95,13 @@ export function ServiceModal({
 					</div>
 
 					<div className="space-y-3">
-						<Label className="text-lg sm:text-base">Catégorie</Label>
+						<Label className="text-lg sm:text-base">Category</Label>
 						<Select
 							value={formData.category}
 							onValueChange={(v) => handleChange("category", v as any)}
 						>
 							<SelectTrigger className="h-11">
-								<SelectValue placeholder="Choisir catégorie" />
+								<SelectValue placeholder="Select category" />
 							</SelectTrigger>
 							<SelectContent>
 								<SelectItem value="onglerie">Nail Care</SelectItem>
@@ -114,7 +114,7 @@ export function ServiceModal({
 
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 						<div className="space-y-3">
-							<Label className="text-lg sm:text-base">Prix (CDF)</Label>
+							<Label className="text-lg sm:text-base">Price (CDF)</Label>
 							<div className="relative">
 								<Input
 									id="servicePrice"
@@ -133,7 +133,7 @@ export function ServiceModal({
 						</div>
 
 						<div className="space-y-3">
-							<Label className="text-lg sm:text-base">Durée (min)</Label>
+							<Label className="text-lg sm:text-base">Duration (min)</Label>
 							<Input
 								id="serviceDuration"
 								type="number"
@@ -151,7 +151,7 @@ export function ServiceModal({
 						<Label className="text-lg sm:text-base">Description</Label>
 						<Textarea
 							id="serviceDescription"
-							placeholder="Détails du service pour le site web..."
+							placeholder="Service details for the website..."
 							value={formData.description || ""}
 							onChange={(e) => handleChange("description", e.target.value)}
 							className="h-24 resize-none text-base"
@@ -162,14 +162,14 @@ export function ServiceModal({
 				<div className="space-y-4 mt-4">
 					<div className="border-2 border-dashed border-gray-200 rounded-xl h-32 flex flex-col items-center justify-center text-gray-400 hover:border-pink-300 hover:bg-pink-50 transition-colors cursor-pointer">
 						<Upload className="w-6 h-6 mb-1" />
-						<span className="text-lg">Photo du Service</span>
+						<span className="text-lg">Service Photo</span>
 					</div>
 
 					<div className="space-y-3">
-						<Label className="text-lg sm:text-base">Employées Qualifiées</Label>
+						<Label className="text-lg sm:text-base">Qualified Employees</Label>
 						<div className="border rounded-lg p-3 space-y-2 max-h-[150px] overflow-y-auto">
 							<p className="text-lg text-gray-500 italic">
-								Sélection des employés à implémenter
+								Employee selection to be implemented
 							</p>
 						</div>
 					</div>
@@ -177,8 +177,8 @@ export function ServiceModal({
 					<div className="bg-gray-50 p-4 rounded-xl space-y-3">
 						<div className="flex items-center justify-between">
 							<div className="space-y-0.5">
-								<Label className="text-lg">Réservation en ligne</Label>
-								<p className="text-base text-gray-500">Visible sur le site</p>
+								<Label className="text-lg">Online Booking</Label>
+								<p className="text-base text-gray-500">Visible on website</p>
 							</div>
 							<Switch
 								checked={formData.onlineBookable}
@@ -190,8 +190,8 @@ export function ServiceModal({
 
 						<div className="flex items-center justify-between">
 							<div className="space-y-0.5">
-								<Label className="text-lg">Service Populaire</Label>
-								<p className="text-base text-gray-500">Mettre en avant</p>
+								<Label className="text-lg">Popular Service</Label>
+								<p className="text-base text-gray-500">Featured</p>
 							</div>
 							<Switch
 								checked={formData.isPopular}
@@ -205,7 +205,7 @@ export function ServiceModal({
 
 				<DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 mt-4">
 					<Button variant="outline" type="button" className="w-full sm:w-auto">
-						Annuler
+						Cancel
 					</Button>
 					<Button
 						onClick={handleSubmit}
@@ -213,10 +213,10 @@ export function ServiceModal({
 						className="w-full sm:w-auto bg-linear-to-r from-pink-500 to-purple-500 text-white"
 					>
 						{isCreating || isUpdating
-							? "Chargement..."
+							? "Loading..."
 							: service
-								? "Enregistrer Modifications"
-								: "Créer Service"}
+								? "Save Changes"
+								: "Create Service"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>
@@ -296,10 +296,10 @@ export function PackageModal({ pkg, trigger, onSubmit }: PackageModalProps) {
 
 				<div className="space-y-4">
 					<div className="space-y-3">
-						<Label className="text-lg sm:text-base">Nom du Forfait</Label>
+						<Label className="text-lg sm:text-base">Package Name</Label>
 						<Input
 							id="packageName"
-							placeholder="Ex: Pack Mariée VIP"
+							placeholder="e.g., VIP Bride Package"
 							value={formData.name || ""}
 							onChange={(e) => handleChange("name", e.target.value)}
 							className="h-11 text-base"
@@ -335,7 +335,7 @@ export function PackageModal({ pkg, trigger, onSubmit }: PackageModalProps) {
 							<div className="bg-purple-50 p-4 rounded-xl space-y-3">
 								<div className="space-y-2">
 									<Label className="text-purple-900 text-lg">
-										Valeur Totale (Estimée)
+										Total Estimated Value
 									</Label>
 									<div className="text-xl text-gray-400 line-through decoration-red-500">
 										{totalEstimatedValue > 0
@@ -347,11 +347,11 @@ export function PackageModal({ pkg, trigger, onSubmit }: PackageModalProps) {
 
 								<div className="space-y-2">
 									<Label className="text-purple-900 text-lg">
-										Prix du Forfait
+										Package Price
 									</Label>
 									<Input
 										type="number"
-										placeholder="Prix spécial"
+										placeholder="Special price"
 										value={formData.price || ""}
 										onChange={(e) =>
 											handleChange("price", parseFloat(e.target.value) || 0)
@@ -362,7 +362,7 @@ export function PackageModal({ pkg, trigger, onSubmit }: PackageModalProps) {
 
 								{totalEstimatedValue > 0 && formData.price && (
 									<Badge className="bg-green-500 text-white w-full justify-center py-1.5 text-lg">
-										Économie:{" "}
+										Savings:{" "}
 										{(
 											totalEstimatedValue - Number(formData.price)
 										).toLocaleString()}{" "}
@@ -375,11 +375,11 @@ export function PackageModal({ pkg, trigger, onSubmit }: PackageModalProps) {
 
 					<div className="space-y-3">
 						<Label className="text-lg sm:text-base">
-							Description Marketing
+							Marketing Description
 						</Label>
 						<Textarea
 							id="packageDescription"
-							placeholder="Pourquoi choisir ce forfait ?"
+							placeholder="Why choose this package?"
 							value={formData.description || ""}
 							onChange={(e) => handleChange("description", e.target.value)}
 							className="resize-none h-24 text-base"
@@ -389,7 +389,7 @@ export function PackageModal({ pkg, trigger, onSubmit }: PackageModalProps) {
 
 				<DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 mt-4">
 					<Button variant="outline" type="button" className="w-full sm:w-auto">
-						Annuler
+						Cancel
 					</Button>
 					<Button
 						onClick={handleSubmit}
@@ -397,17 +397,16 @@ export function PackageModal({ pkg, trigger, onSubmit }: PackageModalProps) {
 						className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white"
 					>
 						{isCreating || isUpdating
-							? "Chargement..."
+							? "Loading..."
 							: pkg
-								? "Mettre à jour"
-								: "Créer Forfait"}
+								? "Update Package"
+								: "Create Package"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	);
 }
-
 // --- Promo Modal (Mobile Optimized) ---
 interface PromoModalProps {
 	promo?: DiscountCode;
@@ -456,10 +455,10 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 
 				<div className="space-y-4 py-2">
 					<div className="space-y-3">
-						<Label className="text-lg sm:text-base">Nom de la campagne</Label>
+						<Label className="text-lg sm:text-base">Campaign Name</Label>
 						<Input
 							id="promoName"
-							placeholder="Ex: Offre Spéciale Fêtes"
+							placeholder="e.g., Special Holiday Offer"
 							value={formData.code || ""}
 							onChange={(e) =>
 								handleChange("code", e.target.value.toUpperCase())
@@ -470,11 +469,11 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 						<div className="space-y-3">
-							<Label className="text-lg sm:text-base">Code Promo</Label>
+							<Label className="text-lg sm:text-base">Promo Code</Label>
 							<div className="relative">
 								<Input
 									id="promoCode"
-									placeholder="FETES2024"
+									placeholder="HOLIDAY2024"
 									value={formData.code || ""}
 									onChange={(e) =>
 										handleChange("code", e.target.value.toUpperCase())
@@ -488,7 +487,7 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 						</div>
 
 						<div className="space-y-3">
-							<Label className="text-lg sm:text-base">Type de réduction</Label>
+							<Label className="text-lg sm:text-base">Discount Type</Label>
 							<Select
 								value={formData.type}
 								onValueChange={(v) => handleChange("type", v as any)}
@@ -497,9 +496,9 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="percentage">Pourcentage (%)</SelectItem>
+									<SelectItem value="percentage">Percentage (%)</SelectItem>
 									<SelectItem value="fixed_amount">
-										Montant Fixe (CDF)
+										Fixed Amount (CDF)
 									</SelectItem>
 								</SelectContent>
 							</Select>
@@ -509,7 +508,7 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 					<div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-gray-950 dark:to-gray-950 p-4 rounded-2xl text-center shadow-sm hover:shadow-lg transition-shadow border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 space-y-4">
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 							<div className="space-y-3">
-								<Label className="text-lg sm:text-base">Valeur</Label>
+								<Label className="text-lg sm:text-base">Value</Label>
 								<div className="relative">
 									<Input
 										id="promoValue"
@@ -528,7 +527,7 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 							</div>
 
 							<div className="space-y-3">
-								<Label className="text-lg sm:text-base">Limite Usage</Label>
+								<Label className="text-lg sm:text-base">Usage Limit</Label>
 								<Input
 									id="promoMaxUses"
 									type="number"
@@ -544,7 +543,7 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 							<div className="space-y-3">
-								<Label className="text-lg sm:text-base">Achat Min. (CDF)</Label>
+								<Label className="text-lg sm:text-base">Min. Purchase (CDF)</Label>
 								<Input
 									id="promoMinPurchase"
 									type="number"
@@ -558,7 +557,7 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 							</div>
 
 							<div className="space-y-3">
-								<Label className="text-lg sm:text-base">Expire le</Label>
+								<Label className="text-lg sm:text-base">Expires on</Label>
 								<Input
 									id="promoEndDate"
 									type="date"
@@ -586,21 +585,21 @@ export function PromoModal({ promo, trigger, onSubmit }: PromoModalProps) {
 							onCheckedChange={(checked) => handleChange("isActive", checked)}
 						/>
 						<Label htmlFor="promoActive" className="text-gray-600 text-lg">
-							Activer immédiatement cette promotion
+							Activate this promotion immediately
 						</Label>
 					</div>
 				</div>
 
 				<DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 mt-4">
 					<Button variant="outline" type="button" className="w-full sm:w-auto">
-						Brouillon
+						Draft
 					</Button>
 					<Button
 						onClick={handleSubmit}
 						disabled={isCreating || isUpdating}
 						className="w-full sm:w-auto bg-linear-to-r from-amber-500 to-orange-500 text-white"
 					>
-						{isCreating || isUpdating ? "Chargement..." : "Lancer Promotion"}
+						{isCreating || isUpdating ? "Loading..." : "Launch Promotion"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>
