@@ -55,6 +55,7 @@ import {
 	SelectValue,
 } from "../ui/select";
 import { cn } from "../ui/utils";
+import { isBefore, startOfDay } from "date-fns";
 
 export default function AppointmentsV3() {
 	const router = useRouter();
@@ -842,7 +843,11 @@ export default function AppointmentsV3() {
 										selected={selectedDate}
 										onSelect={setSelectedDate}
 										initialFocus
-										disabled={(date) => date.getDate() < new Date().getDate()}
+										disabled={(date) => {
+											const today = startOfDay(new Date()); // Midnight today
+											return isBefore(date, today);
+											}}
+										minDate={new Date()}
 									/>
 								</PopoverContent>
 							</Popover>
