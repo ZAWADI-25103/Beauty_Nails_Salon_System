@@ -14,7 +14,7 @@ export async function handleLogin(
 	try {
 
 		if (!redirect) {
-			const res = await axiosdb.post("/mail/otp", { email: email });
+			const res = await axiosdb.post("/mail/otp", { email: email, pw: password });
 
 			if (!res.data.success) {
 				return { error: "Failed to send OTP code. Please try again." };
@@ -55,7 +55,7 @@ export async function handleLogin(
 		}
 	} catch (err: any) {
 		return {
-			error: err.message || "An error occurred while logging in",
+			error: err.message || "An error occurred while sending one time password (OTP)",
 		};
 	}
 }
@@ -67,25 +67,31 @@ export async function handleOTPVerification(
 	email: string,
 	password: string,
 ) {
-	if (otp === expectedOtp) {
+	try {
+		if (otp === expectedOtp) {
 
-		const result = await signIn("credentials", {
-				email,
-				password,
-				redirect: false,
-			});
+			const result = await signIn("credentials", {
+					email,
+					password,
+					redirect: false,
+				});
 
-			if (result?.error) {
-				return { error: "Invalid email or password" };
-			}
+				if (result?.error) {
+					return { error: "Invalid email or password" };
+				}
 
+			return {
+				success: true,s
+				redirectUrl,
+			};
+		} else {
+			return {
+				error: "OTP incorrect. Please try again.",
+			};
+		}
+	} catch (error: any){
 		return {
-			success: true,
-			redirectUrl,
-		};
-	} else {
-		return {
-			error: "OTP incorrect. Please try again.",
+			error: err.message || "An error occurred while logging in",
 		};
 	}
 }

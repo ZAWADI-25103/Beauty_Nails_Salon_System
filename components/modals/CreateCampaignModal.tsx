@@ -23,9 +23,9 @@ import type { MarketingCampaign } from "@/lib/api/marketing";
 import { useCampaigns } from "@/lib/hooks/useMarketing";
 
 interface CreateCampaignModalProps {
-	campaign?: MarketingCampaign; // For editing existing campaigns
+	campaign?: MarketingCampaign;
 	trigger: React.ReactNode;
-	onSubmit?: (data: MarketingCampaign) => void; // Optional callback
+	onSubmit?: (data: MarketingCampaign) => void;
 }
 
 export function CreateCampaignModal({
@@ -35,7 +35,7 @@ export function CreateCampaignModal({
 	const [formData, setFormData] = useState<Partial<MarketingCampaign>>({
 		name: campaign?.name || "",
 		type: campaign?.type || "email",
-		target: campaign?.target || "all_customers", // Example target
+		target: campaign?.target || "all_customers",
 		message: campaign?.message || "",
 		status: campaign?.status || "draft",
 		scheduledDate: campaign?.scheduledDate || undefined,
@@ -57,8 +57,6 @@ export function CreateCampaignModal({
 		} else {
 			createCampaign(formData as Partial<MarketingCampaign>);
 		}
-		// Optionally call onSubmit callback
-		// onSubmit?.(/* new/updated campaign object - usually returned by mutation */);
 	};
 
 	return (
@@ -72,17 +70,17 @@ export function CreateCampaignModal({
 				</DialogHeader>
 				<div className="space-y-4">
 					<div className="space-y-2">
-						<Label htmlFor="campaignName">Nom de la Campagne</Label>
+						<Label htmlFor="campaignName">Campaign Name</Label>
 						<Input
 							id="campaignName"
-							placeholder="Ex: Offre Spéciale Fêtes"
+							placeholder="e.g., Special Holiday Offer"
 							value={formData.name || ""}
 							onChange={(e) => handleChange("name", e.target.value)}
 						/>
 					</div>
 
 					<div className="space-y-2">
-						<Label>Type d'Envoi</Label>
+						<Label>Send Type</Label>
 						<RadioGroup
 							value={formData.type}
 							onValueChange={(v) => handleChange("type", v as any)}
@@ -98,29 +96,29 @@ export function CreateCampaignModal({
 								</div>
 								<div className="flex items-center space-x-2">
 									<RadioGroupItem value="both" id="type-both" />
-									<Label htmlFor="type-both">Les Deux</Label>
+									<Label htmlFor="type-both">Both</Label>
 								</div>
 							</div>
 						</RadioGroup>
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="campaignTarget">Ciblage</Label>
+						<Label htmlFor="campaignTarget">Target Audience</Label>
 						<Select
 							value={formData.target}
 							onValueChange={(v) => handleChange("target", v)}
 						>
 							<SelectTrigger>
-								<SelectValue placeholder="Sélectionner cible" />
+								<SelectValue placeholder="Select target" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="all_customers">Tous les clients</SelectItem>
-								<SelectItem value="vip_customers">Membres VIP</SelectItem>
+								<SelectItem value="all_customers">All Customers</SelectItem>
+								<SelectItem value="vip_customers">VIP Members</SelectItem>
 								<SelectItem value="inactive_customers">
-									Clients inactifs
+									Inactive Customers
 								</SelectItem>
 								<SelectItem value="birthday_month">
-									Anniversaires ce mois
+									Birthdays This Month
 								</SelectItem>
 							</SelectContent>
 						</Select>
@@ -130,7 +128,7 @@ export function CreateCampaignModal({
 						<Label htmlFor="campaignMessage">Message</Label>
 						<Textarea
 							id="campaignMessage"
-							placeholder="Contenu du message..."
+							placeholder="Message content..."
 							value={formData.message || ""}
 							onChange={(e) => handleChange("message", e.target.value)}
 							className="resize-none"
@@ -138,7 +136,7 @@ export function CreateCampaignModal({
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="campaignStatus">Statut</Label>
+						<Label htmlFor="campaignStatus">Status</Label>
 						<Select
 							value={formData.status}
 							onValueChange={(v) => handleChange("status", v as any)}
@@ -147,15 +145,15 @@ export function CreateCampaignModal({
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="draft">Brouillon</SelectItem>
-								<SelectItem value="scheduled">Programmé</SelectItem>
+								<SelectItem value="draft">Draft</SelectItem>
+								<SelectItem value="scheduled">Scheduled</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>
 
 					{formData.status === "scheduled" && (
 						<div className="space-y-2">
-							<Label htmlFor="scheduledDate">Date Programmée</Label>
+							<Label htmlFor="scheduledDate">Scheduled Date</Label>
 							<Input
 								id="scheduledDate"
 								type="datetime-local"
@@ -178,18 +176,18 @@ export function CreateCampaignModal({
 				</div>
 				<DialogFooter>
 					<Button variant="outline" type="button">
-						Annuler
+						Cancel
 					</Button>
 					<Button
 						onClick={handleSubmit}
-						disabled={isCreating || isUpdating} // Disable during mutation
+						disabled={isCreating || isUpdating}
 						className="bg-linear-to-r from-pink-500 to-purple-500 text-white"
 					>
 						{isCreating || isUpdating
-							? "Chargement..."
+							? "Loading..."
 							: campaign
-								? "Mettre à jour"
-								: "Créer Campagne"}
+								? "Update Campaign"
+								: "Create Campaign"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

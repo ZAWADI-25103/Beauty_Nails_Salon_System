@@ -69,6 +69,7 @@ export function useAuth() {
 			queryClient.clear();
 			toast.success("Logged out successfully");
 			window.location.href = "/auth/login";
+			window.location.reload()
 		},
 	});
 

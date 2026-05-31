@@ -3,10 +3,11 @@ import { NextResponse } from "next/server";
 import { OtpEmail } from "@/emails/OtpEmail";
 import prisma from "@/lib/prisma";
 import { sendEmail } from "@/lib/sendEmail";
+import { compare } from "bcryptjs";
 
 export async function POST(req: Request) {
 	try {
-		const { email } = await req.json();
+		const { email, pw } = await req.json();
 
 		if (!email) {
 			return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -19,7 +20,18 @@ export async function POST(req: Request) {
 		if (!user) {
 			// Return success even if user doesn't exist to prevent email enumeration
 			return NextResponse.json({
-				message: "If an account with this email exists, an OTP has been sent.",
+				message: `User (${email}) doesn't exist.`,
+			});
+		}
+		
+		const isPasswordValid = await compare(
+			pw,
+			user.password,
+		);
+		if (!isPasswordValid) {
+			// Return success even if user doesn't exist to prevent email enumeration
+			return NextResponse.json({
+				message: `(${user.name}) please enter valid password and try again.`,
 			});
 		}
 

@@ -270,13 +270,13 @@ export default function ClientDashboardV2() {
 		workerId: selectedWorker ? selectedWorker : "",
 	});
 	const weekDay = [
-		"Dimanche",
-		"Lundi",
-		"Mardi",
-		"Mercredi",
-		"Jeudi",
-		"Vendredi",
-		"Samedi",
+		"Sanday",
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
 	];
 
 	// Filter appointments
@@ -306,7 +306,7 @@ export default function ClientDashboardV2() {
 	// Handle review submission
 	const handleSubmitReview = async () => {
 		if (!selectedAppointment || rating === 0) {
-			toast.error("Veuillez donner une note");
+			toast.error("Minimum rate is 1 star");
 			return;
 		}
 
@@ -333,8 +333,8 @@ export default function ClientDashboardV2() {
 				});
 
 				// 2. Immediate Toast Notification
-				toast.success(`Félicitations ! ${user?.name}! 🎉`, {
-					description: "Profitez de 10% de réduction ce mois-ci.",
+				toast.success(`Congrats ! ${user?.name}! 🎉`, {
+					description: "Enjoy 10% off on all our services",
 					duration: 5000,
 				});
 
@@ -342,7 +342,7 @@ export default function ClientDashboardV2() {
 				createNotification({
 					userId: user?.id ?? "",
 					type: "marketing",
-					title: `Félicitations ! ${user?.name}!`,
+					title: `Congrats ! ${user?.name}!`,
 					message: `Enjoy 10% off on all our services.`,
 				});
 			},
@@ -378,9 +378,9 @@ export default function ClientDashboardV2() {
 
 				// 3. Database Notification (Persistent History)
 				createNotification({
-					userId: user?.id ?? "", // Using client ID here
+					userId: user?.id ?? "",
 					type: "loyalty_reward",
-					title: `Félicitations ${user?.name}! ✨`,
+					title: `Congrats ${user?.name}! ✨`,
 					message: `You used your points to get a loyalty bonus!`,
 				});
 			},
@@ -406,7 +406,7 @@ export default function ClientDashboardV2() {
 		} else if (selectedClient.loyaltyPoints === 2000 && loyaltyPoints >= 2000) {
 			callApplyLoyaltyBonus();
 		} else {
-			toast.error("Vous n'avez pas assez de points de loyaute");
+			toast.error("No Enough Loyalty Points");
 			return;
 		}
 	};
@@ -434,8 +434,8 @@ export default function ClientDashboardV2() {
 				fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
 
 				// 2. High-Impact Toast Notification
-				toast.success("C'est offert ! 🏆✨", {
-					description: `Félicitations ${user?.name}, votre prochain service est 100% gratuit !`,
+				toast.success("Just For You ! 🏆✨", {
+					description: `Congrats! ${user?.name}, your next service est 100% free !`,
 					duration: 8000, // Longer for a big win
 					style: {
 						border: "2px solid #10B981", // Green for "Free/Success"
@@ -450,7 +450,7 @@ export default function ClientDashboardV2() {
 				createNotification({
 					userId: user?.id ?? "",
 					type: "loyalty_reward",
-					title: `Service Gratuit Débloqué ! 🎖️`,
+					title: `Free Service Unlocked ! 🎖️`,
 					message: `Congratulations! Your loyalty paid off. Your next salon visit is completely free. À très vite !`,
 				});
 			},
@@ -507,28 +507,28 @@ export default function ClientDashboardV2() {
 				return (
 					<Badge className="bg-green-100 text-green-700 hover:bg-green-100">
 						<CheckCircle className="w-3 h-3 mr-1" />
-						Confirmé
+						Confirmed
 					</Badge>
 				);
 			case "pending":
 				return (
 					<Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">
 						<Clock className="w-3 h-3 mr-1" />
-						En attente
+						Pending
 					</Badge>
 				);
 			case "completed":
 				return (
 					<Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">
 						<CheckCircle className="w-3 h-3 mr-1" />
-						Terminé
+						Completed
 					</Badge>
 				);
 			case "cancelled":
 				return (
 					<Badge className="bg-red-100 text-red-700 hover:bg-red-100">
 						<XCircle className="w-3 h-3 mr-1" />
-						Annulé
+						Cancelled
 					</Badge>
 				);
 			default:
@@ -554,7 +554,7 @@ export default function ClientDashboardV2() {
 			},
 			{
 				onSuccess: () => {
-					toast.success("Statut mis à jour");
+					toast.success("Status updated");
 				},
 			},
 		);
@@ -603,7 +603,7 @@ export default function ClientDashboardV2() {
 			{
 				onSuccess: () => {
 					toast.success(
-						`Le montant (${amount} CDF) sera ajouté au prepaid balance`,
+						`The Amount (${amount} CDF) will be added to prepaid balance`,
 					);
 					setSelectedAppointment(null);
 				},
