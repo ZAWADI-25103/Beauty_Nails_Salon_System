@@ -1529,10 +1529,6 @@ export default function WorkerDashboardV2() {
 										<Button
 											className="flex-1 bg-purple-600 hover:bg-purple-700"
 											onClick={() => {
-												handleUpdateStatus(
-													selectedAppointment.id,
-													"in_progress",
-												);
 												setShowInventorySelection(true);
 											}}
 										>
@@ -1544,6 +1540,12 @@ export default function WorkerDashboardV2() {
 											workerId={selectedAppointment.workerId}
 											open={showInventorySelection}
 											onOpenChange={setShowInventorySelection}
+											onUsageRecorded={() => {
+												handleUpdateStatus(
+													selectedAppointment.id,
+													"in_progress",
+												);
+											}}
 										/>
 									</>
 								)}
