@@ -211,8 +211,9 @@ export default function ClientDashboardV2() {
 		if (
 			isAppointmentMissed(appointment.date, appointment.time) &&
 			appointment.status === "cancelled"
-		)
+		){
 			return;
+		}
 		cancelAppointment(
 			{
 				id: appointment.id,
@@ -286,8 +287,7 @@ export default function ClientDashboardV2() {
 			new Date(apt.date).getDate() >= new Date().getDate(),
 	);
 	const ongoingAppointments = appointments.filter(
-		(apt) =>
-			(apt.status === "in_progress")
+		(apt) => (apt.status === "in_progress")
 	);
 	const missedAppointments = appointments.filter(
 		(apt) =>
@@ -988,7 +988,7 @@ export default function ClientDashboardV2() {
 									Ongoing Appointments
 								</h2>
 								<div className="space-y-4">
-									{upcomingAppointments.map((appointment) => {
+									{ongoingAppointments.map((appointment) => {
 
 										return (
 										    <div
