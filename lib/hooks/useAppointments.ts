@@ -18,6 +18,12 @@ export function useAppointments(params?: {
 }) {
 	const queryClient = useQueryClient();
 	const router = useRouter();
+	const formatDate = (dateString: string) => {
+			return new Date(dateString).toLocaleDateString("en-US", {
+				day: "numeric",
+				month: "long",
+			});
+		};
 
 	// Get appointments
 	const {
@@ -37,7 +43,7 @@ export function useAppointments(params?: {
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({ queryKey: ["appointments"] });
 			toast.success("Appointment created successfully!", {
-				description: `Your appointment is scheduled for ${data.appointment.date} at ${data.appointment.time}`,
+				description: `Your appointment is scheduled for ${formatDate(data.appointment.date)} at ${data.appointment.time}`,
 			});
 			if (data.canGenerateReceipt) {
 				const storage =
@@ -60,7 +66,7 @@ export function useAppointments(params?: {
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({ queryKey: ["appointments"] });
 			toast.success("Appointment confirmed!", {
-				description: `Your appointment is scheduled for ${data.appointment.date} at ${data.appointment.time}`,
+				description: `Your appointment is scheduled for ${formatDate(data.appointment.date)} at ${data.appointment.time}`,
 			});
 		},
 		onError: (error: any) => {
