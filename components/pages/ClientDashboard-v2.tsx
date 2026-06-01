@@ -290,7 +290,7 @@ export default function ClientDashboardV2() {
 		(apt) => (apt.status === "in_progress")
 	);
 	const missedAppointments = appointments.filter(
-		(apt) => isAppointmentMissed(apt.date, apt.time),
+		(apt) => isAppointmentMissed(apt.date, apt.time) && (apt.status === "confirmed" || apt.status === "cancelled") && apt.status !== "completed",
 	);
 
 	const appointmentHistory = appointments.filter(
