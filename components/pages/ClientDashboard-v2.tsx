@@ -282,8 +282,12 @@ export default function ClientDashboardV2() {
 	// Filter appointments
 	const upcomingAppointments = appointments.filter(
 		(apt) =>
-			apt.status === "confirmed" &&
+			(apt.status === "confirmed") &&
 			new Date(apt.date).getDate() >= new Date().getDate(),
+	);
+	const ongoingAppointments = appointments.filter(
+		(apt) =>
+			(apt.status === "in_progress")
 	);
 	const missedAppointments = appointments.filter(
 		(apt) =>
@@ -975,6 +979,109 @@ export default function ClientDashboardV2() {
 					<TabsContent value="appointments" className="space-y-6">
 						{/* Upcoming Appointments */}
 						<Card className="p-6">
+							
+
+							{ongoingAppointments.length > 0 && (
+								<>
+								<h2 className="text-2xl   mb-6 flex items-center">
+									<Clock className="w-6 h-6 mr-2 text-pink-500" />
+									Ongoing Appointments
+								</h2>
+								<div className="space-y-4">
+									{upcomingAppointments.map((appointment) => {
+
+										return (
+										    <div
+										        key={appointment.id}
+										        className={cn(
+										            "p-6 hover:shadow-lg border shadow-xl rounded-2xl bg-white dark:bg-gray-950 transition-all duration-300",
+										            appointment.status === "in_progress"
+										                ? "border-transparent relative overflow-hidden animate-border-glow"
+										                : "border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400",
+										        )}
+										    >
+										        {/* ✨ Animated border */}
+										        {appointment.status === "in_progress" && (
+										            <div className="absolute inset-0 rounded-2xl pointer-events-none border-2 border-transparent bg-[conic-linear(at_top,#ec4899,#a855f7,#ec4899)] animate-spin-slow opacity-40" />
+										        )}
+										
+										        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+										            <div className="flex-1">
+										                <div className="flex items-center gap-3 mb-3">
+										                    <h3 className="text-xl ">
+										                        {appointment.package
+										                            ? ""
+										                            : appointment.service?.name || "Service"}
+										                    </h3>
+										                    {appointment.package && (
+										                        <Badge className="bg-purple-500 text-white">
+										                            <Sparkles className="w-3 h-3 mr-1" />
+										                            Package: {appointment.package.name}
+										                        </Badge>
+										                    )}
+										                    {getStatusBadge(appointment.status)}
+										                </div>
+										
+										                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-lg text-gray-900 dark:text-gray-100">
+										                    <div className="flex items-center gap-2">
+										                        <CalendarIcon className="w-4 h-4 text-pink-500" />
+										                        <span>{formatDate(appointment.date)}</span>
+										                    </div>
+										                    <div className="flex items-center gap-2">
+										                        <Clock className="w-4 h-4 text-purple-500" />
+										                        <span>{appointment.time}</span>
+										                    </div>
+										                    <div className="flex items-center gap-2">
+										                        <Users className="w-4 h-4 text-amber-500" />
+										                        <span>
+										                            {appointment.worker?.user?.name ||
+										                                "Unassigned"}
+										                        </span>
+										                    </div>
+										                    <div className="flex items-center gap-2">
+										                        <MapPin className="w-4 h-4 text-green-500" />
+										                        <span>
+										                            {appointment.location === "salon"
+										                                ? "Salon"
+										                                : "Home"}
+										                        </span>
+										                    </div>
+										                </div>
+										
+										                {appointment.notes && (
+										                    <div className="mt-3 p-3 bg-purple-50 rounded-lg">
+										                        <p className="text-lg text-gray-700">
+										                            <MessageSquare className="w-4 h-4 inline mr-2" />
+										                            {appointment.notes}
+										                        </p>
+										                    </div>
+										                )}
+										            </div>
+										
+										            <div className="flex flex-col gap-2">
+										                <div className="text-right mb-2">
+										                    <p className="text-2xl text-pink-600">
+										                        {appointment.price?.toLocaleString()} CDF
+										                    </p>
+										                </div>
+														<div className="p-4 rounded-xl bg-linear-to-r from-pink-500 to-purple-600 text-white text-center font-medium shadow-lg animate-pulse">
+										                        We promise satisfaction and
+										                        professionalism.
+										                        <br />
+										                        <span className="font-bold">
+										                            ENJOY YOUR APPOINTMENT!!
+										                        </span>
+										                    </div>
+										                
+										            </div>
+										        </div>
+										    </div>
+										)}
+													
+												)}
+								</div>
+								</>
+							)}
 							<h2 className="text-2xl   mb-6 flex items-center">
 								<Clock className="w-6 h-6 mr-2 text-pink-500" />
 								Upcoming Appointments
@@ -1020,7 +1127,7 @@ export default function ClientDashboardV2() {
 										                <div className="flex items-center gap-3 mb-3">
 										                    <h3 className="text-xl ">
 										                        {appointment.package
-										                            ? ""
+										                            ? "All in one package"
 										                            : appointment.service?.name || "Service"}
 										                    </h3>
 										                    {appointment.package && (
