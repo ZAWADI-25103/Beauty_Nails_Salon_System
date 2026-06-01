@@ -290,9 +290,7 @@ export default function ClientDashboardV2() {
 		(apt) => (apt.status === "in_progress")
 	);
 	const missedAppointments = appointments.filter(
-		(apt) =>
-			apt.status === "cancelled" &&
-			new Date(apt.date).getDate() <= new Date().getDate(),
+		(apt) => isAppointmentMissed(apt.date, apt.time),
 	);
 
 	const appointmentHistory = appointments.filter(
@@ -1497,169 +1495,169 @@ export default function ClientDashboardV2() {
 															</PopoverTrigger>
 
 															<PopoverContent className="w-95 rounded-2xl p-4 space-y-4">
-    {/* 🧠 Info */}
-    <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-        <p className="font-semibold text-amber-600">
-            ⚠️ Missed Appointment
-        </p>
+																{/* 🧠 Info */}
+																<div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+																	<p className="font-semibold text-amber-600">
+																		⚠️ Missed Appointment
+																	</p>
 
-        <p>
-            You can reschedule this appointment or decline.
-        </p>
-    </div>
+																	<p>
+																		You can reschedule this appointment or decline.
+																	</p>
+																</div>
 
-    {/* 💰 Prepaid Status */}
-    <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900 border text-sm">
-        {canUsePrepaid ? (
-            <p className="text-green-600 font-medium">
-                ✅ The prepaid balance will automatically cover this service
-            </p>
-        ) : (
-            <p className="text-red-500 font-medium">
-                ❌ Insufficient prepaid balance (payment required)
-            </p>
-        )}
-    </div>
+																{/* 💰 Prepaid Status */}
+																<div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900 border text-sm">
+																	{canUsePrepaid ? (
+																		<p className="text-green-600 font-medium">
+																			✅ The prepaid balance will automatically cover this service
+																		</p>
+																	) : (
+																		<p className="text-red-500 font-medium">
+																			❌ Insufficient prepaid balance (payment required)
+																		</p>
+																	)}
+																</div>
 
-    {/* 📅 Date */}
-    <Popover>
-        <PopoverTrigger asChild>
-            <Button
-                variant="outline"
-                className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !selectedDate && "text-muted-foreground",
-                )}
-            >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {selectedDate
-                    ? format(selectedDate, "PPP", { locale: enUS })
-                    : "Choose date"}
-            </Button>
-        </PopoverTrigger>
+																{/* 📅 Date */}
+																<Popover>
+																	<PopoverTrigger asChild>
+																		<Button
+																			variant="outline"
+																			className={cn(
+																				"w-full justify-start text-left font-normal",
+																				!selectedDate && "text-muted-foreground",
+																			)}
+																		>
+																			<CalendarIcon className="mr-2 h-4 w-4" />
+																			{selectedDate
+																				? format(selectedDate, "PPP", { locale: enUS })
+																				: "Choose date"}
+																		</Button>
+																	</PopoverTrigger>
 
-        <PopoverContent className="w-auto p-0">
-            <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={setSelectedDate}
-                disabled={(date) => date < new Date()}
-            />
-        </PopoverContent>
-    </Popover>
+																	<PopoverContent className="w-auto p-0">
+																		<Calendar
+																			mode="single"
+																			selected={selectedDate}
+																			onSelect={setSelectedDate}
+																			disabled={(date) => date < new Date()}
+																		/>
+																	</PopoverContent>
+																</Popover>
 
-    {/* ⏰ Time */}
-    <div>
-        {slots?.slots.length != 0 ? (
-            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-                Available Times{" "}
-                <span className="text-md font-bold text-pink-600">
-                    {selectedWorkerName}
-                </span>{" "}
-                will be available on{" "}
-                <span className="text-md font-bold text-pink-600">
-                    {selectedDate
-                        ? format(selectedDate, "PPP", { locale: enUS })
-                        : ""}
-                </span>
-            </h3>
-        ) : (
-            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-                Unfortunately{" "}
-                <span className="text-md font-bold text-pink-600">
-                    {selectedWorkerName}
-                </span>{" "}
-                is not working on{" "}
-                <span className="text-md font-bold text-pink-600">
-                    the{" "}
-                    {selectedDate
-                        ? weekDay[selectedDate.getDay()]
-                        : ""}
-                </span>
-            </h3>
-        )}
-        <div
-            className={`grid ${slots?.slots.length != 0 ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-6" : ""} gap-2`}
-        >
-            {slots?.slots.length === 0 ? (
-                <p className="p-1 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">
-                    Unfortunately, no time is available for this date. Choose another specialist or another date.
-                </p>
-            ) : (
-                slots?.slots.map((time) => (
-                    <button
-                        key={time}
-                        type="button"
-                        onClick={() => setSelectedTime(time)}
-                        className={`p-2 rounded-lg border ${
-                            selectedTime === time
-                                ? "bg-pink-500 text-white border-pink-500"
-                                : "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700"
-                        } ${
-                            selectedDate &&
-                            selectedDate < new Date() &&
-                            Number(time.split(":")[0]) < new Date().getHours()
-                                ? "cursor-not-allowed opacity-50"
-                                : "cursor-pointer"
-                        }`}
-                        disabled={
-                            selectedDate &&
-                            selectedDate < new Date() &&
-                            Number(time.split(":")[0]) < new Date().getHours()
-                                ? true
-                                : false
-                        }
-                    >
-                        {time}
-                    </button>
-                ))
-            )}
-        </div>
-    </div>
-    {/* 📌 Explanation */}
-    <div className="text-xs text-gray-500 space-y-1">
-        <p>
-            • Reschedule → uses the prepaid balance if available
-        </p>
-        <p>
-            • Decline → amount will be added to your prepaid balance
-        </p>
-    </div>
+																{/* ⏰ Time */}
+																<div>
+																	{slots?.slots.length != 0 ? (
+																		<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+																			Available Times{" "}
+																			<span className="text-md font-bold text-pink-600">
+																				{selectedWorkerName}
+																			</span>{" "}
+																			will be available on{" "}
+																			<span className="text-md font-bold text-pink-600">
+																				{selectedDate
+																					? format(selectedDate, "PPP", { locale: enUS })
+																					: ""}
+																			</span>
+																		</h3>
+																	) : (
+																		<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+																			Unfortunately{" "}
+																			<span className="text-md font-bold text-pink-600">
+																				{selectedWorkerName}
+																			</span>{" "}
+																			is not working on{" "}
+																			<span className="text-md font-bold text-pink-600">
+																				the{" "}
+																				{selectedDate
+																					? weekDay[selectedDate.getDay()]
+																					: ""}
+																			</span>
+																		</h3>
+																	)}
+																	<div
+																		className={`grid ${slots?.slots.length != 0 ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-6" : ""} gap-2`}
+																	>
+																		{slots?.slots.length === 0 ? (
+																			<p className="p-1 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">
+																				Unfortunately, no time is available for this date. Choose another specialist or another date.
+																			</p>
+																		) : (
+																			slots?.slots.map((time) => (
+																				<button
+																					key={time}
+																					type="button"
+																					onClick={() => setSelectedTime(time)}
+																					className={`p-2 rounded-lg border ${
+																						selectedTime === time
+																							? "bg-pink-500 text-white border-pink-500"
+																							: "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-700"
+																					} ${
+																						selectedDate &&
+																						selectedDate < new Date() &&
+																						Number(time.split(":")[0]) < new Date().getHours()
+																							? "cursor-not-allowed opacity-50"
+																							: "cursor-pointer"
+																					}`}
+																					disabled={
+																						selectedDate &&
+																						selectedDate < new Date() &&
+																						Number(time.split(":")[0]) < new Date().getHours()
+																							? true
+																							: false
+																					}
+																				>
+																					{time}
+																				</button>
+																			))
+																		)}
+																	</div>
+																</div>
+																{/* 📌 Explanation */}
+																<div className="text-xs text-gray-500 space-y-1">
+																	<p>
+																		• Reschedule → uses the prepaid balance if available
+																	</p>
+																	<p>
+																		• Decline → amount will be added to your prepaid balance
+																	</p>
+																</div>
 
-    {/* 🔘 Actions */}
-    <div className="flex gap-2">
-        <Button
-            variant="outline"
-            className="text-red-600"
-            onClick={() => handleRefuseAndConvertToPrepaid(appointment)}
-        >
-            Decline
-        </Button>
+																{/* 🔘 Actions */}
+																<div className="flex gap-2">
+																	<Button
+																		variant="outline"
+																		className="text-red-600"
+																		onClick={() => handleRefuseAndConvertToPrepaid(appointment)}
+																	>
+																		Decline
+																	</Button>
 
-        <Button
-            disabled={
-                !selectedDate ||
-                !selectedTime ||
-                !canUsePrepaid
-            }
-            onClick={() =>
-                handleReschedule(
-                    appointment.id,
-                    selectedTime,
-                    selectedDate!,
-                    canUsePrepaid,
-                )
-            }
-            className={cn(
-                canUsePrepaid
-                    ? "bg-green-600 hover:bg-green-700"
-                    : "bg-gray-400 cursor-not-allowed",
-            )}
-        >
-            Reschedule
-        </Button>
-    </div>
-</PopoverContent>
+																	<Button
+																		disabled={
+																			!selectedDate ||
+																			!selectedTime ||
+																			!canUsePrepaid
+																		}
+																		onClick={() =>
+																			handleReschedule(
+																				appointment.id,
+																				selectedTime,
+																				selectedDate!,
+																				canUsePrepaid,
+																			)
+																		}
+																		className={cn(
+																			canUsePrepaid
+																				? "bg-green-600 hover:bg-green-700"
+																				: "bg-gray-400 cursor-not-allowed",
+																		)}
+																	>
+																		Reschedule
+																	</Button>
+																</div>
+															</PopoverContent>
 														</Popover>
 													)}
 												</div>
