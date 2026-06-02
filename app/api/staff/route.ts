@@ -221,7 +221,7 @@ export async function POST(request: NextRequest) {
 				create: {
 					referralCode: nanoid(8).toUpperCase(),
 					tier: "Regular",
-					isAvailable: true,
+					// isAvailable: true,
 				},
 			},
 			workerProfile: {
@@ -231,7 +231,7 @@ export async function POST(request: NextRequest) {
 					commissionRate,
 					workingHours,
 					hireDate: new Date(),
-					isAvailable: false,
+					isAvailable: true,
 				},
 			},
 		};
