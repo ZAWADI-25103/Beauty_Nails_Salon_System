@@ -119,7 +119,7 @@ export default function PackageBookingForm({
 	});
 	// Category icons
 	const categoryIcons: Record<string, React.ReactElement> = {
-		onglerie: <Scissors className="w-5 h-5" />,
+		Nails: <Scissors className="w-5 h-5" />,
 		cils: <Eye className="w-5 h-5" />,
 		tresses: <Scissors className="w-5 h-5" />,
 		maquillage: <Sparkles className="w-5 h-5" />,

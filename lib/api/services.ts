@@ -3,7 +3,7 @@ import axiosdb from "../axios";
 export interface Service {
 	id: string;
 	name: string;
-	category: "onglerie" | "cils" | "tresses" | "maquillage";
+	category: "Nails" | "Lashes" | "Braids" | "Makeup";
 	price: number;
 	duration: number;
 	description: string;
@@ -29,7 +29,7 @@ export interface ServiceAddOn {
 
 export interface CreateServiceData {
 	name: string;
-	category: "onglerie" | "cils" | "tresses" | "maquillage";
+	category: "Nails" | "Lahes" | "Braides" | "Makeup";
 	price: number;
 	commission: number;
 	duration: number;

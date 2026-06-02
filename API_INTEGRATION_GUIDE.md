@@ -646,7 +646,7 @@ Response: { success: boolean }
 {
   id: string;
   name: string;
-  category: 'onglerie' | 'cils' | 'tresses' | 'maquillage';
+  category: 'Nails' | 'Lashes' | 'Braids' | 'Makeup';
   price: number;
   duration: number;
   description: string;

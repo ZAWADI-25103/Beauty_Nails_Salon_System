@@ -190,7 +190,7 @@ import { useStaff, useAvailableStaff } from '@/lib/hooks/useStaff';
 function StaffManagement() {
   const { staff, isLoading, createWorker } = useStaff({ isAvailable: true });
   const { data: availableStaff } = useAvailableStaff({
-    category: 'onglerie',
+    category: 'Nails',
     date: '2024-01-15',
     time: '14:00',
   });
@@ -214,7 +214,7 @@ import { useServices } from '@/lib/hooks/useServices';
 
 function ServicesCatalog() {
   const { services, isLoading, createService, updateService, deleteService } = useServices({
-    category: 'onglerie',
+    category: 'Nails',
   });
 
   return (

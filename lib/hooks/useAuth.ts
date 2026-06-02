@@ -69,6 +69,7 @@ export function useAuth() {
 			queryClient.removeQueries({ queryKey: ["auth", "me"] });
 			queryClient.clear();
 			toast.success("Logged out successfully");
+			queryClient.setQueryData(["auth", "me"], null);
 			window.location.href = "/auth/login";
 		},
 		onError: (error: any) => {
