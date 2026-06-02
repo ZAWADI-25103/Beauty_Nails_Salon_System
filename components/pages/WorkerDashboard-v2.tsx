@@ -27,6 +27,7 @@ import {
 	Phone,
 	PlayCircle,
 	Settings,
+	ShoppingCart,
 	Sparkles,
 	Star,
 	TrendingUp,
@@ -279,6 +280,7 @@ export default function WorkerDashboardV2() {
 				onSuccess: () => {
 					toast.success("Status updated");
 					setDetailsOpen(false);
+
 					refetch();
 					router.refresh();
 				},
@@ -700,12 +702,12 @@ export default function WorkerDashboardV2() {
 										{showTransfers ? (
 											<>
 												<ChevronUp className="w-4 h-4 mr-2" />
-												Réduire
+												hide
 											</>
 										) : (
 											<>
 												<ChevronDown className="w-4 h-4 mr-2" />
-												Voir
+												show
 											</>
 										)}
 									</Button>
@@ -1529,37 +1531,38 @@ export default function WorkerDashboardV2() {
 										<Button
 											className="flex-1 bg-purple-600 hover:bg-purple-700"
 											onClick={() => {
-												setShowInventorySelection(true);
-											}}
-										>
-											<PlayCircle className="w-4 h-4 mr-2" />
-											Start
-										</Button>
-										<InventorySelectionModal
-											appointmentId={selectedAppointment.id}
-											workerId={selectedAppointment.workerId}
-											open={showInventorySelection}
-											onOpenChange={setShowInventorySelection}
-											onUsageRecorded={() => {
+												// setShowInventorySelection(true);
 												handleUpdateStatus(
 													selectedAppointment.id,
 													"in_progress",
 												);
 											}}
-										/>
+										>
+											<PlayCircle className="w-4 h-4 mr-2" />
+											Start
+										</Button>
 									</>
 								)}
 
 								{selectedAppointment.status === "in_progress" && (
-									<Button
-										className="flex-1 bg-green-600 hover:bg-green-700"
-										onClick={() =>
-											handleUpdateStatus(selectedAppointment.id, "completed")
-										}
-									>
-										<CheckCheck className="w-4 h-4 mr-2" />
-										Complete
-									</Button>
+									<div className="flex flex-row gap-2 w-full">
+										<Button
+											className="flex-1 bg-green-600 hover:bg-green-700"
+											onClick={() =>
+												handleUpdateStatus(selectedAppointment.id, "completed")
+											}
+										>
+											<CheckCheck className="w-4 h-4 mr-2" />
+											Complete
+										</Button>
+										<Button
+											variant="outline"
+											onClick={() => setShowInventorySelection(true)}
+										>
+											<ShoppingCart className="w-4 h-4 mr-2" />
+											Show inventory to use
+										</Button>
+									</div>
 								)}
 
 								{(selectedAppointment.status === "confirmed" ||
@@ -1576,6 +1579,12 @@ export default function WorkerDashboardV2() {
 									</Button>
 								)}
 							</div>
+							<InventorySelectionModal
+								appointmentId={selectedAppointment.id}
+								workerId={selectedAppointment.workerId}
+								open={showInventorySelection}
+								onOpenChange={setShowInventorySelection}
+							/>
 						</div>
 					)}
 				</DialogContent>

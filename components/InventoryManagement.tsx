@@ -187,7 +187,7 @@ export default function InventoryManagement() {
 					<div className="flex-1 relative">
 						<Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
 						<Input
-							placeholder="Rechercher un produit..."
+							placeholder="Search for a product..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
 							className="pl-12 rounded-xl bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 dark:text-gray-100 focus:ring-pink-500"
@@ -199,7 +199,7 @@ export default function InventoryManagement() {
 							onClick={() => setSelectedCategory("all")}
 							className={`rounded-full px-6 transition-all ${selectedCategory === "all" ? "bg-pink-500 hover:bg-pink-600 text-white" : "dark:border-gray-700 dark:text-gray-300"}`}
 						>
-							Tous
+							All
 						</Button>
 						{categories.map((cat) => (
 							<Button
@@ -345,13 +345,13 @@ export default function InventoryManagement() {
 					) : (
 						<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 							<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100 mb-8">
-								Rapport d'Utilisation — Ce Mois
+								Usage Report - This Month
 							</h3>
 							{usageReport.length === 0 ? (
 								<div className="text-center py-12 text-gray-500 dark:text-gray-400">
 									<Package className="w-12 h-12 mx-auto mb-4 opacity-40" />{" "}
 									<p className="text-lg">
-										Aucune donnée d'utilisation enregistrée ce mois-ci.
+										No usage data recorded for this month.
 									</p>
 								</div>
 							) : (
@@ -371,7 +371,7 @@ export default function InventoryManagement() {
 														<span className="font-semibold text-pink-500">
 															{report.used} {report.unit}
 														</span>{" "}
-														utilisé(s) ce mois
+														used this month
 													</p>
 												</div>
 												<div className="flex items-center gap-4 sm:gap-8 w-full sm:w-auto justify-between sm:justify-end">
@@ -380,7 +380,7 @@ export default function InventoryManagement() {
 															{report.totalCost.toLocaleString()} CDF
 														</p>
 														<p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase  tracking-tighter">
-															Valeur estimée
+															Estimated Value
 														</p>
 													</div>
 													<div className="flex items-center gap-3 bg-white dark:bg-gray-950 p-2 rounded-xl border border-gray-100 dark:border-gray-700">
@@ -415,7 +415,7 @@ export default function InventoryManagement() {
 									<div className="mt-10 p-6 sm:p-10 bg-linear-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/50 rounded-3xl border border-blue-100 dark:border-blue-900/30">
 										<h4 className="text-xl  text-gray-900 dark:text-gray-100 mb-8 flex items-center gap-2">
 											<TrendingUp className="w-6 h-6 text-blue-500" />
-											Statistiques du Mois
+											Monthly Statistics
 										</h4>
 										<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
 											<div className="p-4 bg-white dark:bg-gray-950 rounded-2xl shadow-sm border border-blue-50 dark:border-blue-900/20">
@@ -423,7 +423,7 @@ export default function InventoryManagement() {
 													{totalItemsUsed}
 												</p>
 												<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-													Produits Utilisés
+													Products Used
 												</p>
 											</div>
 											<div className="p-4 bg-white dark:bg-gray-950 rounded-2xl shadow-sm border border-blue-50 dark:border-blue-900/20">
@@ -431,7 +431,7 @@ export default function InventoryManagement() {
 													{totalCost.toLocaleString()} CDF
 												</p>
 												<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-													Coût Total
+													Total Cost
 												</p>
 											</div>
 											<div className="p-4 bg-white dark:bg-gray-950 rounded-2xl shadow-sm border border-blue-50 dark:border-blue-900/20">
@@ -448,14 +448,14 @@ export default function InventoryManagement() {
 													{usageChange}%
 												</p>
 												<p className="text-base text-gray-600 dark:text-gray-400 uppercase  mt-2 tracking-widest">
-													vs Mois Précédent
+													vs Previous Month
 												</p>
 											</div>
 										</div>
 									</div>
 
 									{/* <Button className="w-full mt-8 bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-full py-7 text-lg shadow-lg shadow-amber-500/20 transition-all">
-											Télécharger Rapport Complet (PDF)
+											Download Complete Report (PDF)
 										</Button> */}
 								</>
 							)}

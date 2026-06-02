@@ -20,7 +20,7 @@ export default function TasksManagement() {
 	};
 
 	const onDelete = (id: string) => {
-		if (!confirm("Supprimer la tâche ?")) return;
+		if (!confirm("Delete task?")) return;
 		deleteTask.mutate(id);
 	};
 
@@ -32,31 +32,29 @@ export default function TasksManagement() {
 						<Badge className="bg-pink-500 hover:bg-pink-600 text-white border-0 w-2 h-2 p-0 rounded-full" />
 					</div>
 					<h3 className="text-xl  text-gray-900 dark:text-gray-100">
-						Tâches récentes
+						Task Management
 					</h3>
 				</div>
 				<div className="flex items-center gap-2 w-full sm:w-auto">
-					<CreateTaskModal triggerLabel="+ Nouvelle tâche" />
+					<CreateTaskModal triggerLabel="+ New Task" />
 					<Button
 						variant="ghost"
 						size="sm"
 						className="rounded-full dark:text-gray-400 dark:hover:bg-gray-800"
 					>
-						Voir tout
+						View All
 					</Button>
 				</div>
 			</div>
 
 			{isLoading ? (
 				<div className="flex items-center justify-center py-12">
-					<p className="text-gray-500 animate-pulse">
-						Chargement des tâches...
-					</p>
+					<p className="text-gray-500 animate-pulse">Loading tasks...</p>
 				</div>
 			) : tasks.length === 0 ? (
 				<div className="text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-dashed border-gray-200 dark:border-gray-700">
 					<p className="text-lg text-gray-500 dark:text-gray-400">
-						Aucune tâche trouvée.
+						No tasks found.
 					</p>
 				</div>
 			) : (
@@ -82,13 +80,13 @@ export default function TasksManagement() {
 								</p>
 								<div className="flex flex-wrap items-center gap-3 mt-4 text-[11px] text-gray-500 dark:text-gray-500 font-medium">
 									<span className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-gray-950 rounded-lg border border-gray-100 dark:border-gray-800">
-										Assigné:{" "}
+										Assigned:{" "}
 										<span className="text-gray-700 dark:text-gray-300 ">
 											{t.assignedTo?.user?.name || "—"}
 										</span>
 									</span>
 									<span className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-gray-950 rounded-lg border border-gray-100 dark:border-gray-800">
-										Par:{" "}
+										Created by:{" "}
 										<span className="text-gray-700 dark:text-gray-300 ">
 											{t.createdBy?.name || "—"}
 										</span>
@@ -109,7 +107,7 @@ export default function TasksManagement() {
 											onClick={() => markCompleted(t.id)}
 											className="bg-linear-to-r from-pink-500 to-purple-500 text-white rounded-full h-8 px-4 text-base "
 										>
-											Compléter
+											Complete
 										</Button>
 									)}
 									<Button
@@ -118,7 +116,7 @@ export default function TasksManagement() {
 										onClick={() => onDelete(t.id)}
 										className="rounded-full h-8 px-4 text-base  bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border-0 hover:bg-red-500 hover:text-white"
 									>
-										Supprimer
+										Delete
 									</Button>
 								</div>
 							</div>

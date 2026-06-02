@@ -134,6 +134,10 @@ export default function InventorySelectionModal({
 			notes: item.notes,
 		}));
 
+		setTimeout(() => {
+			onUsageRecorded?.();
+		}, 2000);
+
 		recordUsage.mutate(
 			{
 				appointmentId,
@@ -142,7 +146,6 @@ export default function InventorySelectionModal({
 			},
 			{
 				onSuccess: () => {
-					onUsageRecorded?.();
 					onOpenChange(false);
 					setSelectedItems([]);
 					setSearchTerm("");
@@ -342,8 +345,9 @@ export default function InventorySelectionModal({
 					<div className="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-800 dark:text-blue-200">
 						<AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
 						<p>
-							<strong>Note:</strong> Shared resources (bottles, jars) are deducted only once per appointment,
-							even if multiple technicians use them. Consumables (cotton, varnish in ml) are deducted
+							<strong>Note:</strong> Shared resources (bottles, jars) are
+							deducted only once per appointment, even if multiple technicians
+							use them. Consumables (cotton, varnish in ml) are deducted
 							according to the quantity used.
 						</p>
 					</div>

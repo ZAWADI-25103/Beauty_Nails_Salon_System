@@ -226,7 +226,7 @@ export default function ClientModal({
 								id="name"
 								value={formData.name}
 								onChange={(e) => handleInputChange("name", e.target.value)}
-								disabled={!canEditAllFields}
+								// disabled={!canEditAllFields}
 								placeholder="Full name"
 								className="mt-1"
 							/>
@@ -239,7 +239,7 @@ export default function ClientModal({
 								type="email"
 								value={formData.email}
 								onChange={(e) => handleInputChange("email", e.target.value)}
-								disabled={!canEditAllFields}
+								// disabled={!canEditAllFields}
 								placeholder="email@example.com"
 								className="mt-1"
 							/>
@@ -251,7 +251,7 @@ export default function ClientModal({
 								id="phone"
 								value={formData.phone}
 								onChange={(e) => handleInputChange("phone", e.target.value)}
-								disabled={!canEditAllFields}
+								// disabled={!canEditAllFields}
 								placeholder="+243 810 000 000"
 								className="mt-1"
 							/>

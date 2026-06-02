@@ -1,6 +1,6 @@
 "use client";
 import { useQueryClient } from "@tanstack/react-query";
-import { format } from "date-fns";
+import { format, isBefore, startOfDay } from "date-fns";
 import { enUS } from "date-fns/locale";
 import {
 	Calendar as CalendarIcon,
@@ -55,7 +55,6 @@ import {
 	SelectValue,
 } from "../ui/select";
 import { cn } from "../ui/utils";
-import { isBefore, startOfDay } from "date-fns";
 
 export default function AppointmentsV3() {
 	const router = useRouter();
@@ -453,9 +452,7 @@ export default function AppointmentsV3() {
 				}
 
 				if (!paymentMeta.transactionId) {
-					toast.error(
-						"No transaction ID found. Please verify your payment.",
-					);
+					toast.error("No transaction ID found. Please verify your payment.");
 					return;
 				}
 
@@ -604,14 +601,14 @@ export default function AppointmentsV3() {
 									</div>
 									<p className="text-2xl font-bold dark:text-gray-200 text-gray-700">
 										{category === "onglerie"
-															? "Nails"
-															: category === "cils"
-																? "Lashes"
-																: category === "tresses"
-																	? "Braids"
-																	: category === "maquillage"
-																		? "Makeup"
-																		: category}
+											? "Nails"
+											: category === "cils"
+												? "Lashes"
+												: category === "tresses"
+													? "Braids"
+													: category === "maquillage"
+														? "Makeup"
+														: category}
 									</p>
 								</div>
 							</Card>
@@ -848,7 +845,6 @@ export default function AppointmentsV3() {
 										// 	return isBefore(date, today);
 										// 	}
 										// }
-										minDate={new Date()}
 									/>
 								</PopoverContent>
 							</Popover>
@@ -885,8 +881,9 @@ export default function AppointmentsV3() {
 								className={`grid ${slots?.slots.length != 0 ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-6" : ""} gap-2`}
 							>
 								{slots?.slots.length === 0 ? (
-									<p className="p-12 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">Unfortunately, no slots are available for this
-date. Choose another specialist or another date.
+									<p className="p-12 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">
+										Unfortunately, no slots are available for this date. Choose
+										another specialist or another date.
 									</p>
 								) : (
 									slots?.slots.map((time) => (
@@ -1068,7 +1065,7 @@ date. Choose another specialist or another date.
 							{/* 💳 METHODS BUTTONS */}
 							<div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
 								{[
-									{ key: "mobile", label: "Mobion Money" },
+									{ key: "mobile", label: "Mobile Money" },
 									{ key: "cash", label: "Cash" },
 									{ key: "prepaid", label: "Prepaid" },
 									{ key: "giftcard", label: "Gift Card" },
@@ -1133,8 +1130,8 @@ date. Choose another specialist or another date.
 
 								<div className="space-y-3 relative z-10">
 									<p className="text-gray-700 dark:text-gray-300 text-lg mb-4">
-										Félicitations ! Ce rendez-vous est entièrement pris en
-										charge.
+										Congratulations! You've unlocked a free service at Beauty
+										Nails Salon as a token of our appreciation for your loyalty.
 									</p>
 
 									<ul className="space-y-2">
@@ -1147,15 +1144,11 @@ date. Choose another specialist or another date.
 										</li>
 										<li className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
 											<CheckCircleIcon className="w-5 h-5 text-green-500 shrink-0" />
-											<span>
-												No additional fees required for the service.
-											</span>
+											<span>No additional fees required for the service.</span>
 										</li>
 										<li className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
 											<CheckCircleIcon className="w-5 h-5 text-green-500 shrink-0" />
-											<span>
-												Tips have been disabled for this method.
-											</span>
+											<span>Tips have been disabled for this method.</span>
 										</li>
 									</ul>
 								</div>
@@ -1171,15 +1164,15 @@ date. Choose another specialist or another date.
 
 								<div className="space-y-3">
 									<p className="text-gray-700 dark:text-gray-300">
-										You are using your points balance or gift card
-										Beauty Nails Salon.
+										You are using your points balance or gift card Beauty Nails
+										Salon.
 									</p>
 
 									<ul className="space-y-2">
 										<li className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
 											<CheckCircleIcon className="w-5 h-5 text-purple-500 shrink-0" />
 											<span>
-												Débloqué grâce à vos paliers de fidélité (500, 1000, ou
+												Unlocked thanks to your loyalty tiers (500, 1000, or
 												2000 points).
 											</span>
 										</li>
@@ -1203,7 +1196,7 @@ date. Choose another specialist or another date.
 										<span className="p-2 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-300">
 											<Wallet className="h-6 w-6" />
 										</span>
-										Mobion Money
+										Mobile Money
 									</h3>
 
 									<button
@@ -1229,9 +1222,7 @@ date. Choose another specialist or another date.
 												<button
 													onClick={() => {
 														navigator.clipboard.writeText("*384*333000#");
-														toast.success(
-															"Code copié. Composez-on sur votre téléphone.",
-														);
+														toast.success("USSD code copied to clipboard!");
 													}}
 													className="flex items-center cursor-pointer gap-2 text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700"
 												>
@@ -1241,7 +1232,7 @@ date. Choose another specialist or another date.
 													href="tel:*384*333000#"
 													className=" hidden cursor-pointer items-center gap-2 text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700"
 												>
-													<Phone className="h-4 w-4" /> Appeler
+													<Phone className="h-4 w-4" /> Dial
 												</a>
 											</div>
 										</div>
@@ -1313,12 +1304,12 @@ date. Choose another specialist or another date.
 										{paymentIntentId && (
 											<div className="flex flex-col gap-2 pt-2">
 												<p className="text-lg text-pink-600 dark:text-pink-400 font-medium flex items-center gap-1.5">
-													<CheckCircleIcon className="h-4 w-4" /> Paiement prêt.
-													Composez on code.
+													<CheckCircleIcon className="h-4 w-4" /> Payment ready.
+													Compose your code.
 												</p>
 												{remainingTime !== null && remainingTime > 0 && (
 													<Badge variant="secondary" className="w-fit text-sm">
-														Complétez on paiement dans{" "}
+														Complete your payment within{" "}
 														{Math.floor(remainingTime / 60)}:
 														{(remainingTime % 60).toString().padStart(2, "0")}
 													</Badge>
@@ -1340,7 +1331,8 @@ date. Choose another specialist or another date.
 										{isPaid ? (
 											<div className="flex justify-between items-center rounded-2xl bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 px-4 py-3">
 												<span className="text-green-700 dark:text-green-400 font-medium flex items-center gap-2">
-													<CheckCircleIcon className="h-5 w-5" /> Payment confirmed
+													<CheckCircleIcon className="h-5 w-5" /> Payment
+													confirmed
 												</span>
 												<span className="font-bold text-green-700 dark:text-green-300">
 													{total.toLocaleString()} CDF
@@ -1360,7 +1352,7 @@ date. Choose another specialist or another date.
 												}}
 												className="mt-4 px-4 py-2 rounded-lg bg-pink-500 text-white"
 											>
-												Télécharger on reçu
+												Download Receipt
 											</button>
 										)}
 									</div>
@@ -1464,7 +1456,7 @@ date. Choose another specialist or another date.
 						disabled={isCreating}
 						className="w-full bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white py-4 rounded-xl font-medium disabled:opacity-50"
 					>
-						{isCreating ? "Processing..." : "Confirmer on Rendez-vous"}
+						{isCreating ? "Processing..." : "Confirm Appointment"}
 					</button>
 				)}
 			</div>

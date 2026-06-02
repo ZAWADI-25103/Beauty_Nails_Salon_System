@@ -116,7 +116,7 @@ export default function FloatingReceipt() {
 										{/* Title */}
 										<p className="text-sm font-medium flex items-center justify-center gap-2 text-pink-400">
 											<CheckCircle className="h-4 w-4" />
-											Votre reçu est prêt
+											Receipt is ready!
 										</p>
 
 										{/* Timer */}
@@ -147,7 +147,7 @@ export default function FloatingReceipt() {
                         transition
                       "
 										>
-											Télécharger
+											Download Receipt
 										</button>
 									</div>
 								)}

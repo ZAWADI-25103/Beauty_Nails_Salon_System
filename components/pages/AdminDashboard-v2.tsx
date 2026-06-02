@@ -676,9 +676,9 @@ export default function AdminDashboardV2() {
         )} */}
 
 				{/* Tasks Management */}
-				{/* <div className="py-2">
-          <TasksManagement />
-        </div> */}
+				<div className="py-2">
+					<TasksManagement />
+				</div>
 			</div>
 		</div>
 	);

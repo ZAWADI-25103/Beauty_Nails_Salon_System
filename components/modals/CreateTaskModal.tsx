@@ -104,7 +104,7 @@ export default function CreateTaskModal({
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
 					<div className="md:col-span-2">
-						<Label htmlFor="task-title">Titre</Label>
+						<Label htmlFor="task-title">Title</Label>
 						<Input
 							id="task-title"
 							value={title}
@@ -129,39 +129,41 @@ export default function CreateTaskModal({
 								<SelectValue placeholder="Type" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="general">Général</SelectItem>
-								<SelectItem value="client_followup">Relance client</SelectItem>
-								<SelectItem value="inventory">Inventaire</SelectItem>
+								<SelectItem value="general">General</SelectItem>
+								<SelectItem value="client_followup">
+									Client Follow-up
+								</SelectItem>
+								<SelectItem value="inventory">Inventory</SelectItem>
 								<SelectItem value="maintenance">Maintenance</SelectItem>
-								<SelectItem value="appointment">Rendez-vous</SelectItem>
+								<SelectItem value="appointment">Appointment</SelectItem>
 								<SelectItem value="admin">Admin</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>
 
 					<div>
-						<Label>Priorité</Label>
+						<Label>Priority</Label>
 						<Select onValueChange={(v) => setPriority(v as any)}>
 							<SelectTrigger size="sm">
-								<SelectValue placeholder="Priorité" />
+								<SelectValue placeholder="Priority" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="low">Faible</SelectItem>
-								<SelectItem value="medium">Moyenne</SelectItem>
-								<SelectItem value="high">Haute</SelectItem>
+								<SelectItem value="low">Low</SelectItem>
+								<SelectItem value="medium">Medium</SelectItem>
+								<SelectItem value="high">High</SelectItem>
 								<SelectItem value="urgent">Urgent</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>
 
 					<div>
-						<Label>Assigner à</Label>
+						<Label>Assign to</Label>
 						<Select onValueChange={(v) => setAssignedToWorkerId(v || null)}>
 							<SelectTrigger size="sm">
-								<SelectValue placeholder="Aucun" />
+								<SelectValue placeholder="None" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="Aucun">Aucun</SelectItem>
+								<SelectItem value="None">None</SelectItem>
 								{staff.map((s: any) => (
 									<SelectItem key={s.id} value={s.id}>
 										{s.user?.name || s.id}
@@ -172,13 +174,13 @@ export default function CreateTaskModal({
 					</div>
 
 					<div>
-						<Label>Client (optionnel)</Label>
+						<Label>Client (optional)</Label>
 						<Select onValueChange={(v) => setClientId(v || null)}>
 							<SelectTrigger size="sm">
-								<SelectValue placeholder="Aucun" />
+								<SelectValue placeholder="None" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="Aucun">Aucun</SelectItem>
+								<SelectItem value="None">None</SelectItem>
 								{clients.map((c: any) => (
 									<SelectItem key={c.id} value={c.id}>
 										{c.user?.name || c.id}
@@ -189,7 +191,7 @@ export default function CreateTaskModal({
 					</div>
 
 					<div>
-						<Label>Échéance</Label>
+						<Label>Due Date</Label>
 						<Input
 							type="date"
 							value={dueAt || ""}
@@ -198,7 +200,7 @@ export default function CreateTaskModal({
 					</div>
 
 					<div>
-						<Label>Planifié</Label>
+						<Label>Scheduled</Label>
 						<Input
 							type="datetime-local"
 							value={scheduledAt || ""}
@@ -212,13 +214,13 @@ export default function CreateTaskModal({
 							checked={isPrivate}
 							onCheckedChange={(v) => setIsPrivate(!!v)}
 						/>
-						<Label htmlFor="task-private">Privée</Label>
+						<Label htmlFor="task-private">Private</Label>
 					</div>
 				</div>
 
 				<DialogFooter>
 					<DialogClose asChild>
-						<Button variant="outline">Annuler</Button>
+						<Button variant="outline">Cancel</Button>
 					</DialogClose>
 					<Button
 						onClick={onSubmit}
@@ -226,7 +228,7 @@ export default function CreateTaskModal({
 							createTask.isPending || isStaffLoading || isClientsLoading
 						}
 					>
-						{createTask.isPending ? "Création..." : "Créer"}
+						{createTask.isPending ? "Creating..." : "Create Task"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

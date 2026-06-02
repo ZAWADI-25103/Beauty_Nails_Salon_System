@@ -455,7 +455,7 @@ export default function ClientDashboardV2() {
 					userId: user?.id ?? "",
 					type: "loyalty_reward",
 					title: `Free Service Unlocked ! 🎖️`,
-					message: `Congratulations! Your loyalty paid off. Your next salon visit is completely free. À très vite !`,
+					message: `Congratulations! Your loyalty paid off. Your next salon visit is completely free. Enjoy your pampering session on us!`,
 				});
 			},
 		});
@@ -936,7 +936,10 @@ export default function ClientDashboardV2() {
 						<div className="p-4 sm:p-5 h-full cursor-pointer hover:shadow-lg transition-shadow border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 flex flex-col justify-between text-center">
 							<Wallet className="w-5 h-5 text-amber-600 dark:text-amber-400 mx-auto mb-2" />
 							<p className="text-xl font-black text-gray-900 dark:text-gray-100">
-								{selectedClient?.prepaymentBalance}
+								{Number(selectedClient?.prepaymentBalance)
+									.toFixed(2)
+									.toLocaleString()}{" "}
+								CDF
 							</p>
 							<p className="text-base text-gray-500 uppercase tracking-tight">
 								Prepaid
@@ -1752,7 +1755,7 @@ export default function ClientDashboardV2() {
 										variant="outline"
 										className="text-pink-600 border-pink-200 dark:text-pink-400 dark:border-pink-900"
 									>
-										{packageAppointments.length} Réservation
+										{packageAppointments.length} package appointment
 										{packageAppointments.length > 1 ? "s" : ""}
 									</Badge>
 								</div>
@@ -1815,7 +1818,7 @@ export default function ClientDashboardV2() {
 																	: "Pending"}
 															</Badge>
 															<span className="text-lg font-bold text-gray-900 dark:text-gray-100">
-																{apt.price?.toLocaleString() || 0} Fc
+																{Number(apt.price)?.toLocaleString() || 0} Fc
 															</span>
 														</div>
 													</div>
@@ -2617,7 +2620,10 @@ export default function ClientDashboardV2() {
 														Prepaid Balance
 													</p>
 													<p className="text-2xl font-black text-gray-900 dark:text-gray-100">
-														{selectedClient?.prepaymentBalance}
+														{Number(selectedClient?.prepaymentBalance)
+															.toFixed(2)
+															.toLocaleString()}{" "}
+														CDF
 													</p>
 												</div>
 											</div>
@@ -2679,7 +2685,10 @@ export default function ClientDashboardV2() {
 														Gift Card
 													</p>
 													<p className="text-2xl font-medium text-gray-900 dark:text-gray-100">
-														{selectedClient?.giftCardBalance}
+														{Number(selectedClient?.giftCardBalance)
+															.toFixed(2)
+															.toLocaleString()}{" "}
+														CDF
 													</p>
 												</div>
 											</div>
