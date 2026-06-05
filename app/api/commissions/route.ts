@@ -10,22 +10,72 @@ import prisma from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
 	try {
-		await requireRole(["worker", "admin", "client"]);
+		await requireRole(["worker", "admin"]);
 
 		const body = await request.json();
-		const {
-			workerId,
-			period,
-			totalRevenue,
-			appointmentsCount,
-			commissionRate,
-		} = body;
+		const { workerId, period } = body;
+
+		if (!workerId) {
+			throw new Error("workerId is required");
+		}
+
+		const worker = await prisma.workerProfile.findUnique({
+			where: { id: workerId },
+			include: { user: true },
+		});
+
+		if (!worker) {
+			throw new Error("Worker not found");
+		}
+
+		const lastPaidAt = worker.lastCommissionPaidAt ?? worker.createdAt;
+		const initializedCommissions = await prisma.commission.findMany({
+			where: {
+				workerId,
+				commissionInitializedAtAppointmentCompletion: true,
+				createdAt: {
+					gt: lastPaidAt,
+				},
+			},
+			orderBy: { createdAt: "asc" },
+		});
+
+		if (!initializedCommissions.length) {
+			throw new Error("No initialized commissions are available to request yet");
+		}
+
+		const totalRevenue = initializedCommissions.reduce(
+			(sum, commission) => sum + commission.totalRevenue,
+			0,
+		);
+		const appointmentsCount = initializedCommissions.reduce(
+			(sum, commission) => sum + commission.appointmentsCount,
+			0,
+		);
+		const commissionAmount = initializedCommissions.reduce(
+			(sum, commission) => sum + commission.commissionAmount,
+			0,
+		);
+		const businessEarnings = initializedCommissions.reduce(
+			(sum, commission) => sum + commission.businessEarnings,
+			0,
+		);
+		const materialsCost = initializedCommissions.reduce(
+			(sum, commission) => sum + commission.materialsCost,
+			0,
+		);
+		const operationalCost = initializedCommissions.reduce(
+			(sum, commission) => sum + commission.operationalCost,
+			0,
+		);
+		const payoutPeriod =
+			period || `payout-${new Date().toISOString().slice(0, 10)}`;
 
 		const existing = await prisma.commission.findUnique({
 			where: {
 				workerId_period: {
 					workerId,
-					period,
+					period: payoutPeriod,
 				},
 			},
 		});
@@ -34,17 +84,28 @@ export async function POST(request: NextRequest) {
 			throw new Error("Commission already generated for this period");
 		}
 
-		const commissionAmount = totalRevenue * (commissionRate / 100);
+		const commission = await prisma.$transaction(async (tx) => {
+			const created = await tx.commission.create({
+				data: {
+					workerId,
+					period: payoutPeriod,
+					totalRevenue,
+					appointmentsCount,
+					commissionRate: worker.commissionRate ?? 0,
+					commissionAmount,
+					businessEarnings,
+					materialsCost,
+					operationalCost,
+					commissionInitializedAtAppointmentCompletion: false,
+				},
+			});
 
-		const commission = await prisma.commission.create({
-			data: {
-				workerId,
-				period,
-				totalRevenue,
-				appointmentsCount,
-				commissionRate,
-				commissionAmount,
-			},
+			await tx.workerProfile.update({
+				where: { id: workerId },
+				data: { lastCommissionPaidAt: new Date() },
+			});
+
+			return created;
 		});
 
 		const admin = await prisma.user.findFirst({
@@ -52,11 +113,7 @@ export async function POST(request: NextRequest) {
 		});
 		const adminId = admin?.id;
 
-		const worker = await prisma.workerProfile.findUnique({
-			where: { id: workerId },
-			include: { user: true },
-		});
-		const workerName = worker?.user.name || "Employee";
+		const workerName = worker.user.name || "Employee";
 
 		await prisma.notification.create({
 			data: {
@@ -73,7 +130,7 @@ export async function POST(request: NextRequest) {
 		await prisma.notification.create({
 			data: {
 				user: {
-					connect: { id: worker?.userId! },
+					connect: { id: worker.userId },
 				},
 				type: "system",
 				title: "Payment Request",
@@ -88,11 +145,18 @@ export async function POST(request: NextRequest) {
 	}
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
 	try {
 		await requireRole(["admin", "worker", "client"]);
 
+		const { searchParams } = new URL(request.url);
+		const workerId = searchParams.get("workerId");
+
 		const commissions = await prisma.commission.findMany({
+			where: {
+				commissionInitializedAtAppointmentCompletion: false,
+				...(workerId ? { workerId } : {}),
+			},
 			include: {
 				worker: {
 					include: { user: true },

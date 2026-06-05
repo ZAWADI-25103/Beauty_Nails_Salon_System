@@ -269,7 +269,6 @@ export default function StaffManagement() {
 			</div>
 
 			{/* Staff Roster - Who's Working Now */}
-			{/* Staff Roster - Who's Working Now */}
 			<Card className="border-0 shadow-lg rounded-2xl p-4 sm:p-6 bg-white dark:bg-gray-950 dark:border dark:border-pink-900/30">
 				<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-4">
 					Staff Today
@@ -667,6 +666,7 @@ export default function StaffManagement() {
 																	staffName={selectedStaff.name}
 																	staff={selectedStaff}
 																	period={selectedPeriodCommission.period}
+																commission={selectedPeriodCommission}
 																	trigger={
 																		<Button
 																			size="sm"

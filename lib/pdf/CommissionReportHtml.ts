@@ -11,11 +11,7 @@ export function CommissionReportHtml(data: {
 	}>;
 }) {
 	const { commission, appointments = [] } = data;
-	const isPaid = commission.status === "paid";
-	const generatedAt = new Date().toLocaleString("fr-FR", {
-		dateStyle: "long",
-		timeStyle: "medium",
-	});
+  const isPaid = commission.status === "paid";
 
 	return `
 <!DOCTYPE html>
@@ -397,7 +393,7 @@ export function CommissionReportHtml(data: {
 				isPaid && commission.paidAt
 					? `
         <div style="text-align:center;margin-top:20px;font-size:13px;color:var(--gray-600);">
-          Référence de paiement: <strong style="color:var(--pink-dark);">${commission.id.slice(-8).toUpperCase()}</strong>
+          Payment Reference: <strong style="color:var(--pink-dark);">${commission.id.slice(-8).toUpperCase()}</strong>
         </div>`
 					: ""
 			}

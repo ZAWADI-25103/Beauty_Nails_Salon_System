@@ -145,10 +145,21 @@ export function useCommission() {
 	});
 
 	const updateMutation = useMutation({
-		mutationFn: ({ id, status }: { id: string; status: string }) =>
-			commissionApi.update(id, status),
-		onSuccess: () => toast.success("Status updated"),
-		onError: (error) => toast.error(error.message),
+		mutationFn: ({
+			id,
+			status,
+			sendEmail = false,
+		}: {
+			id: string;
+			status: string;
+			sendEmail?: boolean;
+		}) => commissionApi.update(id, status, sendEmail),
+		onSuccess: () => {
+			toast.success("Status updated");
+			queryClient.invalidateQueries({ queryKey: ["commission"] });
+		},
+		onError: (error: any) =>
+			toast.error(error.response?.data?.error?.message || error.message),
 	});
 
 	return {

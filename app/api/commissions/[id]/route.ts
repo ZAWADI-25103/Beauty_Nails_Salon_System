@@ -7,7 +7,10 @@ import {
 	requireRole,
 	successResponse,
 } from "@/lib/api/helpers";
+import { render } from "@react-email/render";
+import { CommissionPaymentEmail } from "@/emails/CommissionPaymentEmail";
 import prisma from "@/lib/prisma";
+import { sendEmail } from "@/lib/sendEmail";
 export async function PATCH(
 	request: NextRequest,
 	context: { params: Promise<{ id: string }> },
@@ -18,6 +21,7 @@ export async function PATCH(
 		const currentUser = await requireRole(["admin", "worker"]);
 
 		const body = await request.json();
+		const sendEmailToWorker = body.sendEmail === true;
 
 		const commission = await prisma.commission.findUnique({
 			where: { id },
@@ -69,6 +73,42 @@ export async function PATCH(
 					message: `Payment made for ${commission.worker.user.name}. Admin revenue: ${employerAmount} CDF`,
 				},
 			});
+
+			if (body.status === "paid" && sendEmailToWorker && commission.worker.user.email) {
+				try {
+					const appointments = await prisma.appointment.findMany({
+						where: {
+							workerId: commission.workerId,
+							status: "completed",
+						},
+						include: {
+							service: { select: { name: true } },
+							client: { include: { user: { select: { name: true } } } },
+						},
+						orderBy: { date: "desc" },
+					});
+
+					const html = await render(
+						CommissionPaymentEmail({
+							workerName: commission.worker.user.name,
+							commissionPeriod: commission.period,
+							commissionAmount: commission.commissionAmount,
+							totalRevenue: commission.totalRevenue,
+							businessEarnings: commission.totalRevenue - commission.commissionAmount,
+							appointmentsCount: appointments.length,
+							paymentDate: new Date().toLocaleDateString("en-GB"),
+						}),
+					);
+
+					await sendEmail(
+						commission.worker.user.email,
+						`Commission paid for ${commission.period}`,
+						html,
+					);
+				} catch (emailError) {
+					console.error("Failed to send commission email", emailError);
+				}
+			}
 
 			return updatedCommission;
 		});

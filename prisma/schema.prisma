@@ -709,6 +709,7 @@ model Commission {
   businessEarnings  Float            @default(0)
   materialsCost     Float            @default(0)
   operationalCost   Float            @default(0)
+  commissionInitializedAtAppointmentCompletion Boolean @default(false)
   status            CommissionStatus @default(pending)
   paidAt            DateTime?
   createdAt         DateTime         @default(now())

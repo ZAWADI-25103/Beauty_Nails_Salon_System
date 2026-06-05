@@ -1280,7 +1280,10 @@ export default function WorkerDashboardV2() {
 										</div>
 
 										{/* 🔥 TIMER */}
-										<PayrollCountdown frequency={freqComm as any} />
+												<PayrollCountdown
+													frequency={freqComm as any}
+													commissionDay={workerProfile?.commissionDay || 1}
+												/>
 
 										{/* BUTTON */}
 										<PayrollModal

@@ -6,9 +6,11 @@ type Frequency = "daily" | "weekly" | "monthly";
 
 export function PayrollCountdown({
 	frequency = "monthly",
+	commissionDay = 1,
 	onReadyChange,
 }: {
 	frequency?: Frequency;
+		commissionDay?: number;
 	onReadyChange?: (ready: boolean) => void;
 }) {
 	const [timeLeft, setTimeLeft] = useState("");
@@ -19,24 +21,34 @@ export function PayrollCountdown({
 
 	const getNextResetDate = () => {
 		const now = new Date();
-		const next = new Date();
+		const next = new Date(now);
 
 		if (frequency === "daily") {
 			next.setDate(now.getDate() + 1);
 			next.setHours(0, 0, 0, 0);
+			return next;
 		}
 
 		if (frequency === "weekly") {
-			const day = now.getDay();
-			const diff = (7 - day + 1) % 7 || 7;
-			next.setDate(now.getDate() + diff);
+			const jsDay = now.getDay() === 0 ? 7 : now.getDay();
+			const targetDay = commissionDay > 0 && commissionDay < 8 ? commissionDay : 1;
+			const diff = (targetDay - jsDay + 7) % 7;
+			next.setDate(now.getDate() + (diff === 0 ? 7 : diff));
 			next.setHours(0, 0, 0, 0);
+			return next;
 		}
 
 		if (frequency === "monthly") {
-			next.setMonth(now.getMonth() + 1);
-			next.setDate(1);
+			const month = now.getMonth() + 1;
+			const targetDay = Math.min(commissionDay || 1, new Date(now.getFullYear(), month, 0).getDate());
+			next.setMonth(month, 1);
+			next.setDate(targetDay);
 			next.setHours(0, 0, 0, 0);
+			if (next <= now) {
+				next.setMonth(next.getMonth() + 1, 1);
+				next.setDate(Math.min(commissionDay || 1, new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate()));
+			}
+			return next;
 		}
 
 		return next;
@@ -59,7 +71,7 @@ export function PayrollCountdown({
 			}
 
 			if (ready) {
-				setTimeLeft("Disponible");
+				setTimeLeft("Available Now");
 				return;
 			}
 
@@ -74,7 +86,7 @@ export function PayrollCountdown({
 
 			if (months > 0) display += `${months}m `;
 			if (weeks > 0) display += `${weeks}w `;
-			if (days > 0) display += `${days % 7}j `;
+			if (days > 0) display += `${days % 7}d `;
 			if (hours > 0) display += `${hours}h `;
 			display += `${minutes}m ${seconds}s`;
 
@@ -82,7 +94,7 @@ export function PayrollCountdown({
 		}, 1000);
 
 		return () => clearInterval(interval);
-	}, [frequency, onReadyChange]);
+	}, [commissionDay, frequency, onReadyChange]);
 
 	return (
 		<div
@@ -98,7 +110,7 @@ export function PayrollCountdown({
 			)}
 
 			<p className="text-xs uppercase tracking-wide opacity-70">
-				{isReady ? "Paiement disponible" : "Prochain paiement dans"}
+				{isReady ? "Payment Available" : "Next Payment in"}
 			</p>
 
 			<p className="text-2xl font-semibold tracking-tight">{timeLeft}</p>

@@ -9,6 +9,7 @@ export interface Commission {
 	totalRevenue: number;
 	commissionRate: number;
 	commissionAmount: number;
+	commissionInitializedAtAppointmentCompletion: boolean;
 	businessEarnings: number;
 	paidAt: Date | null;
 	createdAt: Date;
@@ -27,8 +28,15 @@ export const commissionApi = {
 		return res;
 	},
 
-	update: async (id: string, status: string): Promise<Commission> => {
-		const { data } = await axiosdb.patch(`/commissions/${id}`, { status });
+	update: async (
+		id: string,
+		status: string,
+		sendEmail = false,
+	): Promise<Commission> => {
+		const { data } = await axiosdb.patch(`/commissions/${id}`, {
+			status,
+			sendEmail,
+		});
 		return data;
 	},
 

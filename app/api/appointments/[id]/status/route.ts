@@ -124,6 +124,7 @@ export async function PUT(
 						commissionAmount: workerCommissionAmount,
 						commissionRate: user.workerProfile?.commissionRate ?? 0,
 						status: "pending",
+						commissionInitializedAtAppointmentCompletion: true,
 						totalRevenue: updatedAppointment.price,
 						period: `${format(
 							new Date(updatedAppointment.date),

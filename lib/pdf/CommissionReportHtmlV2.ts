@@ -603,8 +603,8 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
 				!hasPending && aggregated.paidCount > 0
 					? `
       <div class="payment-info">
-        <div class="label">✅ Paiement effectué avec succès</div>
-        <div class="date">Dernier paiement: ${new Date().toLocaleDateString(
+        <div class="label">✅ Payment processed successfully</div>
+        <div class="date">Last payment: ${new Date().toLocaleDateString(
 					"fr-FR",
 					{
 						day: "2-digit",
@@ -621,16 +621,16 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
 
     <!-- Footer -->
     <div class="footer">
-      <div class="generated">📄 Généré automatiquement • Système ERP K-Corp</div>
+      <div class="generated">📄 Generated automatically • K-Corp ERP System</div>
       <div class="disclaimer">
-        Document généré le ${generatedAt}<br/>
-        Toute reproduction non autorisée est interdite • Réf: COMM-${Date.now().toString(36).toUpperCase()}
+        Document generated on ${generatedAt}<br/>
+        Unauthorized reproduction is prohibited • RRef: COMM-${Date.now().toString(36).toUpperCase()}
       </div>
       ${
 				hasPending
 					? `
       <div class="warning">
-        ⚠️ Ce document ne constitue pas un reçu de paiement — il atteste uniquement de l'achèvement des services
+        ⚠️ This document does not constitute a payment receipt — it only attests to the completion of services
       </div>`
 					: ""
 			}
