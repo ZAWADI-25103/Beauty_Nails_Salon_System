@@ -56,7 +56,6 @@ export default function TodayOverview() {
 			? apiAppointments.filter(
 					(apt) =>
 						(apt.status === "confirmed" ||
-							apt.status === "in_progress" ||
 							apt.status === "pending") &&
 						new Date(apt.date).getDate() >= new Date().getDate(),
 				)
@@ -113,7 +112,7 @@ export default function TodayOverview() {
 	if (lowStock.length > 0)
 		urgentAlerts.push({
 			type: "stock",
-			message: `${lowStock.length} article(s) avec stock bas`,
+			message: `${lowStock.length} items low on stock`,
 			priority: "high",
 			icon: Package,
 		});
@@ -338,6 +337,56 @@ export default function TodayOverview() {
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 				{/* Upcoming Appointments */}
 				<Card className="border-0 shadow-lg rounded-2xl p-5 sm:p-6 lg:col-span-2 bg-white dark:bg-gray-950 dark:border dark:border-pink-900/30">
+					<div className="flex items-center gap-3 mb-6">
+						<div className="w-10 h-10 bg-pink-100 dark:bg-pink-900/20 rounded-full flex items-center justify-center">
+							<Clock className="w-5 h-5 text-pink-500" />
+						</div>
+						<h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 ">
+							Ongoing Appointments
+						</h3>
+					</div>
+					<div className="space-y-3">
+						{ongoingAppointments.length > 0 ? (
+							ongoingAppointments.map((apt, idx) => (
+								<div
+									key={idx}
+									className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-linear-to-r from-pink-50 to-purple-50 dark:from-pink-900/10 dark:to-purple-900/10 rounded-xl border border-pink-100/50 dark:border-pink-900/20"
+								>
+									<div className="flex items-center gap-4">
+										<div className="text-center min-w-15 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm">
+											<p className="text-base sm:text-lg text-gray-900 dark:text-gray-100 font-black">
+												{apt.time}
+											</p>
+											<p className="text-[10px] sm:text-base text-gray-500 dark:text-gray-400 uppercase">
+												{apt.duration} min
+											</p>
+										</div>
+										<div className="flex-1 min-w-0">
+											<p className="text-lg sm:text-base text-gray-900 dark:text-gray-100 truncate">
+												{apt.client.user.name}
+											</p>
+											<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 font-medium truncate">
+												{apt.service?.name}
+											</p>
+										</div>
+									</div>
+									<div className="hidden sm:block w-px h-10 bg-pink-200 dark:bg-pink-800/30" />
+									<div className="flex items-center justify-between sm:justify-end gap-3 flex-1">
+										<p className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
+											with <span className="">{apt.worker.user.name}</span>
+										</p>
+										<Badge className="bg-blue-500 dark:bg-blue-900/40 text-white dark:text-blue-200 border-0 text-[10px] sm:text-base font-black">
+											{apt.status === "in_progress" ? "In Progress" : "Confirmed"}
+										</Badge>
+									</div>
+								</div>
+							))
+						) : (
+							<div className="text-center py-10 text-gray-500 dark:text-gray-400 italic">
+								No Ongoing appointments for Now
+							</div>
+						)}
+					</div>
 					<div className="flex items-center gap-3 mb-6">
 						<div className="w-10 h-10 bg-pink-100 dark:bg-pink-900/20 rounded-full flex items-center justify-center">
 							<Clock className="w-5 h-5 text-pink-500" />

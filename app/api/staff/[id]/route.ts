@@ -51,10 +51,6 @@ export async function GET(
 					},
 				},
 			},
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
-			},
 		});
 
 		const daysMap = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
@@ -97,10 +93,6 @@ export async function GET(
 					// lte: now,
 				},
 			},
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
-			},
 		});
 
 		const totalEarnings = commissions.reduce(
@@ -130,10 +122,6 @@ export async function GET(
 						},
 					},
 				},
-			},
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
 			},
 		});
 

@@ -1,128 +1,69 @@
 "use client";
-import { useDeleteTask, useTasks, useUpdateTask } from "@/lib/hooks/useTasks";
+
+import { useMemo } from "react";
+import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { useTasks } from "@/lib/hooks/useTasks";
 import CreateTaskModal from "./modals/CreateTaskModal";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
+import { TaskCard } from "./tasks/TaskCard";
 
 export default function TasksManagement() {
-	const { data, isLoading } = useTasks({ page: 1, limit: 6 });
+	const { data, isLoading } = useTasks({ page: 1, limit: 12 });
+	const { user } = useAuth();
+
 	const tasks = data?.tasks || [];
 
-	const updateTask = useUpdateTask();
-	const deleteTask = useDeleteTask();
+	const visibleTasks = useMemo(() => {
+		if (!user?.role) return tasks;
+		if (user.role === "worker") {
+			return tasks.filter((task: any) => task.assignedTo?.user?.id === user.id);
+		}
+		if (user.role === "client") {
+			return tasks.filter((task: any) => task.client?.user?.id === user.id);
+		}
+		return tasks;
+	}, [tasks, user]);
 
-	const markCompleted = (id: string) => {
-		updateTask.mutate({
-			id,
-			payload: { status: "completed", completedAt: new Date().toISOString() },
-		});
-	};
-
-	const onDelete = (id: string) => {
-		if (!confirm("Delete task?")) return;
-		deleteTask.mutate(id);
-	};
+	const heading = user?.role === "admin" ? "Team workflow" : user?.role === "worker" ? "Assigned tasks" : "Your mentions";
 
 	return (
-		<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
-			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-				<div className="flex items-center gap-3">
-					<div className="w-10 h-10 rounded-xl bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center">
-						<Badge className="bg-pink-500 hover:bg-pink-600 text-white border-0 w-2 h-2 p-0 rounded-full" />
-					</div>
-					<h3 className="text-xl  text-gray-900 dark:text-gray-100">
-						Task Management
-					</h3>
+		<Card className="rounded-3xl border border-pink-100 bg-white/95 p-4 shadow-xl shadow-pink-400/40 transition-all hover:border-pink-400 dark:border-pink-900/40 dark:bg-gray-950/95 sm:p-8">
+			<div className="mb-8 flex flex-col gap-4 border-b border-dashed border-gray-200 pb-6 dark:border-gray-800 sm:flex-row sm:items-center sm:justify-between">
+				<div>
+					<p className="text-xs uppercase tracking-[0.25em] text-pink-600">Workflow module</p>
+					<h3 className="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">{heading}</h3>
+					{user?.role === "admin" && <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">Manage all tasks across the team, assign workers, and track progress.</p>}
+					{user?.role === "worker" && <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">View and manage tasks assigned to you by the admin.</p>}
+					{user?.role === "client" && <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">View tasks related to your appointments and communications with the salon.</p>}
 				</div>
-				<div className="flex items-center gap-2 w-full sm:w-auto">
-					<CreateTaskModal triggerLabel="+ New Task" />
-					<Button
-						variant="ghost"
-						size="sm"
-						className="rounded-full dark:text-gray-400 dark:hover:bg-gray-800"
-					>
-						View All
-					</Button>
-				</div>
+				{user?.role === "admin" && <CreateTaskModal triggerLabel="+ New Task" />}
 			</div>
 
 			{isLoading ? (
-				<div className="flex items-center justify-center py-12">
-					<p className="text-gray-500 animate-pulse">Loading tasks...</p>
+				<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+					{Array.from({ length: 6 }).map((_, index) => (
+						<div key={index} className="rounded-3xl border border-pink-100 bg-white p-5 shadow-sm dark:border-pink-900/40 dark:bg-gray-950/70">
+							<Skeleton className="h-10 w-10 rounded-2xl" />
+							<Skeleton className="mt-4 h-5 w-2/3" />
+							<Skeleton className="mt-3 h-4 w-full" />
+							<Skeleton className="mt-2 h-4 w-5/6" />
+							<Skeleton className="mt-6 h-24 w-full rounded-2xl" />
+						</div>
+					))}
 				</div>
-			) : tasks.length === 0 ? (
-				<div className="text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-dashed border-gray-200 dark:border-gray-700">
-					<p className="text-lg text-gray-500 dark:text-gray-400">
-						No tasks found.
-					</p>
+			) : visibleTasks.length === 0 ? (
+				<div className="rounded-3xl border border-dashed border-gray-200 bg-gray-50/80 py-12 text-center text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-300">
+					{user?.role === "admin" && "No tasks found. Start by creating a new task for your team."}
+					{user?.role === "worker" && "No tasks assigned to you yet."}
+					{user?.role === "client" && "No tasks related to your appointments."}
 				</div>
 			) : (
-				<ul className="space-y-4">
-					{tasks.map((t: any) => (
-						<li
-							key={t.id}
-							className="flex flex-col sm:flex-row items-start justify-between gap-4 bg-gray-50 dark:bg-gray-800/50 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 hover:border-pink-100 dark:hover:border-pink-900/30 transition-all"
-						>
-							<div className="flex-1">
-								<div className="flex flex-wrap items-center gap-2 mb-2">
-									<h4 className=" text-gray-900 dark:text-gray-100">
-										{t.title}
-									</h4>
-									<Badge
-										className={`${t.priority === "high" ? "bg-orange-500" : t.priority === "urgent" ? "bg-red-600" : "bg-gray-400"} text-white border-0 text-[10px] px-2 py-0.5 uppercase  tracking-wider`}
-									>
-										{t.priority}
-									</Badge>
-								</div>
-								<p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-									{t.description || "-"}
-								</p>
-								<div className="flex flex-wrap items-center gap-3 mt-4 text-[11px] text-gray-500 dark:text-gray-500 font-medium">
-									<span className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-gray-950 rounded-lg border border-gray-100 dark:border-gray-800">
-										Assigned:{" "}
-										<span className="text-gray-700 dark:text-gray-300 ">
-											{t.assignedTo?.user?.name || "—"}
-										</span>
-									</span>
-									<span className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-gray-950 rounded-lg border border-gray-100 dark:border-gray-800">
-										Created by:{" "}
-										<span className="text-gray-700 dark:text-gray-300 ">
-											{t.createdBy?.name || "—"}
-										</span>
-									</span>
-								</div>
-							</div>
-
-							<div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-3 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-200 dark:border-gray-700">
-								<Badge
-									className={`${t.status === "completed" ? "bg-green-500" : t.status === "in_progress" ? "bg-blue-500" : "bg-gray-400"} text-white border-0 `}
-								>
-									{t.status}
-								</Badge>
-								<div className="flex items-center gap-2">
-									{t.status !== "completed" && (
-										<Button
-											size="sm"
-											onClick={() => markCompleted(t.id)}
-											className="bg-linear-to-r from-pink-500 to-purple-500 text-white rounded-full h-8 px-4 text-base "
-										>
-											Complete
-										</Button>
-									)}
-									<Button
-										size="sm"
-										variant="destructive"
-										onClick={() => onDelete(t.id)}
-										className="rounded-full h-8 px-4 text-base  bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border-0 hover:bg-red-500 hover:text-white"
-									>
-										Delete
-									</Button>
-								</div>
-							</div>
-						</li>
-					))}
-				</ul>
+						<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+							{visibleTasks.map((task: any) => (
+								<TaskCard key={task.id} task={task} role={user?.role} />
+							))}
+						</div>
 			)}
 		</Card>
 	);

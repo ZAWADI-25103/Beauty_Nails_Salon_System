@@ -127,7 +127,7 @@ export async function PUT(
 						totalRevenue: updatedAppointment.price,
 						period: `${format(
 							new Date(updatedAppointment.date),
-							"yyyy-MM dd",
+							"yyyy-MM dd HH:mm",
 							{ locale: enUS },
 						)}`,
 						businessEarnings: businessEarnings,

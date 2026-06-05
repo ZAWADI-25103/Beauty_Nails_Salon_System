@@ -15,9 +15,6 @@ export async function GET(req: NextRequest) {
 			orderBy: {
 				createdAt: "asc",
 			},
-			cacheStrategy: {
-				ttl: 60,
-			},
 		});
 
 		if (!payments) return errorResponse("no payments intents");

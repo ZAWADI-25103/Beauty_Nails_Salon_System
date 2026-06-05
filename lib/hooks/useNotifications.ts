@@ -10,7 +10,7 @@ export function useNotifications(params?: {
 	const queryClient = useQueryClient();
 
 	const { data, isLoading, error } = useQuery({
-		queryKey: ["notifications", params],
+		queryKey: ["notifications", JSON.stringify(params)],
 		queryFn: () => notificationsApi.getNotifications(params),
 		refetchInterval: 60 * 1000, // Refetch every 60 seconds
 	});

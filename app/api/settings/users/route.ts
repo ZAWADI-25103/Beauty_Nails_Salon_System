@@ -11,9 +11,6 @@ export async function GET(request: NextRequest) {
 		// requireRole(["admin"])
 
 		const users = await prisma.user.findMany({
-			cacheStrategy: {
-				ttl: 60,
-			},
 		});
 
 		return successResponse(users);

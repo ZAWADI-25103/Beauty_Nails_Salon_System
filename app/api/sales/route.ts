@@ -38,10 +38,6 @@ export async function GET(request: NextRequest) {
 			orderBy: {
 				createdAt: "asc",
 			},
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
-			},
 		});
 
 		return NextResponse.json(sales);

@@ -80,6 +80,7 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Textarea } from "../ui/textarea";
 import { cn } from "../ui/utils";
+import TasksManagement from "../TasksManagement";
 
 export default function ClientDashboardV2() {
 	const [notificationOpen, setNotificationOpen] = useState(false);
@@ -973,6 +974,12 @@ export default function ClientDashboardV2() {
 						<TabsTrigger value="profile">
 							<User className="w-4 h-4 mr-2" />
 							Profile
+						</TabsTrigger>
+						<TabsTrigger
+							value="tasks"
+							className="rounded-lg px-4 sm:px-8 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-pink-400 shadow-sm"
+						>
+							Mentions
 						</TabsTrigger>
 					</TabsList>
 
@@ -2385,6 +2392,7 @@ export default function ClientDashboardV2() {
 									>
 										Finance
 									</TabsTrigger>
+
 								</TabsList>
 
 								{/* Profilee Tab */}
@@ -2735,10 +2743,20 @@ export default function ClientDashboardV2() {
 										</Card>
 									</div>
 								</TabsContent>
+
 							</Tabs>
 						</Card>
 					</TabsContent>
+
+					{/* Tasks Tab */}
+					<TabsContent value="tasks" className="space-y-6">
+						{/* Tasks Management */}
+						<div className="py-2">
+							<TasksManagement />
+						</div>
+					</TabsContent>
 				</Tabs>
+
 			</div>
 
 			{/* Cancel Appointment Dialog */}

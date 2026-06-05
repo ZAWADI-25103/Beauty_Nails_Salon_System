@@ -14,9 +14,6 @@ export async function GET(_request: NextRequest) {
 
 		const loyaltyTransactions = await prisma.loyaltyTransaction.findMany({
 			orderBy: { createdAt: "desc" },
-			cacheStrategy: {
-				ttl: 60,
-			},
 		});
 
 		if (!loyaltyTransactions) return errorResponse("no transactions ");

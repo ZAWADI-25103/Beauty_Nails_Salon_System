@@ -46,10 +46,6 @@ export async function GET(request: NextRequest) {
 				},
 			},
 			orderBy: { createdAt: "desc" },
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
-			},
 		});
 
 		const staffIds = staff.map((s: any) => s.id);
@@ -65,7 +61,6 @@ export async function GET(request: NextRequest) {
 				workerId: { in: staffIds },
 				createdAt: { gte: globalStartDate },
 			},
-			cacheStrategy: { ttl: 60, swr: 30 },
 		});
 
 		// 3. FETCH ALL ACTIVE APPOINTMENTS AT ONCE
@@ -85,7 +80,6 @@ export async function GET(request: NextRequest) {
 					},
 				},
 			},
-			cacheStrategy: { ttl: 30 }, // Cache this too for speed
 		});
 
 		// Filter out staff who have conflicting appointments
@@ -97,10 +91,6 @@ export async function GET(request: NextRequest) {
 					status: {
 						in: ["confirmed", "in_progress"],
 					},
-				},
-				cacheStrategy: {
-					ttl: 60, // Fresh for 60 seconds
-					swr: 30, // For another 30s, serve old data while updating in background
 				},
 			});
 

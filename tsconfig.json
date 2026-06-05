@@ -1,8 +1,7 @@
 {
 	"compilerOptions": {
-		"ignoreDeprecations": "6.0",
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"module": "commonjs",
+		"module": "esnext",
 		"moduleResolution": "bundler",
 		"target": "es2018",
 		"strict": true,

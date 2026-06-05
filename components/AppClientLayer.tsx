@@ -12,6 +12,8 @@ export default function AppClientLayer() {
 	const { user } = useAuth();
 	const { data: referrals } = useClientReferrals(user?.clientProfile?.id);
 
+	
+	if (!user) return null;
 	// 🔥 prepare data HERE (not in layout)
 	const ongoingAppointments = appointments
 		.filter((a: any) => a.status === "in_progress")
@@ -20,8 +22,6 @@ export default function AppClientLayer() {
 			startTime: a.updatedAt,
 			duration: a.service?.duration || 60,
 		}));
-
-	if (!user) return null;
 
 	return (
 		<>

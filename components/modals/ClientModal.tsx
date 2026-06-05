@@ -213,7 +213,7 @@ export default function ClientModal({
 
 	return (
 		<div className="flex items-center justify-center ">
-			<Card className="w-full sm:max-w-3xl p-6 bg-white dark:bg-gray-950 rounded-xl ">
+			<Card className="w-full sm:max-w-3xl p-6 bg-white dark:bg-gray-950 rounded-xl border-0">
 				<h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
 					{edit ? `Edit ${client?.name}` : "New Client"}
 				</h2>
@@ -280,6 +280,18 @@ export default function ClientModal({
 									<SelectItem value="VIP">VIP</SelectItem>
 								</SelectContent>
 							</Select>
+						</div>
+
+						<div>
+							<Label htmlFor="phone">Password</Label>
+							<Input
+								id="phone"
+								value={formData.password || ""}
+								onChange={(e) => handleInputChange("password", e.target.value)}
+								// disabled={!canEditAllFields}
+								placeholder="Enter password"
+								className="mt-1"
+							/>
 						</div>
 
 						<div className="md:col-span-2">

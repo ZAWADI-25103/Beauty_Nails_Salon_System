@@ -70,6 +70,7 @@ import {
 } from "../ui/select";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import TasksManagement from "../TasksManagement";
 
 export default function WorkerDashboardV2() {
 	const [notificationOpen, setNotificationOpen] = useState(false);
@@ -120,12 +121,8 @@ export default function WorkerDashboardV2() {
 		refetch,
 	} = useAppointments({
 		workerId: user?.workerProfile?.id,
-		// date: today,
 	});
 
-	const { appointments: AllAppointments } = useAppointments({
-		workerId: user?.workerProfile?.id,
-	});
 
 	// Get weekly appointments for stats
 	const weekStart = new Date();
@@ -225,7 +222,7 @@ export default function WorkerDashboardV2() {
 			new Date(apt.date).getDate() >= new Date().getDate(),
 	);
 
-	const pendingAppointments = AllAppointments.filter(
+	const pendingAppointments = appointments.filter(
 		(apt) =>
 			(apt.status === "confirmed" || apt.status === "pending") &&
 			new Date(apt.date).getDate() >= new Date().getDate(),
@@ -235,13 +232,13 @@ export default function WorkerDashboardV2() {
 		(apt) => apt.status === "completed",
 	);
 
-	const missedAppointments = AllAppointments.filter(
+	const missedAppointments = appointments.filter(
 		(apt) => apt.status === "pending" && new Date(apt.date) < new Date(),
 	);
-	const completedAppointments = AllAppointments.filter(
+	const completedAppointments = appointments.filter(
 		(apt) => apt.status === "completed",
 	);
-	const cancelledAppointments = AllAppointments.filter(
+	const cancelledAppointments = appointments.filter(
 		(apt) => apt.status === "cancelled",
 	);
 
@@ -729,7 +726,7 @@ export default function WorkerDashboardV2() {
 											transfer={transfer}
 											onAccepted={() => {
 												refetchTransfers();
-												refetch?.();
+												refetch();
 											}}
 											onRejected={() => refetchTransfers()}
 										/>
@@ -758,7 +755,14 @@ export default function WorkerDashboardV2() {
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
 							<CalendarIcon className="w-4 h-4 mr-2" />
-							Calendar
+							My Calendar
+						</TabsTrigger>
+						<TabsTrigger
+							value="tasks"
+							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
+						>
+							<CalendarIcon className="w-4 h-4 mr-2" />
+							My Tasks
 						</TabsTrigger>
 						<TabsTrigger
 							value="performance"
@@ -860,37 +864,36 @@ export default function WorkerDashboardV2() {
 													{getStatusBadge(appointment.status)}
 
 													{/* Transfer Badge */}
-													{appointment.transfer?.originalWorker?.id ===
+													{appointment.transfer?.originalWorkerId ===
 														user?.id && (
 														<Badge
 															variant="outline"
 															className="flex items-center gap-1"
 														>
 															<ArrowRight className="w-3 h-3" />
-															Votre demande de transfert pour le appointments a{" "}
-															{appointment.transfer?.newWorker?.user?.name} est
-															en cours..
-														</Badge>
-													)}
-													{appointment.transfer?.originalWorker?.id ===
-														user?.id && (
-														<Badge
-															variant="outline"
-															className="flex items-center gap-1"
-														>
-															<ArrowRight className="w-3 h-3" />
-															Vous avez transferer ce appointments a{" "}
+															You have transfered this appointment to{" "}
 															{appointment.transfer?.newWorker?.user?.name}.
 														</Badge>
 													)}
-													{appointment.transfer?.newWorker?.id === user?.id && (
+													{appointment.transfer?.originalWorkerId ===
+														user?.id && (
 														<Badge
 															variant="outline"
 															className="flex items-center gap-1"
 														>
 															<ArrowRight className="w-3 h-3" />
-															Ce appointments vous a etez transfere par{" "}
-															{appointment.transfer?.originalWorker?.user?.name}
+															You have transfered this appointment to{" "}
+															{appointment.transfer?.newWorker?.user?.name}.
+														</Badge>
+													)}
+													{appointment.transfer?.newWorkerId === user?.id && (
+														<Badge
+															variant="outline"
+															className="flex items-center gap-1"
+														>
+															<ArrowRight className="w-3 h-3" />
+															This appointment has been transfered to you from{" "}
+															{appointment.transfer?.originalWorker?.user?.name}.
 														</Badge>
 													)}
 
@@ -909,7 +912,7 @@ export default function WorkerDashboardV2() {
 														>
 															{appointment.transfer.status === "pending" &&
 																"													🔄 Transferring"}
-															{appointment.transfer.status === "accepted" &&
+															{appointment.transfer.status === "accepted" && 
 																"✓						Transferred"}
 															{appointment.transfer.status === "rejected" &&
 																"✗						Declined"}
@@ -938,6 +941,21 @@ export default function WorkerDashboardV2() {
 
 													{/* Details Button */}
 													{!appointment.transfer && (
+														<>
+															<Button
+																size="sm"
+																variant="outline"
+																onClick={() => {
+																	setSelectedAppointment(appointment);
+																	setDetailsOpen(true);
+																}}
+															>
+																Details & Tool Selection
+															</Button>
+														</>
+													)}
+
+													{appointment.transfer?.newWorker?.id === user?.id && (
 														<>
 															<Button
 																size="sm"
@@ -1081,6 +1099,13 @@ export default function WorkerDashboardV2() {
 					{/* Calendar Tab */}
 					<TabsContent value="calendar" className="mt-6">
 						<BookingCalendar />
+					</TabsContent>
+
+					<TabsContent value="tasks" className="mt-6">
+						{/* Tasks Management */}
+						<div className="py-2">
+							<TasksManagement />
+						</div>
 					</TabsContent>
 
 					<TabsContent value="performance" className="space-y-6">

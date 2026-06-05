@@ -20,9 +20,6 @@ export async function GET(req: NextRequest) {
 			orderBy: {
 				createdAt: "asc",
 			},
-			cacheStrategy: {
-				ttl: 60,
-			},
 		});
 
 		if (!workers) return errorResponse("no workers");

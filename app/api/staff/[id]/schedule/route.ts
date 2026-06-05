@@ -25,10 +25,6 @@ export async function GET(
 			select: {
 				workingHours: true,
 			},
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
-			},
 		});
 
 		return successResponse({

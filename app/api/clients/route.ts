@@ -8,6 +8,7 @@ import {
 	successResponse,
 } from "@/lib/api/helpers";
 import prisma from "@/lib/prisma";
+import { hash } from "bcryptjs";
 
 export async function GET(request: NextRequest) {
 	try {
@@ -64,10 +65,6 @@ export async function GET(request: NextRequest) {
 				orderBy: { createdAt: "desc" },
 				skip: (page - 1) * limit,
 				take: limit,
-				cacheStrategy: {
-					ttl: 60, // Fresh for 60 seconds
-					swr: 30, // For another 30s, serve old data while updating in background
-				},
 			}),
 			prisma.clientProfile.count({ where }),
 		]);
@@ -111,7 +108,7 @@ export async function POST(request: NextRequest) {
 			throw new Error("Name, email and phone are required");
 		}
 
-		// const pwd = await hash(password, 10);
+		const pwd = await hash(password, 10);
 		const referralCode = nanoid(8).toUpperCase();
 
 		const user = await prisma.user.create({
@@ -119,7 +116,7 @@ export async function POST(request: NextRequest) {
 				name,
 				email,
 				phone,
-				password,
+				password: pwd,
 				role: "client",
 				emailVerified: new Date(),
 				clientProfile: {

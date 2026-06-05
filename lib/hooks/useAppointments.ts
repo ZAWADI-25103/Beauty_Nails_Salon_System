@@ -32,9 +32,11 @@ export function useAppointments(params?: {
 		error,
 		refetch,
 	} = useQuery({
-		queryKey: ["appointments", params],
+		queryKey: ["appointments", JSON.stringify(params)],
 		queryFn: () => appointmentsApi.getAppointments(params),
-		refetchInterval: 5 * 1000, // Refetch every 5 seconds
+		refetchInterval: 10000, // 10 sec
+		refetchOnWindowFocus: true,
+		refetchOnReconnect: true,
 	});
 
 	// Create appointment
@@ -86,8 +88,18 @@ export function useAppointments(params?: {
 			statusData: UpdateAppointmentStatusData;
 		}) => appointmentsApi.updateAppointmentStatus(id, statusData),
 		onSuccess: (data) => {
-			queryClient.invalidateQueries({ queryKey: ["appointments"] });
-			toast.success(data.message);
+			queryClient.setQueriesData(
+				{ queryKey: ["appointments"] },
+				(old: any) => {
+					if (!old) return old;
+
+					return old.map((apt: any) =>
+						apt.id === data.appointment.id
+							? data
+							: apt
+					);
+				}
+			);
 		},
 		onError: (error: any) => {
 			console.log("Error updating appointment status:", error);

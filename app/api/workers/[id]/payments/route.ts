@@ -21,10 +21,6 @@ export async function GET(
 				status: "paid",
 			},
 			orderBy: { paidAt: "desc" }, // Order by payment date
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
-			},
 		});
 
 		const paymentHistory = paidCommissions.map((c: any) => ({

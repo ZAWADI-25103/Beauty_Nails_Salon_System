@@ -266,19 +266,19 @@ export default function PackageBookingForm({
 	// Handle form submission
 	const handleSubmit = async () => {
 		if (!user) {
-			toast.error("Veuillez vous connecter pour réserver");
+			toast.error("Please log in to book");
 			router.push("/auth/login");
 			return;
 		}
 
 		if (!selectedWorker || !selectedDate || !selectedTime) {
-			toast.error("Veuillez remplir tous les champs obligatoires");
+			toast.error("Please fill in all required fields");
 			return;
 		}
 
 		// For mobile payments, ensure payment is confirmed
 		if (selectedMethod === "mobile" && !isPaid) {
-			toast.error("Veuillez confirmer le paiement avant de continuer");
+			toast.error("Please confirm payment before continuing");
 			return;
 		}
 
@@ -298,11 +298,11 @@ export default function PackageBookingForm({
 
 		try {
 			const res = await axiosdb.post("/appointments/package", appointmentData);
-			toast.success("Forfait réservé avec succès!");
+			toast.success("Package booked successfully!");
 			router.push("/dashboard/client");
 		} catch (error: any) {
 			toast.error(
-				error.response?.data?.error?.message || "Erreur lors de la réservation",
+				error.response?.data?.error?.message || "Error while booking",
 			);
 		}
 	};
@@ -349,10 +349,10 @@ export default function PackageBookingForm({
 				);
 			} else {
 				setIsPaid(false);
-				toast("Paiement non encore reçu");
+				toast("Payment not yet received");
 			}
 		} catch (err) {
-			toast.error("Erreur lors de la vérification");
+			toast.error("Error while checking payment status");
 		}
 	};
 
@@ -361,7 +361,7 @@ export default function PackageBookingForm({
 			<div className="text-center py-12">
 				<p className="text-gray-500">Package not found</p>
 				<Button variant="outline" onClick={onBack} className="mt-4">
-					Retour
+					Back
 				</Button>
 			</div>
 		);
@@ -408,13 +408,13 @@ export default function PackageBookingForm({
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 					<Badge className="my-8 bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-200">
 						<CalendarIcon className="w-4 h-4 mr-2" />
-						Réservation
+						Booking
 					</Badge>
 					<h1 className="text-3xl sm:text-4xl font-medium lg:text-5xl text-gray-900 dark:text-gray-100 mb-6">
-						Prenez rendez-vous en quelques clics
+						Book your appointment in a few clicks
 					</h1>
 					<p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-						Choisissez votre service, votre spécialiste et votre créneau horaire
+						Choose your service, specialist, and time slot
 					</p>
 				</div>
 			</section>
@@ -434,7 +434,7 @@ export default function PackageBookingForm({
 							</p>
 							{pkg.discount > 0 && (
 								<Badge className="mt-2 bg-green-500 text-white">
-									Économisez{" "}
+									Save{" "}
 									{(
 										pkg.services?.reduce(
 											(sum: number, s: Service) => sum + s.price,
@@ -489,7 +489,7 @@ export default function PackageBookingForm({
 
 				<div>
 					<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-						Esthéticienne
+						Stylist
 					</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 						{staff.map((worker: any) => {
@@ -576,11 +576,11 @@ export default function PackageBookingForm({
 						<div>
 							{slots?.slots.length != 0 ? (
 								<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-									Les Heures{" "}
+									Available times for{" "}
 									<span className="text-md font-bold text-pink-600">
 										{selectedWorkerName}
 									</span>{" "}
-									sera disponible le{" "}
+									on{" "}
 									<span className="text-md font-bold text-pink-600">
 										{selectedDate
 											? format(selectedDate, "PPP", { locale: fr })
@@ -589,13 +589,13 @@ export default function PackageBookingForm({
 								</h3>
 							) : (
 								<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-									Malheureusement{" "}
+										Unfortunately,{" "}
 									<span className="text-md font-bold text-pink-600">
 										{selectedWorkerName}
 									</span>{" "}
-									ne travaille pas{" "}
+										is not working on{" "}
 									<span className="text-md font-bold text-pink-600">
-										le {selectedDate ? weekDay[selectedDate.getDay()] : ""}
+											{selectedDate ? weekDay[selectedDate.getDay()] : ""}
 									</span>
 								</h3>
 							)}
@@ -604,9 +604,9 @@ export default function PackageBookingForm({
 							>
 								{slots?.slots.length === 0 ? (
 									<p className="p-12 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-400 border-gray-300 dark:border-gray-700">
-										Malheureusement aucune heure n'est disponible pour cette
+										Unfortunately, no time slots are available for this date
 										date {". "}
-										Choisi un autre specialiste ou une autre date.
+										Please choose another specialist or another date.
 									</p>
 								) : (
 									slots?.slots.map((time) => (
@@ -656,7 +656,7 @@ export default function PackageBookingForm({
 										<Sparkles className="w-5 h-5 mr-3 text-pink-500 shrink-0 mt-0.5 sm:mt-0" />
 										<div>
 											<p className="text-gray-900 dark:text-gray-100 font-medium">
-												Au salon
+												At the salon
 											</p>
 											<p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
 												Quartier HIMBI, Commune de Goma, Ville de Goma
@@ -678,7 +678,7 @@ export default function PackageBookingForm({
 										<Home className="w-5 h-5 mr-3 text-amber-500 shrink-0 mt-0.5 sm:mt-0" />
 										<div>
 											<p className="text-gray-900 dark:text-gray-100 font-medium">
-												À domicile
+												At home
 											</p>
 											<p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
 												+20 000 CDF - Dans la zone de Goma
@@ -710,13 +710,13 @@ export default function PackageBookingForm({
 				{user && location && (
 					<div className="border border-pink-100 dark:border-pink-900 shadow-xl rounded-2xl bg-white dark:bg-gray-950 p-6">
 						<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
-							Informations de Paiement
+							Payment Information
 						</h3>
 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
 							<div>
 								<label className="block text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-									Code de Discount
+									Discount Code
 								</label>
 								<input
 									type="text"
@@ -729,14 +729,14 @@ export default function PackageBookingForm({
 
 						<div className="mb-4 space-y-4">
 							<label className="block text-lg font-medium text-gray-700 dark:text-gray-300">
-								Méthode de Paiement
+								Payment Method
 							</label>
 
 							{/* 💳 METHODS BUTTONS */}
 							<div className="grid grid-cols-2 sm:grid-cols-2 gap-2">
 								{[
 									{ key: "mobile", label: "Mobile Money" },
-									{ key: "cash", label: "Espèces" },
+									{ key: "cash", label: "Cash" },
 								].map((method) => {
 									return (
 										<button
@@ -781,7 +781,7 @@ export default function PackageBookingForm({
 										onClick={handleUSSDPayment}
 										className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full border border-pink-200 dark:border-pink-900 text-pink-700 dark:text-pink-300 hover:bg-pink-50 dark:hover:bg-pink-900/30 transition-all"
 									>
-										<RefreshCcw className="h-4 w-4" /> Rafraîchir
+										<RefreshCcw className="h-4 w-4" /> Refresh
 									</button>
 								</div>
 
@@ -789,7 +789,7 @@ export default function PackageBookingForm({
 									{/* USSD Code Section */}
 									<div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-700">
 										<p className="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 font-medium">
-											Code USSD
+											USSD Code
 										</p>
 										<div className="flex items-center justify-between gap-4 mt-2">
 											<p className="text-2xl font-bold text-pink-600 dark:text-pink-400 tracking-wider">
@@ -883,8 +883,8 @@ export default function PackageBookingForm({
 										{paymentIntentId && (
 											<div className="flex flex-col gap-2 pt-2">
 												<p className="text-lg text-pink-600 dark:text-pink-400 font-medium flex items-center gap-1.5">
-													<CheckCircle className="h-4 w-4" /> Paiement prêt.
-													Composez le code.
+													<CheckCircle className="h-4 w-4" /> Payment ready.
+													Dial the code.
 												</p>
 												{remainingTime !== null && remainingTime > 0 && (
 													<Badge variant="secondary" className="w-fit text-sm">
@@ -898,7 +898,7 @@ export default function PackageBookingForm({
 														variant="destructive"
 														className="w-fit text-sm"
 													>
-														Temps écoulé - Veuillez réessayer
+														Time expired - Please try again
 													</Badge>
 												)}
 											</div>
@@ -918,7 +918,7 @@ export default function PackageBookingForm({
 											</div>
 										) : (
 											<div className="text-center text-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 rounded-xl py-2">
-												En attente de paiement...
+													Waiting for payment...
 											</div>
 										)}
 										{isPaid && paymentMeta.transactionId && (
@@ -930,7 +930,7 @@ export default function PackageBookingForm({
 												}}
 												className="mt-4 px-4 py-2 rounded-lg bg-pink-500 text-white"
 											>
-												Télécharger le reçu
+												Download receipt
 											</button>
 										)}
 									</div>
@@ -945,7 +945,7 @@ export default function PackageBookingForm({
 					<h3 className="font-semibold mb-4">Summary</h3>
 					<div className="space-y-2 text-sm">
 						<div className="flex justify-between">
-							<span>Forfait {pkg.name}</span>
+							<span>Package {pkg.name}</span>
 							<span>{packageBasePrice.toLocaleString()} CDF</span>
 						</div>
 						{addOnsTotalPrice > 0 && (
@@ -961,7 +961,7 @@ export default function PackageBookingForm({
 							</div>
 						)}
 						<div className="flex justify-between">
-							<span>Taxe</span>
+							<span>Tax</span>
 							<span>(16% TVA) +{taxAmount.toLocaleString()} CDF</span>
 						</div>
 						<div className="flex justify-between font-bold text-lg border-t pt-2">
@@ -975,7 +975,7 @@ export default function PackageBookingForm({
 						disabled={!selectedWorker || !selectedDate || !selectedTime}
 						className="w-full mt-6 bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full py-6"
 					>
-						Confirmer la réservation du forfait
+						Confirm package booking
 					</Button>
 				</Card>
 			</div>
@@ -1057,11 +1057,11 @@ function ServiceItem({
 						<div className="mt-3 space-y-2">
 							{isLoading ? (
 								<p className="text-xs text-gray-500 text-center py-2">
-									Chargement...
+									Loading...
 								</p>
 							) : !serviceAddOns || serviceAddOns.length === 0 ? (
 								<p className="text-xs text-gray-400 text-center py-2">
-									Aucune option disponible
+										No options available
 								</p>
 							) : (
 								serviceAddOns.map((addOn) => (

@@ -25,12 +25,12 @@ export interface Task {
 	assignedToWorkerId?: string | null;
 	assignedTo?: {
 		id: string;
-		user?: { id: string; name?: string; email?: string } | null;
+		user?: { id: string; name?: string; email?: string; phone?: string } | null;
 	} | null;
 	clientId?: string | null;
 	client?: {
 		id: string;
-		user?: { id: string; name?: string; email?: string } | null;
+		user?: { id: string; name?: string; email?: string; phone?: string } | null;
 	} | null;
 	appointmentId?: string | null;
 	createdById?: string | null;

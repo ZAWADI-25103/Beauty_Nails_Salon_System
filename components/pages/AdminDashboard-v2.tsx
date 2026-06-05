@@ -179,9 +179,9 @@ export default function AdminDashboardV2() {
 	}));
 
 	// Service distribution - use performance data when available, otherwise show defaults
-	const _serviceColors = ["#ec4899", "#a855f7", "#f59e0b", "#10b981"];
+	const serviceColors = ["#ec4899", "#a855f7", "#f59e0b", "#10b981"];
 
-	const categories = ["Nail Care", "Eyelashes", "Braids", "Makeup"];
+	const categories = ["onglerie", "cils", "tresses", "maquillage"];
 
 	const serviceDistribution = categories.map((category, index) => {
 		const totalCount =
@@ -195,7 +195,7 @@ export default function AdminDashboardV2() {
 		return {
 			name: category,
 			value: totalCount,
-			color: _serviceColors[index],
+			color: serviceColors[index],
 		};
 	});
 
@@ -530,6 +530,12 @@ export default function AdminDashboardV2() {
 							<CreditCard className="w-4 h-4 mr-2" /> Membership
 						</TabsTrigger>
 						<TabsTrigger
+							value="tasks"
+							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
+						>
+							<CheckCircle className="w-4 h-4 mr-2" /> Team Tasks
+						</TabsTrigger>
+						<TabsTrigger
 							value="more"
 							className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 						>
@@ -560,6 +566,13 @@ export default function AdminDashboardV2() {
 					{/* membership Tab */}
 					<TabsContent value="membership" className="mt-2">
 						<MembershipsManagement />
+					</TabsContent>
+
+					<TabsContent value="tasks" className="mt-2">
+						{/* Tasks Management */}
+						<div className="py-2">
+							<TasksManagement />
+						</div>
 					</TabsContent>
 
 					{/* More Tab */}
@@ -675,10 +688,7 @@ export default function AdminDashboardV2() {
           </Card>
         )} */}
 
-				{/* Tasks Management */}
-				<div className="py-2">
-					<TasksManagement />
-				</div>
+
 			</div>
 		</div>
 	);

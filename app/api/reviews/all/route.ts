@@ -11,9 +11,6 @@ export async function GET(request: NextRequest) {
 		// requireRole(["admin"])
 
 		const reviews = await prisma.review.findMany({
-			cacheStrategy: {
-				ttl: 60,
-			},
 		});
 
 		return successResponse(reviews);

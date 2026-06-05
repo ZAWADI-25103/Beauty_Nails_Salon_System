@@ -71,8 +71,7 @@ export default function About() {
 							Beauty at the service of well-being
 						</h1>
 						<p className="text-xl text-pink-100 max-w-3xl mx-auto">
-							Depuis 2020, Beauty Nails sublime la beauté des femmes de Kinshasa
-							avec passion et professionnalisme
+							Since 2023, Beauty Nails has been dedicated to enhancing the natural beauty of our clients while providing an unforgettable experience. Our passion for excellence and commitment to hygiene make us the go-to salon for all your beauty needs.
 						</p>
 					</div>
 				</div>
@@ -89,16 +88,10 @@ export default function About() {
 							A salon that celebrates your unique beauty
 						</h2>
 						<p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-							Beauty Nails was born from a dream: to create a space where every woman feels
-							sent belle, confiante et choyée. Nous croyons que la beauté est un
-							art, et chaque cliente est notre chef-d'œuvre.
+							Beauty Nails was born from a dream: to create a space where every woman feels beautiful, pampered and empowered. We believe that beauty is not just about appearance, but also about confidence and well-being. That's why we strive to provide personalized services that enhance your natural beauty while respecting your individuality.
 						</p>
 						<p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-6 sm:mb-8">
-							Our team of passionate, certified professionals uses
-							les meilleures techniques et produits pour vous offrir une
-							expérience exceptionnelle. De l'onglerie au maquillage, en passant
-							par les cils et les tresses, nous maîtrisons tous les aspects de
-							la beauté féminine.
+							Our team of passionate, certified professionals uses only high-quality products and the latest techniques to ensure you receive the best care. Whether you're looking for a simple manicure, a bold nail art or a relaxing pedicure, we are here to make your beauty dreams come true.
 						</p>
 						<div className="grid grid-cols-3 gap-4 sm:gap-6">
 							<div className="text-center">
@@ -111,7 +104,7 @@ export default function About() {
 							</div>
 							<div className="text-center">
 								<div className="text-3xl sm:text-4xl font-medium text-pink-600 dark:text-pink-400 mb-2">
-									2000+
+									230+
 								</div>
 								<div className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
 									Happy clients
@@ -119,7 +112,7 @@ export default function About() {
 							</div>
 							<div className="text-center">
 								<div className="text-3xl sm:text-4xl font-medium text-pink-600 dark:text-pink-400 mb-2">
-									4.9
+									4.2
 								</div>
 								<div className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
 									Average rating
@@ -232,7 +225,15 @@ export default function About() {
 													variant="outline"
 													className="mr-2 text-base dark:border-gray-700 dark:text-gray-300"
 												>
-													{specialty}
+													{specialty.toLocaleLowerCase() === "onglerie"
+														? "Nails"
+														: specialty.toLocaleLowerCase() === "cils"
+															? "EyeLashes"
+															: specialty.toLocaleLowerCase() === "tresses"
+																? "Braids"
+																: specialty.toLocaleLowerCase() === "maquillage"
+																	? "Makeup"
+																	: specialty}
 												</Badge>
 											))}
 										</div>

@@ -190,7 +190,7 @@ export default function TransferRequestCard({
 			{transfer.transferFeeAmount > 0 && (
 				<div className="mb-5 rounded-2xl border border-green-200 dark:border-green-900/30 bg-green-50 dark:bg-green-950/10 p-4">
 					<p className="text-sm sm:text-base text-green-800 dark:text-green-200 leading-relaxed">
-						<strong>Commission for you:</strong>{" "}
+						<strong>Commission for {transfer.originalWorker?.user?.name}:</strong>{" "}
 						{transfer.transferFeeAmount.toLocaleString()} CDF (
 						{transfer.transferFeePercentage}%)
 					</p>

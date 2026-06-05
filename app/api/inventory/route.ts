@@ -36,9 +36,6 @@ export async function GET(request: NextRequest) {
 				},
 			},
 			orderBy: { currentStock: "asc" },
-			cacheStrategy: {
-				ttl: 60, // Cache for 60 seconds
-			},
 		});
 
 		return successResponse(items);

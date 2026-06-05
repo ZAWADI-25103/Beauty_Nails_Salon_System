@@ -15,9 +15,6 @@ export async function GET(req: NextRequest) {
 			orderBy: {
 				createdAt: "asc",
 			},
-			cacheStrategy: {
-				ttl: 60,
-			},
 		});
 
 		if (!registers) return errorResponse("no registers");

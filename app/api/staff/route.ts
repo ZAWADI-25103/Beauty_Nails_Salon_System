@@ -64,7 +64,6 @@ export async function GET(request: NextRequest) {
 				workerId: { in: staffIds },
 				createdAt: { gte: globalStartDate },
 			},
-			cacheStrategy: { ttl: 60, swr: 30 },
 		});
 
 		// 3. FETCH ALL ACTIVE APPOINTMENTS AT ONCE
@@ -84,7 +83,6 @@ export async function GET(request: NextRequest) {
 					},
 				},
 			},
-			cacheStrategy: { ttl: 30 }, // Cache this too for speed
 		});
 
 		const formattedStaff = staff.map((s: any) => {
@@ -194,11 +192,6 @@ export async function POST(request: NextRequest) {
 		const existingUser = await prisma.user.findFirst({
 			where: {
 				OR: [{ email }, { phone }],
-			},
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
-				// tags: ['products'] // Optional: Use for manual invalidation
 			},
 		});
 

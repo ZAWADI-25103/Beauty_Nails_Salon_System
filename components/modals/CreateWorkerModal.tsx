@@ -26,7 +26,12 @@ import {
 
 const POSITIONS = ["Specialist", "Receptionist", "Manager", "Assistant"];
 
-const SERVICE_CATEGORIES = ["Nail Care", "Eyelashes", "Braids", "Makeup"];
+const SERVICE_CATEGORIES = [
+	{ id: "onglerie", name: "Nails" },
+	{ id: "cils", name: "EyeLashes" },
+	{ id: "tresses", name: "Braids" },
+	{ id: "maquillage", name: "Makeup" }
+];
 
 export default function CreateWorkerModal({
 	triggerLabel = "Add Staff",
@@ -41,7 +46,7 @@ export default function CreateWorkerModal({
 	const [position, setPosition] = useState("");
 	const [specialties, setSpecialties] = useState<string[]>([]);
 	const [commissionRate, setCommissionRate] = useState<number | "">("");
-	const [workingHours, setWorkingHours] = useState("");
+	const [workingHours, setWorkingHours] = useState("Mon-Fri 09:00-18:00");
 
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -191,14 +196,14 @@ export default function CreateWorkerModal({
 							<Label className="mb-3">Specialties</Label>
 							<div className="grid grid-cols-2 gap-3 mt-2">
 								{SERVICE_CATEGORIES.map((category) => (
-									<div key={category} className="flex items-center space-x-2">
+									<div key={category.id} className="flex items-center space-x-2">
 										<Checkbox
-											id={category}
-											checked={specialties.includes(category)}
-											onCheckedChange={() => toggleSpecialty(category)}
+											id={category.id}
+											checked={specialties.includes(category.id)}
+											onCheckedChange={() => toggleSpecialty(category.id)}
 										/>
-										<Label htmlFor={category} className="text-lg">
-											{category}
+										<Label htmlFor={category.id} className="text-lg">
+											{category.name}
 										</Label>
 									</div>
 								))}
@@ -226,10 +231,10 @@ export default function CreateWorkerModal({
 					{/* Working Hours */}
 					<div className="space-y-4">
 						<h3 className="text-lg font-semibold text-muted-foreground">
-							Schedule
+							Schedule {workingHours}
 						</h3>
 
-						<div>
+						{/* <div>
 							<Label className="mb-3">Working Hours</Label>
 							<Input
 								value={workingHours}
@@ -241,7 +246,7 @@ export default function CreateWorkerModal({
 						<div className="bg-muted rounded-lg p-4 text-base">
 							<strong>Note:</strong> A client and employee account will be
 							created automatically.
-						</div>
+						</div> */}
 					</div>
 				</div>
 

@@ -344,12 +344,12 @@ export default function ReportsAnalytics() {
 					>
 						Staff
 					</TabsTrigger>
-					<TabsTrigger
+					{/* <TabsTrigger
 						value="marketing"
 						className="data-[state=active]:bg-pink-100 dark:data-[state=active]:bg-pink-900/30 dark:data-[state=active]:text-pink-400 text-base sm:text-base"
 					>
 						Marketing
-					</TabsTrigger>
+					</TabsTrigger> */}
 				</TabsList>
 
 				{/* Revenue Tab */}
@@ -854,7 +854,7 @@ export default function ReportsAnalytics() {
 				</TabsContent>
 
 				{/* Marketing Tab */}
-				<TabsContent value="marketing">
+				{/* <TabsContent value="marketing">
 					<Card className="p-4 sm:p-8 hover:shadow-lg transition-all border border-pink-100 hover:border-pink-400 dark:border-pink-900 dark:hover:border-pink-400 shadow-xl rounded-2xl bg-white dark:bg-gray-950">
 						<h3 className="text-xl sm:text-2xl  text-gray-900 dark:text-gray-100 mb-6">
 							Performance des Campagnes Marketing
@@ -953,7 +953,7 @@ export default function ReportsAnalytics() {
 							</Card>
 						</div>
 					</Card>
-				</TabsContent>
+				</TabsContent> */}
 			</Tabs>
 
 			{/* Custom Report Generator */}

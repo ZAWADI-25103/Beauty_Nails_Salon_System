@@ -9,7 +9,7 @@ import prisma from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
 	try {
-		await requireRole(["admin", "worker"]);
+		await requireRole(["admin", "worker", "client"]);
 
 		const { searchParams } = new URL(request.url);
 		const search = searchParams.get("search") || "";
@@ -39,13 +39,13 @@ export async function GET(request: NextRequest) {
 					assignedTo: {
 						select: {
 							id: true,
-							user: { select: { id: true, name: true, email: true } },
+							user: { select: { id: true, name: true, email: true, phone: true } },
 						},
 					},
 					client: {
 						select: {
 							id: true,
-							user: { select: { id: true, name: true, email: true } },
+							user: { select: { id: true, name: true, email: true, phone: true } },
 						},
 					},
 					createdBy: { select: { id: true, name: true, email: true } },

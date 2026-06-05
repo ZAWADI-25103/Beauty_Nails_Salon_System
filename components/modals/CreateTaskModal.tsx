@@ -97,138 +97,255 @@ export default function CreateTaskModal({
 				<Button variant="ghost">{triggerLabel}</Button>
 			</DialogTrigger>
 
-			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>Create a Task</DialogTitle>
+			<DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto p-0">
+				<DialogHeader className="px-6 py-5 border-b bg-muted/30">
+					<DialogTitle className="text-xl font-semibold">
+						Create New Task
+					</DialogTitle>
+					<p className="text-sm text-muted-foreground">
+						Create, assign and schedule tasks for your team.
+					</p>
 				</DialogHeader>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
-					<div className="md:col-span-2">
-						<Label htmlFor="task-title">Title</Label>
-						<Input
-							id="task-title"
-							value={title}
-							onChange={(e) => setTitle(e.target.value)}
-						/>
+				<div className="px-6 py-5 space-y-6">
+					{/* Basic Information */}
+					<div className="space-y-4">
+						<div>
+							<h3 className="font-medium">Basic Information</h3>
+							<p className="text-sm text-muted-foreground">
+								Define the task details.
+							</p>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="task-title">Title</Label>
+							<Input
+								id="task-title"
+								value={title}
+								onChange={(e) => setTitle(e.target.value)}
+								placeholder="e.g. Follow up with client regarding invoice"
+							/>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="task-desc">Description</Label>
+							<Textarea
+								id="task-desc"
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+								rows={4}
+								placeholder="Add notes, instructions or context..."
+							/>
+						</div>
 					</div>
 
-					<div className="md:col-span-2">
-						<Label htmlFor="task-desc">Description</Label>
-						<Textarea
-							id="task-desc"
-							value={description}
-							onChange={(e) => setDescription(e.target.value)}
-							rows={4}
-						/>
+					{/* Task Settings */}
+					<div className="space-y-4">
+						<div>
+							<h3 className="font-medium">Task Settings</h3>
+							<p className="text-sm text-muted-foreground">
+								Set task category and urgency.
+							</p>
+						</div>
+
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<div className="space-y-2">
+								<Label>Type</Label>
+								<Select
+									value={type}
+									onValueChange={(v) => setType(v as any)}
+								>
+									<SelectTrigger>
+										<SelectValue />
+									</SelectTrigger>
+
+									<SelectContent>
+										<SelectItem value="general">📋 General</SelectItem>
+										<SelectItem value="client_followup">
+											👤 Client Follow-up
+										</SelectItem>
+										<SelectItem value="inventory">
+											📦 Inventory
+										</SelectItem>
+										<SelectItem value="maintenance">
+											🛠 Maintenance
+										</SelectItem>
+										<SelectItem value="appointment">
+											📅 Appointment
+										</SelectItem>
+										<SelectItem value="admin">⚙️ Admin</SelectItem>
+									</SelectContent>
+								</Select>
+							</div>
+
+							<div className="space-y-2">
+								<Label>Priority</Label>
+								<Select
+									value={priority}
+									onValueChange={(v) => setPriority(v as any)}
+								>
+									<SelectTrigger>
+										<SelectValue />
+									</SelectTrigger>
+
+									<SelectContent>
+										<SelectItem value="low">🟢 Low</SelectItem>
+										<SelectItem value="medium">🟡 Medium</SelectItem>
+										<SelectItem value="high">🟠 High</SelectItem>
+										<SelectItem value="urgent">🔴 Urgent</SelectItem>
+									</SelectContent>
+								</Select>
+							</div>
+						</div>
 					</div>
 
-					<div>
-						<Label>Type</Label>
-						<Select onValueChange={(v) => setType(v as any)}>
-							<SelectTrigger size="sm">
-								<SelectValue placeholder="Type" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="general">General</SelectItem>
-								<SelectItem value="client_followup">
-									Client Follow-up
+					{/* Assignment */}
+					<div className="space-y-4">
+						<div>
+							<h3 className="font-medium">Assignment</h3>
+							<p className="text-sm text-muted-foreground">
+								Assign the task to a team member or client.
+							</p>
+						</div>
+
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<div className="space-y-2">
+								<Label>Assign To</Label>
+
+								<Select
+									onValueChange={(v) =>
+										setAssignedToWorkerId(v === "none" ? null : v)
+									}
+								>
+									<SelectTrigger>
+										<SelectValue placeholder="Select staff member" />
+									</SelectTrigger>
+
+									<SelectContent>
+										<SelectItem value="none">
+											Unassigned
+										</SelectItem>
+
+										{staff.map((s: any) => (
+								<SelectItem
+									key={s.id}
+									value={s.id}
+								>
+									{s.user?.name || s.id}
 								</SelectItem>
-								<SelectItem value="inventory">Inventory</SelectItem>
-								<SelectItem value="maintenance">Maintenance</SelectItem>
-								<SelectItem value="appointment">Appointment</SelectItem>
-								<SelectItem value="admin">Admin</SelectItem>
-							</SelectContent>
-						</Select>
+							))}
+									</SelectContent>
+								</Select>
+							</div>
+
+							<div className="space-y-2">
+								<Label>Client</Label>
+
+								<Select
+									onValueChange={(v) =>
+										setClientId(v === "none" ? null : v)
+									}
+								>
+									<SelectTrigger>
+										<SelectValue placeholder="Optional client" />
+									</SelectTrigger>
+
+									<SelectContent>
+										<SelectItem value="none">None</SelectItem>
+
+										{clients.map((c: any) => (
+								<SelectItem
+									key={c.id}
+									value={c.id}
+								>
+									{c.user?.name || c.id}
+								</SelectItem>
+							))}
+									</SelectContent>
+								</Select>
+							</div>
+						</div>
 					</div>
 
-					<div>
-						<Label>Priority</Label>
-						<Select onValueChange={(v) => setPriority(v as any)}>
-							<SelectTrigger size="sm">
-								<SelectValue placeholder="Priority" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="low">Low</SelectItem>
-								<SelectItem value="medium">Medium</SelectItem>
-								<SelectItem value="high">High</SelectItem>
-								<SelectItem value="urgent">Urgent</SelectItem>
-							</SelectContent>
-						</Select>
+					{/* Scheduling */}
+					<div className="space-y-4">
+						<div>
+							<h3 className="font-medium">Schedule</h3>
+							<p className="text-sm text-muted-foreground">
+								Set deadlines and planned execution dates.
+							</p>
+						</div>
+
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<div className="space-y-2">
+								<Label>Due Date</Label>
+
+								<Input
+									type="date"
+									value={dueAt || ""}
+									onChange={(e) =>
+										setDueAt(e.target.value || null)
+									}
+								/>
+							</div>
+
+							<div className="space-y-2">
+								<Label>Scheduled Time</Label>
+
+								<Input
+									type="datetime-local"
+									value={scheduledAt || ""}
+									onChange={(e) =>
+										setScheduledAt(e.target.value || null)
+									}
+								/>
+							</div>
+						</div>
 					</div>
 
-					<div>
-						<Label>Assign to</Label>
-						<Select onValueChange={(v) => setAssignedToWorkerId(v || null)}>
-							<SelectTrigger size="sm">
-								<SelectValue placeholder="None" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="None">None</SelectItem>
-								{staff.map((s: any) => (
-									<SelectItem key={s.id} value={s.id}>
-										{s.user?.name || s.id}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					</div>
+					{/* Visibility */}
+					<div className="rounded-xl border bg-muted/20 p-4">
+						<div className="flex items-center gap-3">
+							<Checkbox
+								id="task-private"
+								checked={isPrivate}
+								onCheckedChange={(v) => setIsPrivate(!!v)}
+							/>
 
-					<div>
-						<Label>Client (optional)</Label>
-						<Select onValueChange={(v) => setClientId(v || null)}>
-							<SelectTrigger size="sm">
-								<SelectValue placeholder="None" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="None">None</SelectItem>
-								{clients.map((c: any) => (
-									<SelectItem key={c.id} value={c.id}>
-										{c.user?.name || c.id}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					</div>
+							<div>
+								<Label
+									htmlFor="task-private"
+									className="cursor-pointer"
+								>
+									Private Task
+								</Label>
 
-					<div>
-						<Label>Due Date</Label>
-						<Input
-							type="date"
-							value={dueAt || ""}
-							onChange={(e) => setDueAt(e.target.value || null)}
-						/>
-					</div>
-
-					<div>
-						<Label>Scheduled</Label>
-						<Input
-							type="datetime-local"
-							value={scheduledAt || ""}
-							onChange={(e) => setScheduledAt(e.target.value || null)}
-						/>
-					</div>
-
-					<div className="md:col-span-2 flex items-center gap-2">
-						<Checkbox
-							id="task-private"
-							checked={isPrivate}
-							onCheckedChange={(v) => setIsPrivate(!!v)}
-						/>
-						<Label htmlFor="task-private">Private</Label>
+								<p className="text-xs text-muted-foreground">
+									Only authorized users can view this task.
+								</p>
+							</div>
+						</div>
 					</div>
 				</div>
 
-				<DialogFooter>
+				<DialogFooter className="px-6 py-4 border-t bg-background sticky bottom-0">
 					<DialogClose asChild>
-						<Button variant="outline">Cancel</Button>
+						<Button variant="outline">
+							Cancel
+						</Button>
 					</DialogClose>
+
 					<Button
 						onClick={onSubmit}
 						disabled={
-							createTask.isPending || isStaffLoading || isClientsLoading
+							createTask.isPending ||
+							isStaffLoading ||
+							isClientsLoading
 						}
 					>
-						{createTask.isPending ? "Creating..." : "Create Task"}
+						{createTask.isPending
+							? "Creating..."
+							: "Create Task"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

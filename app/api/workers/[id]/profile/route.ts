@@ -33,10 +33,6 @@ export async function GET(
 				schedules: true,
 				commissions: true,
 			},
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
-			},
 		});
 
 		if (!workerProfile) {
@@ -131,10 +127,6 @@ export async function PUT(
 		const workerProfile = await prisma.workerProfile.findUnique({
 			where: { id: id },
 			select: { id: true },
-			cacheStrategy: {
-				ttl: 60, // Fresh for 60 seconds
-				swr: 30, // For another 30s, serve old data while updating in background
-			},
 		});
 
 		if (!workerProfile) {

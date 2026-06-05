@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
 
 		// If user used referral code → create referral record
 		if (referrerProfileId && user.clientProfile) {
-			await prisma.referral.create({
+			const referral = await prisma.referral.create({
 				data: {
 					status: "completed",
 					rewardGranted: false,
@@ -107,6 +107,11 @@ export async function POST(request: NextRequest) {
 				data: {
 					referrals: {
 						increment: 1,
+					},
+					referralsReceived: {
+						connect: {
+							id: referral.id,
+						},
 					},
 					// loyaltyPoints:{
 					//   increment: 5

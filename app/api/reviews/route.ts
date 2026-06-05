@@ -94,9 +94,6 @@ export async function GET(request: NextRequest) {
 		// requireRole(["admin","client","worker"])
 
 		let reviews = await prisma.review.findMany({
-			cacheStrategy: {
-				ttl: 60,
-			},
 		});
 
 		if (clientId) {
@@ -104,17 +101,11 @@ export async function GET(request: NextRequest) {
 				where: {
 					clientId,
 				},
-				cacheStrategy: {
-					ttl: 60,
-				},
 			});
 		} else if (workerId) {
 			reviews = await prisma.review.findMany({
 				where: {
 					workerId,
-				},
-				cacheStrategy: {
-					ttl: 60,
 				},
 			});
 		}

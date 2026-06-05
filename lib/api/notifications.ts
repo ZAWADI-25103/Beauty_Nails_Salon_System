@@ -11,7 +11,10 @@ export interface Notification {
 		| "loyalty_reward"
 		| "marketing"
 		| "system"
-		| "birthday";
+	| "birthday"
+	| "task_issue_reported"
+	| "task_worker_message"
+	| "task_status_updated";
 	title: string;
 	message: string;
 	link?: string;

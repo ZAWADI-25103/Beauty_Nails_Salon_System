@@ -147,7 +147,7 @@ export default function MarketingLoyalty() {
 		}
 
 		const title = `Joyeux Anniversaire ${client.name}!`;
-		const message = `Chère ${client.name}, Joyeux Anniversaire! 🎉 Profitez de 20% de réduction sur tous nos services ce mois-ci.`; // Use default message or customize
+		const message = `Dear ${client.name}, to celebrate your birthday on ${client.birthday}, we are offering you a special discount on your next visit! 🎉`; // Customize message
 		const type: Notification["type"] =
 			channel === "email" ? "marketing" : "marketing"; // Could differentiate types
 
@@ -171,7 +171,7 @@ export default function MarketingLoyalty() {
 		}
 
 		const title = `Thank you for your Referral!`;
-		const message = `Hello ${referrer.name}, thank you for referring ${referrer.referrals} personnes. Keep it up!`; // Customize message
+		const message = `Hello ${referrer.name}, thank you for referring ${referrer.referrals} people. Keep it up!`; // Customize message
 		const type: Notification["type"] =
 			channel === "email" ? "marketing" : "loyalty_reward"; // Could differentiate types
 
