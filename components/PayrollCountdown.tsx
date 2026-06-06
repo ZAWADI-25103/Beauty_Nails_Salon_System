@@ -109,11 +109,11 @@ export function PayrollCountdown({
 				<div className="absolute inset-0 rounded-xl animate-pulse opacity-20 bg-pink-400" />
 			)}
 
-			<p className="text-xs uppercase tracking-wide opacity-70">
+			<p className="text-xs uppercase text-white tracking-wide opacity-50">
 				{isReady ? "Payment Available" : "Next Payment in"}
 			</p>
 
-			<p className="text-2xl font-semibold tracking-tight">{timeLeft}</p>
+			<p className="text-2xl font-semibold text-white tracking-tight">{timeLeft}</p>
 		</div>
 	);
 }

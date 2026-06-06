@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { enUS, fr } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import {
 	Award,
 	Calendar,
@@ -752,38 +752,47 @@ export function PayrollModal({
 	const [localPeriod, setLocalPeriod] = useState("");
 	const [sendEmailToWorker, setSendEmailToWorker] = useState(true);
 
-	const commissionRecord =
+	// console.log("Worker Profile:", { period: workerProfile?.commissionFrequency, day: workerProfile?.commissionDay });
+
+	const payoutCommissionRecord =
 		commission ??
 		commissions.find(
-			(c: any) => c.workerId === staff?.id && c.period === period,
+			(c: any) =>
+				c.workerId === staff?.id &&
+				c.period === period &&
+				c.commissionInitializedAtAppointmentCompletion === false,
 		);
 
 	useEffect(() => {
-		if (commissionRecord?.period) {
-			setLocalPeriod(commissionRecord.period);
+		if (payoutCommissionRecord?.period) {
+			setLocalPeriod(payoutCommissionRecord.period);
 		}
-	}, [commissionRecord?.period]);
+	}, [payoutCommissionRecord?.period]);
 
 	const isLockedByTime = !isPaymentAvailable;
 
 	// Get commission data for the selected period
-	const getCommissionForPeriod = (periodStr: string) =>
-		commissionRecord ??
+	const getPayoutCommissionForPeriod = (periodStr: string) =>
+		payoutCommissionRecord ??
 		commissions.find(
-			(c: any) => c.workerId === staff?.id && c.period === periodStr,
+			(c: any) =>
+				c.workerId === staff?.id &&
+				c.period === periodStr &&
+				c.commissionInitializedAtAppointmentCompletion === false,
 		);
 
 	const isPeriodPaid = (periodStr: string) =>
-		getCommissionForPeriod(periodStr)?.status === "paid";
+		getPayoutCommissionForPeriod(periodStr)?.status === "paid";
 
-	const activePeriod = localPeriod || commissionRecord?.period || period || "";
+	const activePeriod =
+		localPeriod || payoutCommissionRecord?.period || period || "";
 
-	// Determine if a commission record already exists for the selected period
-	const commissionRecordExists = !!getCommissionForPeriod(activePeriod);
+	const payoutCommissionExists =
+		!!getPayoutCommissionForPeriod(activePeriod);
 
-	const commissionData = getCommissionForPeriod(activePeriod);
+	const payoutCommissionData = getPayoutCommissionForPeriod(activePeriod);
 
-	// if (!commissionData && !commissionRecord) {
+	// if (!payoutCommissionData && !payoutCommissionRecord) {
 	// 	return (
 	// 		<div className="flex justify-center items-center h-64">
 	// 			<Loader2 className="h-8 w-8 animate-spin" />
@@ -798,17 +807,19 @@ export function PayrollModal({
 	let employerShare = 0;
 
 	if (isAdmin) {
-		totalRevenue = commissionData?.totalRevenue || 0;
-		commissionRate = commissionData?.commissionRate || workerProfile?.commissionRate || 0;
-		appointmentsCount = commissionData?.appointmentsCount || 0;
-		commissionAmount = commissionData?.commissionAmount || 0;
-		employerShare = commissionData?.businessEarnings || 0;
+		totalRevenue = payoutCommissionData?.totalRevenue || 0;
+		commissionRate =
+			payoutCommissionData?.commissionRate || workerProfile?.commissionRate || 0;
+		appointmentsCount = payoutCommissionData?.appointmentsCount || 0;
+		commissionAmount = payoutCommissionData?.commissionAmount || 0;
+		employerShare = payoutCommissionData?.businessEarnings || 0;
 	} else {
-		totalRevenue = commissionData?.totalRevenue || 0;
-		commissionRate = commissionData?.commissionRate || workerProfile?.commissionRate || 0;
-		appointmentsCount = commissionData?.appointmentsCount || 0;
-		commissionAmount = commissionData?.commissionAmount || 0;
-		employerShare = commissionData?.businessEarnings || 0;
+		totalRevenue = payoutCommissionData?.totalRevenue || 0;
+		commissionRate =
+			payoutCommissionData?.commissionRate || workerProfile?.commissionRate || 0;
+		appointmentsCount = payoutCommissionData?.appointmentsCount || 0;
+		commissionAmount = payoutCommissionData?.commissionAmount || 0;
+		employerShare = payoutCommissionData?.businessEarnings || 0;
 	}
 
 	const handleGenerateOrRequest = () => {
@@ -822,7 +833,7 @@ export function PayrollModal({
 			return;
 		}
 
-		if (commissionRecordExists) {
+		if (payoutCommissionExists) {
 			// If record exists but is not paid, worker is requesting approval
 			if (!isAdmin) {
 				toast.info(
@@ -865,7 +876,7 @@ export function PayrollModal({
 	};
 
 	const handleApprove = () => {
-		const commissionToPay = getCommissionForPeriod(activePeriod);
+		const commissionToPay = getPayoutCommissionForPeriod(activePeriod);
 		if (!commissionToPay?.id) {
 			toast.error(
 				"No commission record found for this period.",
@@ -883,7 +894,8 @@ export function PayrollModal({
 
 	// Determine button states based on user role, period status, and record existence
 	const isPaid = isPeriodPaid(activePeriod);
-	const isPending = getCommissionForPeriod(activePeriod)?.status === "pending";
+	const isPending =
+		getPayoutCommissionForPeriod(activePeriod)?.status === "pending";
 	const isRequested = isPending && !isAdmin; // Worker sees 'requested' as 'pending'
 	const canAdminApprove = isAdmin && isPending && activePeriod;
 
@@ -908,7 +920,7 @@ export function PayrollModal({
 			buttonText = "Paid";
 			buttonVariant = "outline";
 			buttonDisabled = true;
-		} else if (commissionRecordExists) {
+		} else if (payoutCommissionExists) {
 			buttonText = "Paid (pending approval)";
 			buttonVariant = "outline";
 			buttonDisabled = true; // Admin cannot re-request, only approve
@@ -926,7 +938,7 @@ export function PayrollModal({
 			buttonText = "Request Submitted";
 			buttonVariant = "outline";
 			buttonDisabled = true;
-		} else if (commissionRecordExists) {
+		} else if (payoutCommissionExists) {
 			// Record exists but is not paid or requested yet (maybe created by admin but not approved)
 			buttonText = "Request Submitted";
 			buttonVariant = "outline";
@@ -989,7 +1001,7 @@ export function PayrollModal({
 										Period
 									</Label>
 									<Input
-										value={commissionRecord?.period || period || ""}
+										value={payoutCommissionRecord?.period || period || ""}
 										disabled
 										className="bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 h-11 text-base"
 									/>

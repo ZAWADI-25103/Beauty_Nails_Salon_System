@@ -136,6 +136,10 @@ export default function WorkerDashboardV2() {
 	const workerCommissions =
 		allCommissions?.filter((c) => c.workerId === user?.workerProfile?.id) || [];
 
+	const unPaidCommissionPeriod = workerCommissions.find(
+		(c) => c.status !== "paid"
+	)?.period;
+
 	// Determine if commission settings are incomplete
 	const isCommissionConfigIncomplete =
 		workerProfile &&
@@ -406,15 +410,15 @@ export default function WorkerDashboardV2() {
 		router.push("/");
 	}
 
-	const printCommission = (commission: any) => {
-		const params = new URLSearchParams({
-			commissionId: commission.id,
-			from,
-			to,
-		});
+	// const printCommission = (commission: any) => {
+	// 	const params = new URLSearchParams({
+	// 		commissionId: commission.id,
+	// 		from,
+	// 		to,
+	// 	});
 
-		window.open(`/api/commissions/receipt?${params.toString()}`, "_blank");
-	};
+	// 	window.open(`/api/commissions/receipt?${params.toString()}`, "_blank");
+	// };
 	const printCommissionReport = (commission: any) => {
 		const params = new URLSearchParams({
 			commissionId: commission.id,
@@ -1286,10 +1290,11 @@ export default function WorkerDashboardV2() {
 												/>
 
 										{/* BUTTON */}
-										<PayrollModal
+												{unPaidCommissionPeriod ? (
+													<PayrollModal
 											staffName={user?.name}
 											staff={worker}
-											period={freqComm}
+														period={unPaidCommissionPeriod}
 											trigger={
 												<Button
 													size="default"
@@ -1299,6 +1304,9 @@ export default function WorkerDashboardV2() {
 												</Button>
 											}
 										/>
+												) : (
+													<span className="text-gray-500">No unpaid commissions</span>
+												)}
 									</Card>
 								</Card>
 
@@ -1455,7 +1463,7 @@ export default function WorkerDashboardV2() {
 																				? "Pending"
 																				: "Unknown"}
 																	</Badge>
-																	<Button
+																	{commission.status !== "paid" ? <Button
 																		variant="ghost"
 																		className="ml-2 cursor-pointer"
 																		size="sm"
@@ -1464,7 +1472,7 @@ export default function WorkerDashboardV2() {
 																		}
 																	>
 																		<Download className="h-4 w-4" />
-																	</Button>
+																	</Button> : null}
 																</div>
 															</div>
 														</div>

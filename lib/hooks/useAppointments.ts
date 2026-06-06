@@ -34,7 +34,7 @@ export function useAppointments(params?: {
 	} = useQuery({
 		queryKey: ["appointments", JSON.stringify(params)],
 		queryFn: () => appointmentsApi.getAppointments(params),
-		refetchInterval: 10000, // 10 sec
+		// refetchInterval: 10000, // 10 sec
 		refetchOnWindowFocus: true,
 		refetchOnReconnect: true,
 	});

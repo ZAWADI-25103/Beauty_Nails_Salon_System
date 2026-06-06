@@ -6,8 +6,8 @@ export function usePendingTransfers() {
 	return useQuery({
 		queryKey: ["transfers", "pending"],
 		queryFn: () => transfersApi.getPendingTransfers(),
-		staleTime: 2 * 60 * 1000, // 2 minutes
-		refetchInterval: 60 * 1000, // Auto-refetch every 30 seconds
+		refetchOnWindowFocus: true,
+		refetchOnReconnect: true, // Auto-refetch every 30 seconds
 	});
 }
 
