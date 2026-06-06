@@ -7,7 +7,7 @@ import {
 	setDate,
 	startOfDay,
 } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import { type NextRequest, NextResponse } from "next/server";
 import {
 	errorResponse,
@@ -121,8 +121,8 @@ export async function GET(request: NextRequest) {
 		}));
 
 		// 🎨 Generate HTML
-		const generatedAt = format(new Date(), "EEEE d MMMM yyyy 'à' HH:mm", {
-			locale: fr,
+		const generatedAt = format(new Date(), "dd/MM/yyyy HH:mm 'at' HH:mm", {
+			locale: enUS,
 		});
 
 		const html = CommissionReportHtmlV2({
@@ -135,15 +135,15 @@ export async function GET(request: NextRequest) {
 			},
 			periodLabel,
 			periodRange: {
-				from: format(from, "dd/MM/yyyy", { locale: fr }),
-				to: format(to, "dd/MM/yyyy HH:mm", { locale: fr }),
+				from: format(from, "dd/MM/yyyy", { locale: enUS }),
+				to: format(to, "dd/MM/yyyy HH:mm", { locale: enUS }),
 			},
 			aggregated,
 			appointments: appointmentData,
 			generatedAt,
 			isWithinPaymentWindow: new Date() <= to,
 			nextPaymentDate: nextPaymentDate
-				? format(nextPaymentDate, "EEEE d MMMM yyyy", { locale: fr })
+				? format(nextPaymentDate, "dd/MM/yyyy HH:mm", { locale: enUS })
 				: undefined,
 		});
 
@@ -224,7 +224,9 @@ function calculatePaymentPeriod(
 			periodEnd = endOfDay(candidate);
 			nextPaymentDate = periodEnd;
 
-			periodLabel = `Weekly • Week ${format(periodStart, "w", { locale: fr })}`;
+			periodLabel = `Weekly • Week ${format(periodStart,
+				"yyyy-MM-dd HH:mm",
+				{ locale: enUS })}`;
 			break;
 		}
 
@@ -243,7 +245,7 @@ function calculatePaymentPeriod(
 			periodEnd = endOfDay(candidate);
 			nextPaymentDate = periodEnd;
 
-			periodLabel = `Monthly • ${format(periodStart, "MMMM yyyy", { locale: fr })}`;
+			periodLabel = `Monthly • ${format(periodStart, "MMMM yyyy", { locale: enUS })}`;
 			break;
 		}
 

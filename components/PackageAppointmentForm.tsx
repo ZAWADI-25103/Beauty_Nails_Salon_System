@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import {
 	Calendar as CalendarIcon,
 	CheckCircle,
@@ -554,7 +554,7 @@ export default function PackageBookingForm({
 									>
 										<CalendarIcon className="mr-2 h-4 w-4" />
 										{selectedDate ? (
-											format(selectedDate, "PPP", { locale: fr })
+											format(selectedDate, "PPP", { locale: enUS })
 										) : (
 											<span>Choisir date</span>
 										)}
@@ -583,7 +583,7 @@ export default function PackageBookingForm({
 									on{" "}
 									<span className="text-md font-bold text-pink-600">
 										{selectedDate
-											? format(selectedDate, "PPP", { locale: fr })
+											? format(selectedDate, "PPP", { locale: enUS })
 											: ""}
 									</span>
 								</h3>

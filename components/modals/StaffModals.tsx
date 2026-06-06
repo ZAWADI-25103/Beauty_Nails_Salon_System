@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import {
 	Award,
 	Calendar,
@@ -783,13 +783,13 @@ export function PayrollModal({
 
 	const commissionData = getCommissionForPeriod(activePeriod);
 
-	if (!commissionData && !commissionRecord) {
-		return (
-			<div className="flex justify-center items-center h-64">
-				<Loader2 className="h-8 w-8 animate-spin" />
-			</div>
-		);
-	}
+	// if (!commissionData && !commissionRecord) {
+	// 	return (
+	// 		<div className="flex justify-center items-center h-64">
+	// 			<Loader2 className="h-8 w-8 animate-spin" />
+	// 		</div>
+	// 	);
+	// }
 
 	let totalRevenue = 0;
 	let commissionRate = 0;
@@ -973,7 +973,9 @@ export function PayrollModal({
 									{
 										<Input
 											type="text"
-											value={`${format(getNextResetDate(period || ""), "EEEE d MMMM 'at' HH'h'mm", { locale: fr })}`}
+											value={`${format(getNextResetDate(period || ""),
+												"yyyy-MM-dd  HH:mm",
+												{ locale: enUS })}`}
 											// onChange={(e) => setLocalTotalRevenue(parseFloat(e.target.value) || 0)} // Disable editing in this view
 											className="w-56 text-right h-10 text-base bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300"
 											disabled // Values are calculated/fetched, not edited here

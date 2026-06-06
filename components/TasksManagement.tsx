@@ -20,7 +20,7 @@ export default function TasksManagement() {
 			return tasks.filter((task: any) => task.assignedTo?.user?.id === user.id);
 		}
 		if (user.role === "client") {
-			return tasks.filter((task: any) => task.client?.user?.id === user.id);
+			return tasks.filter((task: any) => (task.client?.user?.id === user.id && task.status !== "completed"));
 		}
 		return tasks;
 	}, [tasks, user]);

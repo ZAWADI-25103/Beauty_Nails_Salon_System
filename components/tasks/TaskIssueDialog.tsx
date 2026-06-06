@@ -24,7 +24,7 @@ import { TASK_ISSUE_SUBJECTS } from "./constants";
 
 export function TaskIssueDialog({ task, role, onSent }: { task: any; role: string; onSent?: () => void }) {
   const [open, setOpen] = useState(false);
-  const [subject, setSubject] = useState(TASK_ISSUE_SUBJECTS[0]);
+  const [subject, setSubject] = useState<string>(TASK_ISSUE_SUBJECTS[0]);
   const [message, setMessage] = useState("");
   const { createNotification, isCreatingNotification } = useNotifications();
 
