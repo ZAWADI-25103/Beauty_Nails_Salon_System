@@ -97,12 +97,24 @@ export async function POST(request: NextRequest) {
 					materialsCost,
 					operationalCost,
 					commissionInitializedAtAppointmentCompletion: false,
+					status: "pending",
 				},
 			});
 
 			await tx.workerProfile.update({
 				where: { id: workerId },
 				data: { lastCommissionPaidAt: new Date() },
+			});
+
+			await tx.commission.updateMany({
+				where: {
+					workerId,
+					commissionInitializedAtAppointmentCompletion: true,
+					createdAt: {
+						gt: lastPaidAt,
+					},
+				},
+				data: { status: "approved" },
 			});
 
 			return created;
@@ -154,7 +166,7 @@ export async function GET(request: NextRequest) {
 
 		const commissions = await prisma.commission.findMany({
 			where: {
-				commissionInitializedAtAppointmentCompletion: false,
+				// commissionInitializedAtAppointmentCompletion: false,
 				...(workerId ? { workerId } : {}),
 			},
 			include: {

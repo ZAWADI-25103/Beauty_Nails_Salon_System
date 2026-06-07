@@ -70,21 +70,21 @@ export async function GET(
 			0,
 		);
 
-		// console.log({
-		//   commission: totalEarnings,
-		//   totalBusiness,
-		//   matCost,
-		//   operaCost,
-		//   totalRevenue,
-		//   appointmentsCount,
-		//   period,
-		//   startDate: startDate.toISOString(),
-		//   endDate: now.toISOString(),
-		// })
+		console.log({
+			commission: totalEarnings,
+			totalBusiness,
+			matCost,
+			operaCost,
+			totalRevenue,
+			appointmentsCount,
+			period,
+			startDate: startDate.toISOString(),
+			endDate: now.toISOString(),
+		})
 
 		return successResponse({
 			commission: totalEarnings,
-			totalBusiness,
+			totalBusiness: totalBusiness - matCost - operaCost,
 			matCost,
 			operaCost,
 			totalRevenue,

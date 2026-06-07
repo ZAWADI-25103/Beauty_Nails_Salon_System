@@ -50,10 +50,9 @@ import AppointmentCountdown from "../AppointmentCountdown";
 import BookingCalendar from "../BookingCalendar";
 import LoaderBN from "../Loader-BN";
 import InventorySelectionModal from "../modals/InventorySelectionModal";
-import { PayrollModal } from "../modals/StaffModals";
 import { StaffModal } from "../modals/StaffModals-v2";
 import TransferAppointmentModal from "../modals/TransferAppointmentModal";
-import { PayrollCountdown } from "../PayrollCountdown";
+import { Frequency, getNextResetDate, PayrollCountdown } from "../PayrollCountdown";
 import TransferRequestCard from "../TransferRequestCard";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
@@ -71,6 +70,8 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import TasksManagement from "../TasksManagement";
+import { PayrollModal } from "../modals/PayrollModal";
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 export default function WorkerDashboardV2() {
 	const [notificationOpen, setNotificationOpen] = useState(false);
@@ -79,6 +80,7 @@ export default function WorkerDashboardV2() {
 	const [freqComm, setFreqComm] = useState("");
 	const [showTransfers, setShowTransfers] = useState(true);
 	const [showInventorySelection, setShowInventorySelection] = useState(false);
+	const [isUpdating, setIsUpdating] = useState(false);
 	const router = useRouter();
 	// Get authenticated user
 	const { user, isLoading: isAuthLoading } = useAuth();
@@ -100,12 +102,6 @@ export default function WorkerDashboardV2() {
 	);
 	const { commissions: allCommissions, isLoading: isAllCommissionsLoading } =
 		useCommission(); // Fetch all commissions for history
-	// Assuming the backend can accept a 'period' like 'week' to aggregate weekly data
-	const { data: weeklyCommissionData, isLoading: isWeeklyCommissionLoading } =
-		useWorkerCommission(
-			user?.workerProfile?.id || "",
-			user?.workerProfile?.commissionFrequency,
-		);
 
 	const {
 		data: pendingTransfers = [],
@@ -134,11 +130,7 @@ export default function WorkerDashboardV2() {
 
 	// Filter commissions for the current worker if using the global hook
 	const workerCommissions =
-		allCommissions?.filter((c) => c.workerId === user?.workerProfile?.id) || [];
-
-	const unPaidCommissionPeriod = workerCommissions.find(
-		(c) => c.status !== "paid"
-	)?.period;
+		allCommissions?.filter((c) => (c.workerId === user?.workerProfile?.id && !c.commissionInitializedAtAppointmentCompletion)) || [];
 
 	// Determine if commission settings are incomplete
 	const isCommissionConfigIncomplete =
@@ -149,23 +141,23 @@ export default function WorkerDashboardV2() {
 
 	// Prepare data for the weekly performance chart
 	const weeklyData = useMemo(() => {
-		// This assumes weeklyCommissionData contains aggregated data per day or a similar structure
+		// This assumes currentPeriodCommissionData contains aggregated data per day or a similar structure
 		// If the API doesn't provide this format, you might need to process workerCommissions or allCommissions
-		if (weeklyCommissionData && Array.isArray(weeklyCommissionData)) {
-			// If weeklyCommissionData is an array of daily stats
-			return weeklyCommissionData.map((item) => ({
+		if (currentPeriodCommissionData && Array.isArray(currentPeriodCommissionData)) {
+			// If currentPeriodCommissionData is an array of daily stats
+			return currentPeriodCommissionData.map((item) => ({
 				day: item.day || item.period || "Unknown", // Adjust key based on actual API response
 				rendezVous: item.appointmentsCount || 0,
 				commission: item.commission || 0,
 				totalRevenue: item.totalRevenue || 0,
 			}));
 		} else if (
-			weeklyCommissionData &&
-			typeof weeklyCommissionData === "object"
+			currentPeriodCommissionData &&
+			typeof currentPeriodCommissionData === "object"
 		) {
-			// If weeklyCommissionData is a single object with daily breakdowns
+			// If currentPeriodCommissionData is a single object with daily breakdowns
 			// Example: { mon: { appointmentsCount: 2, ... }, tue: { ... }, ... }
-			return Object.entries(weeklyCommissionData).map(
+			return Object.entries(currentPeriodCommissionData).map(
 				([day, data]: [string, any]) => ({
 					day,
 					rendezVous: data.appointmentsCount || 0,
@@ -184,7 +176,7 @@ export default function WorkerDashboardV2() {
 			{ day: "Sat", rendezVous: 0, commission: 0, totalRevenue: 0 },
 			{ day: "Sun", rendezVous: 0, commission: 0, totalRevenue: 0 },
 		];
-	}, [weeklyCommissionData]);
+	}, [currentPeriodCommissionData]);
 
 	useEffect(() => {
 		if (workerProfile && workerProfile.commissionFrequency)
@@ -197,10 +189,10 @@ export default function WorkerDashboardV2() {
 			return "To configure";
 		// This is simplified - actual calculation would depend on frequency and day
 		if (freqComm === "monthly")
-			return `On the ${workerProfile.commissionDay}th of each month`;
+			return `On the ${getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDate()}th of each month`;
 		else if (freqComm === "weekly")
-			return `Every Saturday - submit your payment request`;
-		else return `Tonight - submit your payment request`;
+			return `[${getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).toLocaleDateString()}] ${getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 0 ? "Sunday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 1 ? "Monday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 2 ? "Tuesday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 3 ? "Wednesday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 4 ? "Thursday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 5 ? "Friday" : "Saturday"} -  your payment will be processed`;
+		else return `[Tonight] - your payment will be proceesed.`;
 	};
 
 	// Handle saving commission settings (example action)
@@ -272,6 +264,7 @@ export default function WorkerDashboardV2() {
 
 	// Handle update status
 	const handleUpdateStatus = (appointmentId: string, newStatus: string) => {
+		setIsUpdating(true);
 		updateStatus(
 			{
 				id: appointmentId,
@@ -284,6 +277,7 @@ export default function WorkerDashboardV2() {
 
 					refetch();
 					router.refresh();
+					setIsUpdating(false);
 				},
 			},
 		);
@@ -380,26 +374,6 @@ export default function WorkerDashboardV2() {
 		return getPeriodRange(selectedPeriod);
 	}, [selectedPeriod]); // Only recalculate when period changes
 
-	// Calculate service statistics from appointments
-	// const serviceStats = (() => {
-	//   const serviceCounts: Record<string, number> = {};
-
-	//   weeklyAppointments.forEach(apt => {
-	//     const serviceName = apt.service?.name || 'Other';
-	//     serviceCounts[serviceName] = (serviceCounts[serviceName] || 0) + 1;
-	//   });
-
-	//   const total = Object.values(serviceCounts).reduce((a, b) => a + b, 0);
-	//   return Object.entries(serviceCounts)
-	//     .map(([name, count]) => ({
-	//       name,
-	//       percentage: total > 0 ? Math.round((count / total) * 100) : 0,
-	//       count,
-	//     }))
-	//     .sort((a, b) => b.percentage - a.percentage)
-	//     .slice(0, 3);
-	// })();
-
 	// Loading state
 	if (isAuthLoading || isAppointmentsLoading || isWorkerLoading) {
 		return <LoaderBN />;
@@ -410,15 +384,6 @@ export default function WorkerDashboardV2() {
 		router.push("/");
 	}
 
-	// const printCommission = (commission: any) => {
-	// 	const params = new URLSearchParams({
-	// 		commissionId: commission.id,
-	// 		from,
-	// 		to,
-	// 	});
-
-	// 	window.open(`/api/commissions/receipt?${params.toString()}`, "_blank");
-	// };
 	const printCommissionReport = (commission: any) => {
 		const params = new URLSearchParams({
 			commissionId: commission.id,
@@ -1116,8 +1081,7 @@ export default function WorkerDashboardV2() {
 						{" "}
 						{/* Changed value to 'performance' */}
 						{isWorkerProfileLoading ||
-						isCurrentPeriodCommissionLoading ||
-						isWeeklyCommissionLoading ? (
+							isCurrentPeriodCommissionLoading ? (
 							<div className="flex justify-center items-center h-64">
 								<Loader2 className="h-8 w-8 animate-spin" />
 							</div>
@@ -1194,8 +1158,7 @@ export default function WorkerDashboardV2() {
 												CDF
 											</p>
 											<p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
-												Your commission varies based on the rate per service.
-												Rate is {workerProfile?.commissionRate || 0}%
+														Commission Rate is {workerProfile?.commissionRate || 0}%
 											</p>
 										</Card>
 
@@ -1234,7 +1197,7 @@ export default function WorkerDashboardV2() {
 								</Card>
 
 								{/* Performance Chart */}
-								{/* <Card className="p-6">
+										{/* <Card className="p-6">
                   <h3 className="text-lg font-semibold mb-4">Weekly Performance</h3>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
@@ -1250,7 +1213,7 @@ export default function WorkerDashboardV2() {
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
-                </Card> */}
+										</Card> */}
 
 								{/* Current Period Summary */}
 								<Card className="p-6">
@@ -1284,29 +1247,16 @@ export default function WorkerDashboardV2() {
 										</div>
 
 										{/* 🔥 TIMER */}
-												<PayrollCountdown
-													frequency={freqComm as any}
-													commissionDay={workerProfile?.commissionDay || 1}
-												/>
-
-										{/* BUTTON */}
-												{unPaidCommissionPeriod ? (
-													<PayrollModal
-											staffName={user?.name}
-											staff={worker}
-														period={unPaidCommissionPeriod}
-											trigger={
-												<Button
-													size="default"
-													className="w-full bg-green-500 hover:bg-green-600 text-white"
-												>
-													Submit Payment Request
-												</Button>
-											}
-										/>
-												) : (
-													<span className="text-gray-500">No unpaid commissions</span>
-												)}
+												<div className="">
+													<h2 className="text-lg font-semibold mb-2">🔥 Time Remaining Until Next Payment</h2>
+													<PayrollCountdown
+														frequency={freqComm as any}
+														commissionDay={workerProfile?.commissionDay || 1}
+														lastCommissionPaidAt={workerProfile?.lastCommissionPaidAt}
+														workerName={workerProfile?.user?.name || "Employee"}
+														userId={workerProfile?.user?.id}
+													/>
+												</div>
 									</Card>
 								</Card>
 
@@ -1355,6 +1305,7 @@ export default function WorkerDashboardV2() {
 											<Select
 												value={selectedPeriod}
 												onValueChange={setSelectedPeriod}
+														disabled={!workerCommissions || workerCommissions.length === 0}
 											>
 												<SelectTrigger className="w-45">
 													<SelectValue placeholder="Select period" />
@@ -1573,9 +1524,10 @@ export default function WorkerDashboardV2() {
 													"in_progress",
 												);
 											}}
+											disabled={isUpdating}
 										>
 											<PlayCircle className="w-4 h-4 mr-2" />
-											Start
+											{isUpdating ? "Updating..." : "Start"}
 										</Button>
 									</>
 								)}
@@ -1587,9 +1539,10 @@ export default function WorkerDashboardV2() {
 											onClick={() =>
 												handleUpdateStatus(selectedAppointment.id, "completed")
 											}
+											disabled={isUpdating}
 										>
 											<CheckCheck className="w-4 h-4 mr-2" />
-											Complete
+											{isUpdating ? "Updating..." : "Complete"}
 										</Button>
 										<Button
 											variant="outline"
@@ -1606,12 +1559,13 @@ export default function WorkerDashboardV2() {
 									<Button
 										variant="outline"
 										className="text-red-600"
+										disabled={isUpdating}
 										onClick={() =>
 											handleUpdateStatus(selectedAppointment.id, "cancelled")
 										}
 									>
 										<XCircle className="w-4 h-4 mr-2" />
-										Cancel
+										{isUpdating ? "Updating..." : "Cancel"}
 									</Button>
 								)}
 							</div>

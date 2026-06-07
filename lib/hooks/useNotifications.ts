@@ -38,10 +38,6 @@ export function useNotifications(params?: {
 	// Create notification
 	const createNotificationMutation = useMutation({
 		mutationFn: notificationsApi.createNotification,
-		onSuccess: () => {
-			// Optionally invalidate queries if needed, or just show a toast
-			toast.success("Notification sent");
-		},
 		onError: (error: any) => {
 			toast.error(
 				error.response?.data?.error?.message ||

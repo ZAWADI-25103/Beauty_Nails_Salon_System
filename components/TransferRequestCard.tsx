@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import {
 	AlertCircle,
 	CheckCircle,
@@ -91,9 +91,9 @@ export default function TransferRequestCard({
 						</h4>
 
 						<p className="text-sm sm:text-base text-pink-700 dark:text-pink-300 mt-1 break-words">
-							De {originalWorker.name} •{" "}
+							From {originalWorker.name} •{" "}
 							{format(new Date(transfer.requestedAt), "HH:mm", {
-								locale: fr,
+								locale: enUS,
 							})}
 						</p>
 					</div>
@@ -134,7 +134,7 @@ export default function TransferRequestCard({
 							<p className="font-medium">Date & Time</p>
 							<p className="text-sm text-muted-foreground">
 								{format(new Date(appointment.date), "PPP", {
-									locale: fr,
+									locale: enUS,
 								})}
 							</p>
 							<p className="text-sm text-muted-foreground">
@@ -190,7 +190,7 @@ export default function TransferRequestCard({
 			{transfer.transferFeeAmount > 0 && (
 				<div className="mb-5 rounded-2xl border border-green-200 dark:border-green-900/30 bg-green-50 dark:bg-green-950/10 p-4">
 					<p className="text-sm sm:text-base text-green-800 dark:text-green-200 leading-relaxed">
-						<strong>Commission for {transfer.originalWorker?.user?.name}:</strong>{" "}
+						<strong>Your Commission:</strong>{" "}
 						{transfer.transferFeeAmount.toLocaleString()} CDF (
 						{transfer.transferFeePercentage}%)
 					</p>

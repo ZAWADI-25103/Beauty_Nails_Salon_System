@@ -14,7 +14,8 @@ export interface Notification {
 	| "birthday"
 	| "task_issue_reported"
 	| "task_worker_message"
-	| "task_status_updated";
+	| "task_status_updated"
+	| "commission_issue_reported";
 	title: string;
 	message: string;
 	link?: string;

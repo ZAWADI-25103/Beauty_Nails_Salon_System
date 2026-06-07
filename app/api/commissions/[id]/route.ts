@@ -76,17 +76,6 @@ export async function PATCH(
 
 			if (body.status === "paid" && sendEmailToWorker && commission.worker.user.email) {
 				try {
-					const appointments = await prisma.appointment.findMany({
-						where: {
-							workerId: commission.workerId,
-							status: "completed",
-						},
-						include: {
-							service: { select: { name: true } },
-							client: { include: { user: { select: { name: true } } } },
-						},
-						orderBy: { date: "desc" },
-					});
 
 					const html = await render(
 						CommissionPaymentEmail({
@@ -95,7 +84,7 @@ export async function PATCH(
 							commissionAmount: commission.commissionAmount,
 							totalRevenue: commission.totalRevenue,
 							businessEarnings: commission.totalRevenue - commission.commissionAmount,
-							appointmentsCount: appointments.length,
+							appointmentsCount: commission.appointmentsCount,
 							paymentDate: new Date().toLocaleDateString("en-GB"),
 						}),
 					);
@@ -105,6 +94,12 @@ export async function PATCH(
 						`Commission paid for ${commission.period}`,
 						html,
 					);
+
+					await tx.workerProfile.update({
+						where: { id: commission.workerId },
+						data: { lastCommissionPaidAt: new Date() },
+					});
+
 				} catch (emailError) {
 					console.error("Failed to send commission email", emailError);
 				}

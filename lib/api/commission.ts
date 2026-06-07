@@ -20,9 +20,6 @@ export const commissionApi = {
 	create: async (data: {
 		workerId: string;
 		period?: string;
-		totalRevenue: number;
-		appointmentsCount: number;
-		commissionRate: number;
 	}): Promise<Commission> => {
 		const { data: res } = await axiosdb.post("/commissions", data);
 		return res;

@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
 		}));
 
 		// 🎨 Generate HTML
-		const generatedAt = format(new Date(), "dd/MM/yyyy HH:mm 'at' HH:mm", {
+		const generatedAt = format(new Date(), "PPP 'at' HH:mm", {
 			locale: enUS,
 		});
 
@@ -135,15 +135,15 @@ export async function GET(request: NextRequest) {
 			},
 			periodLabel,
 			periodRange: {
-				from: format(from, "dd/MM/yyyy", { locale: enUS }),
-				to: format(to, "dd/MM/yyyy HH:mm", { locale: enUS }),
+				from: format(from, "PPP", { locale: enUS }),
+				to: format(to, "PPP", { locale: enUS }),
 			},
 			aggregated,
 			appointments: appointmentData,
 			generatedAt,
 			isWithinPaymentWindow: new Date() <= to,
 			nextPaymentDate: nextPaymentDate
-				? format(nextPaymentDate, "dd/MM/yyyy HH:mm", { locale: enUS })
+				? format(nextPaymentDate, "PPP ' at ' HH:mm", { locale: enUS })
 				: undefined,
 		});
 
@@ -225,7 +225,7 @@ function calculatePaymentPeriod(
 			nextPaymentDate = periodEnd;
 
 			periodLabel = `Weekly • Week ${format(periodStart,
-				"yyyy-MM-dd HH:mm",
+				"PPP 'at' HH:mm",
 				{ locale: enUS })}`;
 			break;
 		}

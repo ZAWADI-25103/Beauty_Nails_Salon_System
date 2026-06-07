@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS, fr } from "date-fns/locale";
 import {
 	Banknote,
 	Calendar as CalendarIcon,

@@ -404,7 +404,7 @@ model AppointmentTransfer {
   originalWorkerId      String
   newWorkerId           String
   transferReason        String?        @db.Text
-  transferFeePercentage Float          @default(5.0) // 5% default transfer fee
+  transferFeePercentage Float          @default(70.0) // 70% default transfer fee
   transferFeeAmount     Float          @default(0)
   status                TransferStatus @default(pending)
   requestedAt           DateTime       @default(now())
@@ -882,6 +882,7 @@ enum NotificationType {
   task_issue_reported
   task_worker_message
   task_status_updated
+  commission_issue_reported
 }
 
 // ============================================

@@ -1,8 +1,8 @@
 "use client";
 
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
-import { Clock, MapPin, Percent, Phone, Sparkles, Wand2 } from "lucide-react";
+import { enUS, fr } from "date-fns/locale";
+import { Clock, MapPin, Percent, Phone, Sparkles, Wand2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -65,7 +65,7 @@ export default function TransferAppointmentModal({
 		if (!isOpen) {
 			setSelectedWorker("");
 			setTransferReason("");
-			setTransferFee(5);
+			setTransferFee(70);
 		}
 	}, [isOpen]);
 
@@ -123,7 +123,11 @@ export default function TransferAppointmentModal({
 									</DialogTitle>
 
 									<p className="mt-1 text-xs sm:text-sm text-pink-700 dark:text-pink-300">
-										Réattribuer ce rendez-vous élégamment
+										Transfer {appointment.service?.name}
+										{" • "}
+										{format(new Date(appointment.date), "PPP", {
+											locale: enUS,
+										})}
 									</p>
 								</div>
 							</div>
@@ -175,7 +179,7 @@ export default function TransferAppointmentModal({
 
 												<div>
 													<p className="font-medium text-sm text-gray-900 dark:text-white">
-														Horaire
+														Date & Time
 													</p>
 
 													<p className="text-xs sm:text-sm text-muted-foreground">
@@ -184,7 +188,7 @@ export default function TransferAppointmentModal({
 
 													<p className="text-xs sm:text-sm text-muted-foreground">
 														{format(new Date(appointment.date), "PPP", {
-															locale: fr,
+															locale: enUS,
 														})}
 													</p>
 												</div>
@@ -198,7 +202,7 @@ export default function TransferAppointmentModal({
 
 													<div>
 														<p className="font-medium text-sm text-gray-900 dark:text-white">
-															Lieu
+															Location
 														</p>
 
 														<p className="text-xs sm:text-sm text-muted-foreground">
@@ -216,7 +220,7 @@ export default function TransferAppointmentModal({
 
 													<div className="min-w-0">
 														<p className="font-medium text-sm text-gray-900 dark:text-white">
-															Téléphone
+															Phone
 														</p>
 
 														<p className="text-xs sm:text-sm text-muted-foreground break-all">
@@ -236,7 +240,7 @@ export default function TransferAppointmentModal({
 									{/* Worker Select */}
 									<div className="space-y-2">
 										<Label className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
-											Styliste
+											Select New Employee
 										</Label>
 
 										<Select
@@ -244,13 +248,13 @@ export default function TransferAppointmentModal({
 											onValueChange={setSelectedWorker}
 										>
 											<SelectTrigger className="h-12 rounded-lg border-pink-200 dark:border-pink-900/30 bg-white/80 dark:bg-black/20 text-sm sm:text-base">
-												<SelectValue placeholder="Choisir un professionnel" />
+												<SelectValue placeholder="Select a worker" />
 											</SelectTrigger>
 
 											<SelectContent className="rounded-lg border-pink-100">
 												{staffLoading ? (
 													<div className="p-3 text-sm text-muted-foreground">
-														Chargement...
+														Loading staff...
 													</div>
 												) : (
 													staff
@@ -272,13 +276,13 @@ export default function TransferAppointmentModal({
 									{/* Reason */}
 									<div className="space-y-2">
 										<Label className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
-											Motif
+											Reason
 										</Label>
 
 										<Textarea
 											value={transferReason}
 											onChange={(e) => setTransferReason(e.target.value)}
-											placeholder="Ex: urgence, retard..."
+											placeholder="Eg. you are sick, you have an emergency, etc..."
 											rows={3}
 											className="rounded-lg border-pink-200 dark:border-pink-900/30 bg-white/80 dark:bg-black/20 p-3 text-sm sm:text-base resize-none focus-visible:ring-pink-400"
 										/>
@@ -293,11 +297,12 @@ export default function TransferAppointmentModal({
 
 											<div>
 												<h4 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white">
-													Commission
+													Transfer Fee Percentage
 												</h4>
 
 												<p className="text-xs sm:text-sm text-muted-foreground">
-													Partage du rendez-vous
+													You can set a transfer fee percentage (e.g. 70%) that the new employee will be paid you as commission for taking over this appointment.
+													The fee will be calculated based on the appointment price.
 												</p>
 											</div>
 										</div>
@@ -320,7 +325,7 @@ export default function TransferAppointmentModal({
 											</div>
 
 											<div className="rounded-lg bg-linear-to-r from-pink-500 to-rose-500 px-4 py-3 text-white shadow-lg flex-1">
-												<p className="text-xs opacity-90">Estimation</p>
+												<p className="text-xs opacity-90">Estimated Fee</p>
 
 												<p className="text-lg font-bold">
 													{transferFeeAmount.toLocaleString()} CDF
@@ -340,6 +345,7 @@ export default function TransferAppointmentModal({
 									onClick={() => onOpenChange(false)}
 									className="h-11 sm:h-12 rounded-lg border-pink-200 dark:border-pink-900/30 bg-white/80 dark:bg-black/20 text-sm sm:text-base flex-1"
 								>
+									<X className="w-4 h-4 mr-2" />
 									Annuler
 								</Button>
 

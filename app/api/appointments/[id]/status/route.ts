@@ -128,7 +128,7 @@ export async function PUT(
 						totalRevenue: updatedAppointment.price,
 						period: `${format(
 							new Date(updatedAppointment.date),
-							"yyyy-MM dd HH:mm",
+							"PPP 'at' HH:mm",
 							{ locale: enUS },
 						)}`,
 						businessEarnings: businessEarnings,
@@ -144,7 +144,7 @@ export async function PUT(
 				) {
 					// Calculate commission distribution
 					const originalWorkerCommission =
-						updatedAppointment.transfer.transferFeeAmount;
+						updatedAppointment.price - updatedAppointment.transfer.transferFeeAmount;
 					const newWorkerCommission =
 						updatedAppointment.price *
 						(1 - updatedAppointment.transfer.transferFeePercentage / 100);
@@ -156,7 +156,7 @@ export async function PUT(
 							where: {
 								workerId_period: {
 									workerId: updatedAppointment.transfer.originalWorkerId,
-									period: format(updatedAppointment.date, "yyyy-MM"),
+									period: format(updatedAppointment.date, "PPP 'at' HH:mm", { locale: enUS }),
 								},
 							},
 							update: {
@@ -165,7 +165,7 @@ export async function PUT(
 							},
 							create: {
 								workerId: updatedAppointment.transfer.originalWorkerId,
-								period: format(updatedAppointment.date, "yyyy-MM"),
+								period: format(updatedAppointment.date, "PPP 'at' HH:mm", { locale: enUS }),
 								totalRevenue: originalWorkerCommission,
 								commissionRate: updatedAppointment.worker?.commissionRate || 0,
 								commissionAmount:
@@ -180,7 +180,7 @@ export async function PUT(
 							where: {
 								workerId_period: {
 									workerId: updatedAppointment.transfer.newWorkerId,
-									period: format(updatedAppointment.date, "yyyy-MM"),
+									period: format(updatedAppointment.date, "PPP 'at' HH:mm", { locale: enUS }),
 								},
 							},
 							update: {
@@ -189,7 +189,7 @@ export async function PUT(
 							},
 							create: {
 								workerId: updatedAppointment.transfer.newWorkerId,
-								period: format(updatedAppointment.date, "yyyy-MM"),
+								period: format(updatedAppointment.date, "PPP 'at' HH:mm", { locale: enUS }),
 								totalRevenue: newWorkerCommission,
 								commissionRate:
 									updatedAppointment.transfer.newWorker?.commissionRate || 0,

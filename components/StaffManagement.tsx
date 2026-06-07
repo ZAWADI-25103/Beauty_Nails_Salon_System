@@ -26,8 +26,6 @@ import {
 } from "@/lib/hooks/useStaff";
 import {
 	EditScheduleModal,
-	PayrollModal,
-	StaffProfileModal,
 } from "./modals/StaffModals";
 import { StaffModal } from "./modals/StaffModals-v2";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -42,6 +40,8 @@ import {
 	SelectValue,
 } from "./ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { PayrollModal } from "./modals/PayrollModal";
+import { Frequency } from "./PayrollCountdown";
 
 export default function StaffManagement() {
 	const [selectedStaff, setSelectedStaff] = useState<Worker | null>(null);
@@ -193,9 +193,6 @@ export default function StaffManagement() {
 			createCommission({
 				workerId: selectedStaff.id,
 				period: selectedPeriod,
-				totalRevenue: totalRevenue || 0, // Use fetched/entered value or 0
-				appointmentsCount: appointmentsCount || 0, // Use fetched/entered value or 0
-				commissionRate: commissionRate,
 				// status defaults to 'pending' in backend
 			});
 			toast.success(`Commission pour ${selectedPeriod} initialisée.`);
@@ -665,7 +662,7 @@ export default function StaffManagement() {
 																<PayrollModal
 																	staffName={selectedStaff.name}
 																	staff={selectedStaff}
-																	period={selectedPeriodCommission.period}
+																period={selectedPeriodCommission.period as Frequency}
 																commission={selectedPeriodCommission}
 																	trigger={
 																		<Button
