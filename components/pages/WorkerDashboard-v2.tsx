@@ -139,45 +139,6 @@ export default function WorkerDashboardV2() {
 			!workerProfile.commissionDay ||
 			workerProfile.minimumPayout === undefined);
 
-	// Prepare data for the weekly performance chart
-	const weeklyData = useMemo(() => {
-		// This assumes currentPeriodCommissionData contains aggregated data per day or a similar structure
-		// If the API doesn't provide this format, you might need to process workerCommissions or allCommissions
-		if (currentPeriodCommissionData && Array.isArray(currentPeriodCommissionData)) {
-			// If currentPeriodCommissionData is an array of daily stats
-			return currentPeriodCommissionData.map((item) => ({
-				day: item.day || item.period || "Unknown", // Adjust key based on actual API response
-				rendezVous: item.appointmentsCount || 0,
-				commission: item.commission || 0,
-				totalRevenue: item.totalRevenue || 0,
-			}));
-		} else if (
-			currentPeriodCommissionData &&
-			typeof currentPeriodCommissionData === "object"
-		) {
-			// If currentPeriodCommissionData is a single object with daily breakdowns
-			// Example: { mon: { appointmentsCount: 2, ... }, tue: { ... }, ... }
-			return Object.entries(currentPeriodCommissionData).map(
-				([day, data]: [string, any]) => ({
-					day,
-					rendezVous: data.appointmentsCount || 0,
-					commission: data.commission || 0,
-					totalRevenue: data.totalRevenue || 0,
-				}),
-			);
-		}
-		// Fallback: Generate empty data for the chart
-		return [
-			{ day: "Mon", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Tue", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Wed", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Thu", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Fri", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Sat", rendezVous: 0, commission: 0, totalRevenue: 0 },
-			{ day: "Sun", rendezVous: 0, commission: 0, totalRevenue: 0 },
-		];
-	}, [currentPeriodCommissionData]);
-
 	useEffect(() => {
 		if (workerProfile && workerProfile.commissionFrequency)
 			setFreqComm(workerProfile.commissionFrequency);
@@ -708,7 +669,7 @@ export default function WorkerDashboardV2() {
 
 				{/* Main Content */}
 				<p className=" dark:text-pink-400 text-xs sm:text-xs">
-					{"glisser  <--- | --->"}
+					{"swipe  <--- | --->"}
 				</p>
 				<Tabs defaultValue="schedule" className="space-y-6">
 					<TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
@@ -1195,25 +1156,6 @@ export default function WorkerDashboardV2() {
 										</Card>
 									</div>
 								</Card>
-
-								{/* Performance Chart */}
-										{/* <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Weekly Performance</h3>
-                  <div className="h-80">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={weeklyData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <Tooltip formatter={(value) => [`${value}`, 'Value']} labelFormatter={(label) => `Day: ${label}`} />
-                        <Legend />
-                        <Bar dataKey="rendezVous" fill="#a855f7" name="Appointments" />
-                        <Bar dataKey="commission" fill="#10b981" name="Commission (CDF)" />
-                        <Bar dataKey="totalRevenue" fill="#3b82f6" name="Revenue (CDF)" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-										</Card> */}
 
 								{/* Current Period Summary */}
 								<Card className="p-6">

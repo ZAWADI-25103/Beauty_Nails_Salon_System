@@ -165,6 +165,7 @@ export async function GET(request: NextRequest) {
 				position: s.position,
 				specialties: s.specialties,
 				commissionRate: s.commissionRate,
+				avatar: s.avatar,
 				rating: s.rating,
 				totalReviews: s.totalReviews,
 				isAvailable: !!isBusy,

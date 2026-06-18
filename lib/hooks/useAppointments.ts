@@ -89,7 +89,7 @@ export function useAppointments(params?: {
 		}) => appointmentsApi.updateAppointmentStatus(id, statusData),
 		onSuccess: (data) => {
 			queryClient.setQueriesData(
-				{ queryKey: ["appointments"] },
+				{ queryKey: ["appointments", "commission", "staff"] },
 				(old: any) => {
 					if (!old) return old;
 

@@ -93,7 +93,7 @@ export default function PackageCard({ pkg }: PackageCardProps) {
 				className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full py-6"
 			>
 				<Sparkles className="w-4 h-4 mr-2" />
-				Book Now
+				Book Now - Save up to 15%
 			</Button>
 		</Card>
 	);

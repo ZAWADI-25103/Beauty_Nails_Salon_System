@@ -365,8 +365,8 @@ export function CommissionReportHtml(data: {
                 <th>Service</th>
                 <th>Client</th>
                 <th>Date</th>
-                <th>Heure</th>
-                <th>Montant</th>
+                <th>Time</th>
+                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -405,7 +405,7 @@ export function CommissionReportHtml(data: {
     </div>
   </div>
   
-  <div class="watermark">K-Corp • Confidential</div>
+  <div class="watermark">Beauty Nails System • Confidential</div>
 </body>
 </html>
   `;

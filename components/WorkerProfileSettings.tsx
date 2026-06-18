@@ -217,7 +217,7 @@ export default function WorkerProfileSettings({
 
 			<form onSubmit={handleSubmit} className="space-y-8">
 				{/* Personal Information */}
-				<Card className="p-6 border border-pink-100 dark:border-pink-900/30 bg-white dark:bg-gray-950">
+				<Card className="p-6 border-0 bg-white dark:bg-gray-950">
 					<h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
 						Personal Information
 					</h2>
@@ -292,7 +292,11 @@ export default function WorkerProfileSettings({
 										id="experience"
 										type="number"
 										min="0"
-										value={workerProfile?.experience || 0}
+										max="15"
+										value={formData.experience || 0}
+										onChange={(e) =>
+											handleInputChange("experience", Number(e.target.value))
+										}
 										disabled={user?.role !== "admin"} // Only admin can edit experience
 									/>
 								</div>

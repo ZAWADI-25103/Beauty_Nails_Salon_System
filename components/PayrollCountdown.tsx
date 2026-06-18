@@ -51,6 +51,57 @@ export const getNextResetDate = (frequency: Frequency, commissionDay: number) =>
 	return next;
 };
 
+const getNextPayoutDate = (
+	frequency: Frequency,
+	commissionDay: number,
+	lastPaidAt?: Date | string | null,
+) => {
+	const now = new Date();
+
+	const next = new Date(now);
+	next.setHours(18, 0, 0, 0); // 6 PM FIXED
+
+	// DAILY → same day 6 PM
+	if (frequency === "daily") {
+		if (now.getHours() >= 18) {
+			// already past today's 6 PM → tomorrow 6 PM
+			next.setDate(next.getDate() + 1);
+		}
+		return next;
+	}
+
+	// WEEKLY → chosen weekday at 6 PM
+	if (frequency === "weekly") {
+		const targetDay = commissionDay || 1; // 1–7
+		const jsDay = now.getDay() === 0 ? 7 : now.getDay();
+
+		let diff = targetDay - jsDay;
+
+		if (diff < 0 || (diff === 0 && now.getHours() >= 18)) {
+			diff += 7;
+		}
+
+		next.setDate(next.getDate() + diff);
+		return next;
+	}
+
+	// MONTHLY → chosen day at 6 PM
+	if (frequency === "monthly") {
+		const day = commissionDay || 1;
+
+		next.setDate(day);
+		next.setHours(18, 0, 0, 0);
+
+		if (now > next) {
+			next.setMonth(next.getMonth() + 1);
+		}
+
+		return next;
+	}
+
+	return next;
+};
+
 export type Frequency = "daily" | "weekly" | "monthly";
 
 export function PayrollCountdown({
@@ -108,10 +159,14 @@ export function PayrollCountdown({
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const now = new Date();
-			const target = getNextResetDate(frequency, commissionDay);
-			const diff = target.getTime() - now.getTime();
 
-			const ready = diff <= 0;
+			const nextPayoutDate = getNextPayoutDate(
+				frequency,
+				commissionDay,
+				lastCommissionPaidAt,
+			);
+
+			const ready = now >= nextPayoutDate;
 
 			setIsReady(ready);
 
@@ -121,31 +176,22 @@ export function PayrollCountdown({
 			}
 
 			if (ready) {
-				setTimeLeft("Available Now");
+				setTimeLeft("Available Now (6:00 PM)");
 				return;
 			}
+
+			const diff = nextPayoutDate.getTime() - now.getTime();
 
 			const seconds = Math.floor(diff / 1000) % 60;
 			const minutes = Math.floor(diff / (1000 * 60)) % 60;
 			const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
 			const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-			const weeks = Math.floor(days / 7);
-			const months = Math.floor(days / 30);
-			const remainingDays = days % 7;
 
-			let display = "";
-
-			if (months > 0) display += `${months}m `;
-			if (weeks > 0) display += `${weeks}w `;
-			if (remainingDays > 0) display += `${remainingDays}d `;
-			if (hours > 0) display += `${hours}h `;
-			display += `${minutes}m ${seconds}s`;
-
-			setTimeLeft(display);
+			setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
 		}, 1000);
 
 		return () => clearInterval(interval);
-	}, [commissionDay, frequency, onReadyChange]);
+	}, [frequency, commissionDay, lastCommissionPaidAt, onReadyChange]);
 
 	// Format last paid date nicely
 	const formatLastPaid = (date: Date | string | null | undefined) => {
@@ -157,6 +203,12 @@ export function PayrollCountdown({
 			day: 'numeric'
 		});
 	};
+
+	const nextEligibleDate = getNextPayoutDate(
+		frequency,
+		commissionDay,
+		lastCommissionPaidAt,
+	);
 
 	return (
 		<>
@@ -223,7 +275,7 @@ export function PayrollCountdown({
 						<div className="absolute inset-0 rounded-xl animate-pulse opacity-20 bg-current" />
 					)}
 
-					<p className="text-xs uppercase tracking-wide opacity-50">
+					<p className="text-xs text-white uppercase tracking-wide opacity-80">
 						{isReady
 							? "Payment Available"
 							: unpaidPeriods > 0
@@ -231,9 +283,17 @@ export function PayrollCountdown({
 								: "Next Payment in"}
 					</p>
 
-					<p className="text-2xl font-semibold tracking-tight">
+					<p className="text-2xl text-white font-semibold tracking-tight">
 						{unpaidPeriods > 0 && !isReady ? "Overdue" : timeLeft}
 					</p>
+
+					<div className="mt-2 text-xs text-white opacity-70">
+						{nextEligibleDate.toLocaleDateString(undefined, {
+							year: "numeric",
+							month: "long",
+							day: "numeric",
+						})}{" "} at 6 PM
+					</div>
 				</div>
 			</div>
 		</>

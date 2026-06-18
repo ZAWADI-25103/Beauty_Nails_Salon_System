@@ -468,7 +468,7 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
 							worker.commissionDay
 								? `
             <div class="config-item">
-              <div class="config-label">Jour de paiement</div>
+              <div class="config-label">Payment Day</div>
               <div class="config-value">${worker.commissionDay}</div>
             </div>`
 								: ""
@@ -488,7 +488,7 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
 					nextPaymentDate
 						? `
         <div style="margin-top:10px;font-size:13px;color:var(--pink-700);font-weight:600;">
-          🎯 Prochain paiement prévu: ${nextPaymentDate}
+          🎯 Next scheduled payment: ${nextPaymentDate}
         </div>`
 						: ""
 				}
@@ -570,8 +570,8 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
               <th>Service</th>
               <th>Client</th>
               <th>Date</th>
-              <th>Heure</th>
-              <th>Montant</th>
+              <th>Time</th>
+              <th>Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -605,7 +605,7 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
       <div class="payment-info">
         <div class="label">✅ Payment processed successfully</div>
         <div class="date">Last payment: ${new Date().toLocaleDateString(
-					"fr-FR",
+          "en-GB",
 					{
 						day: "2-digit",
 						month: "long",
@@ -621,7 +621,7 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
 
     <!-- Footer -->
     <div class="footer">
-      <div class="generated">📄 Generated automatically • K-Corp ERP System</div>
+      <div class="generated">📄 Generated automatically • Beauty Nails System</div>
       <div class="disclaimer">
         Document generated on ${generatedAt}<br/>
         Unauthorized reproduction is prohibited • RRef: COMM-${Date.now().toString(36).toUpperCase()}
@@ -637,7 +637,7 @@ export function CommissionReportHtmlV2(data: CommissionHtmlProps) {
     </div>
   </div>
   
-  <div class="watermark">K-Corp • Confidential</div>
+  <div class="watermark">Beauty Nails System • Confidential</div>
 </body>
 </html>
   `;

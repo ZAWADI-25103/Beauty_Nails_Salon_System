@@ -13,12 +13,12 @@ export default function About() {
 	const teams = staff.map((worker) => ({
 		name: worker.name,
 		role: worker.position || "Beauty Specialist",
-		experience: `${worker.experience || 1.5} ans`,
+		experience: `${worker.experience || 1.5} year(s)`,
 		specialties: worker.specialties,
 		image:
 			worker.avatar ||
 			`https://ui-avatars.com/api/?name=${encodeURIComponent(worker.name)}&background=random`,
-		rating: worker.rating ? worker.rating.toFixed(1) : "N/A",
+		rating: worker.rating ? worker.rating.toFixed(1) : "0",
 		reviews: worker.totalReviews || 0,
 	}));
 

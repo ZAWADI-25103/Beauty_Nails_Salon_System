@@ -41,7 +41,7 @@ import {
 } from "./ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { PayrollModal } from "./modals/PayrollModal";
-import { Frequency } from "./PayrollCountdown";
+import { Frequency, getNextResetDate } from "./PayrollCountdown";
 
 export default function StaffManagement() {
 	const [selectedStaff, setSelectedStaff] = useState<Worker | null>(null);
@@ -142,6 +142,16 @@ export default function StaffManagement() {
 			(c: any) => c.workerId === selectedStaff?.id && c.period === periodStr,
 		);
 
+	const getNextPaymentDate = () => {
+		if (!workerProfile?.commissionFrequency || !workerProfile?.commissionDay)
+			return "To configure";
+		// This is simplified - actual calculation would depend on frequency and day
+		if (workerProfile?.commissionFrequency === "monthly")
+			return `On the ${getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDate()}th of each month`;
+		else if (workerProfile?.commissionFrequency === "weekly")
+			return `[${getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).toLocaleDateString()}] ${getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 0 ? "Sunday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 1 ? "Monday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 2 ? "Tuesday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 3 ? "Wednesday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 4 ? "Thursday" : getNextResetDate(workerProfile.commissionFrequency as Frequency, workerProfile.commissionDay).getDay() === 5 ? "Friday" : "Saturday"} -  ${workerProfile.name}'s payment will be proceesed automatically. pay as soon as posible`;
+		else return `[Tonight] - ${workerProfile.name}'s payment will be proceesed automatically. pay as soon as posible`;
+	};
 	// Determine if selected period is paid
 	const isPeriodPaid = (periodStr: string) => {
 		const record = getCommissionForPeriod(periodStr);
@@ -509,7 +519,7 @@ export default function StaffManagement() {
 							<TabsContent value="commission" className="space-y-6">
 								<div className="flex flex-col sm:flex-row items-center justify-between gap-4">
 									<h4 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 mb-4 font-medium">
-										Calcul Commission & Paie
+										{selectedStaff.name}'s Commissions
 									</h4>
 
 									<div className="flex item-center gap-2">
@@ -866,7 +876,7 @@ export default function StaffManagement() {
 																					size="sm"
 																					className="bg-green-600 hover:bg-green-700 text-white"
 																				>
-																					Approve & Pay
+																					I Confirm - I've Paid
 																				</Button>
 																			}
 																		/>
@@ -955,6 +965,19 @@ export default function StaffManagement() {
 										)}
 									</div>
 								)}
+								<PayrollModal
+									staffName={selectedStaff.name}
+									staff={selectedStaff}
+									period={selectedStaff.commissionFrequency as Frequency}
+									trigger={
+										<Button
+											size="sm"
+											className="bg-green-600 hover:bg-green-700 text-white"
+										>
+											Approve Payment
+										</Button>
+									}
+								/>
 
 								{/* No commissions yet */}
 								{staffCommissions.pending.length === 0 &&
@@ -963,17 +986,14 @@ export default function StaffManagement() {
 									selectedStaff &&
 									!selectedPeriodCommission && (
 										<Card className="p-8 text-center border-2 border-dashed border-gray-300 dark:border-gray-700">
+										{user?.role === "admin" && (
+											<p className="text-gray-500">{getNextPaymentDate()}</p>
+										)}
 											<FileText className="w-12 h-12 mx-auto text-gray-400 mb-4" />
 											<p className="text-gray-500">
 												No commission records found for {selectedStaff.name}{" "}
 												yet.
-											</p>
-											{user?.role === "admin" && (
-												<p className="text-sm text-gray-500 mt-2">
-													Use the Initialize Commission section above to get
-													started.
-												</p>
-											)}
+										</p>
 										</Card>
 									)}
 							</TabsContent>

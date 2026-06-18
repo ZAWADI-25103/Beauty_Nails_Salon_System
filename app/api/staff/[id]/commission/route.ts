@@ -30,14 +30,22 @@ export async function GET(
 
 		// Calculate date range based on period
 		const now = new Date();
-		const startDate = new Date();
+		const startDate = new Date(now);
 
-		if (worker.commissionFrequency === "weekly") {
-			startDate.setDate(now.getDate() - now.getDay()); // Start of current week
-		} else if (worker.commissionFrequency === "monthly") {
-			startDate.setDate(1); // Start of current month
-		} else if (worker.commissionFrequency === "daily") {
-			startDate.setDate(now.getDate()); // Start of today
+		switch (worker.commissionFrequency) {
+			case "daily":
+				startDate.setHours(0, 0, 0, 0);
+				break;
+
+			case "weekly":
+				startDate.setHours(0, 0, 0, 0);
+				startDate.setDate(startDate.getDate() - startDate.getDay());
+				break;
+
+			case "monthly":
+				startDate.setDate(1);
+				startDate.setHours(0, 0, 0, 0);
+				break;
 		}
 
 		const commissions = await prisma.commission.findMany({
@@ -71,6 +79,7 @@ export async function GET(
 		);
 
 		console.log({
+			starting: startDate,
 			commission: totalEarnings,
 			totalBusiness,
 			matCost,

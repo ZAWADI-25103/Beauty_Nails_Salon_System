@@ -95,20 +95,26 @@ export function PayrollModal({
 
 	const payoutCommissionData = getPayoutCommissionForPeriod(activePeriod);
 
-	// if (!payoutCommissionData && !payoutCommissionRecord) {
-	// 	return (
-	// 		<div className="flex justify-center items-center h-64">
-	// 			<Loader2 className="h-8 w-8 animate-spin" />
-	// 		</div>
-	// 	);
-	// }
-
     useEffect(() => {
-		if (!isAdmin && isPaymentAvailable && activePeriod && !payoutCommissionExists) {
+		if (autoRequestTriggeredRef.current) {
+			return;
+		}
+
+		if (
+			!isAdmin &&
+			isPaymentAvailable &&
+			activePeriod &&
+			!payoutCommissionExists
+		) {
 			autoRequestTriggeredRef.current = true;
 			handleGenerateOrRequest();
 		}
-	}, [activePeriod, isAdmin, isPaymentAvailable, payoutCommissionExists]);
+	}, [
+		activePeriod,
+		isAdmin,
+		isPaymentAvailable,
+		payoutCommissionExists,
+	]);
 
 	let totalRevenue = 0;
 	let commissionRate = 0;
@@ -133,12 +139,11 @@ export function PayrollModal({
 	}
 
 	const handleGenerateOrRequest = () => {
-		if (!staff || !localPeriod) {
-			toast.error("Select a valid period to generate or request payment.");
+		if (!staff) {
 			return;
 		}
 
-		if (isPeriodPaid(localPeriod)) {
+		if (isPeriodPaid(activePeriod)) {
 			toast.info("This period has already been paid.");
 			return;
 		}
@@ -149,9 +154,6 @@ export function PayrollModal({
 				toast.info(
 					"Payment request already exists for this period. Awaiting admin approval.",
 				);
-				// Optionally, trigger an update mutation to set status to 'pending' if it wasn't already
-				// This depends on your backend logic for handling requests.
-				// Example: updateCommission({ id: commissionData.id, status: 'pending' });
 			} else {
 				toast.info("A record already exists for this period.");
 			}
@@ -164,14 +166,14 @@ export function PayrollModal({
 			// We'll pass the current displayed values. 
 			createCommission({
 				workerId: staff.id,
-				period: localPeriod,
+				period: activePeriod,
 			});
 			refetch();
 		} else {
 			// Backend logic might differ.
 			createCommission({
 				workerId: staff.id,
-				period: localPeriod,
+				period: activePeriod,
 			});
 			refetch();
 		}
@@ -202,7 +204,7 @@ export function PayrollModal({
 	const canAdminApprove = isAdmin && isPending && activePeriod;
 
 	// Determine button text and state
-	let buttonText = "Générer Demande";
+	let buttonText = "Request Payment";
 	let buttonVariant:
 		| "default"
 		| "destructive"
@@ -315,7 +317,7 @@ export function PayrollModal({
 					<Separator className="dark:bg-gray-700" />
 					<div className="space-y-3">
 						<PayrollCountdown
-							frequency={period as any}
+							frequency={workerProfile?.commissionFrequency as Frequency}
 							commissionDay={workerProfile?.commissionDay || 1}
                             lastCommissionPaidAt={workerProfile?.lastCommissionPaidAt}
                             workerName={staffName || staff?.user?.name || "Employee"}

@@ -1816,13 +1816,13 @@ export default function ClientDashboardV2() {
 															<Badge
 																className={
 																	apt.status === "confirmed"
-																		? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-																		: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+																		? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+																		: apt.status === "completed" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
 																}
 															>
 																{apt.status === "confirmed"
 																	? "Confirmed"
-																	: "Pending"}
+																	: apt.status === "completed" ? "Completed" : "Pending"}
 															</Badge>
 															<span className="text-lg font-bold text-gray-900 dark:text-gray-100">
 																{Number(apt.price)?.toLocaleString() || 0} Fc
@@ -1887,17 +1887,17 @@ export default function ClientDashboardV2() {
 
 													{/* Footer: Action */}
 													<div className="mt-4 flex justify-end">
-														<Button
+														{/* <Button
 															variant="ghost"
 															size="sm"
 															className="text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-900/20"
 															onClick={() => {
-																/* Open details modal */
+
 															}}
 														>
 															View Details
 															<ChevronRight className="w-4 h-4 ml-1" />
-														</Button>
+														</Button> */}
 													</div>
 												</div>
 											</Card>

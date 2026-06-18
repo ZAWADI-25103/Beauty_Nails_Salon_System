@@ -93,7 +93,7 @@ export async function handleOTPVerification(
 		}
 	} catch (error: any){
 		return {
-			error: err.message || "An error occurred while logging in",
+			error: error.message || "An error occurred while logging in",
 		};
 	}
 }

@@ -110,7 +110,7 @@ export function CommissionHtml(c: any) {
             <div>${c.period}</div>
         </div>
         <div class="badge ${isPaid ? "paid" : "pending"}">
-          ${isPaid ? "PAYÉ" : "EN ATTENTE"}
+          ${isPaid ? "PAID" : "PENDING"}
         </div>
       </div>
 
@@ -122,53 +122,53 @@ export function CommissionHtml(c: any) {
 
       <div class="section grid">
         <div class="card">
-          <strong>Travailleur</strong><br/>
+          <strong>Worker</strong><br/>
           ${c.worker.user.name}<br/>
           ${c.worker.position}
         </div>
 
         <div class="card">
           <strong>Configuration</strong><br/>
-          Taux: ${c.commissionRate}%<br/>
+          Rate: ${c.commissionRate}%<br/>
           Type: ${c.worker.commissionType || "percentage"}<br/>
-          Fréquence: ${c.worker.commissionFrequency || "N/A"}
+          Frequency: ${c.worker.commissionFrequency || "N/A"}
         </div>
       </div>
 
       <div class="section grid">
         <div class="card">
-          <strong>Revenu total</strong><br/>
+          <strong>Total Revenue</strong><br/>
           ${c.totalRevenue.toLocaleString()} CDF
         </div>
 
         <div class="card">
-          <strong>RDV complétés</strong><br/>
+          <strong>Completed Appointments</strong><br/>
           ${c.appointmentsCount}
         </div>
       </div>
 
       <div class="section grid">
         <div class="card">
-          <strong>Coûts opérationnels</strong><br/>
+          <strong>Operational Costs</strong><br/>
           ${c.operationalCost.toLocaleString()} CDF
         </div>
 
         <div class="card">
-          <strong>Matériel</strong><br/>
+          <strong>Materials</strong><br/>
           ${c.materialsCost.toLocaleString()} CDF
         </div>
       </div>
 
       <div class="section card">
-        <strong>Gains entreprise</strong><br/>
+        <strong>Business Earnings</strong><br/>
         ${c.businessEarnings.toLocaleString()} CDF
       </div>
 
       <div class="highlight">
         ${
 					isPaid
-						? "Paiement effectué avec succès par l'administration"
-						: "Cette commission est en attente de paiement"
+    ? "Payment successfully processed by administration"
+    : "This commission is pending payment"
 				}
         <br/>
         <div class="amount">
@@ -179,14 +179,14 @@ export function CommissionHtml(c: any) {
       ${
 				isPaid
 					? `<div class="section card">
-              <strong>Date de paiement</strong><br/>
+              <strong>Payment Date</strong><br/>
               ${new Date(c.paidAt).toLocaleString()}
             </div>`
 					: ""
 			}
 
       <div class="footer">
-        Généré automatiquement • Système ERP K-Corp
+        Generated automatically • Beauty Nails System
       </div>
 
     </div>

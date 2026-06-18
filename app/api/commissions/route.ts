@@ -166,7 +166,7 @@ export async function GET(request: NextRequest) {
 
 		const commissions = await prisma.commission.findMany({
 			where: {
-				// commissionInitializedAtAppointmentCompletion: false,
+				commissionInitializedAtAppointmentCompletion: workerId ? true : false,
 				...(workerId ? { workerId } : {}),
 			},
 			include: {
@@ -179,7 +179,7 @@ export async function GET(request: NextRequest) {
 			},
 		});
 
-		// console.log(commissions)
+		console.log(commissions)
 
 		return successResponse(commissions);
 	} catch (error) {

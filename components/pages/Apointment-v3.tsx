@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { format, isBefore, startOfDay } from "date-fns";
 import { enUS } from "date-fns/locale";
 import {
+	Award,
 	Calendar as CalendarIcon,
 	CheckCircle,
 	CheckCircleIcon,
@@ -16,6 +17,7 @@ import {
 	RefreshCcw,
 	Scissors,
 	Sparkles,
+	Star,
 	Wallet,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -55,6 +57,7 @@ import {
 	SelectValue,
 } from "../ui/select";
 import { cn } from "../ui/utils";
+import { ImageWithFallback } from "../figma/ImageWithFallback";
 
 export default function AppointmentsV3() {
 	const router = useRouter();
@@ -533,6 +536,19 @@ export default function AppointmentsV3() {
 		? services.filter((s: Service) => s.category === selectedCategory)
 		: [];
 
+	const teams = staff.map((worker) => ({
+		id: worker.id,
+		name: worker.name,
+		role: worker.position || "Beauty Specialist",
+		experience: `${worker.experience || 1.5} year(s)`,
+		specialties: worker.specialties,
+		image:
+			worker.avatar ||
+			`https://ui-avatars.com/api/?name=${encodeURIComponent(worker.name)}&background=random`,
+		rating: worker.rating ? worker.rating.toFixed(1) : "0",
+		reviews: worker.totalReviews || 0,
+	}));
+
 	const countries = [
 		{ code: "+250", name: "Rwanda", placeholder: "78xxxxxxx" },
 		{ code: "+243", name: "DRC", placeholder: "8xxxxxxx" },
@@ -757,54 +773,132 @@ export default function AppointmentsV3() {
 						<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
 							Specialist
 						</h3>
-						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-							{staff.map((worker: any) => {
-								if (
-									!worker.specialties
-										.map((s: any) => s.toLowerCase())
-										.includes(selectedCategory?.toLowerCase()!)
-								) {
-									return null;
-								}
-								return (
-									<Card
-										key={worker.id}
-										className={`p-4 cursor-pointer transition-all ${
-											selectedWorker === worker.id
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+							{/* <Card
+								key={worker.id}
+								className={`p-4 cursor-pointer transition-all ${
+									selectedWorker === worker.id
+										? "border-2 border-pink-500 bg-pink-50 dark:bg-pink-900/20"
+										: "border border-gray-200 dark:border-gray-700 hover:border-pink-300 dark:hover:border-pink-700"
+								}`}
+								onClick={() => {
+									setSelectedWorker(worker.id);
+									setSelectedWorkerName(worker.user.name);
+								}}
+							>
+								<div className="flex items-center gap-3">
+									<div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+										{worker.user.avatar ? (
+											<img
+												src={worker.user.avatar}
+												alt={worker.user.name}
+												className="w-10 h-10 rounded-full object-cover"
+											/>
+										) : (
+											<span className="text-gray-500 dark:text-gray-400 text-lg">
+												{worker.user.name.charAt(0)}
+											</span>
+										)}
+									</div>
+									<div>
+										<h4 className="font-medium text-gray-900 dark:text-gray-100">
+											{worker.user.name}
+										</h4>
+										<p className="text-lg text-gray-600 dark:text-gray-400">
+											{worker.position}
+										</p>
+									</div>
+								</div>
+							</Card> */}
+							{staffLoading ? (
+								<div className="col-span-full text-center py-8">
+									<p className="text-lg text-gray-600 dark:text-gray-400">
+										Loading team...
+									</p>
+								</div>
+							) : (
+								teams.map((member) => {
+									if (
+										!member.specialties
+											.map((s: any) => s.toLowerCase())
+											.includes(selectedCategory?.toLowerCase()!)
+									) {
+										return null;
+									}
+									return (
+										<Card
+											key={member.id}
+											className={`p-2 cursor-pointer transition-all ${selectedWorker === member.id
 												? "border-2 border-pink-500 bg-pink-50 dark:bg-pink-900/20"
 												: "border border-gray-200 dark:border-gray-700 hover:border-pink-300 dark:hover:border-pink-700"
-										}`}
-										onClick={() => {
-											setSelectedWorker(worker.id);
-											setSelectedWorkerName(worker.user.name);
-										}}
-									>
-										<div className="flex items-center gap-3">
-											<div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-												{worker.user.avatar ? (
-													<img
-														src={worker.user.avatar}
-														alt={worker.user.name}
-														className="w-10 h-10 rounded-full object-cover"
-													/>
-												) : (
-													<span className="text-gray-500 dark:text-gray-400 text-lg">
-														{worker.user.name.charAt(0)}
+												}`}
+											onClick={() => {
+												setSelectedWorker(member.id);
+												setSelectedWorkerName(member.name);
+											}}
+										>
+											<div className="relative h-48 sm:h-56 md:h-64">
+												<ImageWithFallback
+													src={member.image}
+													alt={member.name}
+													className="w-full h-full object-cover"
+												/>
+												<div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent dark:from-black/80" />
+												<div className="absolute bottom-3 sm:bottom-4 left-4 right-4 text-white">
+													<h3 className="text-lg sm:text-xl mb-1">{member.name}</h3>
+													<p className="text-base sm:text-lg text-pink-200">
+														{member.role}
+													</p>
+												</div>
+											</div>
+											<div className="p-2 sm:p-4">
+												<div className="flex items-center gap-2 mb-3 sm:mb-4">
+													<Award className="w-4 h-4 text-amber-500" />
+													<span className="text-base sm:text-lg text-gray-600 dark:text-gray-400">
+														{member.experience} of experience
 													</span>
-												)}
+												</div>
+												<div className="space-y-2">
+													<p className="text-base text-gray-500 dark:text-gray-400 mb-2">
+														Specialties:
+													</p>
+													{member.specialties.map((specialty, i) => (
+														<Badge
+															key={i}
+															variant="outline"
+															className="mr-2 text-base dark:border-gray-700 dark:text-gray-300"
+														>
+															{specialty.toLocaleLowerCase() === "onglerie"
+																? "Nails"
+																: specialty.toLocaleLowerCase() === "cils"
+																	? "EyeLashes"
+																	: specialty.toLocaleLowerCase() === "tresses"
+																		? "Braids"
+																		: specialty.toLocaleLowerCase() === "maquillage"
+																			? "Makeup"
+																			: specialty}
+														</Badge>
+													))}
+												</div>
+												<div className="flex items-center mt-3 sm:mt-4">
+													<div className="flex">
+														{[...Array(member.rating)].map((_, i) => (
+															<Star
+																key={i}
+																className="w-4 h-4 fill-amber-400 text-amber-400"
+															/>
+														))}
+													</div>
+													<span className="ml-2 text-base sm:text-lg text-gray-600 dark:text-gray-400">
+														{member.rating}/5 ({member.reviews} reviews)
+													</span>
+												</div>
 											</div>
-											<div>
-												<h4 className="font-medium text-gray-900 dark:text-gray-100">
-													{worker.user.name}
-												</h4>
-												<p className="text-lg text-gray-600 dark:text-gray-400">
-													{worker.position}
-												</p>
-											</div>
-										</div>
-									</Card>
-								);
-							})}
+										</Card>
+									);
+								}
+								))
+							}
 						</div>
 					</div>
 				)}
@@ -1030,7 +1124,7 @@ export default function AppointmentsV3() {
 										Prepaid
 									</span>
 									<p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-										{prepaid} CDF
+										{prepaid.toFixed(2)} CDF
 									</p>
 								</div>
 
