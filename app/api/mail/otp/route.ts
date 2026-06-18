@@ -55,11 +55,11 @@ export async function POST(req: Request) {
 		if (theUser) {
 			const emailHtml = await render(OtpEmail({ verificationCode: otp }));
 
-			// const result = await sendEmail(
-			// 	email,
-			// 	"Your verification code - Beauty Nails",
-			// 	emailHtml,
-			// );
+			await sendEmail(
+				email,
+				"Your verification code - Beauty Nails",
+				emailHtml,
+			);
 
 			console.log("Nodemailer Result with OTP :", otp);
 
@@ -70,11 +70,11 @@ export async function POST(req: Request) {
 				});
 
 				if (adminUser) {
-					// await sendEmail(
-					// 	adminUser.email,
-					// "OTP Code Request",
-					// `A user (${user.email}) has just logged in.`,
-					// );
+					await sendEmail(
+						adminUser.email,
+						"OTP Code Request",
+						`A user (${user.email}) has just logged in.`,
+					);
 				}
 			} catch (adminNotifyError) {
 				console.error("Error notifying admin:", adminNotifyError);
