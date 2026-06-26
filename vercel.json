@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/app/api/internal/cron/payroll/daily",
+      "schedule": "0 18 * * *"
+    },
+    {
+      "path": "/app/api/internal/cron/payroll/weekly",
+      "schedule": "0 18 * * 5"
+    },
+    {
+      "path": "/app/api/internal/cron/payroll/monthly",
+      "schedule": "0 18 1-31 * *"
+    }
+  ]
+}

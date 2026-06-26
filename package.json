@@ -117,7 +117,19 @@
 		"i": "^0.3.7",
 		"npm": "^11.11.0",
 		"prisma": "^7.4.2",
-		"tailwindcss": "^4.1.18",
+		"tailwindcss": "^4.3.1",
 		"typescript": "^5"
+	},
+	"allowScripts": {
+		"@prisma/engines@7.4.2": true,
+		"cypress@15.16.0": true,
+		"esbuild@0.25.12": true,
+		"esbuild@0.27.2": true,
+		"esbuild@0.27.3": true,
+		"prisma@7.4.2": true,
+		"puppeteer@24.37.3": true,
+		"sharp@0.34.5": true,
+		"unrs-resolver@1.11.1": true,
+		"core-js@3.48.0": true
 	}
 }

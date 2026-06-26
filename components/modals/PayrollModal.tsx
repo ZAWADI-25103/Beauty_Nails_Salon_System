@@ -80,7 +80,7 @@ export function PayrollModal({
 		commissions.find(
 			(c: any) =>
 				c.workerId === staff?.id &&
-				c.period === periodStr &&
+				// c.period === periodStr &&
 				c.commissionInitializedAtAppointmentCompletion === false,
 		);
 
@@ -95,26 +95,26 @@ export function PayrollModal({
 
 	const payoutCommissionData = getPayoutCommissionForPeriod(activePeriod);
 
-    useEffect(() => {
-		if (autoRequestTriggeredRef.current) {
-			return;
-		}
+	// useEffect(() => {
+	// 	if (autoRequestTriggeredRef.current) {
+	// 		return;
+	// 	}
 
-		if (
-			!isAdmin &&
-			isPaymentAvailable &&
-			activePeriod &&
-			!payoutCommissionExists
-		) {
-			autoRequestTriggeredRef.current = true;
-			handleGenerateOrRequest();
-		}
-	}, [
-		activePeriod,
-		isAdmin,
-		isPaymentAvailable,
-		payoutCommissionExists,
-	]);
+	// 	if (
+	// 		!isAdmin &&
+	// 		isPaymentAvailable &&
+	// 		activePeriod &&
+	// 		!payoutCommissionExists
+	// 	) {
+	// 		autoRequestTriggeredRef.current = true;
+	// 		handleGenerateOrRequest();
+	// 	}
+	// }, [
+	// 	activePeriod,
+	// 	isAdmin,
+	// 	isPaymentAvailable,
+	// 	payoutCommissionExists,
+	// ]);
 
 	let totalRevenue = 0;
 	let commissionRate = 0;

@@ -965,7 +965,7 @@ export default function StaffManagement() {
 										)}
 									</div>
 								)}
-								<PayrollModal
+								{/* <PayrollModal
 									staffName={selectedStaff.name}
 									staff={selectedStaff}
 									period={selectedStaff.commissionFrequency as Frequency}
@@ -977,7 +977,7 @@ export default function StaffManagement() {
 											Approve Payment
 										</Button>
 									}
-								/>
+								/> */}
 
 								{/* No commissions yet */}
 								{staffCommissions.pending.length === 0 &&

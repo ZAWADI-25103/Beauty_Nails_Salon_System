@@ -1,4 +1,4 @@
-"use server";
+
 import { nanoid } from "nanoid";
 import type { NextRequest } from "next/server";
 import {

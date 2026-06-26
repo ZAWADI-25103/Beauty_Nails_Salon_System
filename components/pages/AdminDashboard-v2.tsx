@@ -494,7 +494,7 @@ export default function AdminDashboardV2() {
 
 				{/* Main Tabs */}
 				<p className=" dark:text-pink-400 text-xs sm:text-xs">
-					{"glisser  <--- | --->"}
+					{"swipe  <--- | --->"}
 				</p>
 				<Tabs defaultValue="overview" className="space-y-8">
 					<TabsList className="w-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-pink-900/30 p-1 rounded-xl flex overflow-x-auto no-scrollbar justify-start sm:justify-center">

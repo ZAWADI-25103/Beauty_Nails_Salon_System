@@ -1,4 +1,4 @@
-"use server";
+
 import { hash } from "bcryptjs";
 import { nanoid } from "nanoid";
 import type { NextRequest } from "next/server";

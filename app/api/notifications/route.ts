@@ -1,4 +1,4 @@
-"use server";
+
 import type { NextRequest } from "next/server";
 import {
 	getAuthenticatedUser,

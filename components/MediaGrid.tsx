@@ -39,7 +39,7 @@ export default function MediaGrid({
 
 	const handleUpload = async (file: File) => {
 		if (file.type !== "application/pdf") {
-			toast.error("Seuls les fichiers PDF sont autorisés");
+			toast.error("Only PDF files are allowed");
 			return;
 		}
 
@@ -53,7 +53,7 @@ export default function MediaGrid({
 			) || [];
 
 		if (workerDocs.length >= 3) {
-			toast.error("Maximum 3 documents autorisés");
+			toast.error("Maximum 3 documents allowed");
 			return;
 		}
 
@@ -74,14 +74,14 @@ export default function MediaGrid({
 
 		try {
 			await createMedia(media);
-			toast.success("Document uploadé avec succès");
+			toast.success("Document uploaded successfully");
 			if (inputRef.current) {
 				inputRef.current.value = "";
 			}
 		} catch (err: any) {
 			toast.error(
 				err.response?.data?.error?.message ||
-					"Erreur lors de l'upload du document",
+				"Error occurred while uploading the document",
 			);
 		} finally {
 			setUploading(false);
@@ -97,14 +97,14 @@ export default function MediaGrid({
 	const handleRemove = async (id: string) => {
 		// Only allow deletion if user has permission
 		if (!canDelete && user?.role !== "admin") {
-			toast.error("Vous n'avez pas la permission de supprimer ce document");
+			toast.error("You do not have permission to delete this document");
 			return;
 		}
 
 		// In a real implementation, you would call a delete API
 		// For now, we'll just refetch to update the list
 		await refetch();
-		toast.success("Document supprimé");
+		toast.success("Document deleted successfully");
 	};
 
 	const handleView = (url: string) => {
@@ -138,11 +138,11 @@ export default function MediaGrid({
 					<div>
 						<p className="text-sm font-medium text-gray-900 dark:text-gray-100">
 							{uploading || isCreating
-								? "Upload en cours..."
+								? "Upload in progress..."
 								: "Add Document"}
 						</p>
 						<p className="text-xs text-gray-500 dark:text-gray-400">
-							PDF uniquement • Maximum 3 documents
+							Only PDF • Maximum 3 documents
 						</p>
 					</div>
 				</div>
@@ -164,14 +164,14 @@ export default function MediaGrid({
 				<Card className="p-4 text-center">
 					<AlertTriangle className="w-8 h-8 mx-auto text-red-500 mb-2" />
 					<p className="text-sm text-red-500">
-						Erreur de chargement des documents.
+							Error loading documents.
 					</p>
 				</Card>
 			) : pdfDocuments.length === 0 ? (
 				<Card className="p-6 text-center">
 					<FileText className="w-10 h-10 mx-auto text-gray-400 mb-2" />
 					<p className="text-sm text-gray-500 dark:text-gray-400">
-						Aucun document PDF uploadé
+								No PDF documents uploaded yet. Click "Add Document" to upload.
 					</p>
 				</Card>
 			) : (
@@ -204,7 +204,7 @@ export default function MediaGrid({
 									className="rounded-full"
 								>
 									<Eye className="w-4 h-4 mr-1" />
-									Voir
+									View
 								</Button>
 
 								{/* Only show delete button for admins or if canDelete prop is true */}

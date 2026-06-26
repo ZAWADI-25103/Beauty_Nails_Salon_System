@@ -1,4 +1,4 @@
-"use server";
+
 import { format } from "date-fns";
 import { enUS, fr } from "date-fns/locale";
 import type { NextRequest } from "next/server";
